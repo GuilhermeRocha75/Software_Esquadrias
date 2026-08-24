@@ -1,0 +1,105 @@
+{
+  "case_id": "CR_20260820_135857_2F",
+  "input": {
+    "width_mm": 2000.0,
+    "height_mm": 2000.0,
+    "quantity": 1,
+    "leaf_count": 2,
+    "leaf_system": "PRIME_DOOR_42x88",
+    "screen_enabled": false,
+    "shutter_enabled": false
+  },
+  "expected_excel": {
+    "unit_cost": 1645.55
+  },
+  "engine_result": {
+    "calculation_version": "CR_ENGINE_0.1.0",
+    "model_description": "2 FOLHAS DE CORRER - PRIME_DOOR_42x88",
+    "geometry": {
+      "frame_width_final_mm": 2000.0,
+      "frame_height_final_mm": 2000.0,
+      "frame_width_cut_mm": 2005.0,
+      "frame_height_cut_mm": 2005.0,
+      "leaf_width_final_mm": 1000.0,
+      "leaf_height_final_mm": 1912.0,
+      "leaf_width_cut_mm": 1005.0,
+      "leaf_height_cut_mm": 1917.0
+    },
+    "unit_cost": 873.35656,
+    "order_cost": 873.35656,
+    "bom": [
+      {
+        "role": "FRAME_HORIZONTAL",
+        "material_code": "PR8852",
+        "description": "MARCO 2 TRILHOS COM ABA",
+        "unit": "m",
+        "length_mm": 2005.0,
+        "quantity_per_unit": 2.0,
+        "quantity_order": 2.0,
+        "unit_price": 43.57,
+        "cost_per_unit_product": 174.7157
+      },
+      {
+        "role": "FRAME_VERTICAL",
+        "material_code": "PR8852",
+        "description": "MARCO 2 TRILHOS COM ABA",
+        "unit": "m",
+        "length_mm": 2005.0,
+        "quantity_per_unit": 2.0,
+        "quantity_order": 2.0,
+        "unit_price": 43.57,
+        "cost_per_unit_product": 174.7157
+      },
+      {
+        "role": "LEAF_HORIZONTAL",
+        "material_code": "PR4288",
+        "description": "FOLHA PORTA DE CORRER 42X88MM",
+        "unit": "m",
+        "length_mm": 1005.0,
+        "quantity_per_unit": 4.0,
+        "quantity_order": 4.0,
+        "unit_price": 40.7,
+        "cost_per_unit_product": 163.614
+      },
+      {
+        "role": "LEAF_VERTICAL",
+        "material_code": "PR4288",
+        "description": "FOLHA PORTA DE CORRER 42X88MM",
+        "unit": "m",
+        "length_mm": 1917.0,
+        "quantity_per_unit": 4.0,
+        "quantity_order": 4.0,
+        "unit_price": 40.7,
+        "cost_per_unit_product": 312.0876
+      },
+      {
+        "role": "INTERLOCK",
+        "material_code": "PR4550",
+        "description": "INTERLOCK PORTA DE CORRER",
+        "unit": "m",
+        "length_mm": 1902.0,
+        "quantity_per_unit": 2.0,
+        "quantity_order": 2.0,
+        "unit_price": 8.59,
+        "cost_per_unit_product": 32.67636
+      },
+      {
+        "role": "ALUMINUM_RAIL",
+        "material_code": "AL16",
+        "description": "TRILHO PRIME",
+        "unit": "m",
+        "length_mm": 1896.0,
+        "quantity_per_unit": 2.0,
+        "quantity_order": 2.0,
+        "unit_price": 4.1,
+        "cost_per_unit_product": 15.5472
+      }
+    ],
+    "warnings": []
+  },
+  "comparison": {
+    "difference_value": -772.19344,
+    "difference_pct": -46.92616085807177
+  },
+  "notes": "calculou somente somente o pvc,faltou baguete, guarnição, vidro reforço, ferragem, borracha, escova entre outros"
+}

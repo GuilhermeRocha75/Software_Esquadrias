@@ -1,0 +1,9 @@
+[project]
+name = "esquadrias-engine"
+version = "0.3.1"
+description = "Primeiro protótipo do motor técnico CR para esquadrias de correr"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
