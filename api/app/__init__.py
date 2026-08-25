@@ -1,0 +1,1 @@
+"""Software Esquadrias API package."""
