@@ -71,7 +71,7 @@ const initialItems = [
     id: crypto.randomUUID(),
     width_mm: 2000,
     height_mm: 2000,
-    leaf_system: 'DESIGN_DOOR_60x111',
+    leaf_system: 'PRIME_WINDOW_42x66',
     glass_description: '04mm FLOAT INCOLOR',
   },
 ]
@@ -409,7 +409,7 @@ export default function App() {
     } finally { setLoading(false) }
   }
 
-  useEffect(() => { loadOptions(); calculate(initialItems) }, [])
+  useEffect(() => { loadOptions(); calculate(items) }, [])
 
   const removeItem = (id) => {
     const next = items.filter((item) => item.id !== id)
