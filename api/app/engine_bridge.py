@@ -22,7 +22,13 @@ from esquadrias_engine import (  # noqa: E402
     SlidingConfiguration,
     build_order_purchase_plan,
     calculate_sliding,
+    GLASSES,
+    CLOSURE_OPTIONS,
+    CREMONA_OPTIONS,
+    ROLLER_OPTIONS,
+    FINISH_OPTIONS,
 )
+from esquadrias_engine.catalog import PARAMETERS  # noqa: E402
 
 __all__ = [
     "ApplicationType",
@@ -30,4 +36,10 @@ __all__ = [
     "SlidingConfiguration",
     "calculate_sliding",
     "build_order_purchase_plan",
+    "GLASSES",
+    "CLOSURE_OPTIONS",
+    "CREMONA_OPTIONS",
+    "ROLLER_OPTIONS",
+    "FINISH_OPTIONS",
+    "PARAMETERS",
 ]
