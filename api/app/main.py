@@ -14,7 +14,7 @@ from .schemas import CRItemRequest, PurchasePlanRequest
 
 app = FastAPI(
     title="Software Esquadrias API",
-    version="0.1.0",
+    version="0.1.1",
     description="API inicial da Plataforma de Gestão e Engenharia para Esquadrias.",
 )
 
@@ -52,11 +52,22 @@ def _serialize_result(cfg: SlidingConfiguration, result):
     }
 
 
+@app.get("/")
+def root():
+    return {
+        "name": "Software Esquadrias API",
+        "status": "online",
+        "api_version": "0.1.1",
+        "documentation": "/docs",
+        "health": "/health",
+    }
+
+
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "api_version": "0.1.0",
+        "api_version": "0.1.1",
         "engine": "CR_ENGINE_0.3.x",
     }
 
