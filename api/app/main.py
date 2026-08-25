@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from .engine_bridge import (
     ApplicationType,
@@ -14,8 +15,19 @@ from .schemas import CRItemRequest, PurchasePlanRequest
 
 app = FastAPI(
     title="Software Esquadrias API",
-    version="0.1.1",
+    version="0.1.2",
     description="API inicial da Plataforma de Gestão e Engenharia para Esquadrias.",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5173",
+        "http://localhost:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -57,7 +69,7 @@ def root():
     return {
         "name": "Software Esquadrias API",
         "status": "online",
-        "api_version": "0.1.1",
+        "api_version": "0.1.2",
         "documentation": "/docs",
         "health": "/health",
     }
@@ -67,7 +79,7 @@ def root():
 def health():
     return {
         "status": "ok",
-        "api_version": "0.1.1",
+        "api_version": "0.1.2",
         "engine": "CR_ENGINE_0.3.x",
     }
 
