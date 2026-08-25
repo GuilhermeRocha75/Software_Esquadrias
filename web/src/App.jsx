@@ -15,6 +15,30 @@ const baseDefaults = {
   shutter_enabled: false,
 }
 
+const fallbackOptions = {
+  leaf_systems: [
+    { value: 'PRIME_WINDOW_42x66', label: 'Prime Janela 42x66' },
+    { value: 'PRIME_DOOR_42x88', label: 'Prime Porta 42x88' },
+    { value: 'DESIGN_DOOR_60x111', label: 'Design 60x111' },
+  ],
+  applications: ['JANELA', 'PORTA'],
+  leaf_counts: [2, 3, 4, 6],
+  glasses: [
+    { description: '04mm FLOAT INCOLOR' },
+    { description: '05mm FLOAT FUMÊ' },
+  ],
+  closures: [
+    'MAÇANETA COM CREMONA + FECHO OCULTO',
+    'MAÇANETA COM CREMONA + MAÇANETA OCULTA COM CREMONA',
+    'MAÇANETA COM CREMONA',
+  ],
+  cremonas: ['CREMONA 1 PONTO'],
+  rollers: ['ROLDANA 30KG', 'ROLDANA 50KG', 'ROLDANA 80KG', 'ROLDANA 120KG', 'ROLDANA 150KG'],
+  finishes: ['SEM ACABAMENTO', 'GUARNIÇÃO DE 70MM', 'BARRA CHATA DE 30MM'],
+  screen: { supported: true },
+  shutter: { supported: 'partial', box_height_mm: 200 },
+}
+
 const initialItems = [
   {
     ...baseDefaults,
@@ -124,7 +148,7 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAdd }) {
+function ItemsTable({ items, onRemove, onAdd, onEdit }) {
   return (
     <section className="card items-card">
       <div className="section-head">
@@ -133,7 +157,7 @@ function ItemsTable({ items, onRemove, onAdd }) {
       </div>
       <div className="table-scroll">
         <table>
-          <thead><tr><th>Item</th><th>Tipo</th><th>Aplicação</th><th>Folhas</th><th>Largura</th><th>Altura</th><th>Qtd</th><th>Vidro</th><th>Status</th><th>Ações</th></tr></thead>
+          <thead><tr><th>Item</th><th>Tipo</th><th>Aplicação</th><th>Folhas</th><th>Largura</th><th>Altura</th><th>Qtd</th><th>Vidro</th><th>Tela</th><th>Persiana</th><th>Status</th><th>Ações</th></tr></thead>
           <tbody>
             {items.map((item, index) => (
               <tr key={item.id}>
@@ -145,8 +169,10 @@ function ItemsTable({ items, onRemove, onAdd }) {
                 <td>{item.height_mm}</td>
                 <td>{item.quantity}</td>
                 <td>{item.glass_description.replace(' FLOAT ', ' ')}</td>
+                <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
+                <td>{item.shutter_enabled ? 'Sim' : 'Não'}</td>
                 <td><span className="status">● Calculado</span></td>
-                <td><button className="icon-btn" title="Editar">✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
+                <td><button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
               </tr>
             ))}
           </tbody>
@@ -254,21 +280,79 @@ function Warnings({ warnings }) {
   return <div className="warnings-list">{warnings.map((warning, index) => <div className="warning-row" key={`${warning.code}-${index}`}><strong>{warning.code}</strong><span>{warning.message}</span></div>)}</div>
 }
 
-function AddItemModal({ onClose, onSave }) {
-  const [form, setForm] = useState({
+function FieldSection({ title, children }) {
+  return <div className="field-section"><div className="field-section-title">{title}</div><div className="modal-grid">{children}</div></div>
+}
+
+function AddItemModal({ onClose, onSave, options, item }) {
+  const [form, setForm] = useState(() => item ? { ...item } : {
+    ...baseDefaults,
     width_mm: 1200,
     height_mm: 1200,
     leaf_system: 'PRIME_WINDOW_42x66',
-    application: 'JANELA',
-    leaf_count: 2,
     glass_description: '04mm FLOAT INCOLOR',
   })
-  const set = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.type === 'number' ? Number(event.target.value) : event.target.value }))
+  const [validation, setValidation] = useState('')
+
+  const set = (key) => (event) => {
+    const target = event.target
+    let value = target.type === 'checkbox' ? target.checked : target.value
+    if (target.type === 'number' || key === 'leaf_count' || key === 'quantity') value = Number(value)
+    setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
   const submit = (event) => {
     event.preventDefault()
-    onSave({ ...baseDefaults, ...form, id: crypto.randomUUID() })
+    if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
+    if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
+    setValidation('')
+    onSave({ ...form, id: item?.id || crypto.randomUUID() })
   }
-  return <div className="modal-backdrop" onMouseDown={onClose}><form className="modal" onSubmit={submit} onMouseDown={(e) => e.stopPropagation()}><div className="modal-head"><div><strong>Inserir Modelo Correr</strong><span>Configuração inicial CR</span></div><button type="button" onClick={onClose}>×</button></div><div className="modal-grid"><label>Largura (mm)<input type="number" value={form.width_mm} onChange={set('width_mm')} /></label><label>Altura (mm)<input type="number" value={form.height_mm} onChange={set('height_mm')} /></label><label>Tipo de folha<select value={form.leaf_system} onChange={set('leaf_system')}><option value="PRIME_WINDOW_42x66">Prime Janela 42x66</option><option value="PRIME_DOOR_42x88">Prime Porta 42x88</option><option value="DESIGN_DOOR_60x111">Design 60x111</option></select></label><label>Aplicação<select value={form.application} onChange={set('application')}><option>JANELA</option><option>PORTA</option></select></label><label>Nº de folhas<select value={form.leaf_count} onChange={set('leaf_count')}><option value={2}>2</option><option value={3}>3</option><option value={4}>4</option><option value={6}>6</option></select></label><label>Vidro<select value={form.glass_description} onChange={set('glass_description')}><option>04mm FLOAT INCOLOR</option><option>05mm FLOAT FUMÊ</option></select></label></div><div className="modal-actions"><button type="button" className="secondary" onClick={onClose}>Cancelar</button><button className="primary" type="submit">Adicionar e recalcular</button></div></form></div>
+
+  const shutterHeight = options?.shutter?.box_height_mm || 200
+
+  return (
+    <div className="modal-backdrop" onMouseDown={onClose}>
+      <form className="modal modal-large" onSubmit={submit} onMouseDown={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <div><strong>{item ? 'Editar Modelo Correr' : 'Inserir Modelo Correr'}</strong><span>Configuração técnica CR conectada à Engine</span></div>
+          <button type="button" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-scroll">
+          {validation && <div className="error-banner compact">⚠ {validation}</div>}
+
+          <FieldSection title="Medidas e sistema">
+            <label>Largura (mm)<input type="number" min="1" value={form.width_mm} onChange={set('width_mm')} /></label>
+            <label>Altura (mm)<input type="number" min="1" value={form.height_mm} onChange={set('height_mm')} /></label>
+            <label>Quantidade<input type="number" min="1" value={form.quantity} onChange={set('quantity')} /></label>
+            <label>Tipo de folha<select value={form.leaf_system} onChange={set('leaf_system')}>{options.leaf_systems.map((row) => <option key={row.value} value={row.value}>{row.label}</option>)}</select></label>
+            <label>Aplicação<select value={form.application} onChange={set('application')}>{options.applications.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Nº de folhas<select value={form.leaf_count} onChange={set('leaf_count')}>{options.leaf_counts.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+          </FieldSection>
+
+          <FieldSection title="Vidro e complementos">
+            <label className="span-2">Vidro<select value={form.glass_description} onChange={set('glass_description')}>{options.glasses.map((glass) => <option key={`${glass.code || ''}-${glass.description}`} value={glass.description}>{glass.description}{glass.price != null ? ` · ${money(glass.price)}/m²` : ''}</option>)}</select></label>
+            <label className="toggle-field"><span>Tela mosquiteira</span><input type="checkbox" checked={form.screen_enabled} onChange={set('screen_enabled')} /></label>
+            <label className="toggle-field"><span>Persiana</span><input type="checkbox" checked={form.shutter_enabled} onChange={set('shutter_enabled')} /></label>
+            {form.shutter_enabled && <label>Caixa da persiana<input value={`${number(shutterHeight, 0)} mm`} readOnly /></label>}
+            {form.shutter_enabled && <div className="info-note">A caixa de {number(shutterHeight, 0)} mm já altera a geometria do cálculo. O kit completo da persiana ainda está marcado como migração pendente do Excel.</div>}
+          </FieldSection>
+
+          <FieldSection title="Fechamento e ferragens">
+            <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Cremona<select value={form.cremona_base} onChange={set('cremona_base')}>{options.cremonas.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Roldanas<select value={form.roller_description} onChange={set('roller_description')}>{options.rollers.map((value) => <option key={value}>{value}</option>)}</select></label>
+          </FieldSection>
+
+          <FieldSection title="Acabamentos">
+            <label>Acabamento interno<select value={form.internal_finish} onChange={set('internal_finish')}>{options.finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Acabamento externo<select value={form.external_finish} onChange={set('external_finish')}>{options.finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
+          </FieldSection>
+        </div>
+        <div className="modal-actions"><button type="button" className="secondary" onClick={onClose}>Cancelar</button><button className="primary" type="submit">{item ? 'Salvar e recalcular' : 'Adicionar e recalcular'}</button></div>
+      </form>
+    </div>
+  )
 }
 
 export default function App() {
@@ -290,9 +374,21 @@ export default function App() {
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [editingItem, setEditingItem] = useState(null)
+  const [options, setOptions] = useState(fallbackOptions)
 
   useEffect(() => { localStorage.setItem('software-esquadrias-items', JSON.stringify(items)) }, [items])
   useEffect(() => { localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote)) }, [quote])
+
+  const loadOptions = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/v1/engine/cr/options`)
+      if (!response.ok) throw new Error('Falha ao carregar opções')
+      setOptions(await response.json())
+    } catch {
+      setOptions(fallbackOptions)
+    }
+  }
 
   const calculate = async (nextItems = items) => {
     if (!nextItems.length) { setData(null); return }
@@ -302,7 +398,10 @@ export default function App() {
       const response = await fetch(`${API_URL}/api/v1/purchase-plans/calculate`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       })
-      if (!response.ok) throw new Error(`API respondeu ${response.status}`)
+      if (!response.ok) {
+        const body = await response.json().catch(() => null)
+        throw new Error(body?.detail || `API respondeu ${response.status}`)
+      }
       const result = await response.json()
       setData(result); setApiOnline(true)
     } catch (err) {
@@ -310,17 +409,21 @@ export default function App() {
     } finally { setLoading(false) }
   }
 
-  useEffect(() => { calculate(initialItems) }, [])
+  useEffect(() => { loadOptions(); calculate(initialItems) }, [])
 
   const removeItem = (id) => {
     const next = items.filter((item) => item.id !== id)
     setItems(next); calculate(next)
   }
 
-  const addItem = (item) => {
-    const next = [...items, item]
-    setItems(next); setModalOpen(false); calculate(next)
+  const saveItem = (item) => {
+    const exists = items.some((current) => current.id === item.id)
+    const next = exists ? items.map((current) => current.id === item.id ? item : current) : [...items, item]
+    setItems(next); setModalOpen(false); setEditingItem(null); calculate(next)
   }
+
+  const openNew = () => { setEditingItem(null); setModalOpen(true) }
+  const openEdit = (item) => { setEditingItem(item); setModalOpen(true) }
 
   const resetBaseline = () => {
     setItems(initialItems); calculate(initialItems)
@@ -337,14 +440,14 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAdd={() => setModalOpen(true)} />
+              <ItemsTable items={items} onRemove={removeItem} onAdd={openNew} onEdit={openEdit} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />
           </div>
         </main>
       </div>
-      {modalOpen && <AddItemModal onClose={() => setModalOpen(false)} onSave={addItem} />}
+      {modalOpen && <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />}
     </div>
   )
 }
