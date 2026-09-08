@@ -1,4 +1,19 @@
-# Software Esquadrias — CR Engine / Tester v0.3.1
+# Software Esquadrias — CR Engine / Tester v0.4.0
+
+## Fechamento CR — Fase 1
+
+A Engine agora calcula grades de travessas nas folhas, painéis de vidro
+dinâmicos, bandeiras inferior/superior, reforço estrutural e cotas livres por
+vão. Esses componentes seguem até a BOM, custos, compra de barras e plano de
+corte. A premissa formal de perda de serra é `kerf_mm = 0`.
+
+O recorte simples anterior permanece num caminho de regressão compatível e o
+golden continua em R$ 8.317,53971. A suíte atual possui 47 testes da Engine;
+somada aos 5 testes da API, são 52 testes aprovados.
+
+O kit completo de persiana e as combinações finais de tela pertencem à Fase 2.
+O marcador textual legado `CR` ainda depende de definição física para ser
+importado; cotas numéricas explícitas já estão implementadas.
 
 ## Principal mudança
 
@@ -35,13 +50,16 @@ Isso replica corretamente a coluna `I` da tabela `ORCS`.
 
 A versão usa **First Fit Decreasing (FFD)** com barra padrão de 5900 mm, reproduzindo o comportamento observado no Excel.
 
-No pedido real enviado, 18/19 linhas do `PED_P` foram reproduzidas exatamente.
+No pedido histórico consolidado, 18/19 linhas do `PED_P` foram reproduzidas exatamente.
 
-A única divergência é um erro do Excel:
+A divergência observada nessa consolidação entre itens é um erro do Excel:
 
 `DE5013` possui 4 cortes de 1902 mm e precisa de 2 barras, mas o Excel registra 1.
 
-## Teste real enviado
+Esse alerta não se aplica ao caso unitário DESIGN 2000 × 2000 de 4 folhas:
+nesse caso, o Excel e a Engine indicam corretamente 2 barras.
+
+## Teste histórico enviado
 
 O pedido de teste possui 4 itens CR.
 

@@ -4,6 +4,28 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
+class CustomDimensionRequest(BaseModel):
+    axis: Literal["COLUMNS", "ROWS"]
+    index: int = Field(ge=0)
+    clear_span_mm: float = Field(gt=0)
+
+
+class LeafGridRequest(BaseModel):
+    horizontal_transoms: int = Field(default=0, ge=0)
+    vertical_transoms: int = Field(default=0, ge=0)
+    custom_dimensions: list[CustomDimensionRequest] = Field(default_factory=list)
+
+
+class FixedPanelRequest(BaseModel):
+    height_mm: float = Field(gt=0)
+    horizontal_transoms: int = Field(default=0, ge=0)
+    vertical_transoms: int = Field(default=0, ge=0)
+
+
+class StructuralReinforcementRequest(BaseModel):
+    material_code: Literal["ALUM10238", "ALUM15338"]
+
+
 class CRItemRequest(BaseModel):
     width_mm: float = Field(gt=0)
     height_mm: float = Field(gt=0)
@@ -23,7 +45,12 @@ class CRItemRequest(BaseModel):
     external_finish: str = "SEM ACABAMENTO"
     screen_enabled: bool = False
     shutter_enabled: bool = False
+    leaf_grid: LeafGridRequest = Field(default_factory=LeafGridRequest)
+    bottom_fixed_panel: FixedPanelRequest | None = None
+    top_fixed_panel: FixedPanelRequest | None = None
+    structural_reinforcement: StructuralReinforcementRequest | None = None
 
 
 class PurchasePlanRequest(BaseModel):
     items: list[CRItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)

@@ -1,7 +1,9 @@
 from .models import (
     LeafSystem, ApplicationType, SlidingConfiguration, CalculationResult,
     BomComponent, EngineeringWarning, CutPiece, BarAllocation,
-    PurchaseLine, OrderPurchasePlan
+    PurchaseLine, OrderPurchasePlan, GridAxis, CustomDimension, LeafGrid,
+    FixedPanelPosition, FixedPanelConfiguration, StructuralReinforcement,
+    GridOpening, TransomOrientation, Transom, FixedPanelGeometry, GlassPanel,
 )
 from .sliding import calculate_sliding
 from .purchase import build_order_purchase_plan
@@ -13,6 +15,9 @@ from .catalog import (
 __all__ = [
     "LeafSystem", "ApplicationType", "SlidingConfiguration",
     "CalculationResult", "BomComponent", "EngineeringWarning",
+    "GridAxis", "CustomDimension", "LeafGrid", "FixedPanelPosition",
+    "FixedPanelConfiguration", "StructuralReinforcement", "GridOpening",
+    "TransomOrientation", "Transom", "FixedPanelGeometry", "GlassPanel",
     "CutPiece", "BarAllocation", "PurchaseLine", "OrderPurchasePlan",
     "calculate_sliding", "build_order_purchase_plan",
     "GLASSES", "CLOSURE_OPTIONS", "CREMONA_OPTIONS", "ROLLER_OPTIONS",

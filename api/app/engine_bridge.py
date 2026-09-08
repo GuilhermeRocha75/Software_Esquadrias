@@ -18,16 +18,38 @@ if str(LEGACY_ENGINE_SRC) not in sys.path:
 
 from esquadrias_engine import (  # noqa: E402
     ApplicationType,
+    CustomDimension,
+    FixedPanelConfiguration,
+    GridAxis,
+    LeafGrid,
     LeafSystem,
     SlidingConfiguration,
+    StructuralReinforcement,
     build_order_purchase_plan,
     calculate_sliding,
+    GLASSES,
+    CLOSURE_OPTIONS,
+    CREMONA_OPTIONS,
+    ROLLER_OPTIONS,
+    FINISH_OPTIONS,
 )
+from esquadrias_engine.catalog import PARAMETERS  # noqa: E402
 
 __all__ = [
     "ApplicationType",
+    "CustomDimension",
+    "FixedPanelConfiguration",
+    "GridAxis",
+    "LeafGrid",
     "LeafSystem",
     "SlidingConfiguration",
+    "StructuralReinforcement",
     "calculate_sliding",
     "build_order_purchase_plan",
+    "GLASSES",
+    "CLOSURE_OPTIONS",
+    "CREMONA_OPTIONS",
+    "ROLLER_OPTIONS",
+    "FINISH_OPTIONS",
+    "PARAMETERS",
 ]

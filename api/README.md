@@ -21,6 +21,10 @@ A resposta do cálculo CR já inclui:
 - custo técnico do pedido;
 - alertas;
 - versão da Engine.
+- vãos e travessas estruturados;
+- bandeiras inferior/superior;
+- lista dinâmica de painéis de vidro;
+- premissa de perda de serra (`kerf_mm`, padrão 0).
 
 ## Stack inicial
 
@@ -52,6 +56,6 @@ A API **não deve conter fórmulas de engenharia**. Ela valida entrada, chama a 
 
 ### Ponte temporária
 
-A API v0.1 ainda importa a Engine a partir da versão validada v0.3.1 armazenada no histórico de `engine/`.
+A API v0.1 ainda importa a Engine CR v0.4.0 a partir do diretório histórico v0.3.1 em `engine/`.
 
 Isso é temporário. A próxima refatoração deve promover a Engine validada para um caminho estável (`engine/current` ou pacote equivalente), sem apagar o histórico das versões anteriores.

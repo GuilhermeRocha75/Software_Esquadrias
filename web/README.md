@@ -1,38 +1,63 @@
 # Web — Software Esquadrias
 
-Esta pasta será a interface web SaaS do projeto.
+Primeira interface web funcional do projeto, construída em React + Vite e conectada à API FastAPI.
 
-## Objetivo
+## O que já funciona
 
-Substituir gradualmente o Tester local por uma aplicação web multiempresa.
+- tela principal de Novo Cliente / Orçamento;
+- dados do cliente e da obra;
+- lista de itens do orçamento;
+- botão para inserir um modelo Correr;
+- cálculo do pedido pela API;
+- resumo com custo técnico, compra de barras, materiais não lineares e compra estimada;
+- margem editável e preço de venda sugerido;
+- indicadores de itens, alertas, aproveitamento e quantidade de barras;
+- abas Custo por Grupo, BOM / Consumo, Compra de Barras, Plano de Corte e Alertas;
+- persistência local do orçamento e itens via `localStorage` enquanto o banco ainda não está conectado.
 
-## Primeiras telas planejadas
+## Executar localmente
 
-1. Login
-2. Dashboard
-3. Clientes
-4. Obras
-5. Orçamentos
-6. Configurador CR — Correr
-7. Resumo de custos
-8. Plano de compra / corte
+### 1. API
 
-## Referência de fluxo do Excel legado
+Na raiz do repositório:
 
-A futura tela de orçamento deve acomodar as ações hoje existentes no painel do Excel:
+```powershell
+.\.venv\Scripts\python.exe -m uvicorn api.app.main:app --reload
+```
 
-- Novo Cliente / Orçamento
-- Buscar Cliente / Orçamento
-- Visualizar Orçamentos
-- Visualizar Orçamento Resumido
-- Inserir modelo Correr
-- Inserir modelo Maxim-Ar
-- Inserir modelo Giro
-- Inserir modelo Fixo
-- Inserir modelo Pivotante
-- Inserir Grade
-- Inserir item manualmente
-- Substituir valor manualmente
-- Definir margem
+API: `http://127.0.0.1:8000`
 
-Essas funções serão implementadas por etapas, sem acoplar a interface às regras da Engine.
+### 2. Web
+
+Em outro PowerShell:
+
+```powershell
+cd web
+npm install
+npm run dev
+```
+
+Web: `http://127.0.0.1:5173`
+
+A API v0.1.2 já permite CORS para `127.0.0.1:5173` e `localhost:5173`.
+
+## Arquitetura
+
+A interface não contém fórmulas de engenharia. Ela envia a configuração para a API e apresenta o retorno da Engine.
+
+Fluxo atual:
+
+`React/Vite → FastAPI → Engine CR → plano de compra`
+
+## Próximas funções planejadas
+
+- Login e multiempresa;
+- banco PostgreSQL;
+- clientes e obras persistidos;
+- salvar e versionar orçamentos;
+- editar itens existentes;
+- modelos Maxim-Ar, Giro, Fixo, Pivotante e Grade;
+- item manual;
+- substituição manual de valor;
+- PDFs de orçamento;
+- permissões por usuário.
