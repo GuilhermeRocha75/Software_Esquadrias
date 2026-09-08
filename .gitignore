@@ -19,3 +19,4 @@ Thumbs.db
 # Local exports
 test_outputs/
 *.log
+*.pyc
