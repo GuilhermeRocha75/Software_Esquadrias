@@ -112,7 +112,7 @@ def fmt_mm(value: float) -> str:
 class EsquadriasTester(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Software Esquadrias — Tester CR v0.3.1.1")
+        self.title("Software Esquadrias — Tester CR v0.4.0")
         self.geometry("1600x930")
         self.minsize(1280, 780)
 
@@ -142,7 +142,7 @@ class EsquadriasTester(tk.Tk):
         header = ttk.Frame(self, padding=(15, 10, 15, 5))
         header.grid(row=0, column=0, sticky="ew")
         ttk.Label(
-            header, text="Software Esquadrias — Tester CR v0.3.1",
+            header, text="Software Esquadrias — Tester CR v0.4",
             style="Title.TLabel"
         ).pack(anchor="w")
         ttk.Label(
@@ -686,7 +686,7 @@ class EsquadriasTester(tk.Tk):
         if not target:
             return
         payload = {
-            "engine_version": "CR_ENGINE_0.3.0",
+            "engine_version": result.calculation_version,
             "items": [
                 {
                     "input": {**asdict(cfg), "leaf_system": cfg.leaf_system.value, "application": cfg.application.value},

@@ -23,7 +23,7 @@ def normalize(text: str) -> str:
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     return " ".join(text.upper().strip().split())
 
-# Materiais utilizados no recorte CR v0.2.
+# Materiais técnicos utilizados pela Engine CR v0.4.
 MATERIALS = {
     # Perfis principais
     "PR8852": Material("PR8852", "MARCO 2 TRILHOS COM ABA", 43.57, "m", 52),
@@ -41,6 +41,11 @@ MATERIALS = {
     "AL17": Material("AL17", "ARREMATE (TRILHO DESIGN)", 8.45, "m"),
     "AL18": Material("AL18", "PERFIL Z (TRILHO DESIGN)", 15.25, "m"),
     "AL19": Material("AL19", "TRILHO DESIGN", 5.10, "m"),
+    "PR4263": Material("PR4263", "TRAVESSA (USADA COMO TRAVESSA)", 25.44, "m", 14, 28),
+    "DE6072": Material("DE6072", "TRAVESSA / FOLHA JANELA AB. EXT.", 39.14, "m", 18, 36),
+    "DE6058": Material("DE6058", "MARCO ALTO DE ABRIR", 38.45, "m", 58, 40),
+    "ALUM10238": Material("ALUM10238", "PERFIL EXTRUTURAL ALUMINIO 102X50MM", 46.00, "m"),
+    "ALUM15338": Material("ALUM15338", "PERFIL EXTRUTURAL ALUMINIO 138X50MM", 46.00, "m"),
 
     # Baguetes
     "BA2516": Material("BA2516", "BAGUETE (Vidro 4/6mm - 12/18mm)", 10.72, "m"),
@@ -59,6 +64,9 @@ MATERIALS = {
     "RAG - PR4288": Material("RAG - PR4288", "REFORÇO - FOLHA PORTA DE CORRER", 13.00, "m"),
     "RAG - PR4266": Material("RAG - PR4266", "REFORÇO - FOLHA JANELA DE CORRER", 7.00, "m"),
     "RAG - DE60111": Material("RAG - DE60111", "REFORÇO - FOLHA PORTA DE CORRER (D)", 25.00, "m"),
+    "RAG - PR4263": Material("RAG - PR4263", "REFORÇO - TRAVESSA", 7.00, "m"),
+    "RAG - DE6072": Material("RAG - DE6072", "REFORÇO - TRAVESSA / FOLHA JANELA", 7.00, "m"),
+    "RAG - DE6058": Material("RAG - DE6058", "REFORÇO - MARCO ALTO DE ABRIR", 8.00, "m"),
 
     # Acabamentos
     "AC7012": Material("AC7012", "GUARNIÇÃO DE 70MM", 14.63, "m"),
@@ -101,7 +109,12 @@ PARAMETERS = {
     "internal_finish_extra_mm": 140.0,
     "external_finish_extra_mm": 60.0,
     "shutter_box_height_mm": 200.0,
+    "structural_reinforcement_panel_clearance_mm": 50.0,
+    "reinforcement_fastener_rate_per_meter": 4.0,
+    "kerf_mm": 0.0,
 }
+
+STRUCTURAL_REINFORCEMENT_CODES = {"ALUM10238", "ALUM15338"}
 
 GLASS_ROWS = [{'description': '04mm FLOAT VERDE', 'code': '4FV', 'price': 110.0, 'thickness_mm': 4}, {'description': '04mm FLOAT FUMÊ', 'code': '4FF', 'price': 110.0, 'thickness_mm': 4}, {'description': '04mm FLOAT INCOLOR', 'code': '4FI', 'price': 75.0, 'thickness_mm': 4}, {'description': '04mm MINI BOREAL', 'code': '4MB', 'price': 115.0, 'thickness_mm': 4}, {'description': '04mm CANELADO', 'code': '4C', 'price': 180.0, 'thickness_mm': 4}, {'description': '04mm SEM VIDRO', 'code': '0', 'price': 0.0, 'thickness_mm': 4}, {'description': '05mm FLOAT VERDE', 'code': '5FV', 'price': 120.0, 'thickness_mm': 5}, {'description': '05mm FLOAT FUMÊ', 'code': '5FF', 'price': 120.0, 'thickness_mm': 5}, {'description': '05mm TEMPERADO INCOLOR', 'code': '5TI', 'price': 110.0, 'thickness_mm': 5}, {'description': '05mm FLOAT INCOLOR', 'code': '5FI', 'price': 100.0, 'thickness_mm': 5}, {'description': '10mm TEMPERADO/LAMINADO INCOLOR', 'code': '10TLI', 'price': 450.0, 'thickness_mm': 10}, {'description': '06mm FLOAT FUMÊ', 'code': '6FF', 'price': 155.0, 'thickness_mm': 6}, {'description': '06mm FLOAT INCOLOR', 'code': '6FI', 'price': 115.0, 'thickness_mm': 6}, {'description': '06mm LAMINADO MINIBOREAL', 'code': '6LMB', 'price': 335.0, 'thickness_mm': 6}, {'description': '06mm LAMINADO INCOLOR', 'code': '6LI', 'price': 200.0, 'thickness_mm': 6}, {'description': '06mm LAMINADO FUMÊ', 'code': '6LF', 'price': 265.0, 'thickness_mm': 6}, {'description': '06mm LAMINADO OPACO', 'code': '6LL', 'price': 332.0, 'thickness_mm': 6}, {'description': '06mm LAMINADO REFLETIVO PRATA', 'code': '6LRP', 'price': 260.0, 'thickness_mm': 6}, {'description': '06mm TEMPERADO FUMÊ', 'code': '6TF', 'price': 150.0, 'thickness_mm': 6}, {'description': '06mm TEMPERADO HABITAT REFLETIVO PRATA', 'code': '6THRP', 'price': 260.0, 'thickness_mm': 6}, {'description': '06mm TEMPERADO INCOLOR', 'code': '6TI', 'price': 125.0, 'thickness_mm': 6}, {'description': '06mm TEMPERADO REFLETIVO CHAMPANHE - VB', 'code': '6TRC', 'price': 290.0, 'thickness_mm': 6}, {'description': '06mm TEMPERADO VERDE VB', 'code': '6mmv', 'price': 150.0, 'thickness_mm': 6}, {'description': '08mm FLOAT FUMÊ', 'code': '8FF', 'price': 240.0, 'thickness_mm': 8}, {'description': '08mm FLOAT INCOLOR', 'code': '8FI', 'price': 155.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO/LAMINADO INCOLOR', 'code': '8LT4+4', 'price': 380.0, 'thickness_mm': 8}, {'description': '08MM LAMINADO HABITAT INCOLOR', 'code': '8MML', 'price': 280.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO INCOLOR', 'code': '8LI', 'price': 245.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO FUMÊ', 'code': '8LF', 'price': 345.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO LEITOSO OPACO VB', 'code': '8LL', 'price': 330.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO MINI BOREAL', 'code': '8LMB', 'price': 400.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO REFLETIVO CHAMPANHE -VB', 'code': '8LRC', 'price': 330.0, 'thickness_mm': 8}, {'description': '08mm LAMINADO REFLETIVO PRATA', 'code': '8LRP', 'price': 300.0, 'thickness_mm': 8}, {'description': '08mm MINI BOREAL', 'code': '8MB', 'price': 270.0, 'thickness_mm': 8}, {'description': '08mm MINI BOREAL TEMPERADO', 'code': '8mt', 'price': 297.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO ACIDATO', 'code': '8mmta', 'price': 350.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO FUMÊ', 'code': '8TF', 'price': 185.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO INCOLOR', 'code': '8TI', 'price': 145.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO PONTILHADO VB', 'code': '12TP', 'price': 280.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO REFLETICO CHAMPANHE - VB', 'code': '8TRC', 'price': 325.0, 'thickness_mm': 8}, {'description': '08mm TEMPERADO REFLETIVO PRATA ', 'code': '8TRP', 'price': 325.0, 'thickness_mm': 8}, {'description': '10mm FLOAT INCOLOR', 'code': '10FI', 'price': 180.0, 'thickness_mm': 10}, {'description': '10mm LAMINADO INCOLOR', 'code': '10LI', 'price': 270.0, 'thickness_mm': 10}, {'description': '10mm LAMINADO REFLETIVO CHAMPANHE VB', 'code': '10LRC', 'price': 420.0, 'thickness_mm': 10}, {'description': '10mm TEMPERADO INCOLOR', 'code': '10TI', 'price': 400.0, 'thickness_mm': 10}, {'description': '12mm TEMPERADO INCOLOR', 'code': '12TI', 'price': 280.0, 'thickness_mm': 12}, {'description': '14mm DUPLO FLOAT INCOLOR (4/10/4)', 'code': '14FI(4/10/4)', 'price': 230.0, 'thickness_mm': 14}, {'description': '20mm DUPLO FLOAT INCOLOR (4/10/6)', 'code': '20FI(4/10/6)', 'price': 270.0, 'thickness_mm': 20}, {'description': '20mm DUPLO FLOAT INCOLOR/LAMINADO INCOLOR (4/10/6)', 'code': '20FILI(4/10/6L)', 'price': 355.0, 'thickness_mm': 20}, {'description': '20mm DUPLO FLOAT INCOLOR/MINIBOREAL (6/10/4)', 'code': '20FIMB(6/10/4MB)', 'price': 270.0, 'thickness_mm': 20}, {'description': '20mm DUPLO FLOAT INCOLOR/TEMPERADO INCOLOR (4/10/6)', 'code': '20FITI(4/10/6L)', 'price': 250.0, 'thickness_mm': 20}, {'description': '20mm DUPLO LAMINADO INCOLOR/MINIBOREAL (6/10/4)', 'code': '20LIMB(6/10/4MB)', 'price': 395.0, 'thickness_mm': 20}, {'description': '24mm DUPLO TEMPERADO INCOLOR (6/10/8)', 'code': '24TI(6/10/8)', 'price': 350.0, 'thickness_mm': 24}, {'description': '20mm DUPLO TEMPERADO INCOLOR (4/10/6)', 'code': '20TI(4/10/6)', 'price': 310.0, 'thickness_mm': 20}, {'description': '22mm DUPLO TEMPERADO INCOLOR (6/10/6)', 'code': '22TI(6/10/6)', 'price': 330.0, 'thickness_mm': 22}, {'description': '22mm DUPLO FLOAT INCOLOR (6/10/6)', 'code': '22FI(6/10/6)', 'price': 310.0, 'thickness_mm': 22}, {'description': '22mm DUPLO FLOAT INCOLOR/LAMINADO INCOLOR (6/10/6)', 'code': '22FILI(6/10/6)', 'price': 395.0, 'thickness_mm': 22}, {'description': '22mm DUPLO LAMINADO INCOLOR (6/10/6)', 'code': '22LL(6/10/6)', 'price': 480.0, 'thickness_mm': 22}, {'description': '22mm DUPLO TEMPERADO INCOLOR/LAMINADO INCOLOR (6/10/6)', 'code': '22TTL(6/10/6)', 'price': 405.0, 'thickness_mm': 22}, {'description': '24mm DUPLO TEMPERADO INCOLOR/LAMINADO INCOLOR (6/10/8)', 'code': '22TTL(6/10/8)', 'price': 450.0, 'thickness_mm': 24}, {'description': '26mm DUPLO TEMPERADO INCOLOR (8/10/8)', 'code': '26TI6/10/8)', 'price': 370.0, 'thickness_mm': 26}, {'description': '0', 'code': '0', 'price': 0.0, 'thickness_mm': None}]
 GLASSES = {
@@ -161,6 +174,7 @@ BAR_STOCK_CODES = {
     "PR4266", "PR4288", "DE60111",
     "PR4536", "PR4550", "DE4109", "DE5013",
     "AC4222", "AL16", "AL17", "AL18", "AL19",
+    "PR4263", "DE6072", "DE6058", "ALUM10238", "ALUM15338",
 
     # Baguetes
     "BA2516", "BA1016", "BA1216", "BA3218",
@@ -169,6 +183,7 @@ BAR_STOCK_CODES = {
     # Reforços
     "RAG - PR8852", "RAG - PR13852", "RAG - DE16652",
     "RAG - PR4288", "RAG - PR4266", "RAG - DE60111",
+    "RAG - PR4263", "RAG - DE6072", "RAG - DE6058",
 
     # Acabamentos
     "AC7012", "AC3004",

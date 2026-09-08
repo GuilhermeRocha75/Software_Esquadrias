@@ -6,8 +6,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .engine_bridge import (
     ApplicationType,
+    CustomDimension,
+    FixedPanelConfiguration,
+    GridAxis,
+    LeafGrid,
     LeafSystem,
     SlidingConfiguration,
+    StructuralReinforcement,
     build_order_purchase_plan,
     calculate_sliding,
     GLASSES,
@@ -53,6 +58,30 @@ def _to_config(item: CRItemRequest) -> SlidingConfiguration:
         external_finish=item.external_finish,
         screen_enabled=item.screen_enabled,
         shutter_enabled=item.shutter_enabled,
+        leaf_grid=LeafGrid(
+            horizontal_transoms=item.leaf_grid.horizontal_transoms,
+            vertical_transoms=item.leaf_grid.vertical_transoms,
+            custom_dimensions=tuple(
+                CustomDimension(
+                    axis=GridAxis(dimension.axis),
+                    index=dimension.index,
+                    clear_span_mm=dimension.clear_span_mm,
+                )
+                for dimension in item.leaf_grid.custom_dimensions
+            ),
+        ),
+        bottom_fixed_panel=(
+            FixedPanelConfiguration(**item.bottom_fixed_panel.model_dump())
+            if item.bottom_fixed_panel is not None else None
+        ),
+        top_fixed_panel=(
+            FixedPanelConfiguration(**item.top_fixed_panel.model_dump())
+            if item.top_fixed_panel is not None else None
+        ),
+        structural_reinforcement=(
+            StructuralReinforcement(item.structural_reinforcement.material_code)
+            if item.structural_reinforcement is not None else None
+        ),
     )
 
 
@@ -62,6 +91,10 @@ def _serialize_result(cfg: SlidingConfiguration, result):
         "model_description": result.model_description,
         "quantity": cfg.quantity,
         "geometry": result.geometry,
+        "leaf_openings": [asdict(opening) for opening in result.leaf_openings],
+        "transoms": [asdict(transom) for transom in result.transoms],
+        "fixed_panels": [asdict(panel) for panel in result.fixed_panels],
+        "glass_panels": [asdict(panel) for panel in result.glass_panels],
         "bom": [asdict(component) for component in result.unit_bom],
         "cost_by_group": result.cost_breakdown,
         "unit_technical_cost": result.unit_cost,
@@ -86,7 +119,7 @@ def health():
     return {
         "status": "ok",
         "api_version": "0.1.3",
-        "engine": "CR_ENGINE_0.3.x",
+        "engine": "CR_ENGINE_0.4.0",
     }
 
 
@@ -118,6 +151,22 @@ def cr_options():
         "rollers": list(ROLLER_OPTIONS),
         "finishes": list(FINISH_OPTIONS.keys()),
         "screen": {"supported": True},
+        "leaf_grid": {
+            "supported": True,
+            "transom_profiles": {"PRIME": "PR4263", "DESIGN": "DE6072"},
+            "custom_dimensions": "clear opening spans indexed from zero",
+        },
+        "fixed_panels": {
+            "positions": ["BOTTOM", "TOP"],
+            "frame_profile": "DE6058",
+            "transom_profile": "DE6072",
+        },
+        "structural_reinforcement": {
+            "materials": ["ALUM10238", "ALUM15338"],
+            "panel_clearance_mm": PARAMETERS[
+                "structural_reinforcement_panel_clearance_mm"
+            ],
+        },
         "shutter": {
             "supported": "partial",
             "box_height_mm": PARAMETERS["shutter_box_height_mm"],
@@ -148,7 +197,7 @@ def calculate_purchase_plan(payload: PurchasePlanRequest):
             order_items.append((cfg, result))
             serialized_items.append(_serialize_result(cfg, result))
 
-        plan = build_order_purchase_plan(order_items)
+        plan = build_order_purchase_plan(order_items, kerf_mm=payload.kerf_mm)
         return {
             "items": serialized_items,
             "purchase_plan": {
@@ -158,6 +207,7 @@ def calculate_purchase_plan(payload: PurchasePlanRequest):
                 "exact_nonbar_cost": plan.exact_nonbar_cost,
                 "procurement_total_estimate": plan.procurement_total_estimate,
                 "purchase_increment_vs_consumption": plan.purchase_increment_vs_consumption,
+                "kerf_mm": plan.kerf_mm,
                 "lines": [asdict(line) for line in plan.lines],
                 "warnings": [asdict(warning) for warning in plan.warnings],
             },

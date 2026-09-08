@@ -36,5 +36,7 @@ Informação de compatibilidade. Hoje PRIME e DESIGN possuem 8 mm nesse parâmet
 portanto o aviso não altera o resultado numérico atual.
 
 ### LEGACY-PEDP-DE5013
-Inconsistência real do legado. Quatro cortes de 1902 mm somam 7608 mm e não cabem
-em uma barra de 5900 mm. A Engine mantém 2 barras e sinaliza a divergência.
+Inconsistência real do legado no pedido histórico consolidado entre itens.
+Quatro cortes de 1902 mm somam 7608 mm e não cabem em uma barra de 5900 mm.
+A Engine mantém 2 barras e sinaliza a divergência somente nessa assinatura.
+No caso unitário DESIGN 2000 × 2000 de 4 folhas, o Excel também retorna 2 barras.

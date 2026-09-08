@@ -26,6 +26,9 @@ Entradas principais:
 - acabamento interno/externo;
 - tela;
 - persiana.
+- grade de travessas e cotas numéricas por vão;
+- bandeira inferior/superior;
+- reforço estrutural das bandeiras.
 
 Saídas:
 - geometria;
@@ -37,12 +40,18 @@ Saídas:
 - sobra;
 - plano de corte;
 - alertas.
+- vãos estruturados, travessas, bandeiras e lista dinâmica de vidros.
 
 ## Validações já concluídas
 
 ### Composição técnica
 
 Vidros, ferragens, borrachas, escovas, telas, acessórios e demais grupos foram comparados com o Excel nos testes realizados e os valores ficaram equivalentes no recorte validado.
+
+A Engine CR v0.4.0 acrescenta travessas PRIME/DESIGN, vidros subdivididos,
+bandeiras inferior/superior, reforço estrutural e cotas numéricas explícitas.
+A regressão atual possui 47 testes da Engine e 5 da API, além da varredura de
+192 configurações do recorte anterior. O golden permanece R$ 8.317,53971.
 
 ### Perfis e compra
 
@@ -63,7 +72,10 @@ Pedido real de referência validado:
 
 ### Inconsistência do legado
 
-`DE5013`: 4 cortes × 1902 mm = 7608 mm. O Excel registra 1 barra, porém são necessárias 2 barras de 5900 mm. O novo sistema deve usar 2.
+`DE5013`: na consolidação histórica entre dois itens, 4 cortes × 1902 mm =
+7608 mm. O Excel registra 1 barra, porém são necessárias 2 barras de 5900 mm.
+O novo sistema deve usar 2. Um único item DESIGN 2000 × 2000 de 4 folhas não
+reproduz o erro: nesse controle, o Excel também indica 2 barras.
 
 ## Interface legado — ações futuras
 
@@ -120,9 +132,8 @@ A plataforma terá um papel superior `PLATFORM_ADMIN` para administrar empresas,
 
 ## Próximos passos
 
-1. API FastAPI v0.1 usando a Engine existente;
-2. promover Engine validada para caminho estável;
-3. autenticação e multiempresa;
-4. clientes/obras/orçamentos;
-5. primeira interface web;
-6. novos módulos técnicos.
+1. concluir a Fase 2 do CR: persiana completa e combinações finais de tela;
+2. decidir a importação do marcador legado `CR` com um desenho/caso físico;
+3. promover a Engine validada para caminho estável;
+4. seguir com infraestrutura SaaS em trilha separada;
+5. iniciar novas famílias somente após o gate técnico integral do CR.

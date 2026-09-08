@@ -1,21 +1,32 @@
 from __future__ import annotations
 
+import math
+
 from .models import (
-    LeafSystem, ApplicationType, SlidingConfiguration, CalculationResult, BomComponent, EngineeringWarning
+    LeafSystem, ApplicationType, SlidingConfiguration, CalculationResult,
+    BomComponent, EngineeringWarning, GridAxis, GridOpening, Transom,
+    TransomOrientation, FixedPanelPosition, FixedPanelGeometry, GlassPanel,
 )
 from .catalog import (
     MATERIALS, PARAMETERS, GLASSES, HARDWARE, FINISH_OPTIONS,
-    normalize
+    CLOSURE_OPTIONS, CREMONA_OPTIONS, ROLLER_OPTIONS,
+    STRUCTURAL_REINFORCEMENT_CODES, normalize
 )
+from .cr_geometry import make_openings, partition_axis, validate_count
 
 SUPPORTED_LEAF_COUNTS = {2, 3, 4, 6}
 
 
 def _linear_component(category: str, role: str, material_code: str, length_mm: float,
-                      qty_unit: float, order_qty: int) -> BomComponent:
+                      qty_unit: float, order_qty: int,
+                      source: str | None = None) -> BomComponent:
     material = MATERIALS[material_code]
-    length_mm = max(0.0, float(length_mm))
-    qty_unit = max(0.0, float(qty_unit))
+    length_mm = float(length_mm)
+    qty_unit = float(qty_unit)
+    if not math.isfinite(length_mm) or length_mm < 0:
+        raise ValueError(f"Comprimento inválido para {role}: {length_mm} mm.")
+    if not math.isfinite(qty_unit) or qty_unit < 0:
+        raise ValueError(f"Quantidade inválida para {role}: {qty_unit}.")
     cost = (length_mm / 1000.0) * qty_unit * material.unit_price
     return BomComponent(
         category=category,
@@ -31,12 +42,15 @@ def _linear_component(category: str, role: str, material_code: str, length_mm: f
         quantity_order=qty_unit * order_qty,
         unit_price=material.unit_price,
         cost_per_unit_product=round(cost, 6),
+        source=source,
     )
 
 
 def _unit_component(category: str, role: str, material, qty_unit: float,
-                    order_qty: int) -> BomComponent:
-    qty_unit = max(0.0, float(qty_unit))
+                    order_qty: int, source: str | None = None) -> BomComponent:
+    qty_unit = float(qty_unit)
+    if not math.isfinite(qty_unit) or qty_unit < 0:
+        raise ValueError(f"Quantidade inválida para {role}: {qty_unit}.")
     cost = qty_unit * material.unit_price
     return BomComponent(
         category=category,
@@ -52,14 +66,23 @@ def _unit_component(category: str, role: str, material, qty_unit: float,
         quantity_order=qty_unit * order_qty,
         unit_price=material.unit_price,
         cost_per_unit_product=round(cost, 6),
+        source=source,
     )
 
 
 def _area_component(category: str, role: str, material, width_mm: float,
-                    height_mm: float, qty_unit: float, order_qty: int) -> BomComponent:
-    width_mm = max(0.0, float(width_mm))
-    height_mm = max(0.0, float(height_mm))
-    qty_unit = max(0.0, float(qty_unit))
+                    height_mm: float, qty_unit: float, order_qty: int,
+                    source: str | None = None) -> BomComponent:
+    width_mm = float(width_mm)
+    height_mm = float(height_mm)
+    qty_unit = float(qty_unit)
+    if (
+        not math.isfinite(width_mm) or width_mm <= 0
+        or not math.isfinite(height_mm) or height_mm <= 0
+    ):
+        raise ValueError(f"Dimensões de área inválidas para {role}.")
+    if not math.isfinite(qty_unit) or qty_unit < 0:
+        raise ValueError(f"Quantidade inválida para {role}: {qty_unit}.")
     area_each = (width_mm / 1000.0) * (height_mm / 1000.0)
     cost = area_each * qty_unit * material.unit_price
     return BomComponent(
@@ -76,13 +99,24 @@ def _area_component(category: str, role: str, material, width_mm: float,
         quantity_order=qty_unit * order_qty,
         unit_price=material.unit_price,
         cost_per_unit_product=round(cost, 6),
+        source=source,
     )
 
 
 def _validate(cfg: SlidingConfiguration) -> None:
-    if cfg.width_mm <= 0 or cfg.height_mm <= 0:
-        raise ValueError("Largura e altura devem ser positivas.")
-    if cfg.quantity <= 0:
+    if (
+        not math.isfinite(float(cfg.width_mm))
+        or not math.isfinite(float(cfg.height_mm))
+        or cfg.width_mm <= 0
+        or cfg.height_mm <= 0
+    ):
+        raise ValueError("Largura e altura devem ser finitas e positivas.")
+    if (
+        isinstance(cfg.quantity, bool)
+        or not math.isfinite(float(cfg.quantity))
+        or float(cfg.quantity) != int(cfg.quantity)
+        or cfg.quantity <= 0
+    ):
         raise ValueError("Quantidade deve ser inteira e positiva.")
     if cfg.leaf_count not in SUPPORTED_LEAF_COUNTS:
         raise ValueError("Número de folhas suportado: 2, 3, 4 ou 6.")
@@ -92,6 +126,32 @@ def _validate(cfg: SlidingConfiguration) -> None:
         raise ValueError(f"Acabamento interno inválido: {cfg.internal_finish}")
     if normalize(cfg.external_finish) not in {normalize(x) for x in FINISH_OPTIONS}:
         raise ValueError(f"Acabamento externo inválido: {cfg.external_finish}")
+    if normalize(cfg.closure_mode) not in {normalize(x) for x in CLOSURE_OPTIONS}:
+        raise ValueError(f"Fechamento inválido: {cfg.closure_mode}")
+    if normalize(cfg.cremona_base) not in {normalize(x) for x in CREMONA_OPTIONS}:
+        raise ValueError(f"Cremona inválida: {cfg.cremona_base}")
+    if normalize(cfg.roller_description) not in {normalize(x) for x in ROLLER_OPTIONS}:
+        raise ValueError(f"Roldana inválida: {cfg.roller_description}")
+    validate_count(cfg.leaf_grid.horizontal_transoms, "travessas horizontais das folhas")
+    validate_count(cfg.leaf_grid.vertical_transoms, "travessas verticais das folhas")
+    for panel_name, panel in (
+        ("bandeira inferior", cfg.bottom_fixed_panel),
+        ("bandeira superior", cfg.top_fixed_panel),
+    ):
+        if panel is None:
+            continue
+        if not math.isfinite(float(panel.height_mm)) or panel.height_mm <= 0:
+            raise ValueError(f"Altura da {panel_name} deve ser finita e positiva.")
+        validate_count(panel.horizontal_transoms, f"travessas horizontais da {panel_name}")
+        validate_count(panel.vertical_transoms, f"travessas verticais da {panel_name}")
+    if cfg.structural_reinforcement is not None:
+        if cfg.structural_reinforcement.material_code not in STRUCTURAL_REINFORCEMENT_CODES:
+            raise ValueError(
+                "Reforço estrutural inválido: "
+                f"{cfg.structural_reinforcement.material_code}"
+            )
+        if cfg.bottom_fixed_panel is None and cfg.top_fixed_panel is None:
+            raise ValueError("Reforço estrutural exige ao menos uma bandeira.")
 
 
 def _select_frame(cfg: SlidingConfiguration) -> str:
@@ -143,6 +203,12 @@ def _select_leaf_reinforcement(leaf_code: str) -> str:
         "PR4288": "RAG - PR4288",
         "DE60111": "RAG - DE60111",
     }[leaf_code]
+
+
+def _select_leaf_transom(cfg: SlidingConfiguration) -> tuple[str, str]:
+    if cfg.leaf_system == LeafSystem.DESIGN_DOOR_60x111:
+        return "DE6072", "RAG - DE6072"
+    return "PR4263", "RAG - PR4263"
 
 
 def _interlock_qty(cfg: SlidingConfiguration) -> int:
@@ -232,6 +298,114 @@ def _select_baguette(cfg: SlidingConfiguration, thickness_mm: float | None) -> s
     )
 
 
+def _select_fixed_panel_baguette(thickness_mm: float | None) -> str:
+    if thickness_mm is None:
+        raise ValueError("Não foi possível determinar a espessura do vidro.")
+    t = float(thickness_mm)
+    if t < 8:
+        return "BA3518"
+    if t < 12:
+        return "BA3218"
+    if t < 19:
+        return "BA2516"
+    if t < 22:
+        return "BA2018"
+    if t < 26:
+        return "BA1816"
+    if t < 31:
+        return "BA1216"
+    if t < 34:
+        return "BA1016"
+    if t < 35:
+        return "BA0716"
+    raise ValueError(
+        f"Espessura de vidro {t:g} mm fora das faixas de bandeira do módulo CR."
+    )
+
+
+def _fixed_panel_geometry(
+    cfg: SlidingConfiguration,
+    position: FixedPanelPosition,
+) -> FixedPanelGeometry | None:
+    panel_cfg = (
+        cfg.bottom_fixed_panel
+        if position == FixedPanelPosition.BOTTOM
+        else cfg.top_fixed_panel
+    )
+    if panel_cfg is None:
+        return None
+
+    frame = MATERIALS["DE6058"]
+    transom = MATERIALS["DE6072"]
+    frame_rebate = float(frame.dim_b_mm or 0.0)
+    transom_face = float(transom.dim_b_mm or 0.0)
+    clearance = (
+        PARAMETERS["structural_reinforcement_panel_clearance_mm"]
+        if cfg.structural_reinforcement is not None
+        else 0.0
+    )
+    frame_height = float(panel_cfg.height_mm) - clearance
+    if frame_height <= 0:
+        raise ValueError(
+            f"Altura útil da bandeira {position.value} ficou inválida após "
+            "o desconto do reforço estrutural."
+        )
+
+    inner_width = float(cfg.width_mm) - 2 * frame_rebate
+    inner_height = frame_height - 2 * frame_rebate
+    columns = partition_axis(
+        inner_width,
+        panel_cfg.vertical_transoms,
+        transom_face,
+        (),
+        GridAxis.COLUMNS,
+        f"largura da bandeira {position.value}",
+    )
+    rows = partition_axis(
+        inner_height,
+        panel_cfg.horizontal_transoms,
+        transom_face,
+        (),
+        GridAxis.ROWS,
+        f"altura da bandeira {position.value}",
+    )
+    source = f"FIXED_PANEL_{position.value}"
+    openings = make_openings(source, columns, rows, 1.0)
+    return FixedPanelGeometry(
+        position=position,
+        width_mm=round(float(cfg.width_mm), 6),
+        nominal_height_mm=round(float(panel_cfg.height_mm), 6),
+        frame_height_mm=round(frame_height, 6),
+        horizontal_transoms=panel_cfg.horizontal_transoms,
+        vertical_transoms=panel_cfg.vertical_transoms,
+        openings=openings,
+    )
+
+
+def _glass_panel(opening: GridOpening, glass, clearance_mm: float) -> GlassPanel:
+    width = float(opening.width_mm) - clearance_mm
+    height = float(opening.height_mm) - clearance_mm
+    if width <= 0 or height <= 0:
+        raise ValueError(
+            f"Dimensões de vidro ficaram inválidas em {opening.source} "
+            f"[{opening.row_index},{opening.column_index}]."
+        )
+    area = width / 1000.0 * height / 1000.0
+    unit_cost = area * glass.unit_price
+    return GlassPanel(
+        source=opening.source,
+        position=f"R{opening.row_index + 1}C{opening.column_index + 1}",
+        width_mm=round(width, 6),
+        height_mm=round(height, 6),
+        quantity=opening.quantity,
+        material_code=glass.code,
+        material_description=glass.description,
+        area_m2=round(area, 6),
+        unit_cost=round(unit_cost, 6),
+        total_cost=round(unit_cost * opening.quantity, 6),
+    )
+
+
 def _hardware_lookup(description: str, warnings: list[EngineeringWarning]):
     key = normalize(description)
     material = HARDWARE.get(key)
@@ -269,8 +443,8 @@ def _add_finish(bom: list[BomComponent], cfg: SlidingConfiguration,
     ))
 
 
-def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
-    """CR Engine 0.3.
+def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
+    """CR Engine 0.4.
 
     Escopo desta versão:
     - perfis principais, tela simples, baguetes e acabamentos;
@@ -281,8 +455,10 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
     - ferragens de correr;
     - composição de custos por categoria.
 
-    Travessas, bandeiras e o kit completo de persiana ainda serão tratados
-    em versões posteriores.
+    Esta função mantém o núcleo simples previamente homologado. A composição
+    dinâmica de travessas, bandeiras e painéis de vidro é aplicada pelo
+    ``calculate_sliding`` público. O kit completo de persiana permanece fora
+    da Fase 1.
     """
     _validate(cfg)
     warnings: list[EngineeringWarning] = []
@@ -309,13 +485,27 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
         else p["prime_overlap_mm"]
     )
 
-    # CR!D8/D9. Nesta versão ainda sem bandeira inferior/superior.
+    # CR!D8/D9: o marco principal perde bandeiras e reserva da persiana.
     frame_width_final = cfg.width_mm
-    frame_height_final = cfg.height_mm - (
-        p["shutter_box_height_mm"] if cfg.shutter_enabled else 0.0
+    bottom_height = (
+        float(cfg.bottom_fixed_panel.height_mm)
+        if cfg.bottom_fixed_panel is not None else 0.0
+    )
+    top_height = (
+        float(cfg.top_fixed_panel.height_mm)
+        if cfg.top_fixed_panel is not None else 0.0
+    )
+    frame_height_final = (
+        cfg.height_mm
+        - bottom_height
+        - top_height
+        - (p["shutter_box_height_mm"] if cfg.shutter_enabled else 0.0)
     )
     if frame_height_final <= 0:
-        raise ValueError("Altura útil ficou inválida após o desconto da persiana.")
+        raise ValueError(
+            "Altura útil do marco principal ficou inválida após os descontos "
+            "de bandeiras/persiana."
+        )
 
     frame_width_cut = frame_width_final + p["weld_allowance_mm"]
     frame_height_cut = frame_height_final + p["weld_allowance_mm"]
@@ -324,6 +514,13 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
     leaf_height_final = frame_height_final - (2 * frame_dim - 2 * overlap)
     leaf_width_cut = leaf_width_final + p["weld_allowance_mm"]
     leaf_height_cut = leaf_height_final + p["weld_allowance_mm"]
+
+    # Falha cedo com a mensagem técnica correta, antes de criar reforços/BOM.
+    if (
+        leaf_width_final - 2 * glazing_rebate - p["glass_clearance_mm"] <= 0
+        or leaf_height_final - 2 * glazing_rebate - p["glass_clearance_mm"] <= 0
+    ):
+        raise ValueError("Dimensões de vidro ficaram inválidas.")
 
     frame_qty = _frame_profile_qty(cfg)
     leaf_profile_qty = float(2 * cfg.leaf_count)
@@ -448,6 +645,8 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
     # VIDRO
     glass_width = baguette_width - p["glass_clearance_mm"]
     glass_height = baguette_height - p["glass_clearance_mm"]
+    if glass_width <= 0 or glass_height <= 0:
+        raise ValueError("Dimensões de vidro ficaram inválidas.")
     glass_qty = main_baguette_qty / 2.0
     bom.append(_area_component(
         "VIDROS", "GLASS_PANEL", glass,
@@ -563,11 +762,19 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
 
     base_cremona = normalize(cfg.cremona_base)
     hidden_latch_code = None
+    short_hidden_latches = {
+        normalize(f"CREMONA 2 PONTOS COMP. {length}MM")
+        for length in (400, 600, 800, 1000)
+    }
+    long_hidden_latches = {
+        normalize(f"CREMONA 2 PONTOS COMP. {length}MM")
+        for length in (1200, 1400, 1600, 1800)
+    }
     if base_cremona == normalize("CREMONA 1 PONTO"):
         hidden_latch_code = "FEC1"
-    elif any(x in base_cremona for x in ("400MM", "600MM", "800MM", "1000MM")):
+    elif base_cremona in short_hidden_latches:
         hidden_latch_code = "FEC2"
-    elif any(x in base_cremona for x in ("1200MM", "1400MM", "1600MM", "1800MM")):
+    elif base_cremona in long_hidden_latches:
         hidden_latch_code = "FEC3"
 
     hidden_latch_qty = (
@@ -647,3 +854,464 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
         unit_cost=total,
         warnings=warnings,
     )
+
+
+_DYNAMIC_ROLES = {
+    "GLAZING_BEAD_HORIZONTAL",
+    "GLAZING_BEAD_VERTICAL",
+    "SCREEN_BEAD_HORIZONTAL",
+    "SCREEN_BEAD_VERTICAL",
+    "GLASS_PANEL",
+    "SCREEN_MESH",
+    "SCREEN_RUBBER",
+    "LEAF_RUBBER",
+    "GLAZING_BLOCK",
+    "DRAIN_CAP",
+    "REINFORCEMENT_SCREWS",
+}
+
+
+def _append_opening_baguettes(
+    bom: list[BomComponent],
+    openings: tuple[GridOpening, ...],
+    baguette_code: str,
+    order_qty: int,
+    role_prefix: str,
+) -> None:
+    for opening in openings:
+        source = (
+            f"{opening.source}:R{opening.row_index + 1}"
+            f"C{opening.column_index + 1}"
+        )
+        bom.append(_linear_component(
+            "BAGUETES",
+            f"{role_prefix}_BEAD_HORIZONTAL",
+            baguette_code,
+            opening.width_mm,
+            2.0 * opening.quantity,
+            order_qty,
+            source,
+        ))
+        bom.append(_linear_component(
+            "BAGUETES",
+            f"{role_prefix}_BEAD_VERTICAL",
+            baguette_code,
+            opening.height_mm,
+            2.0 * opening.quantity,
+            order_qty,
+            source,
+        ))
+
+
+def _leaf_transoms(
+    cfg: SlidingConfiguration,
+    column_widths: tuple[float, ...],
+    full_inner_height: float,
+    material_code: str,
+    reinforcement_code: str,
+) -> list[Transom]:
+    transoms: list[Transom] = []
+    for column_index, width in enumerate(column_widths):
+        if cfg.leaf_grid.horizontal_transoms:
+            transoms.append(Transom(
+                source=f"LEAF:C{column_index + 1}",
+                orientation=TransomOrientation.HORIZONTAL,
+                material_code=material_code,
+                reinforcement_material_code=reinforcement_code,
+                length_mm=round(float(width), 6),
+                quantity=float(
+                    cfg.leaf_grid.horizontal_transoms * cfg.leaf_count
+                ),
+            ))
+    for transom_index in range(cfg.leaf_grid.vertical_transoms):
+        transoms.append(Transom(
+            source=f"LEAF:V{transom_index + 1}",
+            orientation=TransomOrientation.VERTICAL,
+            material_code=material_code,
+            reinforcement_material_code=reinforcement_code,
+            length_mm=round(float(full_inner_height), 6),
+            quantity=float(cfg.leaf_count),
+        ))
+    return transoms
+
+
+def _fixed_panel_transoms(panel: FixedPanelGeometry) -> list[Transom]:
+    widths = tuple(
+        opening.width_mm
+        for opening in panel.openings
+        if opening.row_index == 0
+    )
+    full_inner_height = panel.frame_height_mm - 2 * float(
+        MATERIALS["DE6058"].dim_b_mm or 0.0
+    )
+    transoms: list[Transom] = []
+    for column_index, width in enumerate(widths):
+        if panel.horizontal_transoms:
+            transoms.append(Transom(
+                source=f"{panel.position.value}:C{column_index + 1}",
+                orientation=TransomOrientation.HORIZONTAL,
+                material_code="DE6072",
+                reinforcement_material_code="RAG - DE6072",
+                length_mm=round(float(width), 6),
+                quantity=float(panel.horizontal_transoms),
+            ))
+    for transom_index in range(panel.vertical_transoms):
+        transoms.append(Transom(
+            source=f"{panel.position.value}:V{transom_index + 1}",
+            orientation=TransomOrientation.VERTICAL,
+            material_code="DE6072",
+            reinforcement_material_code="RAG - DE6072",
+            length_mm=round(float(full_inner_height), 6),
+            quantity=1.0,
+        ))
+    return transoms
+
+
+def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
+    """Calculate a CR assembly with dynamic leaf and fixed-panel geometry."""
+
+    result = _calculate_sliding_base(cfg)
+    p = PARAMETERS
+    glass = GLASSES[normalize(cfg.glass_description)]
+
+    is_validated_simple_case = (
+        cfg.leaf_grid.horizontal_transoms == 0
+        and cfg.leaf_grid.vertical_transoms == 0
+        and not cfg.leaf_grid.custom_dimensions
+        and cfg.bottom_fixed_panel is None
+        and cfg.top_fixed_panel is None
+        and cfg.structural_reinforcement is None
+    )
+    if is_validated_simple_case:
+        opening = GridOpening(
+            source="LEAF",
+            row_index=0,
+            column_index=0,
+            width_mm=result.geometry["baguette_width_mm"],
+            height_mm=result.geometry["baguette_height_mm"],
+            quantity=float(cfg.leaf_count),
+        )
+        panel = _glass_panel(opening, glass, p["glass_clearance_mm"])
+        result.geometry.update({
+            "leaf_grid_columns": 1.0,
+            "leaf_grid_rows": 1.0,
+            "leaf_glass_panel_count": float(cfg.leaf_count),
+            "total_glass_panel_count": float(cfg.leaf_count),
+        })
+        result.leaf_openings = [opening]
+        result.glass_panels = [panel]
+        return result
+
+    leaf_code = _select_leaf(cfg)
+    leaf = MATERIALS[leaf_code]
+    leaf_rebate = float(leaf.dim_b_mm or 0.0)
+    leaf_inner_width = float(result.geometry["leaf_width_final_mm"]) - 2 * leaf_rebate
+    leaf_inner_height = float(result.geometry["leaf_height_final_mm"]) - 2 * leaf_rebate
+    transom_code, transom_reinforcement_code = _select_leaf_transom(cfg)
+    transom_face = float(MATERIALS[transom_code].dim_b_mm or 0.0)
+
+    column_widths = partition_axis(
+        leaf_inner_width,
+        cfg.leaf_grid.vertical_transoms,
+        transom_face,
+        cfg.leaf_grid.custom_dimensions,
+        GridAxis.COLUMNS,
+        "largura das folhas",
+    )
+    row_heights = partition_axis(
+        leaf_inner_height,
+        cfg.leaf_grid.horizontal_transoms,
+        transom_face,
+        cfg.leaf_grid.custom_dimensions,
+        GridAxis.ROWS,
+        "altura das folhas",
+    )
+    leaf_openings = make_openings(
+        "LEAF",
+        column_widths,
+        row_heights,
+        float(cfg.leaf_count),
+    )
+
+    fixed_panels = [
+        panel
+        for panel in (
+            _fixed_panel_geometry(cfg, FixedPanelPosition.BOTTOM),
+            _fixed_panel_geometry(cfg, FixedPanelPosition.TOP),
+        )
+        if panel is not None
+    ]
+    fixed_openings = tuple(
+        opening
+        for panel in fixed_panels
+        for opening in panel.openings
+    )
+
+    transoms = _leaf_transoms(
+        cfg,
+        column_widths,
+        leaf_inner_height,
+        transom_code,
+        transom_reinforcement_code,
+    )
+    for panel in fixed_panels:
+        transoms.extend(_fixed_panel_transoms(panel))
+
+    bom = [component for component in result.unit_bom if component.role not in _DYNAMIC_ROLES]
+    leaf_baguette_code = _select_baguette(cfg, glass.thickness_mm)
+    _append_opening_baguettes(
+        bom,
+        leaf_openings,
+        leaf_baguette_code,
+        cfg.quantity,
+        "GLAZING",
+    )
+
+    if cfg.screen_enabled:
+        for opening in leaf_openings:
+            source = (
+                f"SCREEN:R{opening.row_index + 1}"
+                f"C{opening.column_index + 1}"
+            )
+            bom.append(_linear_component(
+                "TELA", "SCREEN_BEAD_HORIZONTAL", "BA3218",
+                opening.width_mm, opening.quantity, cfg.quantity, source,
+            ))
+            bom.append(_linear_component(
+                "TELA", "SCREEN_BEAD_VERTICAL", "BA3218",
+                opening.height_mm, opening.quantity, cfg.quantity, source,
+            ))
+
+    fixed_baguette_code = _select_fixed_panel_baguette(glass.thickness_mm)
+    for panel in fixed_panels:
+        prefix = f"{panel.position.value}_FIXED_GLAZING"
+        _append_opening_baguettes(
+            bom, panel.openings, fixed_baguette_code, cfg.quantity, prefix
+        )
+
+        frame_height_reinforcement = panel.frame_height_mm - 2 * float(
+            MATERIALS["DE6058"].dim_a_mm or 0.0
+        )
+        frame_width_reinforcement = panel.width_mm - 2 * float(
+            MATERIALS["DE6058"].dim_a_mm or 0.0
+        )
+        if frame_height_reinforcement <= 0 or frame_width_reinforcement <= 0:
+            raise ValueError(
+                f"Bandeira {panel.position.value} não comporta o reforço do marco."
+            )
+        bom.extend([
+            _linear_component(
+                "PERFIS PRINCIPAIS",
+                f"{panel.position.value}_FIXED_FRAME_HORIZONTAL",
+                "DE6058",
+                panel.width_mm + p["weld_allowance_mm"],
+                2.0,
+                cfg.quantity,
+                panel.position.value,
+            ),
+            _linear_component(
+                "PERFIS PRINCIPAIS",
+                f"{panel.position.value}_FIXED_FRAME_VERTICAL",
+                "DE6058",
+                panel.frame_height_mm + p["weld_allowance_mm"],
+                2.0,
+                cfg.quantity,
+                panel.position.value,
+            ),
+            _linear_component(
+                "REFORÇOS",
+                f"{panel.position.value}_FIXED_FRAME_REINFORCEMENT_HORIZONTAL",
+                "RAG - DE6058",
+                frame_width_reinforcement,
+                2.0,
+                cfg.quantity,
+                panel.position.value,
+            ),
+            _linear_component(
+                "REFORÇOS",
+                f"{panel.position.value}_FIXED_FRAME_REINFORCEMENT_VERTICAL",
+                "RAG - DE6058",
+                frame_height_reinforcement,
+                2.0,
+                cfg.quantity,
+                panel.position.value,
+            ),
+        ])
+
+    for transom in transoms:
+        role_scope = "LEAF" if transom.source.startswith("LEAF") else "FIXED_PANEL"
+        bom.append(_linear_component(
+            "PERFIS PRINCIPAIS",
+            f"{role_scope}_TRANSOM_{transom.orientation.value}",
+            transom.material_code,
+            transom.length_mm,
+            transom.quantity,
+            cfg.quantity,
+            transom.source,
+        ))
+        bom.append(_linear_component(
+            "REFORÇOS",
+            f"{role_scope}_TRANSOM_REINFORCEMENT_{transom.orientation.value}",
+            transom.reinforcement_material_code,
+            transom.length_mm,
+            transom.quantity,
+            cfg.quantity,
+            transom.source,
+        ))
+
+    if cfg.structural_reinforcement is not None and fixed_panels:
+        bom.append(_linear_component(
+            "REFORÇOS",
+            "STRUCTURAL_REINFORCEMENT",
+            cfg.structural_reinforcement.material_code,
+            cfg.width_mm,
+            float(len(fixed_panels)),
+            cfg.quantity,
+            "FIXED_PANELS",
+        ))
+
+    glass_panels = [
+        _glass_panel(opening, glass, p["glass_clearance_mm"])
+        for opening in (*leaf_openings, *fixed_openings)
+    ]
+    for panel in glass_panels:
+        bom.append(_area_component(
+            "VIDROS",
+            "GLASS_PANEL",
+            glass,
+            panel.width_mm,
+            panel.height_mm,
+            panel.quantity,
+            cfg.quantity,
+            f"{panel.source}:{panel.position}",
+        ))
+
+    if cfg.screen_enabled:
+        screen_material = MATERIALS["TL1"]
+        for panel in glass_panels:
+            if panel.source != "LEAF":
+                continue
+            bom.append(_area_component(
+                "TELA",
+                "SCREEN_MESH",
+                screen_material,
+                panel.width_mm,
+                panel.height_mm,
+                panel.quantity / 2.0,
+                cfg.quantity,
+                f"SCREEN:{panel.position}",
+            ))
+
+    frame_code = _select_frame(cfg)
+    rubber_code = "AC0708" if frame_code == "DE16652" else "ACB606"
+    leaf_rubber_length = sum(
+        2.0 * (opening.width_mm + opening.height_mm) * opening.quantity
+        for opening in leaf_openings
+    )
+    bom.append(_linear_component(
+        "VEDAÇÕES", "LEAF_RUBBER", rubber_code,
+        leaf_rubber_length, 1.0, cfg.quantity, "LEAF_GRID",
+    ))
+    if fixed_openings:
+        fixed_rubber_length = sum(
+            2.0 * (opening.width_mm + opening.height_mm) * opening.quantity
+            for opening in fixed_openings
+        )
+        bom.append(_linear_component(
+            "VEDAÇÕES", "FIXED_PANEL_RUBBER", "AC0708",
+            fixed_rubber_length, 1.0, cfg.quantity, "FIXED_PANELS",
+        ))
+    if cfg.screen_enabled:
+        screen_rubber_length = sum(
+            (opening.width_mm + opening.height_mm) * opening.quantity
+            for opening in leaf_openings
+        )
+        bom.append(_linear_component(
+            "VEDAÇÕES", "SCREEN_RUBBER", "TL2",
+            screen_rubber_length, 1.0, cfg.quantity, "SCREEN_GRID",
+        ))
+
+    total_glass_panel_count = sum(panel.quantity for panel in glass_panels)
+    bom.append(_unit_component(
+        "ACESSÓRIOS", "GLAZING_BLOCK", MATERIALS["AC0312"],
+        total_glass_panel_count * 2.0, cfg.quantity, "ALL_GLASS_PANELS",
+    ))
+    bom.append(_unit_component(
+        "ACESSÓRIOS", "DRAIN_CAP", MATERIALS["AC0001"],
+        _frame_profile_qty(cfg) + 2.0 * len(fixed_panels),
+        cfg.quantity,
+        "MAIN_AND_FIXED_FRAMES",
+    ))
+
+    frame_qty = _frame_profile_qty(cfg)
+    leaf_profile_qty = float(2 * cfg.leaf_count)
+    screen_leaf_profile_qty = float(cfg.leaf_count) if cfg.screen_enabled else 0.0
+    fastener_rate = p["reinforcement_fastener_rate_per_meter"]
+    screw_reinforcement_qty = (
+        (
+            (result.geometry["frame_width_cut_mm"] + result.geometry["frame_height_cut_mm"])
+            / 1000.0 * frame_qty
+        ) * fastener_rate
+        + (
+            (result.geometry["leaf_width_cut_mm"] + result.geometry["leaf_height_cut_mm"])
+            / 1000.0 * (leaf_profile_qty + screen_leaf_profile_qty)
+        ) * fastener_rate
+        + sum(
+            ((panel.width_mm + panel.frame_height_mm) / 1000.0 * 2.0)
+            * fastener_rate
+            for panel in fixed_panels
+        )
+    )
+    bom.append(_unit_component(
+        "FERRAGENS", "REINFORCEMENT_SCREWS", MATERIALS["PAR2"],
+        screw_reinforcement_qty, cfg.quantity, "REINFORCED_FRAMES_AND_LEAVES",
+    ))
+
+    bom = [
+        component
+        for component in bom
+        if component.quantity_per_unit > 0 and component.cost_per_unit_product >= 0
+    ]
+    breakdown: dict[str, float] = {}
+    for component in bom:
+        breakdown[component.category] = round(
+            breakdown.get(component.category, 0.0)
+            + component.cost_per_unit_product,
+            6,
+        )
+    total = round(sum(component.cost_per_unit_product for component in bom), 6)
+    breakdown["TOTAL"] = total
+
+    first_leaf_opening = leaf_openings[0]
+    first_glass = next(panel for panel in glass_panels if panel.source == "LEAF")
+    result.geometry.update({
+        "baguette_width_mm": first_leaf_opening.width_mm,
+        "baguette_height_mm": first_leaf_opening.height_mm,
+        "glass_width_mm": first_glass.width_mm,
+        "glass_height_mm": first_glass.height_mm,
+        "leaf_grid_columns": float(len(column_widths)),
+        "leaf_grid_rows": float(len(row_heights)),
+        "leaf_glass_panel_count": round(
+            sum(opening.quantity for opening in leaf_openings), 6
+        ),
+        "fixed_glass_panel_count": round(
+            sum(opening.quantity for opening in fixed_openings), 6
+        ),
+        "total_glass_panel_count": round(total_glass_panel_count, 6),
+    })
+    if cfg.bottom_fixed_panel is not None:
+        result.geometry["bottom_fixed_panel_height_mm"] = round(
+            cfg.bottom_fixed_panel.height_mm, 6
+        )
+    if cfg.top_fixed_panel is not None:
+        result.geometry["top_fixed_panel_height_mm"] = round(
+            cfg.top_fixed_panel.height_mm, 6
+        )
+    result.unit_bom = bom
+    result.cost_breakdown = breakdown
+    result.unit_cost = total
+    result.leaf_openings = list(leaf_openings)
+    result.transoms = transoms
+    result.fixed_panels = fixed_panels
+    result.glass_panels = glass_panels
+    return result

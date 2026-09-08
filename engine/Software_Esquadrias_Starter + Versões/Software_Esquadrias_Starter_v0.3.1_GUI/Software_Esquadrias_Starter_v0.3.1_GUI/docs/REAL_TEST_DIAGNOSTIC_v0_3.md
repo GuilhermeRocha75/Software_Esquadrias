@@ -29,7 +29,7 @@ Esse algoritmo é conhecido como **First Fit Decreasing (FFD)**.
 
 Ele reproduziu 18 das 19 quantidades do `PED_P` do arquivo enviado.
 
-## 3. Defeito detectado no legado
+## 3. Defeito detectado no legado em consolidação entre itens
 
 `DE5013 — TAPA FOLHA PORTA DE CORRER`
 
@@ -41,7 +41,12 @@ No `PPED_P` existem:
 
 Uma barra tem 5900 mm. Logo são fisicamente necessárias 2 barras.
 
-O `PED_P` legado registra apenas 1 barra.
+O `PED_P` legado registra apenas 1 barra nesse pedido com os cortes provenientes
+de mais de um item.
+
+Controle negativo: um único item DESIGN 2000 × 2000 de 4 folhas também gera
+4 cortes de 1902 mm, mas o Excel indica corretamente 2 barras. Portanto, não se
+deve generalizar a divergência apenas por quantidade e comprimento dos cortes.
 
 A v0.3 calcula 2 barras e emite o alerta `LEGACY-PEDP-DE5013`.
 
