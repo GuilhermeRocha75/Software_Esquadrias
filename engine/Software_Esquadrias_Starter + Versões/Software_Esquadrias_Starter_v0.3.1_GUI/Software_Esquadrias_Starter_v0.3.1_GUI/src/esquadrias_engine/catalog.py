@@ -23,7 +23,7 @@ def normalize(text: str) -> str:
     text = "".join(ch for ch in text if not unicodedata.combining(ch))
     return " ".join(text.upper().strip().split())
 
-# Materiais técnicos utilizados pela Engine CR v0.4.
+# Materiais técnicos utilizados pela Engine CR v0.5.
 MATERIALS = {
     # Perfis principais
     "PR8852": Material("PR8852", "MARCO 2 TRILHOS COM ABA", 43.57, "m", 52),
@@ -83,6 +83,31 @@ MATERIALS = {
     "AC0001": Material("AC0001", "TAPA DESAGUE", 1.00, "un"),
     "375441": Material("375441", "LIMITADOR DE ABERTURA", 3.45, "un"),
 
+    # Persiana — LISTAPERFIS!A65:F86 e LISTAFERRA!A48:C49.
+    "321040": Material("321040", "CAIXA DE PERSIANA 200MM", 102.93, "m", 200),
+    "327201": Material("327201", "GUIA LATERAL", 40.00, "m", 32),
+    "327204": Material("327204", "GUIA CENTRAL", 83.03, "m", 30),
+    "327019": Material("327019", "PROLONGADOR DE GUIA", 20.00, "m"),
+    "326015_F": Material("326015_F", "TALA DE PVC 40MM", 5.00, "m", 40),
+    "311712": Material("311712", "TERMINAL DE ALUMINIO", 15.00, "m"),
+    "375021": Material("375021", "EIXO DE 60MM", 26.67, "m"),
+    "373128": Material("373128", "CONVITE PARA GUIAS LATERAIS (PAR)", 9.44, "un"),
+    "370141": Material("370141", "TAMPA LATERAL PARA MOTOR", 44.99, "un"),
+    "371553": Material("371553", "PLACA LATERAL PARA MOTOR", 22.32, "un"),
+    "370113": Material("370113", "TAMPA LATERAL PARA POLIA/PONTEIRA", 44.95, "un"),
+    "371127": Material("371127", "PLACA CENTRAL (EIXOS INDEPENDENTES)", 78.27, "un"),
+    "371143": Material("371143", "PLACA CENTRAL (EIXO ÚNICO)", 48.43, "un"),
+    "371513_2": Material("371513_2", "PLACA DE CONTENÇÃO (PONTEIRA)", 7.10, "un"),
+    "371513_4": Material("371513_4", "PLACA DE CONTENÇÃO (POLIA)", 6.37, "un"),
+    "375110": Material("375110", "POLIA", 9.19, "un"),
+    "375339": Material("375339", "RECOLHEDOR EMBUTIDO", 45.00, "un"),
+    "375678": Material("375678", "ENGATE DA 1ª TALA", 7.69, "un"),
+    "375415": Material("375415", "PASSADOR FRONTAL", 4.00, "un"),
+    "375213": Material("375213", "PONTEIRA EIXO DE 40MM", 9.00, "un"),
+    "375234": Material("375234", "ADAPTADOR DE PONTEIRA 40/60MM", 10.45, "un"),
+    "MOT1": Material("MOT1", "MOTOR DE PERSIANA CONTROLE REMOTO", 500.00, "un"),
+    "MOT2": Material("MOT2", "MOTOR DE PERSIANA BOTOEIRA", 250.00, "un"),
+
     # Tela
     "TL1": Material("TL1", "TELA MOSQUITEIRA (TECIDO)", 12.43, "m²"),
     "TL2": Material("TL2", "BORRACHA PARA TELA DE CORRER", 2.00, "m"),
@@ -109,6 +134,12 @@ PARAMETERS = {
     "internal_finish_extra_mm": 140.0,
     "external_finish_extra_mm": 60.0,
     "shutter_box_height_mm": 200.0,
+    "shutter_side_guide_width_mm": 32.0,
+    "shutter_central_guide_width_mm": 30.0,
+    "shutter_slat_height_mm": 40.0,
+    "shutter_slat_clearance_mm": 10.0,
+    "shutter_box_end_clearance_mm": 15.0,
+    "shutter_shaft_clearance_mm": 40.0,
     "structural_reinforcement_panel_clearance_mm": 50.0,
     "reinforcement_fastener_rate_per_meter": 4.0,
     "kerf_mm": 0.0,
@@ -163,6 +194,21 @@ ROLLER_OPTIONS = [
     "ROLDANA 150KG",
 ]
 
+SHUTTER_MODES = [
+    "SEM PERSIANA",
+    "MANUAL EM PAINEL ÚNICO",
+    "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO",
+    "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
+    "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
+    "AUTOMATIZADA COM BOTOEIRA EM 2 PAINÉIS",
+    "AUTOMATIZADA COM BOTOEIRA EM 3 PAINÉIS",
+    "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO",
+    "AUTOMATIZADA COM CONTROLE REMOTO EM 2 PAINÉIS",
+    "AUTOMATIZADA COM CONTROLE REMOTO EM 3 PAINÉIS",
+]
+SHUTTER_BOX_OPTIONS = ["CAIXA DE 200MM"]
+SHUTTER_SLAT_OPTIONS = ["TALA DE PVC 40MM"]
+
 
 # Materiais lineares que, no legado, entram no PED_P e são comprados em barras.
 # O comprimento padrão atual vem de PFAB!B16 = 5900 mm.
@@ -187,4 +233,7 @@ BAR_STOCK_CODES = {
 
     # Acabamentos
     "AC7012", "AC3004",
+
+    # Persiana (linhas de perfil CR!54:60).
+    "321040", "327201", "327204", "327019", "326015_F", "311712", "375021",
 }

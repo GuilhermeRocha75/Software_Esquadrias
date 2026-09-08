@@ -519,7 +519,10 @@ class CRRegressionMatrixTests(unittest.TestCase):
         self.assertAlmostEqual(glass.area_m2, glass_width * glass_height / 1_000_000, places=6)
         self.assertAlmostEqual(glass.quantity_per_unit, float(n), places=6)
 
-        screen_profile_quantity = float(n) if cfg.screen_enabled else 0.0
+        # CR!G12/G13 e CR!G69 produzem grandezas fracionárias para 3 folhas.
+        # A Fase 2 separa o fator de malha da quantidade física de quadros.
+        screen_frame_count = math.ceil(n / 2) if cfg.screen_enabled else 0
+        screen_profile_quantity = float(2 * screen_frame_count)
         if cfg.screen_enabled:
             self.assert_component(
                 components,
@@ -540,14 +543,14 @@ class CRRegressionMatrixTests(unittest.TestCase):
                 "SCREEN_BEAD_HORIZONTAL",
                 "BA3218",
                 baguette_width,
-                float(n),
+                screen_profile_quantity,
             )
             self.assert_component(
                 components,
                 "SCREEN_BEAD_VERTICAL",
                 "BA3218",
                 baguette_height,
-                float(n),
+                screen_profile_quantity,
             )
             screen = components["SCREEN_MESH"]
             self.assertEqual(screen.material_code, "TL1")
@@ -558,7 +561,7 @@ class CRRegressionMatrixTests(unittest.TestCase):
                 components,
                 "SCREEN_RUBBER",
                 "TL2",
-                (baguette_width + baguette_height) * n,
+                2.0 * (baguette_width + baguette_height) * screen_frame_count,
                 1.0,
             )
         else:

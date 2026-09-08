@@ -27,6 +27,19 @@ class FixedPanelPosition(str, Enum):
     TOP = "TOP"
 
 
+class ShutterMode(str, Enum):
+    NONE = "SEM PERSIANA"
+    MANUAL_SINGLE = "MANUAL EM PAINEL ÚNICO"
+    MANUAL_DOUBLE_SHARED_SHAFT = "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO"
+    MANUAL_DOUBLE_INDEPENDENT_SHAFTS = "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES"
+    BUTTON_SINGLE = "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO"
+    BUTTON_DOUBLE = "AUTOMATIZADA COM BOTOEIRA EM 2 PAINÉIS"
+    BUTTON_TRIPLE = "AUTOMATIZADA COM BOTOEIRA EM 3 PAINÉIS"
+    REMOTE_SINGLE = "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO"
+    REMOTE_DOUBLE = "AUTOMATIZADA COM CONTROLE REMOTO EM 2 PAINÉIS"
+    REMOTE_TRIPLE = "AUTOMATIZADA COM CONTROLE REMOTO EM 3 PAINÉIS"
+
+
 @dataclass(frozen=True)
 class CustomDimension:
     """Clear size of one opening in a grid axis.
@@ -59,6 +72,15 @@ class FixedPanelConfiguration:
 class StructuralReinforcement:
     material_code: str
 
+
+@dataclass(frozen=True)
+class ShutterConfiguration:
+    """Entradas comprovadas nos campos CR!L2:M2:N2 do XLSM legado."""
+
+    mode: ShutterMode
+    box_description: str = "CAIXA DE 200MM"
+    slat_description: str = "TALA DE PVC 40MM"
+
 @dataclass(frozen=True)
 class SlidingConfiguration:
     width_mm: float
@@ -78,7 +100,10 @@ class SlidingConfiguration:
     external_finish: str = "SEM ACABAMENTO"
 
     screen_enabled: bool = False
+    # Compatibilidade com clientes <= 0.4: ``True`` mantém o antigo desconto
+    # geométrico. Para o kit completo, use ``shutter``.
     shutter_enabled: bool = False
+    shutter: ShutterConfiguration | None = None
 
     leaf_grid: LeafGrid = field(default_factory=LeafGrid)
     bottom_fixed_panel: FixedPanelConfiguration | None = None
@@ -166,7 +191,7 @@ class CalculationResult:
     fixed_panels: List[FixedPanelGeometry] = field(default_factory=list)
     glass_panels: List[GlassPanel] = field(default_factory=list)
     warnings: List[EngineeringWarning] = field(default_factory=list)
-    calculation_version: str = "CR_ENGINE_0.4.0"
+    calculation_version: str = "CR_ENGINE_0.5.0"
 
 @dataclass(frozen=True)
 class CutPiece:

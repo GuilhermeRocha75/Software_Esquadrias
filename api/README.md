@@ -9,6 +9,7 @@ Expor a Engine de cálculo através de uma API web, sem duplicar regras de engen
 Endpoints já criados:
 
 - `GET /health`
+- `GET /api/v1/engine/cr/options`
 - `POST /api/v1/engine/cr/calculate`
 - `POST /api/v1/purchase-plans/calculate`
 
@@ -25,6 +26,8 @@ A resposta do cálculo CR já inclui:
 - bandeiras inferior/superior;
 - lista dinâmica de painéis de vidro;
 - premissa de perda de serra (`kerf_mm`, padrão 0).
+- configuração explícita e BOM completo de persiana (`L2:M2:N2` do legado).
+- contagem física de quadros de tela separada do fator de área da malha.
 
 ## Stack inicial
 
@@ -56,6 +59,6 @@ A API **não deve conter fórmulas de engenharia**. Ela valida entrada, chama a 
 
 ### Ponte temporária
 
-A API v0.1 ainda importa a Engine CR v0.4.0 a partir do diretório histórico v0.3.1 em `engine/`.
+A API v0.1.4 ainda importa a Engine CR v0.5.0 a partir do diretório histórico v0.3.1 em `engine/`.
 
 Isso é temporário. A próxima refatoração deve promover a Engine validada para um caminho estável (`engine/current` ou pacote equivalente), sem apagar o histórico das versões anteriores.

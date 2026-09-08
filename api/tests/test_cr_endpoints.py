@@ -9,7 +9,7 @@ API_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = API_ROOT.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from api.app.main import calculate_cr, calculate_purchase_plan  # noqa: E402
+from api.app.main import calculate_cr, calculate_purchase_plan, cr_options, health  # noqa: E402
 from api.app.schemas import CRItemRequest, PurchasePlanRequest  # noqa: E402
 
 
@@ -66,7 +66,7 @@ class CREndpointTests(unittest.TestCase):
                 **COMMON,
             )
         )
-        self.assertEqual(response["engine_version"], "CR_ENGINE_0.4.0")
+        self.assertEqual(response["engine_version"], "CR_ENGINE_0.5.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 1011.5)
         self.assertEqual(response["geometry"]["glass_width_mm"], 817.5)
         self.assertAlmostEqual(response["unit_technical_cost"], 2694.73947, places=5)
@@ -122,7 +122,7 @@ class CREndpointTests(unittest.TestCase):
             structural_reinforcement={"material_code": "ALUM10238"},
         ))
 
-        self.assertEqual(response["engine_version"], "CR_ENGINE_0.4.0")
+        self.assertEqual(response["engine_version"], "CR_ENGINE_0.5.0")
         self.assertEqual(response["geometry"]["frame_height_final_mm"], 1950)
         self.assertEqual(len(response["fixed_panels"]), 2)
         self.assertEqual(response["fixed_panels"][0]["frame_height_mm"], 350)
@@ -146,6 +146,35 @@ class CREndpointTests(unittest.TestCase):
             line["kerf_loss_mm"] == 0
             for line in response["purchase_plan"]["lines"]
         ))
+
+    def test_phase2_options_expose_complete_excel_shutter_inventory(self):
+        options = cr_options()
+        self.assertIs(options["shutter"]["supported"], True)
+        self.assertEqual(len(options["shutter"]["modes"]), 10)
+        self.assertEqual(options["shutter"]["boxes"], ["CAIXA DE 200MM"])
+        self.assertEqual(options["shutter"]["slats"], ["TALA DE PVC 40MM"])
+        self.assertEqual(health()["engine"], "CR_ENGINE_0.5.0")
+
+    def test_phase2_explicit_shutter_is_converted_and_serialized(self):
+        response = calculate_cr(CRItemRequest(
+            width_mm=2400,
+            height_mm=2600,
+            leaf_count=3,
+            leaf_system="PRIME_DOOR_42x88",
+            screen_enabled=True,
+            shutter={
+                "mode": "AUTOMATIZADA COM CONTROLE REMOTO EM 2 PAINÉIS",
+                "box_description": "CAIXA DE 200MM",
+                "slat_description": "TALA DE PVC 40MM",
+            },
+        ))
+        roles = {component["role"] for component in response["bom"]}
+        self.assertEqual(response["engine_version"], "CR_ENGINE_0.5.0")
+        self.assertEqual(response["geometry"]["frame_height_final_mm"], 2400)
+        self.assertEqual(response["geometry"]["screen_frame_count"], 2)
+        self.assertIn("SHUTTER_BOX", roles)
+        self.assertIn("SHUTTER_REMOTE_MOTOR", roles)
+        self.assertIn("PERSIANA", response["cost_by_group"])
 
 
 if __name__ == "__main__":

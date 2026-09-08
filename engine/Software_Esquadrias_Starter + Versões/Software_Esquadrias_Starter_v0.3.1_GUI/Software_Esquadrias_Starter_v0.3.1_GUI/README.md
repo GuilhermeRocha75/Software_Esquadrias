@@ -1,4 +1,16 @@
-# Software Esquadrias — CR Engine / Tester v0.4.0
+# Software Esquadrias — CR Engine / Tester v0.5.0
+
+## Fechamento CR — Fase 2
+
+A Engine `CR_ENGINE_0.5.0` inclui o kit completo de persiana comprovado no
+XLSM (`L2:M2:N2`), com perfis, talas, guias, eixo, acessórios, motores,
+custos e cortes FFD. A tela de 3 folhas agora separa os dois quadros físicos
+inteiros do fator legado de 1,5 usado apenas no consumo de malha.
+
+As regras da Fase 1, o golden de R$ 8.317,53971, barra de 5.900 mm, kerf zero,
+DE5013, travessas, bandeiras, reforços, cotas e vidros subdivididos permanecem
+protegidos pela regressão. O relatório completo está em
+`docs/FECHAMENTO_TECNICO_CR_FASE2_2026-09-08.md` na raiz do repositório.
 
 ## Fechamento CR — Fase 1
 
@@ -11,7 +23,6 @@ O recorte simples anterior permanece num caminho de regressão compatível e o
 golden continua em R$ 8.317,53971. A suíte atual possui 47 testes da Engine;
 somada aos 5 testes da API, são 52 testes aprovados.
 
-O kit completo de persiana e as combinações finais de tela pertencem à Fase 2.
 O marcador textual legado `CR` ainda depende de definição física para ser
 importado; cotas numéricas explícitas já estão implementadas.
 

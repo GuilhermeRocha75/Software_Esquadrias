@@ -12,6 +12,8 @@ from .engine_bridge import (
     LeafGrid,
     LeafSystem,
     SlidingConfiguration,
+    ShutterConfiguration,
+    ShutterMode,
     StructuralReinforcement,
     build_order_purchase_plan,
     calculate_sliding,
@@ -20,13 +22,16 @@ from .engine_bridge import (
     CREMONA_OPTIONS,
     ROLLER_OPTIONS,
     FINISH_OPTIONS,
+    SHUTTER_MODES,
+    SHUTTER_BOX_OPTIONS,
+    SHUTTER_SLAT_OPTIONS,
     PARAMETERS,
 )
 from .schemas import CRItemRequest, PurchasePlanRequest
 
 app = FastAPI(
     title="Software Esquadrias API",
-    version="0.1.3",
+    version="0.1.4",
     description="API inicial da Plataforma de Gestão e Engenharia para Esquadrias.",
 )
 
@@ -58,6 +63,14 @@ def _to_config(item: CRItemRequest) -> SlidingConfiguration:
         external_finish=item.external_finish,
         screen_enabled=item.screen_enabled,
         shutter_enabled=item.shutter_enabled,
+        shutter=(
+            ShutterConfiguration(
+                mode=ShutterMode(item.shutter.mode),
+                box_description=item.shutter.box_description,
+                slat_description=item.shutter.slat_description,
+            )
+            if item.shutter is not None else None
+        ),
         leaf_grid=LeafGrid(
             horizontal_transoms=item.leaf_grid.horizontal_transoms,
             vertical_transoms=item.leaf_grid.vertical_transoms,
@@ -108,7 +121,7 @@ def root():
     return {
         "name": "Software Esquadrias API",
         "status": "online",
-        "api_version": "0.1.3",
+        "api_version": "0.1.4",
         "documentation": "/docs",
         "health": "/health",
     }
@@ -118,8 +131,8 @@ def root():
 def health():
     return {
         "status": "ok",
-        "api_version": "0.1.3",
-        "engine": "CR_ENGINE_0.4.0",
+        "api_version": "0.1.4",
+        "engine": "CR_ENGINE_0.5.0",
     }
 
 
@@ -168,10 +181,12 @@ def cr_options():
             ],
         },
         "shutter": {
-            "supported": "partial",
+            "supported": True,
             "box_height_mm": PARAMETERS["shutter_box_height_mm"],
-            "geometry_effect": "Quando ativa, a caixa padrão é descontada da altura útil do marco.",
-            "pending": "O kit completo/material da persiana ainda será migrado do Excel.",
+            "modes": list(SHUTTER_MODES),
+            "boxes": list(SHUTTER_BOX_OPTIONS),
+            "slats": list(SHUTTER_SLAT_OPTIONS),
+            "geometry_effect": "A caixa de 200 mm é descontada da altura útil do marco.",
         },
     }
 

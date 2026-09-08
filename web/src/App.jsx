@@ -13,6 +13,15 @@ const baseDefaults = {
   external_finish: 'BARRA CHATA DE 30MM',
   screen_enabled: false,
   shutter_enabled: false,
+  shutter: {
+    mode: 'SEM PERSIANA',
+    box_description: 'CAIXA DE 200MM',
+    slat_description: 'TALA DE PVC 40MM',
+  },
+  leaf_grid: { horizontal_transoms: 0, vertical_transoms: 0, custom_dimensions: [] },
+  bottom_fixed_panel: null,
+  top_fixed_panel: null,
+  structural_reinforcement: null,
 }
 
 const fallbackOptions = {
@@ -36,7 +45,24 @@ const fallbackOptions = {
   rollers: ['ROLDANA 30KG', 'ROLDANA 50KG', 'ROLDANA 80KG', 'ROLDANA 120KG', 'ROLDANA 150KG'],
   finishes: ['SEM ACABAMENTO', 'GUARNIÇÃO DE 70MM', 'BARRA CHATA DE 30MM'],
   screen: { supported: true },
-  shutter: { supported: 'partial', box_height_mm: 200 },
+  shutter: {
+    supported: true,
+    box_height_mm: 200,
+    modes: [
+      'SEM PERSIANA',
+      'MANUAL EM PAINEL ÚNICO',
+      'MANUAL EM 2 PAINÉIS COM EIXO ÚNICO',
+      'MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES',
+      'AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO',
+      'AUTOMATIZADA COM BOTOEIRA EM 2 PAINÉIS',
+      'AUTOMATIZADA COM BOTOEIRA EM 3 PAINÉIS',
+      'AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO',
+      'AUTOMATIZADA COM CONTROLE REMOTO EM 2 PAINÉIS',
+      'AUTOMATIZADA COM CONTROLE REMOTO EM 3 PAINÉIS',
+    ],
+    boxes: ['CAIXA DE 200MM'],
+    slats: ['TALA DE PVC 40MM'],
+  },
 }
 
 const initialItems = [
@@ -170,7 +196,7 @@ function ItemsTable({ items, onRemove, onAdd, onEdit }) {
                 <td>{item.quantity}</td>
                 <td>{item.glass_description.replace(' FLOAT ', ' ')}</td>
                 <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
-                <td>{item.shutter_enabled ? 'Sim' : 'Não'}</td>
+                <td>{item.shutter?.mode && item.shutter.mode !== 'SEM PERSIANA' ? item.shutter.mode : (item.shutter_enabled ? 'Legado' : 'Não')}</td>
                 <td><span className="status">● Calculado</span></td>
                 <td><button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
               </tr>
@@ -285,13 +311,18 @@ function FieldSection({ title, children }) {
 }
 
 function AddItemModal({ onClose, onSave, options, item }) {
-  const [form, setForm] = useState(() => item ? { ...item } : {
+  const [form, setForm] = useState(() => ({
     ...baseDefaults,
     width_mm: 1200,
     height_mm: 1200,
     leaf_system: 'PRIME_WINDOW_42x66',
     glass_description: '04mm FLOAT INCOLOR',
-  })
+    ...(item || {}),
+    // Itens salvos pela API <= 0.4 podem ter apenas o booleano. Mantemos
+    // ``null`` nesse caso para não inventar um modo de acionamento.
+    shutter: item?.shutter || (item?.shutter_enabled ? null : baseDefaults.shutter),
+    leaf_grid: item?.leaf_grid || baseDefaults.leaf_grid,
+  }))
   const [validation, setValidation] = useState('')
 
   const set = (key) => (event) => {
@@ -299,6 +330,40 @@ function AddItemModal({ onClose, onSave, options, item }) {
     let value = target.type === 'checkbox' ? target.checked : target.value
     if (target.type === 'number' || key === 'leaf_count' || key === 'quantity') value = Number(value)
     setForm((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const setGrid = (key) => (event) => {
+    const value = Number(event.target.value)
+    setForm((prev) => ({ ...prev, leaf_grid: { ...prev.leaf_grid, [key]: value } }))
+  }
+
+  const setShutter = (key) => (event) => {
+    const value = event.target.value
+    setForm((prev) => ({
+      ...prev,
+      shutter_enabled: false,
+      shutter: { ...prev.shutter, [key]: value },
+    }))
+  }
+
+  const togglePanel = (key) => (event) => setForm((prev) => ({
+    ...prev,
+    [key]: event.target.checked
+      ? { height_mm: 400, horizontal_transoms: 0, vertical_transoms: 0 }
+      : null,
+  }))
+
+  const setPanel = (key, field) => (event) => {
+    const value = Number(event.target.value)
+    setForm((prev) => ({ ...prev, [key]: { ...prev[key], [field]: value } }))
+  }
+
+  const setReinforcement = (event) => {
+    const value = event.target.value
+    setForm((prev) => ({
+      ...prev,
+      structural_reinforcement: value ? { material_code: value } : null,
+    }))
   }
 
   const submit = (event) => {
@@ -309,7 +374,7 @@ function AddItemModal({ onClose, onSave, options, item }) {
     onSave({ ...form, id: item?.id || crypto.randomUUID() })
   }
 
-  const shutterHeight = options?.shutter?.box_height_mm || 200
+  const shutterActive = form.shutter?.mode && form.shutter.mode !== 'SEM PERSIANA'
 
   return (
     <div className="modal-backdrop" onMouseDown={onClose}>
@@ -333,9 +398,22 @@ function AddItemModal({ onClose, onSave, options, item }) {
           <FieldSection title="Vidro e complementos">
             <label className="span-2">Vidro<select value={form.glass_description} onChange={set('glass_description')}>{options.glasses.map((glass) => <option key={`${glass.code || ''}-${glass.description}`} value={glass.description}>{glass.description}{glass.price != null ? ` · ${money(glass.price)}/m²` : ''}</option>)}</select></label>
             <label className="toggle-field"><span>Tela mosquiteira</span><input type="checkbox" checked={form.screen_enabled} onChange={set('screen_enabled')} /></label>
-            <label className="toggle-field"><span>Persiana</span><input type="checkbox" checked={form.shutter_enabled} onChange={set('shutter_enabled')} /></label>
-            {form.shutter_enabled && <label>Caixa da persiana<input value={`${number(shutterHeight, 0)} mm`} readOnly /></label>}
-            {form.shutter_enabled && <div className="info-note">A caixa de {number(shutterHeight, 0)} mm já altera a geometria do cálculo. O kit completo da persiana ainda está marcado como migração pendente do Excel.</div>}
+            <label className="span-2">Persiana<select value={form.shutter?.mode || 'SEM PERSIANA'} onChange={setShutter('mode')}>{options.shutter.modes.map((value) => <option key={value}>{value}</option>)}</select></label>
+            {shutterActive && <label>Caixa<select value={form.shutter.box_description} onChange={setShutter('box_description')}>{options.shutter.boxes.map((value) => <option key={value}>{value}</option>)}</select></label>}
+            {shutterActive && <label>Tala<select value={form.shutter.slat_description} onChange={setShutter('slat_description')}>{options.shutter.slats.map((value) => <option key={value}>{value}</option>)}</select></label>}
+            {shutterActive && <div className="info-note">Kit completo homologado: caixa, talas, guias, eixo, acessórios e acionamento são calculados pela Engine.</div>}
+          </FieldSection>
+
+          <FieldSection title="Travessas e bandeiras">
+            <label>Travessas horizontais<input type="number" min="0" value={form.leaf_grid.horizontal_transoms} onChange={setGrid('horizontal_transoms')} /></label>
+            <label>Travessas verticais<input type="number" min="0" value={form.leaf_grid.vertical_transoms} onChange={setGrid('vertical_transoms')} /></label>
+            <label className="toggle-field"><span>Bandeira inferior</span><input type="checkbox" checked={Boolean(form.bottom_fixed_panel)} onChange={togglePanel('bottom_fixed_panel')} /></label>
+            <label className="toggle-field"><span>Bandeira superior</span><input type="checkbox" checked={Boolean(form.top_fixed_panel)} onChange={togglePanel('top_fixed_panel')} /></label>
+            {form.bottom_fixed_panel && <label>Altura inferior (mm)<input type="number" min="1" value={form.bottom_fixed_panel.height_mm} onChange={setPanel('bottom_fixed_panel', 'height_mm')} /></label>}
+            {form.bottom_fixed_panel && <label>Travessas H/V inferior<div className="inline-inputs"><input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms} onChange={setPanel('bottom_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.bottom_fixed_panel.vertical_transoms} onChange={setPanel('bottom_fixed_panel', 'vertical_transoms')} /></div></label>}
+            {form.top_fixed_panel && <label>Altura superior (mm)<input type="number" min="1" value={form.top_fixed_panel.height_mm} onChange={setPanel('top_fixed_panel', 'height_mm')} /></label>}
+            {form.top_fixed_panel && <label>Travessas H/V superior<div className="inline-inputs"><input type="number" min="0" value={form.top_fixed_panel.horizontal_transoms} onChange={setPanel('top_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.top_fixed_panel.vertical_transoms} onChange={setPanel('top_fixed_panel', 'vertical_transoms')} /></div></label>}
+            <label className="span-2">Reforço estrutural<select value={form.structural_reinforcement?.material_code || ''} onChange={setReinforcement}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238</option><option value="ALUM15338">ALUM15338</option></select></label>
           </FieldSection>
 
           <FieldSection title="Fechamento e ferragens">

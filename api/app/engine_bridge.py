@@ -24,6 +24,8 @@ from esquadrias_engine import (  # noqa: E402
     LeafGrid,
     LeafSystem,
     SlidingConfiguration,
+    ShutterConfiguration,
+    ShutterMode,
     StructuralReinforcement,
     build_order_purchase_plan,
     calculate_sliding,
@@ -32,6 +34,9 @@ from esquadrias_engine import (  # noqa: E402
     CREMONA_OPTIONS,
     ROLLER_OPTIONS,
     FINISH_OPTIONS,
+    SHUTTER_MODES,
+    SHUTTER_BOX_OPTIONS,
+    SHUTTER_SLAT_OPTIONS,
 )
 from esquadrias_engine.catalog import PARAMETERS  # noqa: E402
 
@@ -43,6 +48,8 @@ __all__ = [
     "LeafGrid",
     "LeafSystem",
     "SlidingConfiguration",
+    "ShutterConfiguration",
+    "ShutterMode",
     "StructuralReinforcement",
     "calculate_sliding",
     "build_order_purchase_plan",
@@ -51,5 +58,8 @@ __all__ = [
     "CREMONA_OPTIONS",
     "ROLLER_OPTIONS",
     "FINISH_OPTIONS",
+    "SHUTTER_MODES",
+    "SHUTTER_BOX_OPTIONS",
+    "SHUTTER_SLAT_OPTIONS",
     "PARAMETERS",
 ]

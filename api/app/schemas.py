@@ -26,6 +26,23 @@ class StructuralReinforcementRequest(BaseModel):
     material_code: Literal["ALUM10238", "ALUM15338"]
 
 
+class ShutterRequest(BaseModel):
+    mode: Literal[
+        "SEM PERSIANA",
+        "MANUAL EM PAINEL ÚNICO",
+        "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO",
+        "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
+        "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
+        "AUTOMATIZADA COM BOTOEIRA EM 2 PAINÉIS",
+        "AUTOMATIZADA COM BOTOEIRA EM 3 PAINÉIS",
+        "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO",
+        "AUTOMATIZADA COM CONTROLE REMOTO EM 2 PAINÉIS",
+        "AUTOMATIZADA COM CONTROLE REMOTO EM 3 PAINÉIS",
+    ]
+    box_description: Literal["CAIXA DE 200MM"] = "CAIXA DE 200MM"
+    slat_description: Literal["TALA DE PVC 40MM"] = "TALA DE PVC 40MM"
+
+
 class CRItemRequest(BaseModel):
     width_mm: float = Field(gt=0)
     height_mm: float = Field(gt=0)
@@ -45,6 +62,7 @@ class CRItemRequest(BaseModel):
     external_finish: str = "SEM ACABAMENTO"
     screen_enabled: bool = False
     shutter_enabled: bool = False
+    shutter: ShutterRequest | None = None
     leaf_grid: LeafGridRequest = Field(default_factory=LeafGridRequest)
     bottom_fixed_panel: FixedPanelRequest | None = None
     top_fixed_panel: FixedPanelRequest | None = None

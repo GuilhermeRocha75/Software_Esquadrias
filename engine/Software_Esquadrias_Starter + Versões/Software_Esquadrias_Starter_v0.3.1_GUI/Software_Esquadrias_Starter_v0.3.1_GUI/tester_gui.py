@@ -112,7 +112,7 @@ def fmt_mm(value: float) -> str:
 class EsquadriasTester(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Software Esquadrias — Tester CR v0.4.0")
+        self.title("Software Esquadrias — Tester CR v0.5.0")
         self.geometry("1600x930")
         self.minsize(1280, 780)
 

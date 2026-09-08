@@ -6,15 +6,45 @@ from .models import (
     LeafSystem, ApplicationType, SlidingConfiguration, CalculationResult,
     BomComponent, EngineeringWarning, GridAxis, GridOpening, Transom,
     TransomOrientation, FixedPanelPosition, FixedPanelGeometry, GlassPanel,
+    ShutterMode,
 )
 from .catalog import (
     MATERIALS, PARAMETERS, GLASSES, HARDWARE, FINISH_OPTIONS,
     CLOSURE_OPTIONS, CREMONA_OPTIONS, ROLLER_OPTIONS,
-    STRUCTURAL_REINFORCEMENT_CODES, normalize
+    STRUCTURAL_REINFORCEMENT_CODES, SHUTTER_BOX_OPTIONS,
+    SHUTTER_SLAT_OPTIONS, normalize
 )
 from .cr_geometry import make_openings, partition_axis, validate_count
 
 SUPPORTED_LEAF_COUNTS = {2, 3, 4, 6}
+
+
+def _shutter_mode(cfg: SlidingConfiguration) -> ShutterMode | None:
+    if cfg.shutter is None:
+        return None
+    try:
+        return ShutterMode(cfg.shutter.mode)
+    except ValueError as exc:
+        raise ValueError(f"Modo de persiana inválido: {cfg.shutter.mode}") from exc
+
+
+def _has_complete_shutter(cfg: SlidingConfiguration) -> bool:
+    mode = _shutter_mode(cfg)
+    return mode is not None and mode != ShutterMode.NONE
+
+
+def _has_shutter(cfg: SlidingConfiguration) -> bool:
+    mode = _shutter_mode(cfg)
+    return cfg.shutter_enabled if mode is None else mode != ShutterMode.NONE
+
+
+def _screen_frame_count(cfg: SlidingConfiguration) -> int:
+    """Quantidade física inteira; CR!G69 mantém fator de área separado."""
+    return math.ceil(cfg.leaf_count / 2) if cfg.screen_enabled else 0
+
+
+def _screen_profile_piece_qty(cfg: SlidingConfiguration) -> float:
+    return float(2 * _screen_frame_count(cfg))
 
 
 def _linear_component(category: str, role: str, material_code: str, length_mm: float,
@@ -132,6 +162,20 @@ def _validate(cfg: SlidingConfiguration) -> None:
         raise ValueError(f"Cremona inválida: {cfg.cremona_base}")
     if normalize(cfg.roller_description) not in {normalize(x) for x in ROLLER_OPTIONS}:
         raise ValueError(f"Roldana inválida: {cfg.roller_description}")
+    mode = _shutter_mode(cfg)
+    if cfg.shutter is not None:
+        if cfg.shutter_enabled and mode == ShutterMode.NONE:
+            raise ValueError(
+                "shutter_enabled não pode ser verdadeiro quando o modo é SEM PERSIANA."
+            )
+        if normalize(cfg.shutter.box_description) not in {
+            normalize(value) for value in SHUTTER_BOX_OPTIONS
+        }:
+            raise ValueError(f"Caixa de persiana inválida: {cfg.shutter.box_description}")
+        if normalize(cfg.shutter.slat_description) not in {
+            normalize(value) for value in SHUTTER_SLAT_OPTIONS
+        }:
+            raise ValueError(f"Tala de persiana inválida: {cfg.shutter.slat_description}")
     validate_count(cfg.leaf_grid.horizontal_transoms, "travessas horizontais das folhas")
     validate_count(cfg.leaf_grid.vertical_transoms, "travessas verticais das folhas")
     for panel_name, panel in (
@@ -443,8 +487,137 @@ def _add_finish(bom: list[BomComponent], cfg: SlidingConfiguration,
     ))
 
 
+def _add_shutter(
+    bom: list[BomComponent],
+    cfg: SlidingConfiguration,
+    warnings: list[EngineeringWarning],
+) -> None:
+    """Migra CR!54:60 e CR!120:136 com rastreabilidade por célula."""
+    if not _has_complete_shutter(cfg):
+        return
+
+    mode = _shutter_mode(cfg)
+    assert mode is not None and mode != ShutterMode.NONE
+    p = PARAMETERS
+    panel_count = {
+        ShutterMode.MANUAL_SINGLE: 1,
+        ShutterMode.MANUAL_DOUBLE_SHARED_SHAFT: 2,
+        ShutterMode.MANUAL_DOUBLE_INDEPENDENT_SHAFTS: 2,
+        ShutterMode.BUTTON_SINGLE: 1,
+        ShutterMode.BUTTON_DOUBLE: 2,
+        ShutterMode.BUTTON_TRIPLE: 3,
+        ShutterMode.REMOTE_SINGLE: 1,
+        ShutterMode.REMOTE_DOUBLE: 2,
+        ShutterMode.REMOTE_TRIPLE: 3,
+    }[mode]
+    manual = mode in {
+        ShutterMode.MANUAL_SINGLE,
+        ShutterMode.MANUAL_DOUBLE_SHARED_SHAFT,
+        ShutterMode.MANUAL_DOUBLE_INDEPENDENT_SHAFTS,
+    }
+    independent = mode == ShutterMode.MANUAL_DOUBLE_INDEPENDENT_SHAFTS
+    button = mode in {
+        ShutterMode.BUTTON_SINGLE,
+        ShutterMode.BUTTON_DOUBLE,
+        ShutterMode.BUTTON_TRIPLE,
+    }
+    remote = mode in {
+        ShutterMode.REMOTE_SINGLE,
+        ShutterMode.REMOTE_DOUBLE,
+        ShutterMode.REMOTE_TRIPLE,
+    }
+
+    box_length = cfg.width_mm - p["shutter_box_end_clearance_mm"]
+    guide_length = cfg.height_mm - p["shutter_box_height_mm"]
+    slat_width = (
+        (
+            cfg.width_mm
+            - 2 * p["shutter_side_guide_width_mm"]
+            - (panel_count - 1) * p["shutter_central_guide_width_mm"]
+        )
+        / panel_count
+        - p["shutter_slat_clearance_mm"]
+    )
+    if min(box_length, guide_length, slat_width) <= 0:
+        raise ValueError("Dimensões da persiana ficaram inválidas.")
+
+    # O XLSM usa (altura/40)*painéis, inclusive fracionário. Cada tala é uma
+    # peça física de barra; a Engine arredonda para cima para cobrir a altura.
+    slat_qty = float(math.ceil(cfg.height_mm / p["shutter_slat_height_mm"]) * panel_count)
+    shaft_length = (
+        cfg.width_mm / 2.0 - p["shutter_shaft_clearance_mm"]
+        if independent
+        else cfg.width_mm - p["shutter_shaft_clearance_mm"]
+    )
+    if shaft_length <= 0:
+        raise ValueError("Comprimento do eixo da persiana ficou inválido.")
+    # No modo de eixos independentes o XLSM corta meia largura, mas registra
+    # apenas 1 peça. Dois eixos são fisicamente exigidos e chegam ao FFD.
+    shaft_qty = 2.0 if independent else 1.0
+
+    bom.extend([
+        _linear_component("PERSIANA", "SHUTTER_BOX", "321040", box_length, 1, cfg.quantity, "CR!D54/G54"),
+        _linear_component("PERSIANA", "SHUTTER_SIDE_GUIDE", "327201", guide_length, 2, cfg.quantity, "CR!D55/G55"),
+        _linear_component("PERSIANA", "SHUTTER_SLAT", "326015_F", slat_width, slat_qty, cfg.quantity, "CR!D57/G57"),
+        _linear_component("PERSIANA", "SHUTTER_TERMINAL", "311712", slat_width, panel_count, cfg.quantity, "CR!D58/G58"),
+        _linear_component("PERSIANA", "SHUTTER_SHAFT", "375021", shaft_length, shaft_qty, cfg.quantity, "CR!D59/G59"),
+        _linear_component("PERSIANA", "SHUTTER_GUIDE_EXTENDER", "327019", guide_length, 2, cfg.quantity, "CR!D60/G60"),
+    ])
+    if panel_count > 1:
+        bom.append(_linear_component(
+            "PERSIANA", "SHUTTER_CENTRAL_GUIDE", "327204",
+            guide_length, panel_count - 1, cfg.quantity, "CR!D56/G56",
+        ))
+
+    motor_cover_qty = 0.0 if manual else 1.0
+    pulley_plate_qty = 2.0 if independent else (1.0 if manual else 0.0)
+    end_plate_qty = 0.0 if independent else 1.0
+    independent_divider_qty = 1.0 if independent else 0.0
+    shared_divider_qty = 0.0 if panel_count == 1 or independent else float(panel_count - 1)
+    pulley_qty = pulley_plate_qty
+    end_cap_qty = end_plate_qty + 2.0 * independent_divider_qty
+    unit_lines = [
+        ("SHUTTER_LATERAL_COVER", "370113", 2.0 if manual else 1.0, "CR!G120"),
+        ("SHUTTER_PULLEY_PLATE", "371513_4", pulley_plate_qty, "CR!G121"),
+        ("SHUTTER_END_PLATE", "371513_2", end_plate_qty, "CR!G122"),
+        ("SHUTTER_MOTOR_COVER", "370141", motor_cover_qty, "CR!G123"),
+        ("SHUTTER_MOTOR_PLATE", "371553", motor_cover_qty, "CR!G124"),
+        ("SHUTTER_SHARED_SHAFT_DIVIDER", "371143", shared_divider_qty, "CR!G125"),
+        ("SHUTTER_INDEPENDENT_SHAFT_DIVIDER", "371127", independent_divider_qty, "CR!G126"),
+        ("SHUTTER_PULLEY", "375110", pulley_qty, "CR!G127"),
+        ("SHUTTER_END_CAP", "375213", end_cap_qty, "CR!G128"),
+        ("SHUTTER_END_CAP_ADAPTER", "375234", end_cap_qty, "CR!G129"),
+        ("SHUTTER_RECESSED_WINDER", "375339", pulley_qty, "CR!G130"),
+        ("SHUTTER_REMOTE_MOTOR", "MOT1", 1.0 if remote else 0.0, "CR!G131"),
+        ("SHUTTER_BUTTON_MOTOR", "MOT2", 1.0 if button else 0.0, "CR!G132"),
+        ("SHUTTER_GUIDE_INVITATION_PAIR", "373128", 1.0, "CR!G133"),
+        ("SHUTTER_FIRST_SLAT_COUPLING", "375678", 2.0 * panel_count, "CR!G134"),
+        ("SHUTTER_FRONT_PIN", "375415", pulley_qty, "CR!G135"),
+        ("SHUTTER_OPENING_LIMITER", "375441", 2.0 * panel_count, "CR!G136"),
+    ]
+    for role, code, quantity, source in unit_lines:
+        if quantity > 0:
+            bom.append(_unit_component(
+                "PERSIANA", role, MATERIALS[code], quantity, cfg.quantity, source
+            ))
+
+    if independent:
+        warnings.append(EngineeringWarning(
+            "LEGACY-SHUTTER-INDEPENDENT-SHAFT",
+            "O Excel corta meia largura, mas registra 1 eixo e seleciona também o "
+            "divisor de eixo único por erro de digitação. A Engine usa 2 eixos e "
+            "somente o divisor de eixos independentes.",
+        ))
+    if slat_qty != (cfg.height_mm / p["shutter_slat_height_mm"]) * panel_count:
+        warnings.append(EngineeringWarning(
+            "LEGACY-SHUTTER-SLAT-FRACTION",
+            "A quantidade física de talas foi arredondada para cima; o Excel "
+            "mantém altura/40 como quantidade fracionária.",
+        ))
+
+
 def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
-    """CR Engine 0.4.
+    """CR Engine 0.5.
 
     Escopo desta versão:
     - perfis principais, tela simples, baguetes e acabamentos;
@@ -453,21 +626,21 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
     - borrachas/escovas;
     - acessórios básicos;
     - ferragens de correr;
-    - composição de custos por categoria.
+    - composição de custos por categoria e kit completo de persiana.
 
     Esta função mantém o núcleo simples previamente homologado. A composição
     dinâmica de travessas, bandeiras e painéis de vidro é aplicada pelo
-    ``calculate_sliding`` público. O kit completo de persiana permanece fora
-    da Fase 1.
+    ``calculate_sliding`` público.
     """
     _validate(cfg)
     warnings: list[EngineeringWarning] = []
     p = PARAMETERS
 
-    if cfg.shutter_enabled:
+    if cfg.shutter_enabled and cfg.shutter is None:
         warnings.append(EngineeringWarning(
             "V0.2-SHUTTER-PARTIAL",
-            "A altura útil desconta 200 mm como no Excel, mas o kit de persiana ainda não está no BOM."
+            "Entrada legada shutter_enabled: a altura útil mantém o desconto "
+            "de 200 mm sem inferir um modo de acionamento. Envie shutter para o kit completo."
         ))
 
     frame_code = _select_frame(cfg)
@@ -499,7 +672,7 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
         cfg.height_mm
         - bottom_height
         - top_height
-        - (p["shutter_box_height_mm"] if cfg.shutter_enabled else 0.0)
+        - (p["shutter_box_height_mm"] if _has_shutter(cfg) else 0.0)
     )
     if frame_height_final <= 0:
         raise ValueError(
@@ -524,7 +697,7 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
 
     frame_qty = _frame_profile_qty(cfg)
     leaf_profile_qty = float(2 * cfg.leaf_count)
-    screen_leaf_profile_qty = float(cfg.leaf_count) if cfg.screen_enabled else 0.0
+    screen_leaf_profile_qty = _screen_profile_piece_qty(cfg)
 
     bom: list[BomComponent] = []
 
@@ -604,7 +777,7 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
     ])
 
     if cfg.screen_enabled:
-        screen_baguette_qty = main_baguette_qty / 2.0
+        screen_baguette_qty = screen_leaf_profile_qty
         bom.extend([
             _linear_component("TELA", "SCREEN_BEAD_HORIZONTAL", "BA3218",
                               baguette_width, screen_baguette_qty, cfg.quantity),
@@ -663,8 +836,7 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
         ))
 
         screen_rubber_length_m = (
-            (baguette_width * (main_baguette_qty / 2.0))
-            + (baguette_height * (main_baguette_qty / 2.0))
+            2.0 * (baguette_width + baguette_height) * _screen_frame_count(cfg)
         ) / 1000.0
         bom.append(_linear_component(
             "VEDAÇÕES", "SCREEN_RUBBER", "TL2",
@@ -819,6 +991,8 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
         screw_hw_qty, cfg.quantity
     ))
 
+    _add_shutter(bom, cfg, warnings)
+
     # Remove linhas de quantidade zero para tornar a BOM mais legível.
     bom = [x for x in bom if x.quantity_per_unit > 0 and x.cost_per_unit_product >= 0]
 
@@ -845,6 +1019,21 @@ def _calculate_sliding_base(cfg: SlidingConfiguration) -> CalculationResult:
         "glass_width_mm": round(glass_width, 6),
         "glass_height_mm": round(glass_height, 6),
     }
+    if cfg.screen_enabled:
+        geometry.update({
+            "screen_panel_count": float(_screen_frame_count(cfg)),
+            "screen_frame_count": float(_screen_frame_count(cfg)),
+            "screen_mesh_area_m2": round(
+                glass_width / 1000.0 * glass_height / 1000.0 * screen_qty,
+                6,
+            ),
+        })
+        if cfg.leaf_count == 3:
+            warnings.append(EngineeringWarning(
+                "LEGACY-SCREEN-3-LEAF-FRACTION",
+                "CR!G69 usa 3/2 como fator de área da TL1. A Engine preserva "
+                "esse consumo de malha, mas usa 2 quadros físicos inteiros.",
+            ))
 
     return CalculationResult(
         model_description=description,
@@ -1068,6 +1257,7 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
     )
 
     if cfg.screen_enabled:
+        screen_bead_qty = _screen_profile_piece_qty(cfg)
         for opening in leaf_openings:
             source = (
                 f"SCREEN:R{opening.row_index + 1}"
@@ -1075,11 +1265,11 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
             )
             bom.append(_linear_component(
                 "TELA", "SCREEN_BEAD_HORIZONTAL", "BA3218",
-                opening.width_mm, opening.quantity, cfg.quantity, source,
+                opening.width_mm, screen_bead_qty, cfg.quantity, source,
             ))
             bom.append(_linear_component(
                 "TELA", "SCREEN_BEAD_VERTICAL", "BA3218",
-                opening.height_mm, opening.quantity, cfg.quantity, source,
+                opening.height_mm, screen_bead_qty, cfg.quantity, source,
             ))
 
     fixed_baguette_code = _select_fixed_panel_baguette(glass.thickness_mm)
@@ -1223,7 +1413,7 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
         ))
     if cfg.screen_enabled:
         screen_rubber_length = sum(
-            (opening.width_mm + opening.height_mm) * opening.quantity
+            2.0 * (opening.width_mm + opening.height_mm) * _screen_frame_count(cfg)
             for opening in leaf_openings
         )
         bom.append(_linear_component(
@@ -1245,7 +1435,7 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
 
     frame_qty = _frame_profile_qty(cfg)
     leaf_profile_qty = float(2 * cfg.leaf_count)
-    screen_leaf_profile_qty = float(cfg.leaf_count) if cfg.screen_enabled else 0.0
+    screen_leaf_profile_qty = _screen_profile_piece_qty(cfg)
     fastener_rate = p["reinforcement_fastener_rate_per_meter"]
     screw_reinforcement_qty = (
         (
@@ -1299,6 +1489,16 @@ def calculate_sliding(cfg: SlidingConfiguration) -> CalculationResult:
         ),
         "total_glass_panel_count": round(total_glass_panel_count, 6),
     })
+    if cfg.screen_enabled:
+        result.geometry.update({
+            "screen_panel_count": float(_screen_frame_count(cfg)),
+            "screen_frame_count": float(_screen_frame_count(cfg)),
+            "screen_mesh_area_m2": round(sum(
+                panel.area_m2 * panel.quantity / 2.0
+                for panel in glass_panels
+                if panel.source == "LEAF"
+            ), 6),
+        })
     if cfg.bottom_fixed_panel is not None:
         result.geometry["bottom_fixed_panel_height_mm"] = round(
             cfg.bottom_fixed_panel.height_mm, 6
