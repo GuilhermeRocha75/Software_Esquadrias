@@ -12,6 +12,11 @@ class ApplicationType(str, Enum):
     DOOR = "PORTA"
 
 
+class MaximArLeafSystem(str, Enum):
+    PRIME_WINDOW_42x63 = "PRIME_WINDOW_42x63"
+    DESIGN_WINDOW_60x78 = "DESIGN_WINDOW_60x78"
+
+
 class GridAxis(str, Enum):
     COLUMNS = "COLUMNS"
     ROWS = "ROWS"
@@ -109,6 +114,21 @@ class SlidingConfiguration:
     bottom_fixed_panel: FixedPanelConfiguration | None = None
     top_fixed_panel: FixedPanelConfiguration | None = None
     structural_reinforcement: StructuralReinforcement | None = None
+
+
+@dataclass(frozen=True)
+class MaximArConfiguration:
+    """Recorte homologável da aba MX: janela de uma folha e módulo único."""
+
+    width_mm: float
+    height_mm: float
+    quantity: int
+    leaf_system: MaximArLeafSystem
+    glass_description: str = "04mm MINI BOREAL"
+    closure_mode: str = "FECHO 1 PONTO"
+    cremona_description: str | None = None
+    internal_finish: str = "GUARNIÇÃO DE 70MM"
+    external_finish: str = "BARRA CHATA DE 30MM"
 
 
 @dataclass(frozen=True)

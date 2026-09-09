@@ -43,6 +43,7 @@ MATERIALS = {
     "AL19": Material("AL19", "TRILHO DESIGN", 5.10, "m"),
     "PR4263": Material("PR4263", "TRAVESSA (USADA COMO TRAVESSA)", 25.44, "m", 14, 28),
     "DE6072": Material("DE6072", "TRAVESSA / FOLHA JANELA AB. EXT.", 39.14, "m", 18, 36),
+    "DE6078": Material("DE6078", "FOLHA JANELA ABERTURA EXTERNA", 45.44, "m", 60, 78),
     "DE6058": Material("DE6058", "MARCO ALTO DE ABRIR", 38.45, "m", 58, 40),
     "ALUM10238": Material("ALUM10238", "PERFIL EXTRUTURAL ALUMINIO 102X50MM", 46.00, "m"),
     "ALUM15338": Material("ALUM15338", "PERFIL EXTRUTURAL ALUMINIO 138X50MM", 46.00, "m"),
@@ -65,6 +66,7 @@ MATERIALS = {
     "RAG - PR4266": Material("RAG - PR4266", "REFORÇO - FOLHA JANELA DE CORRER", 7.00, "m"),
     "RAG - DE60111": Material("RAG - DE60111", "REFORÇO - FOLHA PORTA DE CORRER (D)", 25.00, "m"),
     "RAG - PR4263": Material("RAG - PR4263", "REFORÇO - TRAVESSA", 7.00, "m"),
+    "RAG - DE6078": Material("RAG - DE6078", "REFORÇO - FOLHA JANELA", 10.00, "m"),
     "RAG - DE6072": Material("RAG - DE6072", "REFORÇO - TRAVESSA / FOLHA JANELA", 7.00, "m"),
     "RAG - DE6058": Material("RAG - DE6058", "REFORÇO - MARCO ALTO DE ABRIR", 8.00, "m"),
 
@@ -74,6 +76,7 @@ MATERIALS = {
 
     # Vedações e acessórios
     "ACB606": Material("ACB606", "BORRACHA PRIME 6X6", 1.80, "m"),
+    "AC0002": Material("AC0002", "BORRACHA MAXIM-AR", 1.60, "m"),
     "AC0708": Material("AC0708", "BORRACHA DESIGN 7X8", 1.80, "m"),
     "ACE606": Material("ACE606", "ESCOVA PRIME 6X6", 0.50, "m"),
     "AC0710": Material("AC0710", "ESCOVA DESIGN 7X10", 0.60, "m"),
@@ -220,7 +223,7 @@ BAR_STOCK_CODES = {
     "PR4266", "PR4288", "DE60111",
     "PR4536", "PR4550", "DE4109", "DE5013",
     "AC4222", "AL16", "AL17", "AL18", "AL19",
-    "PR4263", "DE6072", "DE6058", "ALUM10238", "ALUM15338",
+    "PR4263", "DE6072", "DE6078", "DE6058", "ALUM10238", "ALUM15338",
 
     # Baguetes
     "BA2516", "BA1016", "BA1216", "BA3218",
@@ -229,7 +232,7 @@ BAR_STOCK_CODES = {
     # Reforços
     "RAG - PR8852", "RAG - PR13852", "RAG - DE16652",
     "RAG - PR4288", "RAG - PR4266", "RAG - DE60111",
-    "RAG - PR4263", "RAG - DE6072", "RAG - DE6058",
+    "RAG - PR4263", "RAG - DE6078", "RAG - DE6072", "RAG - DE6058",
 
     # Acabamentos
     "AC7012", "AC3004",

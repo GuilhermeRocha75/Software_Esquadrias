@@ -44,6 +44,7 @@ class ShutterRequest(BaseModel):
 
 
 class CRItemRequest(BaseModel):
+    family: Literal["CR"] = "CR"
     width_mm: float = Field(gt=0)
     height_mm: float = Field(gt=0)
     quantity: int = Field(default=1, ge=1)
@@ -71,4 +72,27 @@ class CRItemRequest(BaseModel):
 
 class PurchasePlanRequest(BaseModel):
     items: list[CRItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)
+
+
+class MaximArItemRequest(BaseModel):
+    family: Literal["MAXIM_AR"] = "MAXIM_AR"
+    width_mm: float = Field(gt=0)
+    height_mm: float = Field(gt=0)
+    quantity: int = Field(default=1, ge=1)
+    leaf_system: Literal["PRIME_WINDOW_42x63", "DESIGN_WINDOW_60x78"]
+    glass_description: str = "04mm MINI BOREAL"
+    closure_mode: Literal["FECHO 1 PONTO", "MAÇANETA COM CREMONA"] = "FECHO 1 PONTO"
+    cremona_description: str | None = None
+    internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
+    external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
+
+
+class MaximArPurchasePlanRequest(BaseModel):
+    items: list[MaximArItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)
+
+
+class UnifiedPurchasePlanRequest(BaseModel):
+    items: list[CRItemRequest | MaximArItemRequest] = Field(min_length=1)
     kerf_mm: float = Field(default=0.0, ge=0)

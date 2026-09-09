@@ -27,8 +27,11 @@ from esquadrias_engine import (  # noqa: E402
     ShutterConfiguration,
     ShutterMode,
     StructuralReinforcement,
+    MaximArConfiguration,
+    MaximArLeafSystem,
     build_order_purchase_plan,
     calculate_sliding,
+    calculate_maxim_ar,
     GLASSES,
     CLOSURE_OPTIONS,
     CREMONA_OPTIONS,
@@ -37,6 +40,13 @@ from esquadrias_engine import (  # noqa: E402
     SHUTTER_MODES,
     SHUTTER_BOX_OPTIONS,
     SHUTTER_SLAT_OPTIONS,
+)
+from esquadrias_engine.maxim_ar import (  # noqa: E402
+    MAXIM_AR_ENGINE_VERSION,
+    MAXIM_AR_CLOSURE_OPTIONS,
+    MAXIM_AR_CREMONA_OPTIONS,
+    MAXIM_AR_INTERNAL_FINISH_OPTIONS,
+    MAXIM_AR_EXTERNAL_FINISH_OPTIONS,
 )
 from esquadrias_engine.catalog import PARAMETERS  # noqa: E402
 
@@ -51,7 +61,10 @@ __all__ = [
     "ShutterConfiguration",
     "ShutterMode",
     "StructuralReinforcement",
+    "MaximArConfiguration",
+    "MaximArLeafSystem",
     "calculate_sliding",
+    "calculate_maxim_ar",
     "build_order_purchase_plan",
     "GLASSES",
     "CLOSURE_OPTIONS",
@@ -62,4 +75,9 @@ __all__ = [
     "SHUTTER_BOX_OPTIONS",
     "SHUTTER_SLAT_OPTIONS",
     "PARAMETERS",
+    "MAXIM_AR_ENGINE_VERSION",
+    "MAXIM_AR_CLOSURE_OPTIONS",
+    "MAXIM_AR_CREMONA_OPTIONS",
+    "MAXIM_AR_INTERNAL_FINISH_OPTIONS",
+    "MAXIM_AR_EXTERNAL_FINISH_OPTIONS",
 ]

@@ -1,0 +1,82 @@
+{
+  "source": {
+    "workbook_sha256": "96514D7818BCBBC1DB86F94F86D8ED0239675E9F8D3A6B64DF651F30FD90C160",
+    "orcs_row": 16942,
+    "worksheet": "MX"
+  },
+  "input": {
+    "width_mm": 800,
+    "height_mm": 800,
+    "quantity": 1,
+    "leaf_system": "PRIME_WINDOW_42x63",
+    "glass_description": "04mm MINI BOREAL",
+    "closure_mode": "FECHO 1 PONTO",
+    "internal_finish": "GUARNIÇÃO DE 70MM",
+    "external_finish": "BARRA CHATA DE 30MM"
+  },
+  "geometry": {
+    "frame_width_final_mm": 800.0,
+    "frame_height_final_mm": 800.0,
+    "frame_width_cut_mm": 805.0,
+    "frame_height_cut_mm": 805.0,
+    "leaf_width_final_mm": 756.0,
+    "leaf_height_final_mm": 756.0,
+    "leaf_width_cut_mm": 761.0,
+    "leaf_height_cut_mm": 761.0,
+    "baguette_width_mm": 668.0,
+    "baguette_height_mm": 668.0,
+    "glass_width_mm": 660.0,
+    "glass_height_mm": 660.0
+  },
+  "cost_by_group": {
+    "PERFIS PRINCIPAIS": 159.35616,
+    "BAGUETES": 28.64384,
+    "ACABAMENTOS": 66.1544,
+    "REFORÇOS": 38.64,
+    "VIDROS": 50.094,
+    "VEDAÇÕES": 14.4864,
+    "ACESSÓRIOS": 3.4,
+    "FERRAGENS": 59.0056,
+    "TOTAL": 419.7804
+  },
+  "bom": [
+    ["FRAME_HORIZONTAL", "PR4263", 805.0, 2.0, 40.9584],
+    ["FRAME_VERTICAL", "PR4263", 805.0, 2.0, 40.9584],
+    ["LEAF_HORIZONTAL", "PR4263", 761.0, 2.0, 38.71968],
+    ["LEAF_VERTICAL", "PR4263", 761.0, 2.0, 38.71968],
+    ["GLAZING_BEAD_HORIZONTAL", "BA2516", 668.0, 2.0, 14.32192],
+    ["GLAZING_BEAD_VERTICAL", "BA2516", 668.0, 2.0, 14.32192],
+    ["INTERNAL_FINISH_HORIZONTAL", "AC7012", 940.0, 2.0, 27.5044],
+    ["INTERNAL_FINISH_VERTICAL", "AC7012", 940.0, 2.0, 27.5044],
+    ["EXTERNAL_FINISH_HORIZONTAL", "AC3004", 860.0, 2.0, 5.5728],
+    ["EXTERNAL_FINISH_VERTICAL", "AC3004", 860.0, 2.0, 5.5728],
+    ["FRAME_REINFORCEMENT_HORIZONTAL", "RAG - PR4263", 712.0, 2.0, 9.968],
+    ["FRAME_REINFORCEMENT_VERTICAL", "RAG - PR4263", 712.0, 2.0, 9.968],
+    ["LEAF_REINFORCEMENT_HORIZONTAL", "RAG - PR4263", 668.0, 2.0, 9.352],
+    ["LEAF_REINFORCEMENT_VERTICAL", "RAG - PR4263", 668.0, 2.0, 9.352],
+    ["GLASS_PANEL", "4MB", null, 1.0, 50.094],
+    ["GLASS_RUBBER", "ACB606", 2672.0, 1.0, 4.8096],
+    ["LEAF_RUBBER", "AC0002", 3024.0, 1.0, 4.8384],
+    ["FRAME_RUBBER", "AC0002", 3024.0, 1.0, 4.8384],
+    ["GLAZING_BLOCK", "AC0312", null, 4.0, 1.4],
+    ["DRAIN_CAP", "AC0001", null, 2.0, 2.0],
+    ["MAXIM_AR_ARM", "BRA3", null, 1.0, 29.0],
+    ["MAXIM_AR_LATCH", "FEC4", null, 1.0, 26.0],
+    ["REINFORCEMENT_SCREWS", "PAR2", null, 25.056, 2.5056],
+    ["HARDWARE_SCREWS", "PAR1", null, 10.0, 1.5]
+  ],
+  "purchase": {
+    "technical_total": 419.7804,
+    "bar_stock_consumption_cost": 292.7944,
+    "bar_stock_purchase_cost": 510.173,
+    "exact_nonbar_cost": 126.986,
+    "procurement_total_estimate": 637.159,
+    "lines": {
+      "BA2516": [4, 2672.0, 1],
+      "AC3004": [4, 3440.0, 1],
+      "AC7012": [4, 3760.0, 1],
+      "RAG - PR4263": [8, 5520.0, 1],
+      "PR4263": [8, 6264.0, 2]
+    }
+  }
+}

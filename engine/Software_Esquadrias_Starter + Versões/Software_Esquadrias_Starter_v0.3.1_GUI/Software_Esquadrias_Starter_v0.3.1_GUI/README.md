@@ -1,4 +1,14 @@
-# Software Esquadrias — CR Engine / Tester v0.5.0
+# Software Esquadrias — Engineering Engine
+
+## Maxim-Ar — Fase 1
+
+A versão `MX_ENGINE_0.1.0` implementa o baseline de uma folha, horizontal e
+módulo único para PRIME 42×63 e DESIGN 60×78. Geometria, BOM, custos,
+compra de barras e plano FFD são independentes da API e da Web. O golden está
+em `test_cases/maxim_ar_golden_v0_1.json` e a engenharia reversa completa em
+`docs/ENGENHARIA_REVERSA_MAXIM_AR_V1_2026-09-08.md` na raiz do repositório.
+
+O CR permanece em `CR_ENGINE_0.5.0`.
 
 ## Fechamento CR — Fase 2
 

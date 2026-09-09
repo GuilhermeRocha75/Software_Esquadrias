@@ -4,9 +4,10 @@ from .models import (
     PurchaseLine, OrderPurchasePlan, GridAxis, CustomDimension, LeafGrid,
     FixedPanelPosition, FixedPanelConfiguration, StructuralReinforcement,
     GridOpening, TransomOrientation, Transom, FixedPanelGeometry, GlassPanel,
-    ShutterMode, ShutterConfiguration,
+    ShutterMode, ShutterConfiguration, MaximArLeafSystem, MaximArConfiguration,
 )
 from .sliding import calculate_sliding
+from .maxim_ar import calculate_maxim_ar
 from .purchase import build_order_purchase_plan
 from .catalog import (
     GLASSES, CLOSURE_OPTIONS, CREMONA_OPTIONS, ROLLER_OPTIONS, FINISH_OPTIONS,
@@ -20,6 +21,7 @@ __all__ = [
     "GridAxis", "CustomDimension", "LeafGrid", "FixedPanelPosition",
     "FixedPanelConfiguration", "StructuralReinforcement", "GridOpening",
     "ShutterMode", "ShutterConfiguration",
+    "MaximArLeafSystem", "MaximArConfiguration", "calculate_maxim_ar",
     "TransomOrientation", "Transom", "FixedPanelGeometry", "GlassPanel",
     "CutPiece", "BarAllocation", "PurchaseLine", "OrderPurchasePlan",
     "calculate_sliding", "build_order_purchase_plan",

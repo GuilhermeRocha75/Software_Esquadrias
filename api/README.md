@@ -12,6 +12,10 @@ Endpoints já criados:
 - `GET /api/v1/engine/cr/options`
 - `POST /api/v1/engine/cr/calculate`
 - `POST /api/v1/purchase-plans/calculate`
+- `GET /api/v1/engine/maxim-ar/options`
+- `POST /api/v1/engine/maxim-ar/calculate`
+- `POST /api/v1/engine/maxim-ar/purchase-plan`
+- `POST /api/v1/purchase-plans/calculate-all` (pedido misto CR + Maxim-Ar)
 
 A resposta do cálculo CR já inclui:
 
@@ -56,6 +60,10 @@ http://127.0.0.1:8000/docs
 ## Regra arquitetural
 
 A API **não deve conter fórmulas de engenharia**. Ela valida entrada, chama a Engine e serializa a resposta.
+
+O Maxim-Ar Fase 1 expõe somente o baseline comprovado no XLSM: janela de uma
+folha, horizontal, módulo único, sistemas PRIME 42×63 e DESIGN 60×78. As
+opções ainda não homologadas não aparecem no contrato HTTP.
 
 ### Ponte temporária
 

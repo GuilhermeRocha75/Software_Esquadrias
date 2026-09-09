@@ -2,18 +2,22 @@ from __future__ import annotations
 
 from collections import defaultdict
 import math
-from typing import Iterable, Sequence
+from typing import Iterable, Protocol, Sequence
 
 from .catalog import MATERIALS, BAR_STOCK_CODES, DEFAULT_BAR_LENGTH_MM, PARAMETERS
 from .models import (
-    SlidingConfiguration, CalculationResult, CutPiece, BarAllocation,
+    CalculationResult, CutPiece, BarAllocation,
     PurchaseLine, OrderPurchasePlan, EngineeringWarning
 )
 
 _EPS = 1e-7
 
+
+class QuantityConfiguration(Protocol):
+    quantity: int
+
 def _explode_pieces(
-    order_items: Sequence[tuple[SlidingConfiguration, CalculationResult]],
+    order_items: Sequence[tuple[QuantityConfiguration, CalculationResult]],
 ) -> dict[str, list[CutPiece]]:
     grouped: dict[str, list[CutPiece]] = defaultdict(list)
 
@@ -93,7 +97,7 @@ def _first_fit_decreasing(
     return bars
 
 def build_order_purchase_plan(
-    order_items: Sequence[tuple[SlidingConfiguration, CalculationResult]],
+    order_items: Sequence[tuple[QuantityConfiguration, CalculationResult]],
     stock_length_mm: float = DEFAULT_BAR_LENGTH_MM,
     kerf_mm: float = PARAMETERS["kerf_mm"],
 ) -> OrderPurchasePlan:

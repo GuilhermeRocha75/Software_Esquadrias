@@ -15,8 +15,11 @@ from .engine_bridge import (
     ShutterConfiguration,
     ShutterMode,
     StructuralReinforcement,
+    MaximArConfiguration,
+    MaximArLeafSystem,
     build_order_purchase_plan,
     calculate_sliding,
+    calculate_maxim_ar,
     GLASSES,
     CLOSURE_OPTIONS,
     CREMONA_OPTIONS,
@@ -26,8 +29,19 @@ from .engine_bridge import (
     SHUTTER_BOX_OPTIONS,
     SHUTTER_SLAT_OPTIONS,
     PARAMETERS,
+    MAXIM_AR_ENGINE_VERSION,
+    MAXIM_AR_CLOSURE_OPTIONS,
+    MAXIM_AR_CREMONA_OPTIONS,
+    MAXIM_AR_INTERNAL_FINISH_OPTIONS,
+    MAXIM_AR_EXTERNAL_FINISH_OPTIONS,
 )
-from .schemas import CRItemRequest, PurchasePlanRequest
+from .schemas import (
+    CRItemRequest,
+    MaximArItemRequest,
+    MaximArPurchasePlanRequest,
+    PurchasePlanRequest,
+    UnifiedPurchasePlanRequest,
+)
 
 app = FastAPI(
     title="Software Esquadrias API",
@@ -116,6 +130,34 @@ def _serialize_result(cfg: SlidingConfiguration, result):
     }
 
 
+def _to_maxim_ar_config(item: MaximArItemRequest) -> MaximArConfiguration:
+    return MaximArConfiguration(
+        width_mm=item.width_mm,
+        height_mm=item.height_mm,
+        quantity=item.quantity,
+        leaf_system=MaximArLeafSystem(item.leaf_system),
+        glass_description=item.glass_description,
+        closure_mode=item.closure_mode,
+        cremona_description=item.cremona_description,
+        internal_finish=item.internal_finish,
+        external_finish=item.external_finish,
+    )
+
+
+def _serialize_purchase_plan(plan):
+    return {
+        "technical_total": plan.technical_total,
+        "bar_stock_consumption_cost": plan.bar_stock_consumption_cost,
+        "bar_stock_purchase_cost": plan.bar_stock_purchase_cost,
+        "exact_nonbar_cost": plan.exact_nonbar_cost,
+        "procurement_total_estimate": plan.procurement_total_estimate,
+        "purchase_increment_vs_consumption": plan.purchase_increment_vs_consumption,
+        "kerf_mm": plan.kerf_mm,
+        "lines": [asdict(line) for line in plan.lines],
+        "warnings": [asdict(warning) for warning in plan.warnings],
+    }
+
+
 @app.get("/")
 def root():
     return {
@@ -133,6 +175,7 @@ def health():
         "status": "ok",
         "api_version": "0.1.4",
         "engine": "CR_ENGINE_0.5.0",
+        "engines": ["CR_ENGINE_0.5.0", MAXIM_AR_ENGINE_VERSION],
     }
 
 
@@ -201,6 +244,97 @@ def calculate_cr(payload: CRItemRequest):
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
+@app.get("/api/v1/engine/maxim-ar/options")
+def maxim_ar_options():
+    glasses = []
+    for glass in GLASSES.values():
+        if glass.code == "0" or glass.thickness_mm is None or glass.thickness_mm > 34:
+            continue
+        compatible_systems = ["DESIGN_WINDOW_60x78"]
+        if glass.thickness_mm <= 24:
+            compatible_systems.insert(0, "PRIME_WINDOW_42x63")
+        glasses.append({
+            "code": glass.code,
+            "description": glass.description,
+            "price": glass.unit_price,
+            "thickness_mm": glass.thickness_mm,
+            "compatible_systems": compatible_systems,
+        })
+    glasses.sort(key=lambda row: (row["thickness_mm"], row["description"]))
+    return {
+        "engine_version": MAXIM_AR_ENGINE_VERSION,
+        "phase": 1,
+        "leaf_systems": [
+            {"value": "PRIME_WINDOW_42x63", "label": "Prime Janela 42x63"},
+            {"value": "DESIGN_WINDOW_60x78", "label": "Design Janela 60x78"},
+        ],
+        "leaf_counts": [1],
+        "orientations": ["HORIZONTAL"],
+        "module_modes": ["MÓDULO ÚNICO"],
+        "glasses": glasses,
+        "closures": list(MAXIM_AR_CLOSURE_OPTIONS),
+        "cremonas": list(MAXIM_AR_CREMONA_OPTIONS),
+        "internal_finishes": list(MAXIM_AR_INTERNAL_FINISH_OPTIONS),
+        "external_finishes": list(MAXIM_AR_EXTERNAL_FINISH_OPTIONS),
+        "screen": {"supported": False, "planned_phase": 2},
+        "fixed_panels": {"supported": False, "planned_phase": 2},
+        "structural_reinforcement": {"supported": False, "planned_phase": 2},
+        "kerf_mm": PARAMETERS["kerf_mm"],
+    }
+
+
+@app.post("/api/v1/engine/maxim-ar/calculate")
+def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
+    try:
+        cfg = _to_maxim_ar_config(payload)
+        return _serialize_result(cfg, calculate_maxim_ar(cfg))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/engine/maxim-ar/purchase-plan")
+def calculate_maxim_ar_purchase_plan(payload: MaximArPurchasePlanRequest):
+    try:
+        order_items = []
+        serialized_items = []
+        for item in payload.items:
+            cfg = _to_maxim_ar_config(item)
+            result = calculate_maxim_ar(cfg)
+            order_items.append((cfg, result))
+            serialized_items.append(_serialize_result(cfg, result))
+        plan = build_order_purchase_plan(order_items, kerf_mm=payload.kerf_mm)
+        return {
+            "items": serialized_items,
+            "purchase_plan": _serialize_purchase_plan(plan),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/purchase-plans/calculate-all")
+def calculate_unified_purchase_plan(payload: UnifiedPurchasePlanRequest):
+    """Plano FFD único para pedidos mistos CR + Maxim-Ar."""
+    try:
+        order_items = []
+        serialized_items = []
+        for item in payload.items:
+            if isinstance(item, MaximArItemRequest):
+                cfg = _to_maxim_ar_config(item)
+                result = calculate_maxim_ar(cfg)
+            else:
+                cfg = _to_config(item)
+                result = calculate_sliding(cfg)
+            order_items.append((cfg, result))
+            serialized_items.append(_serialize_result(cfg, result))
+        plan = build_order_purchase_plan(order_items, kerf_mm=payload.kerf_mm)
+        return {
+            "items": serialized_items,
+            "purchase_plan": _serialize_purchase_plan(plan),
+        }
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
 @app.post("/api/v1/purchase-plans/calculate")
 def calculate_purchase_plan(payload: PurchasePlanRequest):
     try:
@@ -215,17 +349,7 @@ def calculate_purchase_plan(payload: PurchasePlanRequest):
         plan = build_order_purchase_plan(order_items, kerf_mm=payload.kerf_mm)
         return {
             "items": serialized_items,
-            "purchase_plan": {
-                "technical_total": plan.technical_total,
-                "bar_stock_consumption_cost": plan.bar_stock_consumption_cost,
-                "bar_stock_purchase_cost": plan.bar_stock_purchase_cost,
-                "exact_nonbar_cost": plan.exact_nonbar_cost,
-                "procurement_total_estimate": plan.procurement_total_estimate,
-                "purchase_increment_vs_consumption": plan.purchase_increment_vs_consumption,
-                "kerf_mm": plan.kerf_mm,
-                "lines": [asdict(line) for line in plan.lines],
-                "warnings": [asdict(warning) for warning in plan.warnings],
-            },
+            "purchase_plan": _serialize_purchase_plan(plan),
         }
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
