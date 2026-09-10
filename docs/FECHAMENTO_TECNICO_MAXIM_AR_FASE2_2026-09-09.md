@@ -1,8 +1,11 @@
 # Fechamento técnico — Maxim-Ar Fase 2
 
-Data: 2026-09-09  
-Branch: `feature/maxim-ar-engine-v2`  
-Base exata: `1aaa99646cf81db6abefa93349e035a67280f260`  
+Data: 2026-09-09
+
+Branch: `feature/maxim-ar-engine-v2`
+
+Base exata: `1aaa99646cf81db6abefa93349e035a67280f260`
+
 Versão: `MX_ENGINE_0.2.0`
 
 ## Resultado executivo
@@ -154,7 +157,10 @@ liberada. A Fase 2, cujo objetivo era homologar toda a família, está reprovada
 porque restam definições físicas essenciais. O gate da família também está
 reprovado e a próxima família não deve ser iniciada.
 
-**MAXIM-AR FASE 2: REPROVADA**  
-**GATE MAXIM-AR: REPROVADO**  
-**MAXIM-AR 100% TECNICAMENTE HOMOLOGADO: NÃO**  
+**MAXIM-AR FASE 2: REPROVADA**
+
+**GATE MAXIM-AR: REPROVADO**
+
+**MAXIM-AR 100% TECNICAMENTE HOMOLOGADO: NÃO**
+
 **É seguro iniciar a próxima família: NÃO**
