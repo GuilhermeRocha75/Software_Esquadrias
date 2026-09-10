@@ -80,12 +80,20 @@ class MaximArItemRequest(BaseModel):
     width_mm: float = Field(gt=0)
     height_mm: float = Field(gt=0)
     quantity: int = Field(default=1, ge=1)
+    leaf_count: Literal[1, 2, 3, 4, 5, 6, 7, 8] = 1
+    orientation: Literal["HORIZONTAL", "VERTICAL"] = "HORIZONTAL"
+    module_mode: Literal["MÓDULO ÚNICO", "MÓDULOS SEPARADOS"] = "MÓDULO ÚNICO"
     leaf_system: Literal["PRIME_WINDOW_42x63", "DESIGN_WINDOW_60x78"]
     glass_description: str = "04mm MINI BOREAL"
     closure_mode: Literal["FECHO 1 PONTO", "MAÇANETA COM CREMONA"] = "FECHO 1 PONTO"
     cremona_description: str | None = None
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
+    screen_enabled: bool = False
+    leaf_grid: LeafGridRequest = Field(default_factory=LeafGridRequest)
+    bottom_fixed_panel: FixedPanelRequest | None = None
+    top_fixed_panel: FixedPanelRequest | None = None
+    structural_reinforcement: StructuralReinforcementRequest | None = None
 
 
 class MaximArPurchasePlanRequest(BaseModel):

@@ -61,9 +61,10 @@ http://127.0.0.1:8000/docs
 
 A API **não deve conter fórmulas de engenharia**. Ela valida entrada, chama a Engine e serializa a resposta.
 
-O Maxim-Ar Fase 1 expõe somente o baseline comprovado no XLSM: janela de uma
-folha, horizontal, módulo único, sistemas PRIME 42×63 e DESIGN 60×78. As
-opções ainda não homologadas não aparecem no contrato HTTP.
+O Maxim-Ar Fase 2 expõe a matriz comprovada da `MX_ENGINE_0.2.0`: uma a oito
+folhas, horizontal/vertical, tela recolhível e bandeiras simples. O endpoint
+de opções também declara as restrições e o gate técnico reprovado. Combinações
+ambíguas do XLSM são recusadas pela Engine com HTTP 422.
 
 ### Ponte temporária
 

@@ -4,7 +4,8 @@ from .models import (
     PurchaseLine, OrderPurchasePlan, GridAxis, CustomDimension, LeafGrid,
     FixedPanelPosition, FixedPanelConfiguration, StructuralReinforcement,
     GridOpening, TransomOrientation, Transom, FixedPanelGeometry, GlassPanel,
-    ShutterMode, ShutterConfiguration, MaximArLeafSystem, MaximArConfiguration,
+    ShutterMode, ShutterConfiguration, MaximArLeafSystem, MaximArOrientation,
+    MaximArModuleMode, MaximArConfiguration,
 )
 from .sliding import calculate_sliding
 from .maxim_ar import calculate_maxim_ar
@@ -21,7 +22,8 @@ __all__ = [
     "GridAxis", "CustomDimension", "LeafGrid", "FixedPanelPosition",
     "FixedPanelConfiguration", "StructuralReinforcement", "GridOpening",
     "ShutterMode", "ShutterConfiguration",
-    "MaximArLeafSystem", "MaximArConfiguration", "calculate_maxim_ar",
+    "MaximArLeafSystem", "MaximArOrientation", "MaximArModuleMode",
+    "MaximArConfiguration", "calculate_maxim_ar",
     "TransomOrientation", "Transom", "FixedPanelGeometry", "GlassPanel",
     "CutPiece", "BarAllocation", "PurchaseLine", "OrderPurchasePlan",
     "calculate_sliding", "build_order_purchase_plan",

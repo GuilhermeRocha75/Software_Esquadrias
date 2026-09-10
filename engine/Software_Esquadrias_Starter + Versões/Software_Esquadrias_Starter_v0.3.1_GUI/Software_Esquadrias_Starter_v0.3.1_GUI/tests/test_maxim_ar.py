@@ -185,7 +185,7 @@ class MaximArExcelRegressionTests(unittest.TestCase):
         result = calculate_maxim_ar(cfg)
         plan = build_order_purchase_plan([(cfg, result)])
 
-        self.assertEqual(result.calculation_version, "MX_ENGINE_0.1.0")
+        self.assertEqual(result.calculation_version, "MX_ENGINE_0.2.0")
         self.assertEqual(result.geometry, golden["geometry"])
         self.assertEqual(result.cost_breakdown, golden["cost_by_group"])
         actual_bom = [

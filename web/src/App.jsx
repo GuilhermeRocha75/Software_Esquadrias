@@ -28,14 +28,22 @@ const baseDefaults = {
 const maximArDefaults = {
   family: 'MAXIM_AR',
   quantity: 1,
+  leaf_count: 1,
   width_mm: 800,
   height_mm: 800,
   leaf_system: 'PRIME_WINDOW_42x63',
+  orientation: 'HORIZONTAL',
+  module_mode: 'MÓDULO ÚNICO',
   glass_description: '04mm MINI BOREAL',
   closure_mode: 'FECHO 1 PONTO',
   cremona_description: null,
   internal_finish: 'GUARNIÇÃO DE 70MM',
   external_finish: 'BARRA CHATA DE 30MM',
+  screen_enabled: false,
+  leaf_grid: { horizontal_transoms: 0, vertical_transoms: 0, custom_dimensions: [] },
+  bottom_fixed_panel: null,
+  top_fixed_panel: null,
+  structural_reinforcement: null,
 }
 
 const fallbackOptions = {
@@ -84,7 +92,9 @@ const fallbackMaximArOptions = {
     { value: 'PRIME_WINDOW_42x63', label: 'Prime Janela 42x63' },
     { value: 'DESIGN_WINDOW_60x78', label: 'Design Janela 60x78' },
   ],
-  leaf_counts: [1],
+  leaf_counts: [1, 2, 3, 4, 5, 6, 7, 8],
+  orientations: ['HORIZONTAL', 'VERTICAL'],
+  module_modes: ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS'],
   glasses: [{ description: '04mm MINI BOREAL', compatible_systems: ['PRIME_WINDOW_42x63', 'DESIGN_WINDOW_60x78'] }],
   closures: ['FECHO 1 PONTO', 'MAÇANETA COM CREMONA'],
   cremonas: [
@@ -224,7 +234,7 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onEdit }) {
                 <td><strong>{String(index + 1).padStart(2, '0')}</strong></td>
                 <td>{modelLabel(item)}</td>
                 <td>{item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
-                <td>{item.family === 'MAXIM_AR' ? 1 : item.leaf_count}</td>
+                <td>{item.leaf_count}</td>
                 <td>{item.width_mm}</td>
                 <td>{item.height_mm}</td>
                 <td>{item.quantity}</td>
@@ -348,19 +358,46 @@ function MaximArModal({ onClose, onSave, options, item }) {
   const [form, setForm] = useState(() => ({ ...maximArDefaults, ...(item || {}) }))
   const [validation, setValidation] = useState('')
   const set = (key) => (event) => {
-    const value = event.target.type === 'number' ? Number(event.target.value) : event.target.value
+    const value = event.target.type === 'checkbox' ? event.target.checked : (event.target.type === 'number' || key === 'leaf_count') ? Number(event.target.value) : event.target.value
     setForm((previous) => ({
       ...previous,
       [key]: value,
       ...(key === 'closure_mode' && value === 'FECHO 1 PONTO' ? { cremona_description: null } : {}),
     }))
   }
+  const togglePanel = (key) => (event) => setForm((previous) => {
+    const enabled = event.target.checked
+    const next = { ...previous, [key]: enabled ? { height_mm: 600, horizontal_transoms: 0, vertical_transoms: 0 } : null }
+    if (!next.bottom_fixed_panel && !next.top_fixed_panel) {
+      next.module_mode = 'MÓDULO ÚNICO'
+      next.structural_reinforcement = null
+    }
+    return next
+  })
+  const setPanelHeight = (key) => (event) => setForm((previous) => ({
+    ...previous,
+    [key]: { ...previous[key], height_mm: Number(event.target.value) },
+  }))
+  const setFixedTransoms = (event) => {
+    const count = Number(event.target.value)
+    setForm((previous) => ({
+      ...previous,
+      bottom_fixed_panel: previous.bottom_fixed_panel ? { ...previous.bottom_fixed_panel, horizontal_transoms: count } : null,
+      top_fixed_panel: previous.top_fixed_panel ? { ...previous.top_fixed_panel, horizontal_transoms: count } : null,
+    }))
+  }
+  const setStructural = (event) => setForm((previous) => ({
+    ...previous,
+    structural_reinforcement: event.target.value ? { material_code: event.target.value } : null,
+  }))
   const compatibleGlasses = options.glasses.filter((glass) =>
     !glass.compatible_systems || glass.compatible_systems.includes(form.leaf_system))
   const submit = (event) => {
     event.preventDefault()
     if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
     if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
+    if ((form.bottom_fixed_panel || form.top_fixed_panel) && form.leaf_count !== 1) return setValidation('Bandeiras estão liberadas somente para uma folha nesta fase.')
+    if (form.module_mode === 'MÓDULOS SEPARADOS' && !form.bottom_fixed_panel && !form.top_fixed_panel) return setValidation('Módulos separados exigem ao menos uma bandeira.')
     if (form.closure_mode === 'MAÇANETA COM CREMONA' && !form.cremona_description) return setValidation('Selecione a cremona Maxim-Ar.')
     onSave({ ...form, family: 'MAXIM_AR', id: item?.id || crypto.randomUUID() })
   }
@@ -368,7 +405,7 @@ function MaximArModal({ onClose, onSave, options, item }) {
     <div className="modal-backdrop" onMouseDown={onClose}>
       <form className="modal modal-large" onSubmit={submit} onMouseDown={(event) => event.stopPropagation()}>
         <div className="modal-head">
-          <div><strong>{item ? 'Editar Modelo Maxim-Ar' : 'Inserir Modelo Maxim-Ar'}</strong><span>Baseline Fase 1 conectado à MX_ENGINE_0.1.0</span></div>
+          <div><strong>{item ? 'Editar Modelo Maxim-Ar' : 'Inserir Modelo Maxim-Ar'}</strong><span>Fase 2 conectada à MX_ENGINE_0.2.0 · gate técnico pendente</span></div>
           <button type="button" onClick={onClose}>×</button>
         </div>
         <div className="modal-scroll">
@@ -377,11 +414,24 @@ function MaximArModal({ onClose, onSave, options, item }) {
             <label>Largura (mm)<input type="number" min="1" value={form.width_mm} onChange={set('width_mm')} /></label>
             <label>Altura (mm)<input type="number" min="1" value={form.height_mm} onChange={set('height_mm')} /></label>
             <label>Quantidade<input type="number" min="1" value={form.quantity} onChange={set('quantity')} /></label>
+            <label>Folhas<select value={form.leaf_count} onChange={set('leaf_count')}>{options.leaf_counts.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
             <label>Tipo de folha<select value={form.leaf_system} onChange={set('leaf_system')}>{options.leaf_systems.map((row) => <option key={row.value} value={row.value}>{row.label}</option>)}</select></label>
+            <label>Orientação<select value={form.orientation} onChange={set('orientation')}>{(options.orientations || ['HORIZONTAL', 'VERTICAL']).map((value) => <option key={value}>{value}</option>)}</select></label>
           </FieldSection>
           <FieldSection title="Vidro">
             <label className="span-2">Vidro<select value={form.glass_description} onChange={set('glass_description')}>{compatibleGlasses.map((glass) => <option key={`${glass.code || ''}-${glass.description}`} value={glass.description}>{glass.description}{glass.price != null ? ` · ${money(glass.price)}/m²` : ''}</option>)}</select></label>
-            <div className="info-note">Fase 1: uma folha horizontal, módulo único, sem tela ou bandeiras.</div>
+            <label className="checkbox-row"><input type="checkbox" checked={form.screen_enabled} onChange={set('screen_enabled')} /> Tela recolhível TL3</label>
+            <div className="info-note">A tela é um conjunto comprado: largura + altura + valor unitário, conforme MX!64.</div>
+          </FieldSection>
+          <FieldSection title="Bandeiras e módulos">
+            <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.bottom_fixed_panel)} onChange={togglePanel('bottom_fixed_panel')} /> Bandeira inferior</label>
+            {form.bottom_fixed_panel && <label>Altura inferior (mm)<input type="number" min="1" value={form.bottom_fixed_panel.height_mm} onChange={setPanelHeight('bottom_fixed_panel')} /></label>}
+            <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.top_fixed_panel)} onChange={togglePanel('top_fixed_panel')} /> Bandeira superior</label>
+            {form.top_fixed_panel && <label>Altura superior (mm)<input type="number" min="1" value={form.top_fixed_panel.height_mm} onChange={setPanelHeight('top_fixed_panel')} /></label>}
+            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Modo<select value={form.module_mode} onChange={set('module_mode')}>{(options.module_modes || ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS']).map((value) => <option key={value}>{value}</option>)}</select></label>}
+            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas horizontais<input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms} /></label>}
+            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Reforço estrutural<select value={form.structural_reinforcement?.material_code || ''} onChange={setStructural}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238 · 102x50</option><option value="ALUM15338">ALUM15338 · 138x50</option></select></label>}
+            <div className="info-note">Travessas verticais e combinações geométricas inconsistentes no Excel permanecem bloqueadas pela Engine.</div>
           </FieldSection>
           <FieldSection title="Fechamento e ferragens">
             <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>

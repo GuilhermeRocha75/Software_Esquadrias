@@ -150,3 +150,100 @@ O caso de ferragem com cremona deriva de ORCS 3194, removendo a bandeira inferio
 `MaximArConfiguration` contém somente largura, altura, quantidade, sistema de folha, vidro, fechamento/cremona e os dois acabamentos comprovados. Aplicação é sempre janela; uma folha, orientação horizontal e módulo único são características fixas desta versão, não opções falsas.
 
 Versão: `MX_ENGINE_0.1.0`. A versão `CR_ENGINE_0.5.0` permanece inalterada.
+
+---
+
+## Adendo Fase 2 — inventário completo em 2026-09-09
+
+O levantamento da Fase 2 passou a identificar MX pelo discriminador técnico
+`ORCS!X="MX"`, e não somente pelo texto da descrição. Assim foram encontrados
+3.644 registros: 3.136 de uma folha, 374 de duas, 91 de três, 33 de quatro, 2
+de cinco, 3 de seis, 2 de sete e 3 de oito folhas. Há 3.591 horizontais e 53
+verticais; 593 usam tela; 13 usam módulos separados; 483 possuem bandeira
+inferior e 163 bandeira superior.
+
+### Fórmulas adicionais comprovadas
+
+| Regra | Origem XLSM | Decisão da Engine 0.2 |
+| --- | --- | --- |
+| Distribuição horizontal de folhas | `MX!D10` | divide a largura útil e desconta `E5/E18` entre folhas |
+| Distribuição vertical de folhas | `MX!D11`, `MX!D14` | divide a altura útil e cria separadores horizontais |
+| Separadores entre folhas | `MX!D14:G15`, `D46:G47` | perfil `PR4263`/`DE6072` e reforço correspondente |
+| Bandeira integrada simples | `MX!D14:G19` | vãos, baguetes, vidro, travessa e reforço estruturados |
+| Bandeira separada simples | `MX!D20:G31`, `D48:G55` | quadro adicional, baguetes, vidro e reforços físicos |
+| Reforço estrutural | `MX!D32:G32` | `ALUM10238`/`ALUM15338`, um corte por bandeira |
+| Tela recolhível | `MX!D64:L64`, `LISTADIV!C5:C7` | item comprado `TL3`: largura_m×110 + altura_m×110 + 110 |
+
+### Uso real dos campos de travessas e cotas
+
+- `AF/AG`, travessas da folha móvel: zero ocorrências não nulas em 3.644 MX.
+- `V/W/Y/Z/AC/AE`, cotas auxiliares aplicáveis à MX: zero ocorrências não
+  nulas. `X` é o discriminador da família e `AD` contém cor em parte do
+  histórico; portanto esses dois campos não são cotas MX utilizáveis.
+- `AH` aparece em 78 registros, `AI` em 1, `AJ` em 54 e `AK` em 10. O uso
+  expôs inconsistências nas fórmulas de bandeira, descritas abaixo.
+
+### Inconsistências físicas confirmadas
+
+1. `MX!D10` usa `PFAB!B17=8` (DESIGN) no PRIME vertical, enquanto o mesmo
+   sistema usa `PFAB!B5=6` na orientação horizontal. A Engine corrige para 6
+   e emite `LEGACY-MX-PRIME-VERTICAL-DESIGN-OVERLAP-CORRECTED`.
+2. `MX!I56=SUM(I42:I47)` deixa fora `I48:I55`, embora essas linhas contenham
+   os reforços dos quadros separados. A Engine inclui esses materiais.
+3. `MX!G80` ignora todos os perfis dos quadros separados. A Engine aplica a
+   taxa já comprovada de quatro parafusos por metro também nesses perfis.
+4. Em módulo único, a geometria/quantidade de vidros não usa `AH/AJ`; no
+   superior, `G18` usa `AI` no lugar de `AK`.
+5. Em módulo separado, as quantidades `G30:G31` do painel superior usam
+   `AH/AI` (painel inferior). Com travessa horizontal, o Excel multiplica a
+   quantidade de vidro sem dividir sua altura.
+6. `AF/AG` alteram quantidade de baguete/vidro, mas não existe linha de BOM
+   que produza a travessa correspondente. Não há configuração histórica para
+   resolver a omissão.
+
+As combinações dos itens 4–6 são rejeitadas pela Engine. Não foi criada uma
+geometria por analogia com CR.
+
+### Investigação da vedação DESIGN em três camadas
+
+1. **Fórmula:** `MX!B67:B69` e `G67:G69` condicionam todas as vedações a
+   `B10=LISTAPERFIS!A7`, perfil PRIME. DESIGN resulta explicitamente em zero.
+2. **Catálogo:** `LISTAPERFIS` contém `ACB606` (borracha Prime 6×6), `AC0002`
+   (borracha Maxim-Ar) e também `AC0708` (borracha Design 7×8), mas nenhuma
+   fórmula MX liga `AC0708` ao marco/folha `DE6058/DE6078`, nem define seu
+   percurso ou quantidade.
+3. **Histórico:** 2.422 registros usam descrição DESIGN. ORCS guarda preço
+   agregado, não um snapshot de BOM; recalcular esses registros com o XLSM
+   atual continua zerando as três linhas de vedação. Logo o histórico não
+   comprova qual material físico foi realmente instalado.
+
+Classificação final: **C — `PENDING_PHYSICAL_HOMOLOGATION`**. Não é seguro
+assumir `AC0708` ou copiar o perímetro PRIME. Essa pendência, por si só,
+reprova o gate de homologação técnica integral.
+
+### Matriz liberada e matriz bloqueada
+
+Liberado em `MX_ENGINE_0.2.0`:
+
+- PRIME e DESIGN, de 1 a 8 folhas, horizontal ou vertical, sem bandeiras;
+- tela recolhível `TL3` opcional;
+- fecho de um ponto ou maçaneta com cremona;
+- uma folha com bandeira simples inferior/superior integrada;
+- travessas horizontais em bandeira integrada inferior; no superior somente
+  quando a contagem espelha a inferior;
+- uma folha com bandeiras simples, sem travessas, em módulos separados;
+- reforço estrutural com bandeira, sempre com alerta de cobertura histórica
+  zero.
+
+Bloqueado por validação:
+
+- `AF/AG` e cotas customizadas;
+- bandeiras com múltiplas folhas;
+- qualquer travessa vertical de bandeira;
+- travessas em módulos separados;
+- travessa superior integrada sem correspondente inferior idêntica;
+- reforço estrutural sem bandeira.
+
+Essa é uma matriz operacional segura, mas não representa homologação 100% da
+família. O fechamento detalhado está em
+`docs/FECHAMENTO_TECNICO_MAXIM_AR_FASE2_2026-09-09.md`.

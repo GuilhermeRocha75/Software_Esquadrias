@@ -114,6 +114,7 @@ MATERIALS = {
     # Tela
     "TL1": Material("TL1", "TELA MOSQUITEIRA (TECIDO)", 12.43, "m²"),
     "TL2": Material("TL2", "BORRACHA PARA TELA DE CORRER", 2.00, "m"),
+    "TL3": Material("TL3", "TELA MOSQUITEIRA (RECOLHÍVEL)", 0.00, "un"),
 
     # Ferragens fixas
     "MAC1": Material("MAC1", "MACANETA STANDARD", 11.00, "un"),

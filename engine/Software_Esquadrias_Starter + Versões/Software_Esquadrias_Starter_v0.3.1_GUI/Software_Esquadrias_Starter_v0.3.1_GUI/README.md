@@ -1,12 +1,13 @@
 # Software Esquadrias — Engineering Engine
 
-## Maxim-Ar — Fase 1
+## Maxim-Ar — Fase 2
 
-A versão `MX_ENGINE_0.1.0` implementa o baseline de uma folha, horizontal e
-módulo único para PRIME 42×63 e DESIGN 60×78. Geometria, BOM, custos,
-compra de barras e plano FFD são independentes da API e da Web. O golden está
-em `test_cases/maxim_ar_golden_v0_1.json` e a engenharia reversa completa em
-`docs/ENGENHARIA_REVERSA_MAXIM_AR_V1_2026-09-08.md` na raiz do repositório.
+A versão `MX_ENGINE_0.2.0` cobre de uma a oito folhas, horizontal/vertical,
+tela recolhível e a matriz segura de bandeiras/módulos separados. Combinações
+que o XLSM calcula de forma contraditória são rejeitadas, e a vedação DESIGN
+continua pendente de homologação física. Os goldens v0.1 e v0.2 permanecem em
+`test_cases/`; o fechamento está em
+`docs/FECHAMENTO_TECNICO_MAXIM_AR_FASE2_2026-09-09.md` na raiz.
 
 O CR permanece em `CR_ENGINE_0.5.0`.
 

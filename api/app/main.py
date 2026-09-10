@@ -17,6 +17,8 @@ from .engine_bridge import (
     StructuralReinforcement,
     MaximArConfiguration,
     MaximArLeafSystem,
+    MaximArOrientation,
+    MaximArModuleMode,
     build_order_purchase_plan,
     calculate_sliding,
     calculate_maxim_ar,
@@ -135,12 +137,40 @@ def _to_maxim_ar_config(item: MaximArItemRequest) -> MaximArConfiguration:
         width_mm=item.width_mm,
         height_mm=item.height_mm,
         quantity=item.quantity,
+        leaf_count=item.leaf_count,
         leaf_system=MaximArLeafSystem(item.leaf_system),
+        orientation=MaximArOrientation(item.orientation),
+        module_mode=MaximArModuleMode(item.module_mode),
         glass_description=item.glass_description,
         closure_mode=item.closure_mode,
         cremona_description=item.cremona_description,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
+        screen_enabled=item.screen_enabled,
+        leaf_grid=LeafGrid(
+            horizontal_transoms=item.leaf_grid.horizontal_transoms,
+            vertical_transoms=item.leaf_grid.vertical_transoms,
+            custom_dimensions=tuple(
+                CustomDimension(
+                    axis=GridAxis(dimension.axis),
+                    index=dimension.index,
+                    clear_span_mm=dimension.clear_span_mm,
+                )
+                for dimension in item.leaf_grid.custom_dimensions
+            ),
+        ),
+        bottom_fixed_panel=(
+            FixedPanelConfiguration(**item.bottom_fixed_panel.model_dump())
+            if item.bottom_fixed_panel is not None else None
+        ),
+        top_fixed_panel=(
+            FixedPanelConfiguration(**item.top_fixed_panel.model_dump())
+            if item.top_fixed_panel is not None else None
+        ),
+        structural_reinforcement=(
+            StructuralReinforcement(item.structural_reinforcement.material_code)
+            if item.structural_reinforcement is not None else None
+        ),
     )
 
 
@@ -263,22 +293,51 @@ def maxim_ar_options():
     glasses.sort(key=lambda row: (row["thickness_mm"], row["description"]))
     return {
         "engine_version": MAXIM_AR_ENGINE_VERSION,
-        "phase": 1,
+        "phase": 2,
         "leaf_systems": [
             {"value": "PRIME_WINDOW_42x63", "label": "Prime Janela 42x63"},
             {"value": "DESIGN_WINDOW_60x78", "label": "Design Janela 60x78"},
         ],
-        "leaf_counts": [1],
-        "orientations": ["HORIZONTAL"],
-        "module_modes": ["MÓDULO ÚNICO"],
+        "leaf_counts": list(range(1, 9)),
+        "orientations": ["HORIZONTAL", "VERTICAL"],
+        "module_modes": ["MÓDULO ÚNICO", "MÓDULOS SEPARADOS"],
         "glasses": glasses,
         "closures": list(MAXIM_AR_CLOSURE_OPTIONS),
         "cremonas": list(MAXIM_AR_CREMONA_OPTIONS),
         "internal_finishes": list(MAXIM_AR_INTERNAL_FINISH_OPTIONS),
         "external_finishes": list(MAXIM_AR_EXTERNAL_FINISH_OPTIONS),
-        "screen": {"supported": False, "planned_phase": 2},
-        "fixed_panels": {"supported": False, "planned_phase": 2},
-        "structural_reinforcement": {"supported": False, "planned_phase": 2},
+        "screen": {
+            "supported": True,
+            "material_code": "TL3",
+            "pricing": "largura_m * 110 + altura_m * 110 + 110",
+        },
+        "fixed_panels": {
+            "supported": True,
+            "positions": ["BOTTOM", "TOP"],
+            "constraints": [
+                "uma folha quando houver bandeira",
+                "sem travessa vertical",
+                "módulo separado sem travessas",
+                "travessas superiores integradas devem espelhar as inferiores",
+            ],
+        },
+        "leaf_grid": {
+            "supported": False,
+            "reason": "AF/AG sem uso histórico e sem BOM de travessa no XLSM",
+        },
+        "structural_reinforcement": {
+            "supported": True,
+            "materials": ["ALUM10238", "ALUM15338"],
+            "historical_orcs_cases": 0,
+        },
+        "technical_gate": {
+            "approved": False,
+            "blockers": [
+                "vedação física DESIGN sem definição",
+                "travessas de folha AF/AG sem BOM",
+                "ramos de bandeira com fórmulas geometricamente inconsistentes",
+            ],
+        },
         "kerf_mm": PARAMETERS["kerf_mm"],
     }
 
