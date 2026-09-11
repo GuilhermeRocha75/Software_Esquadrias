@@ -64,6 +64,11 @@ Informar:
 Fotos úteis: vista frontal completa e detalhes dos encontros. Documentos úteis:
 croqui aprovado, lista de corte, lista de vidros e lista de materiais.
 
+Já localizamos croquis e orçamentos que comprovam a grade `(VH)`, inclusive
+`(03)`, `(10)`, `(23)` e `(30)`. Não é necessário reenviar apenas a elevação
+frontal. A evidência que falta agora é a lista de corte/BOM que mostre perfis,
+descontos, folgas e medidas individuais dos vidros.
+
 ### 4. Bandeiras em módulos separados com travessas
 
 Localizar uma obra em que a folha Maxim-Ar e a bandeira foram fabricadas como
@@ -81,6 +86,9 @@ Informar:
 
 Fotos úteis: módulos antes da união e conjunto instalado. Documentos úteis:
 desenho de fabricação de cada módulo e listas de corte/vidro separadas.
+
+Já existem croquis comerciais e seis registros históricos dessa combinação;
+precisamos especificamente do documento de produção, não somente do orçamento.
 
 ### 5. Calços dos vidros das bandeiras
 
