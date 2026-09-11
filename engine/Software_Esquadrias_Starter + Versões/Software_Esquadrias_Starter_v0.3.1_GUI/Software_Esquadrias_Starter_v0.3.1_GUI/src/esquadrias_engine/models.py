@@ -147,6 +147,18 @@ class MaximArConfiguration:
     bottom_fixed_panel: FixedPanelConfiguration | None = None
     top_fixed_panel: FixedPanelConfiguration | None = None
     structural_reinforcement: StructuralReinforcement | None = None
+    sealing: "MaximArSealingConfiguration" = field(
+        default_factory=lambda: MaximArSealingConfiguration()
+    )
+
+
+@dataclass(frozen=True)
+class MaximArSealingConfiguration:
+    """Material comercial configurável; não representa código legado comprovado."""
+
+    internal_material_id: str = "MX-SEALING-CONFIGURABLE"
+    description: str = "VEDAÇÃO MAXIM-AR CONFIGURÁVEL"
+    unit_price_per_meter: float = 0.0
 
 
 @dataclass(frozen=True)

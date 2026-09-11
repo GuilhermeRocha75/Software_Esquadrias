@@ -21,6 +21,23 @@ SHA-256 confirmado: `96514D7818BCBBC1DB86F94F86D8ED0239675E9F8D3A6B64DF651F30FD9
 
 ## Matriz de homologação
 
+### Atualização Fase 3B — evidência direta de fabricação (2026-09-11)
+
+Esta matriz substitui os estados de bloqueio abaixo. A fonte humana foi
+anonimizada e nenhum dado de cliente foi reproduzido.
+
+| Bloqueador | Novo status | Evidência consolidada | Regra produtiva |
+| --- | --- | --- | --- |
+| Vedação PRIME/DESIGN | `RESOLVED_PHYSICAL` | Fabricação confirmou três percursos reais em ambos os sistemas | vidro/folha, perímetro externo da folha e contato no marco; material e R$/m configuráveis |
+| AF/AG na folha móvel | `RESOLVED_PHYSICAL` + `LEGACY_BUG_CONFIRMED` | Fabricação confirmou inexistência física | rejeitar Engine/API/Web |
+| Bandeiras `(V,H)` | `RESOLVED_EXCEL` + `RESOLVED_PHYSICAL_TOPOLOGY` | Fabricação confirmou `(03)=3` travessas/4 vidros; XLSM/LISTAPERFIS identifica `PR4263` e `DE6072` como perfis normais e `RAG - PR4263`/`RAG - DE6072` como reforços | `(V+1)*(H+1)` painéis; gerar travessas normais, nunca ALUM estrutural |
+| Módulos separados + travessas | `RESOLVED_PHYSICAL` + `LEGACY_BUG_CONFIRMED` | Fabricação confirmou combinação impossível | rejeitar Engine/API/Web |
+| Calços | `RESOLVED_PHYSICAL` | Fabricação confirmou quatro por painel de vidro | `4 * total_paineis_vidro * quantidade` |
+| Reforço estrutural | `RESOLVED_PHYSICAL` + `RESOLVED_EXCEL` | somente em módulo separado, opcional; XLSM/catálogo comprovam escolha manual e cortes | proibir no módulo único; não selecionar automaticamente |
+
+Correção expressa: **reforço estrutural não é obrigatório em módulo
+separado; é opcional e somente permitido nessa condição.**
+
 | Bloqueador | Status | Evidência Excel | Evidência ORCS | Evidência física | Regra candidata | Confiança | Próxima ação |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Vedações DESIGN | BLOCKED | MX 67:69 restringe três vedações ao PRIME; catálogo traz `AC0708` a R$ 1,80/m, sem ligação MX/percurso | 2.423 descrições DESIGN; nenhum código de vedação em 238 PDFs | ausente | `AC0708` é candidato por catálogo/analogia CR, mas material e percursos de vidro/folha/marco não estão provados | BAIXA | obter lista/foto de uma fabricação DESIGN |

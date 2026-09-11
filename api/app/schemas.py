@@ -26,6 +26,12 @@ class StructuralReinforcementRequest(BaseModel):
     material_code: Literal["ALUM10238", "ALUM15338"]
 
 
+class MaximArSealingRequest(BaseModel):
+    internal_material_id: str = Field(default="MX-SEALING-CONFIGURABLE", min_length=1)
+    description: str = Field(default="VEDAÇÃO MAXIM-AR CONFIGURÁVEL", min_length=1)
+    unit_price_per_meter: float = Field(default=0.0, ge=0)
+
+
 class ShutterRequest(BaseModel):
     mode: Literal[
         "SEM PERSIANA",
@@ -94,6 +100,7 @@ class MaximArItemRequest(BaseModel):
     bottom_fixed_panel: FixedPanelRequest | None = None
     top_fixed_panel: FixedPanelRequest | None = None
     structural_reinforcement: StructuralReinforcementRequest | None = None
+    sealing: MaximArSealingRequest = Field(default_factory=MaximArSealingRequest)
 
 
 class MaximArPurchasePlanRequest(BaseModel):

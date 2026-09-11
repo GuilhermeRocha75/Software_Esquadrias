@@ -19,6 +19,7 @@ from .engine_bridge import (
     MaximArLeafSystem,
     MaximArOrientation,
     MaximArModuleMode,
+    MaximArSealingConfiguration,
     build_order_purchase_plan,
     calculate_sliding,
     calculate_maxim_ar,
@@ -171,6 +172,7 @@ def _to_maxim_ar_config(item: MaximArItemRequest) -> MaximArConfiguration:
             StructuralReinforcement(item.structural_reinforcement.material_code)
             if item.structural_reinforcement is not None else None
         ),
+        sealing=MaximArSealingConfiguration(**item.sealing.model_dump()),
     )
 
 
@@ -293,7 +295,7 @@ def maxim_ar_options():
     glasses.sort(key=lambda row: (row["thickness_mm"], row["description"]))
     return {
         "engine_version": MAXIM_AR_ENGINE_VERSION,
-        "phase": 2,
+        "phase": 3,
         "leaf_systems": [
             {"value": "PRIME_WINDOW_42x63", "label": "Prime Janela 42x63"},
             {"value": "DESIGN_WINDOW_60x78", "label": "Design Janela 60x78"},
@@ -315,28 +317,24 @@ def maxim_ar_options():
             "supported": True,
             "positions": ["BOTTOM", "TOP"],
             "constraints": [
-                "uma folha quando houver bandeira",
-                "sem travessa vertical",
                 "módulo separado sem travessas",
-                "travessas superiores integradas devem espelhar as inferiores",
+                "grade integrada (V,H) gera (V+1)*(H+1) vidros",
             ],
         },
         "leaf_grid": {
             "supported": False,
-            "reason": "AF/AG sem uso histórico e sem BOM de travessa no XLSM",
+            "reason": "AF/AG fisicamente inválidos por confirmação de fabricação",
         },
         "structural_reinforcement": {
             "supported": True,
             "materials": ["ALUM10238", "ALUM15338"],
             "historical_orcs_cases": 0,
+            "constraint": "opcional e somente em módulos separados",
         },
+        "sealing": {"configurable": True, "unit": "m", "physical_paths": 3},
         "technical_gate": {
-            "approved": False,
-            "blockers": [
-                "vedação física DESIGN sem definição",
-                "travessas de folha AF/AG sem BOM",
-                "ramos de bandeira com fórmulas geometricamente inconsistentes",
-            ],
+            "approved": True,
+            "blockers": [],
         },
         "kerf_mm": PARAMETERS["kerf_mm"],
     }

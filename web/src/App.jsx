@@ -44,6 +44,7 @@ const maximArDefaults = {
   bottom_fixed_panel: null,
   top_fixed_panel: null,
   structural_reinforcement: null,
+  sealing: { internal_material_id: 'MX-SEALING-CONFIGURABLE', description: 'VEDAÇÃO MAXIM-AR CONFIGURÁVEL', unit_price_per_meter: 0 },
 }
 
 const fallbackOptions = {
@@ -378,14 +379,10 @@ function MaximArModal({ onClose, onSave, options, item }) {
     ...previous,
     [key]: { ...previous[key], height_mm: Number(event.target.value) },
   }))
-  const setFixedTransoms = (event) => {
-    const count = Number(event.target.value)
-    setForm((previous) => ({
-      ...previous,
-      bottom_fixed_panel: previous.bottom_fixed_panel ? { ...previous.bottom_fixed_panel, horizontal_transoms: count } : null,
-      top_fixed_panel: previous.top_fixed_panel ? { ...previous.top_fixed_panel, horizontal_transoms: count } : null,
-    }))
-  }
+  const setFixedTransoms = (panel, axis) => (event) => setForm((previous) => ({
+    ...previous,
+    [panel]: { ...previous[panel], [axis]: Number(event.target.value) },
+  }))
   const setStructural = (event) => setForm((previous) => ({
     ...previous,
     structural_reinforcement: event.target.value ? { material_code: event.target.value } : null,
@@ -396,8 +393,10 @@ function MaximArModal({ onClose, onSave, options, item }) {
     event.preventDefault()
     if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
     if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
-    if ((form.bottom_fixed_panel || form.top_fixed_panel) && form.leaf_count !== 1) return setValidation('Bandeiras estão liberadas somente para uma folha nesta fase.')
     if (form.module_mode === 'MÓDULOS SEPARADOS' && !form.bottom_fixed_panel && !form.top_fixed_panel) return setValidation('Módulos separados exigem ao menos uma bandeira.')
+    if ((form.leaf_grid.horizontal_transoms || form.leaf_grid.vertical_transoms)) return setValidation('AF/AG na folha móvel são fisicamente inválidos.')
+    if (form.module_mode === 'MÓDULOS SEPARADOS' && [form.bottom_fixed_panel, form.top_fixed_panel].filter(Boolean).some((p) => p.horizontal_transoms || p.vertical_transoms)) return setValidation('Módulos separados não admitem travessas internas.')
+    if (form.structural_reinforcement && form.module_mode !== 'MÓDULOS SEPARADOS') return setValidation('Reforço estrutural só é permitido em módulos separados.')
     if (form.closure_mode === 'MAÇANETA COM CREMONA' && !form.cremona_description) return setValidation('Selecione a cremona Maxim-Ar.')
     onSave({ ...form, family: 'MAXIM_AR', id: item?.id || crypto.randomUUID() })
   }
@@ -405,7 +404,7 @@ function MaximArModal({ onClose, onSave, options, item }) {
     <div className="modal-backdrop" onMouseDown={onClose}>
       <form className="modal modal-large" onSubmit={submit} onMouseDown={(event) => event.stopPropagation()}>
         <div className="modal-head">
-          <div><strong>{item ? 'Editar Modelo Maxim-Ar' : 'Inserir Modelo Maxim-Ar'}</strong><span>Fase 2 conectada à MX_ENGINE_0.2.0 · gate técnico pendente</span></div>
+          <div><strong>{item ? 'Editar Modelo Maxim-Ar' : 'Inserir Modelo Maxim-Ar'}</strong><span>Fase 3B conectada à MX_ENGINE_0.3.0</span></div>
           <button type="button" onClick={onClose}>×</button>
         </div>
         <div className="modal-scroll">
@@ -429,9 +428,15 @@ function MaximArModal({ onClose, onSave, options, item }) {
             <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.top_fixed_panel)} onChange={togglePanel('top_fixed_panel')} /> Bandeira superior</label>
             {form.top_fixed_panel && <label>Altura superior (mm)<input type="number" min="1" value={form.top_fixed_panel.height_mm} onChange={setPanelHeight('top_fixed_panel')} /></label>}
             {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Modo<select value={form.module_mode} onChange={set('module_mode')}>{(options.module_modes || ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS']).map((value) => <option key={value}>{value}</option>)}</select></label>}
-            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas horizontais<input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms} /></label>}
-            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Reforço estrutural<select value={form.structural_reinforcement?.material_code || ''} onChange={setStructural}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238 · 102x50</option><option value="ALUM15338">ALUM15338 · 138x50</option></select></label>}
-            <div className="info-note">Travessas verticais e combinações geométricas inconsistentes no Excel permanecem bloqueadas pela Engine.</div>
+            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V inferior<div className="inline-inputs"><input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.bottom_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'vertical_transoms')} /></div></label>}
+            {form.top_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V superior<div className="inline-inputs"><input type="number" min="0" value={form.top_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.top_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'vertical_transoms')} /></div></label>}
+            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Reforço estrutural<select disabled={form.module_mode !== 'MÓDULOS SEPARADOS'} value={form.structural_reinforcement?.material_code || ''} onChange={setStructural}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238 · 102x50</option><option value="ALUM15338">ALUM15338 · 138x50</option></select></label>}
+            <div className="info-note">Travessas pertencem apenas a bandeiras integradas. Reforço estrutural é opcional e exclusivo de módulos separados.</div>
+          </FieldSection>
+          <FieldSection title="Vedação configurável">
+            <label className="span-2">Descrição<input value={form.sealing.description} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, description: e.target.value } }))} /></label>
+            <label>Identificador interno<input value={form.sealing.internal_material_id} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, internal_material_id: e.target.value } }))} /></label>
+            <label>Preço por metro<input type="number" min="0" step="0.01" value={form.sealing.unit_price_per_meter} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, unit_price_per_meter: Number(e.target.value) } }))} /></label>
           </FieldSection>
           <FieldSection title="Fechamento e ferragens">
             <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>

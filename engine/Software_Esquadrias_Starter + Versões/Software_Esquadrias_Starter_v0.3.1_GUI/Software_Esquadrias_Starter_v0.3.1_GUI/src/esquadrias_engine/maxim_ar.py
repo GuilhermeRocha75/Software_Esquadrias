@@ -12,7 +12,7 @@ from .models import (
 )
 
 
-MAXIM_AR_ENGINE_VERSION = "MX_ENGINE_0.2.0"
+MAXIM_AR_ENGINE_VERSION = "MX_ENGINE_0.3.0"
 MAXIM_AR_SUPPORTED_LEAF_COUNTS = tuple(range(1, 9))
 MAXIM_AR_CLOSURE_OPTIONS = ("FECHO 1 PONTO", "MAÇANETA COM CREMONA")
 MAXIM_AR_CREMONA_OPTIONS = (
@@ -66,6 +66,20 @@ def _linear_component(category, role, material_code, length_mm, quantity_per_uni
         quantity_per_unit=float(quantity_per_unit),
         quantity_order=float(quantity_per_unit * order_quantity),
         unit_price=material.unit_price, cost_per_unit_product=round(cost, 6),
+        source=source,
+    )
+
+
+def _configured_sealing_component(cfg, role, length_mm, order_quantity, source):
+    sealing = cfg.sealing
+    cost = length_mm / 1000.0 * sealing.unit_price_per_meter
+    return BomComponent(
+        category="VEDAÇÕES", role=role,
+        material_code=sealing.internal_material_id,
+        description=sealing.description, unit="m", length_mm=round(length_mm, 6),
+        width_mm=None, height_mm=None, area_m2=None, quantity_per_unit=1.0,
+        quantity_order=float(order_quantity), unit_price=sealing.unit_price_per_meter,
+        cost_per_unit_product=round(cost, 6),
         source=source,
     )
 
@@ -166,8 +180,7 @@ def _validate_configuration(cfg):
         raise ValueError("O Maxim-Ar comprovado em ORCS admite de 1 a 8 folhas.")
     if cfg.leaf_grid.horizontal_transoms or cfg.leaf_grid.vertical_transoms:
         raise ValueError(
-            "Travessas internas da folha móvel não estão homologadas: AF/AG têm zero uso "
-            "nos 3.644 registros MX e o XLSM não gera os perfis correspondentes."
+            "Travessas AF/AG dentro da folha móvel são fisicamente inválidas no Maxim-Ar."
         )
     if cfg.leaf_grid.custom_dimensions:
         raise ValueError("Cotas personalizadas V:AE não possuem uso MX comprovado em ORCS.")
@@ -185,27 +198,11 @@ def _validate_configuration(cfg):
         validate_count(panel.vertical_transoms, "travessas verticais da bandeira")
     if cfg.module_mode == MaximArModuleMode.SEPARATE and not panels:
         raise ValueError("MÓDULOS SEPARADOS exige ao menos uma bandeira.")
-    if panels and cfg.leaf_count != 1:
+    if cfg.module_mode == MaximArModuleMode.SEPARATE and any(
+        panel.horizontal_transoms or panel.vertical_transoms for panel in panels
+    ):
         raise ValueError(
-            "Bandeiras com múltiplas folhas permanecem bloqueadas: MX usa o número de "
-            "folhas no lugar de AH/AJ e produz uma geometria não fechada."
-        )
-    if any(panel.vertical_transoms for panel in panels):
-        raise ValueError(
-            "Travessas verticais de bandeira permanecem bloqueadas: MX ignora AH/AJ "
-            "na geometria e na quantidade de vidros do módulo único."
-        )
-    if cfg.module_mode == MaximArModuleMode.SEPARATE and any(panel.horizontal_transoms for panel in panels):
-        raise ValueError(
-            "Travessas em bandeira separada permanecem bloqueadas: MX multiplica a "
-            "quantidade sem dividir a dimensão do vidro."
-        )
-    bottom_h = cfg.bottom_fixed_panel.horizontal_transoms if cfg.bottom_fixed_panel else 0
-    top_h = cfg.top_fixed_panel.horizontal_transoms if cfg.top_fixed_panel else 0
-    if cfg.module_mode == MaximArModuleMode.SINGLE and top_h and top_h != bottom_h:
-        raise ValueError(
-            "Travessas superiores assimétricas permanecem bloqueadas: MX!G18 usa AI "
-            "(bandeira inferior) no lugar de AK."
+            "Módulos separados com travessas internas são fisicamente inválidos."
         )
     if sum(panel.height_mm for panel in panels) >= cfg.height_mm:
         raise ValueError("As bandeiras não podem consumir toda a altura do conjunto.")
@@ -213,8 +210,13 @@ def _validate_configuration(cfg):
         code = cfg.structural_reinforcement.material_code
         if code not in STRUCTURAL_REINFORCEMENT_CODES:
             raise ValueError(f"Reforço estrutural Maxim-Ar não suportado: {code}")
-        if not panels:
-            raise ValueError("Reforço estrutural Maxim-Ar exige bandeira inferior ou superior.")
+        if cfg.module_mode != MaximArModuleMode.SEPARATE:
+            raise ValueError("Reforço estrutural é permitido somente em módulos separados.")
+    sealing = cfg.sealing
+    if not sealing.internal_material_id.strip() or not sealing.description.strip():
+        raise ValueError("A vedação configurável exige identificador interno e descrição.")
+    if not math.isfinite(sealing.unit_price_per_meter) or sealing.unit_price_per_meter < 0:
+        raise ValueError("O preço por metro da vedação deve ser finito e não negativo.")
 
 
 def _fixed_panel_geometry(cfg, position, props):
@@ -339,11 +341,21 @@ def calculate_maxim_ar(cfg):
             ])
         else:
             panel_cfg = cfg.bottom_fixed_panel if panel.position == FixedPanelPosition.BOTTOM else cfg.top_fixed_panel
-            horizontal_length = panel.openings[0].width_mm + recess
-            horizontal_qty = panel_cfg.horizontal_transoms + 1
-            transom = Transom(prefix, TransomOrientation.HORIZONTAL, transom_code, transom_reinforcement, round(horizontal_length, 6), float(horizontal_qty))
-            transoms.append(transom)
-            bom.append(_linear_component("PERFIS PRINCIPAIS", f"{prefix}_TRANSOM_HORIZONTAL", transom_code, horizontal_length, horizontal_qty, quantity, "MX-GEO-005 / MX!D14:G14"))
+            inner_width = sum(o.width_mm for o in panel.openings if o.row_index == 0) + panel_cfg.vertical_transoms * transom_face
+            inner_height = sum(o.height_mm for o in panel.openings if o.column_index == 0) + panel_cfg.horizontal_transoms * transom_face
+            boundary_length = inner_width + recess
+            boundary = Transom(f"{prefix}_BOUNDARY", TransomOrientation.HORIZONTAL, transom_code, transom_reinforcement, round(boundary_length, 6), 1.0)
+            transoms.append(boundary)
+            bom.append(_linear_component("PERFIS PRINCIPAIS", f"{prefix}_BOUNDARY_TRANSOM_HORIZONTAL", transom_code, boundary_length, 1, quantity, "MX-GEO-005 / MX!D14:G14"))
+            if panel_cfg.horizontal_transoms:
+                divider = Transom(f"{prefix}_FIXED_DIVIDER", TransomOrientation.HORIZONTAL, transom_code, transom_reinforcement, round(boundary_length, 6), float(panel_cfg.horizontal_transoms))
+                transoms.append(divider)
+                bom.append(_linear_component("PERFIS PRINCIPAIS", f"{prefix}_FIXED_DIVIDER_HORIZONTAL", transom_code, boundary_length, panel_cfg.horizontal_transoms, quantity, "MX-GEO-006 / RESOLVED_PHYSICAL_TOPOLOGY"))
+            if panel_cfg.vertical_transoms:
+                vertical_length = inner_height + recess
+                divider = Transom(f"{prefix}_FIXED_DIVIDER", TransomOrientation.VERTICAL, transom_code, transom_reinforcement, round(vertical_length, 6), float(panel_cfg.vertical_transoms))
+                transoms.append(divider)
+                bom.append(_linear_component("PERFIS PRINCIPAIS", f"{prefix}_FIXED_DIVIDER_VERTICAL", transom_code, vertical_length, panel_cfg.vertical_transoms, quantity, "MX-GEO-006 / RESOLVED_PHYSICAL_TOPOLOGY"))
         for opening in panel.openings:
             position = f"{prefix}:R{opening.row_index + 1}C{opening.column_index + 1}"
             bom.extend([
@@ -379,35 +391,28 @@ def calculate_maxim_ar(cfg):
     if cfg.screen_enabled:
         bom.append(_screen_component(width, frame_height, quantity))
 
+    glass_sealing_length = sum(2 * (o.width_mm + o.height_mm) * o.quantity for o in all_openings)
+    leaf_perimeter = 2 * count * (leaf_width + leaf_height)
+    bom.extend([
+        _configured_sealing_component(cfg, "GLASS_SEATING_SEAL", glass_sealing_length, quantity, "MX-VED-001 / RESOLVED_PHYSICAL"),
+        _configured_sealing_component(cfg, "LEAF_EXTERNAL_SEAL", leaf_perimeter, quantity, "MX-VED-002 / RESOLVED_PHYSICAL"),
+        _configured_sealing_component(cfg, "FRAME_CONTACT_SEAL", leaf_perimeter, quantity, "MX-VED-003 / RESOLVED_PHYSICAL"),
+    ])
     warnings = []
-    if cfg.leaf_system == MaximArLeafSystem.PRIME_WINDOW_42x63:
-        rubber_openings = leaf_openings if separate else all_openings
-        rubber_length = sum(2 * (o.width_mm + o.height_mm) * o.quantity for o in rubber_openings)
-        bom.extend([
-            _linear_component("VEDAÇÕES", "GLASS_RUBBER", "ACB606", rubber_length, 1, quantity, "MX-VED-001 / MX!G67:I67"),
-            _linear_component("VEDAÇÕES", "LEAF_RUBBER", "AC0002", 2 * count * (leaf_width + leaf_height), 1, quantity, "MX-VED-002 / MX!G68:I68"),
-            _linear_component("VEDAÇÕES", "FRAME_RUBBER", "AC0002", 2 * count * (leaf_width + leaf_height), 1, quantity, "MX-VED-003 / MX!G69:I69"),
-        ])
-    else:
-        warnings.extend([
-            EngineeringWarning("LEGACY-MX-DESIGN-SEALING-OMITTED", "MX!B67:B69 zera todas as vedações no DESIGN; a omissão legada foi preservada e continua explícita."),
-            EngineeringWarning("PENDING-MX-DESIGN-SEALING-PHYSICAL-DEFINITION", "Catálogo e histórico não definem material/percurso alternativo para a vedação DESIGN; a pendência bloqueia homologação 100%."),
-        ])
+    if cfg.sealing.unit_price_per_meter == 0:
+        warnings.append(EngineeringWarning("MX-SEALING-PRICE-NOT-CONFIGURED", "A vedação física foi calculada, mas o preço configurado é zero."))
     if cfg.orientation == MaximArOrientation.VERTICAL and cfg.leaf_system == MaximArLeafSystem.PRIME_WINDOW_42x63:
         warnings.append(EngineeringWarning("LEGACY-MX-PRIME-VERTICAL-DESIGN-OVERLAP-CORRECTED", "MX!D10 usa PFAB!B17=8 mm; a Engine usa o transpasse PRIME PFAB!B5=6 mm, com delta intencional contra o Excel."))
     if separate:
         warnings.extend([
             EngineeringWarning("LEGACY-MX-SEPARATE-REINFORCEMENT-SUBTOTAL-CORRECTED", "MX!I56 soma apenas I42:I47 e omite os reforços físicos I48:I55; a Engine os inclui."),
             EngineeringWarning("LEGACY-MX-SEPARATE-SCREWS-CORRECTED", "MX!G80 ignora os quadros separados; a Engine aplica a mesma taxa comprovada de 4 parafusos/m."),
-            EngineeringWarning("PENDING-MX-SEPARATE-FIXED-SEALING", "MX!G67 não inclui as vedações dos vidros em módulos separados; a Engine não inventa material ou perímetro adicional."),
         ])
-    if fixed_panels:
-        warnings.append(EngineeringWarning("PENDING-MX-FIXED-GLAZING-BLOCKS", "MX!G72 dimensiona calços apenas pelas folhas móveis; não há definição física comprovada de calços adicionais para os vidros das bandeiras."))
     if cfg.structural_reinforcement:
         warnings.append(EngineeringWarning("MX-STRUCTURAL-REINFORCEMENT-NO-HISTORICAL-ORCS", "A fórmula MX!D32:G32 e o catálogo comprovam o item, mas ORCS não contém nenhum caso MX preenchido com reforço estrutural."))
 
     bom.extend([
-        _unit_component("GLAZING_BLOCK", MATERIALS["AC0312"], 4 * count, quantity, "MX-ACE-001 / MX!G72:I72", "ACESSÓRIOS"),
+        _unit_component("GLAZING_BLOCK", MATERIALS["AC0312"], 4 * sum(o.quantity for o in all_openings), quantity, "MX-ACE-001 / RESOLVED_PHYSICAL", "ACESSÓRIOS"),
         _unit_component("DRAIN_CAP", MATERIALS["AC0001"], 2, quantity, "MX-ACE-002 / MX!G73:I73", "ACESSÓRIOS"),
     ])
     bom.append(_unit_component("MAXIM_AR_ARM", _arm_material(cfg.leaf_system, leaf_height), count, quantity, "MX-FER-001 / MX!B76:I76"))
