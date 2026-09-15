@@ -229,9 +229,15 @@ def _fixed_panel_geometry(cfg, position, props):
     frame_face = float(props["frame_face"])
     transom_face = float(props["transom_face"])
     transom_depth = float(props["transom_depth"])
-    # Em módulos separados, MX!D24/D30 retira também o rebaixo PFAB!B18.
-    # Esse detalhe é comprovado nos casos ORCS de uma folha (por exemplo 990).
-    inner_width = float(cfg.width_mm) - 2 * frame_face - (float(props["transom_recess"]) if separate else 0.0)
+    # Integrado: MX!D16/D18 = D14 - 12, inclusive no PRIME (PFAB!B19=6).
+    # O desconto fixo de 12 não é o rebaixo PRIME. Não há prova física
+    # para trocá-lo por 6. Preserve o corte D14 independentemente do vidro.
+    # Separado: conserva o comportamento já validado em MX!D24/D30.
+    recess = float(props["transom_recess"])
+    inner_width = (
+        float(cfg.width_mm) - 2 * frame_face - recess
+        if separate else float(cfg.width_mm) - 2 * frame_face + recess - 12.0
+    )
     inner_height = frame_height - 2 * frame_face if separate else frame_height - frame_face - transom_depth
     widths = partition_axis(inner_width, panel_cfg.vertical_transoms, transom_face, (), GridAxis.COLUMNS, f"largura da bandeira {position.value}")
     heights = partition_axis(inner_height, panel_cfg.horizontal_transoms, transom_face, (), GridAxis.ROWS, f"altura da bandeira {position.value}")
@@ -341,9 +347,8 @@ def calculate_maxim_ar(cfg):
             ])
         else:
             panel_cfg = cfg.bottom_fixed_panel if panel.position == FixedPanelPosition.BOTTOM else cfg.top_fixed_panel
-            inner_width = sum(o.width_mm for o in panel.openings if o.row_index == 0) + panel_cfg.vertical_transoms * transom_face
             inner_height = sum(o.height_mm for o in panel.openings if o.column_index == 0) + panel_cfg.horizontal_transoms * transom_face
-            boundary_length = inner_width + recess
+            boundary_length = width - 2 * frame_face + recess
             boundary = Transom(f"{prefix}_BOUNDARY", TransomOrientation.HORIZONTAL, transom_code, transom_reinforcement, round(boundary_length, 6), 1.0)
             transoms.append(boundary)
             bom.append(_linear_component("PERFIS PRINCIPAIS", f"{prefix}_BOUNDARY_TRANSOM_HORIZONTAL", transom_code, boundary_length, 1, quantity, "MX-GEO-005 / MX!D14:G14"))

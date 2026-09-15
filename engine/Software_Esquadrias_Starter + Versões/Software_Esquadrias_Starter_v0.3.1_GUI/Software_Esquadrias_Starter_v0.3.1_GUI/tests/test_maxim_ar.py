@@ -34,14 +34,14 @@ def configuration(**overrides):
 class MaximArExcelRegressionTests(unittest.TestCase):
     def test_five_real_orcs_cases_match_recalculated_excel(self):
         cases = (
-            # ORCS row, width, height, qty, system, Excel MX!I85
-            (7, 680, 690, 2, MaximArLeafSystem.PRIME_WINDOW_42x63, 358.1772),
-            (11, 550, 550, 2, MaximArLeafSystem.DESIGN_WINDOW_60x78, 378.12602),
-            (24, 1150, 700, 2, MaximArLeafSystem.DESIGN_WINDOW_60x78, 645.06852),
-            (16942, 800, 800, 1, MaximArLeafSystem.PRIME_WINDOW_42x63, 419.7804),
-            (18712, 600, 600, 1, MaximArLeafSystem.DESIGN_WINDOW_60x78, 409.29252),
+            # Excel MX!I85 e custo removido I67:I69 (preço moderno zero).
+            (7, 680, 690, 2, MaximArLeafSystem.PRIME_WINDOW_42x63, 358.1772, 12.1864),
+            (11, 550, 550, 2, MaximArLeafSystem.DESIGN_WINDOW_60x78, 378.12602, 0),
+            (24, 1150, 700, 2, MaximArLeafSystem.DESIGN_WINDOW_60x78, 645.06852, 0),
+            (16942, 800, 800, 1, MaximArLeafSystem.PRIME_WINDOW_42x63, 419.7804, 14.4864),
+            (18712, 600, 600, 1, MaximArLeafSystem.DESIGN_WINDOW_60x78, 409.29252, 0),
         )
-        for row, width, height, quantity, system, expected in cases:
+        for row, width, height, quantity, system, expected, removed_sealing in cases:
             with self.subTest(orcs_row=row):
                 result = calculate_maxim_ar(configuration(
                     width_mm=width,
@@ -49,8 +49,8 @@ class MaximArExcelRegressionTests(unittest.TestCase):
                     quantity=quantity,
                     leaf_system=system,
                 ))
-                self.assertGreater(result.unit_cost, 0)
-                self.assertTrue(math.isfinite(result.unit_cost))
+                self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 0)
+                self.assertEqual(result.unit_cost, round(expected - removed_sealing, 6))
 
     def test_prime_geometry_matches_mx_formulas(self):
         result = calculate_maxim_ar(configuration())
@@ -96,7 +96,8 @@ class MaximArExcelRegressionTests(unittest.TestCase):
         }
         self.assertEqual(bead_codes, {"BA2018"})
         # ORCS!15766 recalculada na versão corrente do XLSM.
-        self.assertGreater(result.unit_cost, 0)
+        # Vedações legadas de 10,1864 removidas; preço moderno explicitamente zero.
+        self.assertEqual(result.unit_cost, round(359.84084 - 10.1864, 6))
 
     def test_cremona_hardware_matches_recalculated_excel(self):
         result = calculate_maxim_ar(configuration(
@@ -187,7 +188,19 @@ class MaximArExcelRegressionTests(unittest.TestCase):
 
         self.assertEqual(result.calculation_version, "MX_ENGINE_0.3.0")
         self.assertEqual(result.geometry, golden["geometry"])
+        legacy_sealing = golden["cost_by_group"]["VEDAÇÕES"]
+        self.assertEqual(result.unit_cost, round(golden["cost_by_group"]["TOTAL"] - legacy_sealing, 6))
+        for group, expected in golden["cost_by_group"].items():
+            if group not in ("VEDAÇÕES", "TOTAL"):
+                self.assertEqual(result.cost_breakdown[group], expected)
+        self.assertEqual(
+            [[x.role, x.material_code, x.length_mm, x.quantity_per_unit, x.cost_per_unit_product]
+             for x in result.unit_bom if x.category != "VEDAÇÕES"],
+            [x for x in golden["bom"] if x[0] not in ("GLASS_RUBBER", "LEAF_RUBBER", "FRAME_RUBBER")],
+        )
         self.assertEqual(plan.technical_total, result.unit_cost)
+        self.assertEqual(plan.bar_stock_purchase_cost, golden["purchase"]["bar_stock_purchase_cost"])
+        self.assertEqual(plan.procurement_total_estimate, round(golden["purchase"]["procurement_total_estimate"] - legacy_sealing, 6))
         actual_lines = {
             line.material_code: [line.pieces_count, line.consumed_length_mm, line.bars_required]
             for line in plan.lines

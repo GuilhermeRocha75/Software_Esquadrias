@@ -63,7 +63,7 @@ class MaximArEndpointTests(unittest.TestCase):
         response = calculate_maxim_ar_endpoint(request())
         self.assertEqual(response["engine_version"], "MX_ENGINE_0.3.0")
         self.assertEqual(response["geometry"]["glass_width_mm"], 660)
-        self.assertGreater(response["unit_technical_cost"], 0)
+        self.assertEqual(response["unit_technical_cost"], round(419.7804 - 14.4864, 6))
         self.assertEqual(response["order_technical_cost"], response["unit_technical_cost"])
         self.assertIn("MX-SEALING-CONFIGURABLE", {row["material_code"] for row in response["bom"]})
 
@@ -91,8 +91,8 @@ class MaximArEndpointTests(unittest.TestCase):
         ))
         plan = response["purchase_plan"]
         self.assertEqual(plan["kerf_mm"], 0)
-        self.assertGreater(plan["technical_total"], 0)
-        self.assertGreater(plan["procurement_total_estimate"], 0)
+        self.assertEqual(plan["technical_total"], round(419.7804 - 14.4864, 6))
+        self.assertEqual(plan["procurement_total_estimate"], round(637.159 - 14.4864, 6))
         pr4263 = next(line for line in plan["lines"] if line["material_code"] == "PR4263")
         self.assertEqual(pr4263["bars_required"], 2)
 
@@ -115,6 +115,25 @@ class MaximArEndpointTests(unittest.TestCase):
             response["purchase_plan"]["technical_total"],
             response["items"][0]["unit_technical_cost"],
         )
+
+    def test_audited_prime_flag_dimensions_and_nonzero_sealing_price(self):
+        for position in ("bottom", "top"):
+            with self.subTest(position=position):
+                response = calculate_maxim_ar_endpoint(request(
+                    width_mm=1000, height_mm=3000, quantity=2,
+                    sealing={"internal_material_id": "MX-SEAL-TEST-180",
+                             "description": "Borracha configurada", "unit_price_per_meter": 1.8},
+                    **{position + "_fixed_panel": {"height_mm": 1000, "horizontal_transoms": 3}},
+                ))
+                openings = response["fixed_panels"][0]["openings"]
+                self.assertEqual(len(openings), 4)
+                self.assertTrue(all((x["width_mm"], x["height_mm"]) == (938, 218.5) for x in openings))
+                glasses = [x for x in response["glass_panels"] if x["source"] == position.upper()]
+                self.assertEqual(len(glasses), 4)
+                self.assertTrue(all((x["width_mm"], x["height_mm"]) == (930, 210.5) for x in glasses))
+                self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 47.6208)
+                self.assertEqual(response["unit_technical_cost"], 1308.78798)
+                self.assertEqual(response["order_technical_cost"], 2617.57596)
 
     def test_phase2_multiple_vertical_request_is_serialized(self):
         response = calculate_maxim_ar_endpoint(request(

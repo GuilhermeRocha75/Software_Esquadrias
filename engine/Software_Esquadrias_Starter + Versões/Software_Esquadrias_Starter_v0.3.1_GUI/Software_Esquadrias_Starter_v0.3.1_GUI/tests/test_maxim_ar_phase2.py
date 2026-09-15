@@ -44,7 +44,7 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
             glass_description="04mm FLOAT INCOLOR",
         ))
         self.assertEqual(result.calculation_version, "MX_ENGINE_0.3.0")
-        self.assertGreater(result.unit_cost, 0)
+        self.assertEqual(result.unit_cost, 1074.13412)  # DESIGN: preço de vedação zero.
         self.assertEqual(result.geometry["leaf_width_final_mm"], 658)
         self.assertEqual(result.geometry["leaf_height_final_mm"], 936)
         self.assertEqual(len(result.transoms), 1)
@@ -59,7 +59,8 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
         ))
         self.assertEqual(result.geometry["leaf_width_final_mm"], 396)
         self.assertEqual(result.geometry["leaf_height_final_mm"], 490)
-        self.assertGreater(result.unit_cost, 0)
+        # Delta anterior de transpasse -1,13944 e retirada da vedação corrigida.
+        self.assertEqual(result.unit_cost, round(467.486 - 1.13944 - 16.4528, 6))
         self.assertIn(
             "LEGACY-MX-PRIME-VERTICAL-DESIGN-OVERLAP-CORRECTED",
             {warning.code for warning in result.warnings},
@@ -72,7 +73,7 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
             quantity=3,
             screen_enabled=True,
         ))
-        self.assertGreater(result.unit_cost, 0)
+        self.assertEqual(result.unit_cost, round(518.2004 - 9.4864, 6))
         screen = next(item for item in result.unit_bom if item.material_code == "TL3")
         self.assertEqual(screen.unit_price, 231)
         self.assertEqual(screen.quantity_order, 3)
@@ -87,7 +88,7 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
             bottom_fixed_panel=FixedPanelConfiguration(1000),
             top_fixed_panel=FixedPanelConfiguration(1000),
         ))
-        self.assertGreater(result.unit_cost, 0)
+        self.assertEqual(result.unit_cost, round(2135.58184 + 8 * 0.35, 6))
         self.assertEqual(len(result.fixed_panels), 2)
         self.assertEqual(result.geometry["total_glass_panel_count"], 3)
         self.assertEqual(len(result.glass_panels), 3)
@@ -104,13 +105,16 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
             top_fixed_panel=FixedPanelConfiguration(1000),
         )
         result = calculate_maxim_ar(cfg)
-        self.assertGreater(result.unit_cost, 0)
+        # Reforços/parafusos separados +59,792; oito calços adicionais +2,80.
+        self.assertEqual(result.unit_cost, round(1514.14116 + 59.792 + 8 * 0.35, 6))
         self.assertEqual(result.cost_breakdown["REFORÇOS"], 128.304)
         codes = {warning.code for warning in result.warnings}
         self.assertIn("LEGACY-MX-SEPARATE-REINFORCEMENT-SUBTOTAL-CORRECTED", codes)
         self.assertIn("LEGACY-MX-SEPARATE-SCREWS-CORRECTED", codes)
         plan = build_order_purchase_plan([(cfg, result)])
         self.assertEqual(plan.technical_total, 2 * result.unit_cost)
+        self.assertEqual(plan.bar_stock_purchase_cost, 2837.074)
+        self.assertEqual(plan.procurement_total_estimate, round(3736.7092 + 2 * 2.8, 6))
 
     def test_full_proven_leaf_count_orientation_system_matrix_is_physical(self):
         for system in MaximArLeafSystem:
@@ -195,17 +199,25 @@ class MaximArPhase2RegressionTests(unittest.TestCase):
         actual_bom = [
             [item.role, item.material_code, item.length_mm,
              item.quantity_per_unit, item.cost_per_unit_product]
-            for item in result.unit_bom
+            for item in result.unit_bom if item.category != "VEDAÇÕES"
         ]
         self.assertEqual(result.geometry, golden["geometry"])
-        self.assertGreater(result.unit_cost, 0)
+        self.assertEqual(actual_bom, golden["bom"])
+        self.assertEqual(result.cost_breakdown, golden["cost_by_group"])
         panel = result.glass_panels[0]
         self.assertEqual(
             [panel.width_mm, panel.height_mm, panel.quantity, panel.total_cost],
             golden["glass"],
         )
         self.assertEqual(plan.kerf_mm, golden["purchase"]["kerf_mm"])
-        self.assertGreater(plan.procurement_total_estimate, 0)
+        self.assertEqual(plan.technical_total, golden["purchase"]["technical_total"])
+        self.assertEqual(plan.bar_stock_purchase_cost, golden["purchase"]["bar_stock_purchase_cost"])
+        self.assertEqual(plan.procurement_total_estimate, golden["purchase"]["procurement_total_estimate"])
+        self.assertEqual(
+            [[line.material_code, line.pieces_count, line.consumed_length_mm,
+              line.bars_required, line.waste_length_mm] for line in plan.lines],
+            golden["purchase"]["lines"],
+        )
 
 
 if __name__ == "__main__":
