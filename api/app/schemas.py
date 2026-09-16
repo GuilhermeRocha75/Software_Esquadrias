@@ -114,7 +114,10 @@ class GrItemRequest(BaseModel):
     height_mm: float = Field(gt=0)
     quantity: int = Field(default=1, ge=1)
     leaf_count: Literal[1] = 1
-    leaf_system: Literal["FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"] = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+    leaf_system: Literal[
+        "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+    ] = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
     application: Literal["PORTA"] = "PORTA"
     panel_mode: Literal["PAINEL COMPLETO"] = "PAINEL COMPLETO"
     module_mode: Literal["MÓDULO ÚNICO"] = "MÓDULO ÚNICO"
