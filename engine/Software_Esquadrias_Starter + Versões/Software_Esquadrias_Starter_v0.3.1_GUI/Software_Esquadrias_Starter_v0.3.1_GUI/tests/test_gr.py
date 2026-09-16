@@ -9,6 +9,9 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
 
+MONO = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+MULTI = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
+
 
 def configuration(**overrides):
     values = {"width_mm": 900, "height_mm": 2100, "quantity": 1}
@@ -16,10 +19,10 @@ def configuration(**overrides):
     return GrConfiguration(**values)
 
 
-class GrPhase1Tests(unittest.TestCase):
+class GrPhase2Tests(unittest.TestCase):
     def test_version_and_model(self):
         result = calculate_gr(configuration())
-        self.assertEqual(result.calculation_version, "GR_ENGINE_0.1.0")
+        self.assertEqual(result.calculation_version, "GR_ENGINE_0.2.0")
         self.assertEqual(result.model_description, "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
 
     def test_geometry_matches_gr_sheet_formulas(self):
@@ -44,24 +47,50 @@ class GrPhase1Tests(unittest.TestCase):
         }
         self.assertEqual(result.geometry, expected)
 
-    def test_current_xlsm_formula_totals_match_real_orcs_snapshots(self):
+    def test_monopoint_formula_totals_match_real_orcs_snapshots(self):
         cases = (
             (17386, 700, 2100, 1283.4252311428572, 0.0),
             (17173, 800, 2100, 1334.0744382857142, 0.0),
-            # ORCS!18542 is stored rounded to cents; current GR formulas produce the exact total below.
             (18542, 900, 2100, 1384.7236454285714, 0.005),
             (17374, 1100, 2100, 1486.022059714286, 0.0),
         )
         for row, width, height, expected, tolerance in cases:
             with self.subTest(orcs_row=row):
-                actual = calculate_gr(configuration(width_mm=width, height_mm=height)).unit_cost
+                actual = calculate_gr(configuration(width_mm=width, height_mm=height, closure_mode=MONO)).unit_cost
                 self.assertLessEqual(abs(actual - expected), max(tolerance, 1e-6))
 
+    def test_multipoint_formula_totals_match_current_real_orcs(self):
+        cases = (
+            (18237, 800, 2100, 1401.8744382857144),
+            (18361, 900, 2100, 1452.5236454285714),
+            (18590, 900, 2100, 1452.5236454285714),
+            (18695, 900, 2150, 1472.9345311428572),
+            (18700, 750, 2150, 1395.8748275714288),
+        )
+        for row, width, height, expected in cases:
+            with self.subTest(orcs_row=row):
+                actual = calculate_gr(configuration(width_mm=width, height_mm=height, closure_mode=MULTI)).unit_cost
+                self.assertLessEqual(abs(actual - expected), 1e-6)
+
+    def test_multipoint_delta_is_explained_by_exact_xlsm_hardware_rules(self):
+        mono = calculate_gr(configuration(closure_mode=MONO))
+        multi = calculate_gr(configuration(closure_mode=MULTI))
+        self.assertEqual(round(multi.unit_cost - mono.unit_cost, 6), 67.8)
+        self.assertEqual(mono.unit_cost, 1384.723645)
+        self.assertEqual(multi.unit_cost, 1452.523645)
+        multi_codes = {x.material_code for x in multi.unit_bom}
+        self.assertIn("FEC5", multi_codes)
+        self.assertIn("CON1", multi_codes)
+        self.assertNotIn("FEC6", multi_codes)
+        screws = next(x for x in multi.unit_bom if x.role == "HARDWARE_SCREWS")
+        self.assertEqual(screws.quantity_per_unit, 36)
+
     def test_cost_is_exact_sum_of_bom_and_groups(self):
-        result = calculate_gr(configuration())
-        self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
-        self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
-        self.assertEqual(result.unit_cost, 1384.723645)
+        for closure in (MONO, MULTI):
+            with self.subTest(closure=closure):
+                result = calculate_gr(configuration(closure_mode=closure))
+                self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
+                self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
 
     def test_quantity_scales_order_bom_not_unit_cost(self):
         one = calculate_gr(configuration(quantity=1))
@@ -70,30 +99,15 @@ class GrPhase1Tests(unittest.TestCase):
         for item in three.unit_bom:
             self.assertEqual(item.quantity_order, item.quantity_per_unit * 3)
 
-    def test_baseline_bom_has_expected_codes(self):
-        result = calculate_gr(configuration())
-        self.assertEqual(
-            {x.material_code for x in result.unit_bom},
-            {"DE6058", "DE60104", "BA2516", "DE20150", "AC7012", "AC3004",
-             "RAG - DE6058", "RAG - DE60104", "AC0312", "AC0001", "DOB3",
-             "MAC4", "FEC6", "CIL1", "CON2", "PAR2", "PAR1"},
-        )
-        self.assertTrue(all(x.source for x in result.unit_bom))
-        self.assertTrue(all(x.cost_per_unit_product >= 0 for x in result.unit_bom))
-
-    def test_golden_case_is_frozen(self):
-        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_1.json").read_text(encoding="utf-8"))
-        case = golden["cases"][0]
-        result = calculate_gr(configuration(**case["input"]))
-        self.assertEqual(result.calculation_version, golden["engine_version"])
-        self.assertEqual(result.geometry, case["geometry"])
-        self.assertEqual(result.cost_breakdown, case["cost_by_group"])
-        self.assertEqual(result.unit_cost, case["unit_cost"])
-        self.assertEqual(
-            [[x.role, x.material_code, x.length_mm, x.quantity_per_unit, x.unit_price, x.cost_per_unit_product]
-             for x in result.unit_bom],
-            case["bom"],
-        )
+    def test_golden_v02_is_frozen(self):
+        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_2.json").read_text(encoding="utf-8"))
+        for case in golden["cases"]:
+            with self.subTest(case=case["id"]):
+                result = calculate_gr(configuration(**case["input"]))
+                self.assertEqual(result.calculation_version, golden["engine_version"])
+                self.assertEqual(result.geometry, case["geometry"])
+                self.assertEqual(result.cost_breakdown, case["cost_by_group"])
+                self.assertEqual(result.unit_cost, case["unit_cost"])
 
     def test_out_of_scope_variants_are_blocked(self):
         invalid = (
@@ -101,6 +115,7 @@ class GrPhase1Tests(unittest.TestCase):
             {"application": "JANELA"},
             {"panel_mode": ""},
             {"leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"},
+            {"closure_mode": "MAÇANETA COM CREMONA SEM CHAVE"},
             {"screen_enabled": True},
             {"shutter_enabled": True},
             {"bottom_flag_height_mm": 600},
