@@ -5,12 +5,14 @@ import math
 
 from .models import BomComponent, CalculationResult
 
-GR_ENGINE_VERSION = "GR_ENGINE_0.1.0"
+GR_ENGINE_VERSION = "GR_ENGINE_0.2.0"
 GR_LEAF_SYSTEM = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
 GR_APPLICATION = "PORTA"
 GR_PANEL_MODE = "PAINEL COMPLETO"
 GR_MODULE_MODE = "MÓDULO ÚNICO"
-GR_CLOSURE = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+GR_CLOSURE_MONOPOINT = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+GR_CLOSURE_MULTIPOINT = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
+GR_CLOSURES = (GR_CLOSURE_MONOPOINT, GR_CLOSURE_MULTIPOINT)
 GR_HINGE = "DOBRADIÇA 90MM"
 GR_INTERNAL_FINISH = "GUARNIÇÃO DE 70MM"
 GR_EXTERNAL_FINISH = "BARRA CHATA DE 30MM"
@@ -26,7 +28,7 @@ class GrConfiguration:
     application: str = GR_APPLICATION
     panel_mode: str = GR_PANEL_MODE
     module_mode: str = GR_MODULE_MODE
-    closure_mode: str = GR_CLOSURE
+    closure_mode: str = GR_CLOSURE_MONOPOINT
     hinge_description: str = GR_HINGE
     internal_finish: str = GR_INTERNAL_FINISH
     external_finish: str = GR_EXTERNAL_FINISH
@@ -52,8 +54,10 @@ _MATERIALS = {
     "AC0001": ("TAPA DESAGUE", 1.00, "ACESSÓRIOS"),
     "DOB3": ("DOBRADIÇA 90MM", 51.45, "FERRAGENS"),
     "MAC4": ("MAÇANETA DUPLA (GIRO)", 60.00, "FERRAGENS"),
+    "FEC5": ("FECHADURA MULTIPONTO (GIRO)", 100.00, "FERRAGENS"),
     "FEC6": ("FECHADURA MONOPONTO (GIRO)", 55.00, "FERRAGENS"),
     "CIL1": ("CILINDRO 45X45MM", 80.00, "FERRAGENS"),
+    "CON1": ("CONTRA FECHO STANDARD", 5.40, "FERRAGENS"),
     "CON2": ("CONTRA-TESTA", 11.00, "FERRAGENS"),
     "PAR2": ("PARAFUSOS DE REFORÇO", 0.10, "FERRAGENS"),
     "PAR1": ("PARAFUSOS DE FERRAGEM", 0.15, "FERRAGENS"),
@@ -73,28 +77,29 @@ def _validate(cfg: GrConfiguration) -> None:
     if isinstance(cfg.quantity, bool) or not isinstance(cfg.quantity, int) or cfg.quantity < 1:
         raise ValueError("Quantidade GR deve ser inteiro maior ou igual a 1.")
     if cfg.leaf_count != 1:
-        raise ValueError("GR_ENGINE_0.1.0 suporta somente 1 folha.")
+        raise ValueError("GR_ENGINE_0.2.0 suporta somente 1 folha.")
     checks = (
         (cfg.leaf_system, GR_LEAF_SYSTEM, "tipo de folha"),
         (cfg.application, GR_APPLICATION, "aplicação"),
         (cfg.panel_mode, GR_PANEL_MODE, "painel"),
         (cfg.module_mode, GR_MODULE_MODE, "módulo"),
-        (cfg.closure_mode, GR_CLOSURE, "fechamento"),
         (cfg.hinge_description, GR_HINGE, "dobradiça"),
         (cfg.internal_finish, GR_INTERNAL_FINISH, "acabamento interno"),
         (cfg.external_finish, GR_EXTERNAL_FINISH, "acabamento externo"),
     )
     for actual, expected, label in checks:
         if actual != expected:
-            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.1.0: {actual}")
+            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.2.0: {actual}")
+    if cfg.closure_mode not in GR_CLOSURES:
+        raise ValueError(f"fechamento fora do escopo do GR_ENGINE_0.2.0: {cfg.closure_mode}")
     if cfg.shutter_enabled or cfg.screen_enabled:
-        raise ValueError("GR_ENGINE_0.1.0 ainda não suporta persiana ou tela.")
+        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta persiana ou tela.")
     if cfg.bottom_flag_height_mm or cfg.top_flag_height_mm:
-        raise ValueError("GR_ENGINE_0.1.0 ainda não suporta bandeiras.")
+        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta bandeiras.")
     if cfg.leaf_horizontal_transoms or cfg.leaf_vertical_transoms:
-        raise ValueError("GR_ENGINE_0.1.0 ainda não suporta travessas na folha.")
+        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta travessas na folha.")
     if cfg.structural_reinforcement is not None:
-        raise ValueError("GR_ENGINE_0.1.0 ainda não suporta reforço estrutural opcional.")
+        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta reforço estrutural opcional.")
 
 
 def _component(code: str, role: str, quantity: float, order_quantity: int, *,
@@ -129,12 +134,11 @@ def _component(code: str, role: str, quantity: float, order_quantity: int, *,
 
 
 def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
-    """Calcula o baseline GR comprovado pelas fórmulas da aba GR do XLSM oficial."""
+    """Calcula o recorte GR comprovado pelas fórmulas da aba GR do XLSM oficial."""
     _validate(cfg)
     width = float(cfg.width_mm)
     height = float(cfg.height_mm)
 
-    # GR!D8:E11 — marco e folha. PFAB!B1=5, B2=3, B6=8, B8=5.
     frame_width_final = width
     frame_width_cut = width + 5.0
     frame_height_final = height
@@ -144,13 +148,11 @@ def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
     leaf_height_final = height - 37.0
     leaf_height_cut = leaf_height_final + 5.0
 
-    # GR!D16:D18 / G16:G18 / D41:G41 — painel completo sem travessas/cota AC.
     panel_bead_width = leaf_width_final - 172.0
     panel_bead_height = leaf_height_final - 172.0
-    panel_secondary_height = -104.0  # GR!D18; G18=0 neste recorte.
+    panel_secondary_height = -104.0
     panel_strip_qty = (panel_bead_height + panel_secondary_height) / 140.0
 
-    # GR!D58:D61 — reforços ordinários dos perfis.
     frame_reinf_width = frame_width_final - 116.0
     frame_reinf_height = frame_height_final - 116.0
     leaf_reinf_width = leaf_width_final - 120.0
@@ -170,7 +172,7 @@ def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
     invalid = {name: value for name, value in positive.items() if value <= 0 or not math.isfinite(value)}
     if invalid:
         details = ", ".join(f"{k}={v:g}" for k, v in invalid.items())
-        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.1: {details}")
+        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.2: {details}")
 
     bom = [
         _component("DE6058", "FRAME_WIDTH", 1, cfg.quantity, length_mm=frame_width_cut, source="GR!E8/G8"),
@@ -188,22 +190,33 @@ def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
         _component("RAG - DE6058", "FRAME_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=frame_reinf_height, source="GR!E59/G59"),
         _component("RAG - DE60104", "LEAF_REINFORCEMENT_WIDTH", 2, cfg.quantity, length_mm=leaf_reinf_width, source="GR!E60/G60"),
         _component("RAG - DE60104", "LEAF_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=leaf_reinf_height, source="GR!E61/G61"),
-        # O XLSM cobra 4 calços mesmo com PAINEL COMPLETO. Mantido para paridade;
-        # a semântica física fica marcada na documentação como ponto a confirmar.
         _component("AC0312", "LEGACY_PANEL_BLOCK", 4, cfg.quantity, source="GR!G83/I83"),
         _component("AC0001", "DRAIN_CAP", 1, cfg.quantity, source="GR!G84/I84"),
         _component("DOB3", "HINGE_90MM", 3, cfg.quantity, source="GR!G105/I105"),
         _component("MAC4", "DOUBLE_HANDLE", 1, cfg.quantity, source="GR!G111/I111"),
-        _component("FEC6", "MONOPOINT_LOCK", 1, cfg.quantity, source="GR!G112/I112"),
-        _component("CIL1", "CYLINDER_45X45", 1, cfg.quantity, source="GR!G113/I113"),
-        _component("CON2", "STRIKE_PLATE", 1, cfg.quantity, source="GR!G115/I115"),
     ]
+
+    if cfg.closure_mode == GR_CLOSURE_MULTIPOINT:
+        bom.extend([
+            _component("FEC5", "MULTIPOINT_LOCK", 1, cfg.quantity, source="GR!G112/I112"),
+            _component("CIL1", "CYLINDER_45X45", 1, cfg.quantity, source="GR!G113/I113"),
+            _component("CON1", "STANDARD_COUNTER_LOCK", 4, cfg.quantity, source="GR!G114/I114"),
+            _component("CON2", "STRIKE_PLATE", 1, cfg.quantity, source="GR!G115/I115"),
+        ])
+        counter_lock_qty = 4.0
+    else:
+        bom.extend([
+            _component("FEC6", "MONOPOINT_LOCK", 1, cfg.quantity, source="GR!G112/I112"),
+            _component("CIL1", "CYLINDER_45X45", 1, cfg.quantity, source="GR!G113/I113"),
+            _component("CON2", "STRIKE_PLATE", 1, cfg.quantity, source="GR!G115/I115"),
+        ])
+        counter_lock_qty = 0.0
 
     reinforcement_screws = 4.0 * (
         (frame_width_cut + frame_height_cut) / 1000.0
         + 2.0 * (leaf_width_cut + leaf_height_cut) / 1000.0
     )
-    hardware_screws = 3.0 * 8.0 + (1.0 + 1.0 + 0.0) * 2.0
+    hardware_screws = 3.0 * 8.0 + (1.0 + 1.0 + counter_lock_qty) * 2.0
     bom.extend([
         _component("PAR2", "REINFORCEMENT_SCREWS", reinforcement_screws, cfg.quantity, source="GR!G118/I118"),
         _component("PAR1", "HARDWARE_SCREWS", hardware_screws, cfg.quantity, source="GR!G119/I119"),
