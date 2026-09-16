@@ -108,6 +108,22 @@ class MaximArPurchasePlanRequest(BaseModel):
     kerf_mm: float = Field(default=0.0, ge=0)
 
 
+class GrItemRequest(BaseModel):
+    family: Literal["GR"] = "GR"
+    width_mm: float = Field(gt=0)
+    height_mm: float = Field(gt=0)
+    quantity: int = Field(default=1, ge=1)
+    leaf_count: Literal[1] = 1
+    leaf_system: Literal["FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"] = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+    application: Literal["PORTA"] = "PORTA"
+    panel_mode: Literal["PAINEL COMPLETO"] = "PAINEL COMPLETO"
+    module_mode: Literal["MÓDULO ÚNICO"] = "MÓDULO ÚNICO"
+    closure_mode: Literal["MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+    hinge_description: Literal["DOBRADIÇA 90MM"] = "DOBRADIÇA 90MM"
+    internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
+    external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
+
+
 class UnifiedPurchasePlanRequest(BaseModel):
     items: list[CRItemRequest | MaximArItemRequest] = Field(min_length=1)
     kerf_mm: float = Field(default=0.0, ge=0)
