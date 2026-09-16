@@ -1,0 +1,86 @@
+{
+  "official_xlsm_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "engine_version": "GR_ENGINE_0.1.0",
+  "scope": "PORTA / 1 FOLHA / ABERTURA INTERNA DESIGN 60X104 / PAINEL COMPLETO / MODULO UNICO / SEM PERSIANA-TELA-BANDEIRAS-TRAVESSAS",
+  "cases": [
+    {
+      "id": "GR-P1-900x2100",
+      "evidence": {
+        "formula_sheet": "GR",
+        "orcs_row": 18542,
+        "orcs_saved_total": 1384.72,
+        "orcs_note": "valor armazenado arredondado a centavos; fórmulas atuais geram 1384.723645"
+      },
+      "input": {
+        "width_mm": 900,
+        "height_mm": 2100,
+        "quantity": 1
+      },
+      "geometry": {
+        "frame_width_final_mm": 900.0,
+        "frame_width_cut_mm": 905.0,
+        "frame_height_final_mm": 2100.0,
+        "frame_height_cut_mm": 2103.0,
+        "leaf_width_final_mm": 836.0,
+        "leaf_width_cut_mm": 841.0,
+        "leaf_height_final_mm": 2063.0,
+        "leaf_height_cut_mm": 2068.0,
+        "panel_bead_width_mm": 664.0,
+        "panel_bead_height_mm": 1891.0,
+        "panel_fill_strip_length_mm": 664.0,
+        "panel_fill_strip_quantity": 12.764286,
+        "frame_reinforcement_width_mm": 784.0,
+        "frame_reinforcement_height_mm": 1984.0,
+        "leaf_reinforcement_width_mm": 716.0,
+        "leaf_reinforcement_height_mm": 1943.0
+      },
+      "cost_by_group": {
+        "PERFIS PRINCIPAIS": 690.633245,
+        "BAGUETES": 54.7792,
+        "ACABAMENTOS": 97.8648,
+        "REFORÇOS": 170.966,
+        "VIDROS": 0.0,
+        "TELA": 0.0,
+        "VEDAÇÕES": 0.0,
+        "ACESSÓRIOS": 2.4,
+        "FERRAGENS": 368.0804,
+        "TOTAL": 1384.723645
+      },
+      "unit_cost": 1384.723645,
+      "bom": [
+        ["FRAME_WIDTH", "DE6058", 905.0, 1.0, 38.45, 34.79725],
+        ["FRAME_HEIGHT", "DE6058", 2103.0, 2.0, 38.45, 161.7207],
+        ["LEAF_WIDTH", "DE60104", 841.0, 2.0, 55.4, 93.1828],
+        ["LEAF_HEIGHT", "DE60104", 2068.0, 2.0, 55.4, 229.1344],
+        ["PANEL_BEAD_WIDTH", "BA2516", 664.0, 2.0, 10.72, 14.23616],
+        ["PANEL_BEAD_HEIGHT", "BA2516", 1891.0, 2.0, 10.72, 40.54304],
+        ["PANEL_FILL", "DE20150", 664.0, 12.764285714285714, 20.27, 171.798095],
+        ["INTERNAL_FINISH_WIDTH", "AC7012", 1040.0, 1.0, 14.63, 15.2152],
+        ["INTERNAL_FINISH_HEIGHT", "AC7012", 2240.0, 2.0, 14.63, 65.5424],
+        ["EXTERNAL_FINISH_WIDTH", "AC3004", 960.0, 1.0, 3.24, 3.1104],
+        ["EXTERNAL_FINISH_HEIGHT", "AC3004", 2160.0, 2.0, 3.24, 13.9968],
+        ["FRAME_REINFORCEMENT_WIDTH", "RAG - DE6058", 784.0, 1.0, 8.0, 6.272],
+        ["FRAME_REINFORCEMENT_HEIGHT", "RAG - DE6058", 1984.0, 2.0, 8.0, 31.744],
+        ["LEAF_REINFORCEMENT_WIDTH", "RAG - DE60104", 716.0, 2.0, 25.0, 35.8],
+        ["LEAF_REINFORCEMENT_HEIGHT", "RAG - DE60104", 1943.0, 2.0, 25.0, 97.15],
+        ["LEGACY_PANEL_BLOCK", "AC0312", null, 4.0, 0.35, 1.4],
+        ["DRAIN_CAP", "AC0001", null, 1.0, 1.0, 1.0],
+        ["HINGE_90MM", "DOB3", null, 3.0, 51.45, 154.35],
+        ["DOUBLE_HANDLE", "MAC4", null, 1.0, 60.0, 60.0],
+        ["MONOPOINT_LOCK", "FEC6", null, 1.0, 55.0, 55.0],
+        ["CYLINDER_45X45", "CIL1", null, 1.0, 80.0, 80.0],
+        ["STRIKE_PLATE", "CON2", null, 1.0, 11.0, 11.0],
+        ["REINFORCEMENT_SCREWS", "PAR2", null, 35.304, 0.1, 3.5304],
+        ["HARDWARE_SCREWS", "PAR1", null, 28.0, 0.15, 4.2]
+      ]
+    }
+  ],
+  "additional_formula_parity": [
+    {"orcs_row": 17386, "width_mm": 700, "height_mm": 2100, "expected_total": 1283.4252311428572},
+    {"orcs_row": 17173, "width_mm": 800, "height_mm": 2100, "expected_total": 1334.0744382857142},
+    {"orcs_row": 17374, "width_mm": 1100, "height_mm": 2100, "expected_total": 1486.022059714286}
+  ],
+  "known_open_questions": [
+    "GR!G83 cobra 4 CALCO DE VIDRO mesmo em PAINEL COMPLETO sem vidro; manter paridade até confirmação física."
+  ]
+}
