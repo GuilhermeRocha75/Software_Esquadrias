@@ -1,0 +1,37 @@
+{
+  "official_xlsm_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "engine_version": "GR_ENGINE_0.3.0",
+  "scope": "PORTA / 1 FOLHA / DESIGN 60X104 / ABERTURA INTERNA OU EXTERNA / PAINEL COMPLETO / MODULO UNICO / FECHADURA MONOPONTO OU MULTIPONTO / SEM PERSIANA-TELA-BANDEIRAS-TRAVESSAS",
+  "cases": [
+    {
+      "id": "GR-P1-INT-MONO-900x2100",
+      "evidence": {"orcs_row": 18542, "orcs_saved_total": 1384.72, "formula_total": 1384.7236454285714},
+      "input": {"width_mm": 900, "height_mm": 2100, "quantity": 1, "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN", "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"},
+      "geometry": {"frame_width_final_mm": 900.0, "frame_width_cut_mm": 905.0, "frame_height_final_mm": 2100.0, "frame_height_cut_mm": 2103.0, "leaf_width_final_mm": 836.0, "leaf_width_cut_mm": 841.0, "leaf_height_final_mm": 2063.0, "leaf_height_cut_mm": 2068.0, "panel_bead_width_mm": 664.0, "panel_bead_height_mm": 1891.0, "panel_fill_strip_length_mm": 664.0, "panel_fill_strip_quantity": 12.764286, "frame_reinforcement_width_mm": 784.0, "frame_reinforcement_height_mm": 1984.0, "leaf_reinforcement_width_mm": 716.0, "leaf_reinforcement_height_mm": 1943.0},
+      "cost_by_group": {"PERFIS PRINCIPAIS": 690.633245, "BAGUETES": 54.7792, "ACABAMENTOS": 97.8648, "REFORÇOS": 170.966, "VIDROS": 0.0, "TELA": 0.0, "VEDAÇÕES": 0.0, "ACESSÓRIOS": 2.4, "FERRAGENS": 368.0804, "TOTAL": 1384.723645},
+      "unit_cost": 1384.723645
+    },
+    {
+      "id": "GR-P2-INT-MULTI-900x2100",
+      "evidence": {"orcs_rows": [18361, 18590, 18595], "orcs_total": 1452.5236454285714, "formula_total": 1452.5236454285714},
+      "input": {"width_mm": 900, "height_mm": 2100, "quantity": 1, "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN", "closure_mode": "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"},
+      "geometry": {"frame_width_final_mm": 900.0, "frame_width_cut_mm": 905.0, "frame_height_final_mm": 2100.0, "frame_height_cut_mm": 2103.0, "leaf_width_final_mm": 836.0, "leaf_width_cut_mm": 841.0, "leaf_height_final_mm": 2063.0, "leaf_height_cut_mm": 2068.0, "panel_bead_width_mm": 664.0, "panel_bead_height_mm": 1891.0, "panel_fill_strip_length_mm": 664.0, "panel_fill_strip_quantity": 12.764286, "frame_reinforcement_width_mm": 784.0, "frame_reinforcement_height_mm": 1984.0, "leaf_reinforcement_width_mm": 716.0, "leaf_reinforcement_height_mm": 1943.0},
+      "cost_by_group": {"PERFIS PRINCIPAIS": 690.633245, "BAGUETES": 54.7792, "ACABAMENTOS": 97.8648, "REFORÇOS": 170.966, "VIDROS": 0.0, "TELA": 0.0, "VEDAÇÕES": 0.0, "ACESSÓRIOS": 2.4, "FERRAGENS": 435.8804, "TOTAL": 1452.523645},
+      "unit_cost": 1452.523645
+    },
+    {
+      "id": "GR-P3-EXT-MULTI-800x2150",
+      "evidence": {"orcs_rows": [18545, 18547, 18558], "orcs_total": 1418.5308554285714, "formula_total": 1418.5308554285714, "leaf_profile": "DE60104-E", "leaf_profile_price_per_m": 54.87},
+      "input": {"width_mm": 800, "height_mm": 2150, "quantity": 1, "leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN", "closure_mode": "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"},
+      "geometry": {"frame_width_final_mm": 800.0, "frame_width_cut_mm": 805.0, "frame_height_final_mm": 2150.0, "frame_height_cut_mm": 2153.0, "leaf_width_final_mm": 736.0, "leaf_width_cut_mm": 741.0, "leaf_height_final_mm": 2113.0, "leaf_height_cut_mm": 2118.0, "panel_bead_width_mm": 564.0, "panel_bead_height_mm": 1941.0, "panel_fill_strip_length_mm": 564.0, "panel_fill_strip_quantity": 13.121429, "frame_reinforcement_width_mm": 684.0, "frame_reinforcement_height_mm": 2034.0, "leaf_reinforcement_width_mm": 616.0, "leaf_reinforcement_height_mm": 1993.0},
+      "cost_by_group": {"PERFIS PRINCIPAIS": 660.272455, "BAGUETES": 53.7072, "ACABAMENTOS": 97.8648, "REFORÇOS": 168.466, "VIDROS": 0.0, "TELA": 0.0, "VEDAÇÕES": 0.0, "ACESSÓRIOS": 2.4, "FERRAGENS": 435.8204, "TOTAL": 1418.530855},
+      "unit_cost": 1418.530855
+    }
+  ],
+  "opening_profile_rule": {
+    "internal": {"material_code": "DE60104", "price_per_m": 55.40},
+    "external": {"material_code": "DE60104-E", "price_per_m": 54.87},
+    "same_geometry": true
+  },
+  "known_open_questions": ["GR!G83 cobra 4 CALCO DE VIDRO mesmo em PAINEL COMPLETO sem vidro; manter paridade até confirmação física."]
+}
