@@ -40,10 +40,13 @@ def request(**overrides):
 
 
 class MaximArEndpointTests(unittest.TestCase):
-    def test_health_exposes_both_engines_without_changing_cr_version(self):
+    def test_health_exposes_engines_without_changing_cr_version(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
-        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0"])
+        self.assertEqual(
+            response["engines"],
+            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.1.0"],
+        )
 
     def test_options_expose_phase2_proven_variants_and_gate(self):
         response = maxim_ar_options()
