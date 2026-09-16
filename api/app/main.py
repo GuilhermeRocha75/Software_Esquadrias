@@ -200,6 +200,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         panel_mode=item.panel_mode,
         module_mode=item.module_mode,
         closure_mode=item.closure_mode,
+        cremona_description=item.cremona_description,
         hinge_description=item.hinge_description,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
@@ -383,17 +384,24 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
 def gr_options():
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 3,
-        "application": "PORTA",
+        "phase": 4,
+        "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1],
         "leaf_systems": [
             {
                 "value": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
-                "label": "Design 60x104 — abertura interna",
+                "label": "Porta Design 60x104 — abertura interna",
+                "application": "PORTA",
             },
             {
                 "value": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
-                "label": "Design 60x104 — abertura externa",
+                "label": "Porta Design 60x104 — abertura externa",
+                "application": "PORTA",
+            },
+            {
+                "value": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                "label": "Janela Design 60x78 — abertura externa",
+                "application": "JANELA",
             },
         ],
         "panel_modes": ["PAINEL COMPLETO"],
@@ -401,10 +409,21 @@ def gr_options():
         "closures": [
             "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
             "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+            "MAÇANETA COM CREMONA SEM CHAVE",
         ],
+        "cremonas": {
+            "window_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+            "physical_evidence": "padrão informado pela fabricação para mais de 90% das janelas de giro",
+        },
         "hinges": ["DOBRADIÇA 90MM"],
         "internal_finishes": ["GUARNIÇÃO DE 70MM"],
         "external_finishes": ["BARRA CHATA DE 30MM"],
+        "panel_squaring_blocks": {
+            "material_code": "AC0312",
+            "quantity": 4,
+            "status": "RESOLVED_PHYSICAL",
+            "purpose": "manter a folha no esquadro e impedir que ceda, com ou sem vidro",
+        },
         "screen": {"supported": False},
         "shutter": {"supported": False},
         "fixed_panels": {"supported": False},
@@ -412,13 +431,11 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 3 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
+            "reason": "Fase 4 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
-            "open_questions": [
-                "GR!G83 cobra 4 calços AC0312 em PAINEL COMPLETO; confirmação física pendente."
-            ],
+            "open_questions": [],
         },
     }
 
