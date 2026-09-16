@@ -2,7 +2,7 @@ name: Software Esquadrias CI
 
 on:
   push:
-    branches: [feature/maxim-ar-engine-v3]
+    branches: [feature/maxim-ar-engine-v3, feature/gr-engine-v1]
   workflow_dispatch:
     inputs:
       target_sha:
