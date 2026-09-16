@@ -117,14 +117,17 @@ class GrItemRequest(BaseModel):
     leaf_system: Literal[
         "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
         "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+        "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
     ] = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
-    application: Literal["PORTA"] = "PORTA"
+    application: Literal["PORTA", "JANELA"] = "PORTA"
     panel_mode: Literal["PAINEL COMPLETO"] = "PAINEL COMPLETO"
     module_mode: Literal["MÓDULO ÚNICO"] = "MÓDULO ÚNICO"
     closure_mode: Literal[
         "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
         "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+        "MAÇANETA COM CREMONA SEM CHAVE",
     ] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+    cremona_description: Literal["CREMONA 2 PONTOS COMP. 800mm E:15mm"] | None = None
     hinge_description: Literal["DOBRADIÇA 90MM"] = "DOBRADIÇA 90MM"
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
