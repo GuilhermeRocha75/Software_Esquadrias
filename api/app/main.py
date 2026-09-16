@@ -21,9 +21,12 @@ from .engine_bridge import (
     MaximArOrientation,
     MaximArModuleMode,
     MaximArSealingConfiguration,
+    GrConfiguration,
+    GR_ENGINE_VERSION,
     build_order_purchase_plan,
     calculate_sliding,
     calculate_maxim_ar,
+    calculate_gr,
     GLASSES,
     CLOSURE_OPTIONS,
     CREMONA_OPTIONS,
@@ -43,6 +46,7 @@ from .schemas import (
     CRItemRequest,
     MaximArItemRequest,
     MaximArPurchasePlanRequest,
+    GrItemRequest,
     PurchasePlanRequest,
     UnifiedPurchasePlanRequest,
 )
@@ -52,6 +56,7 @@ app = FastAPI(
     version="0.1.4",
     description="API inicial da Plataforma de Gestão e Engenharia para Esquadrias.",
 )
+
 
 def _cors_origins() -> list[str]:
     raw = os.getenv("CORS_ALLOWED_ORIGINS")
@@ -123,7 +128,7 @@ def _to_config(item: CRItemRequest) -> SlidingConfiguration:
     )
 
 
-def _serialize_result(cfg: SlidingConfiguration, result):
+def _serialize_result(cfg, result):
     return {
         "engine_version": result.calculation_version,
         "model_description": result.model_description,
@@ -184,6 +189,23 @@ def _to_maxim_ar_config(item: MaximArItemRequest) -> MaximArConfiguration:
     )
 
 
+def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
+    return GrConfiguration(
+        width_mm=item.width_mm,
+        height_mm=item.height_mm,
+        quantity=item.quantity,
+        leaf_count=item.leaf_count,
+        leaf_system=item.leaf_system,
+        application=item.application,
+        panel_mode=item.panel_mode,
+        module_mode=item.module_mode,
+        closure_mode=item.closure_mode,
+        hinge_description=item.hinge_description,
+        internal_finish=item.internal_finish,
+        external_finish=item.external_finish,
+    )
+
+
 def _serialize_purchase_plan(plan):
     return {
         "technical_total": plan.technical_total,
@@ -215,7 +237,7 @@ def health():
         "status": "ok",
         "api_version": "0.1.4",
         "engine": "CR_ENGINE_0.5.0",
-        "engines": ["CR_ENGINE_0.5.0", MAXIM_AR_ENGINE_VERSION],
+        "engines": ["CR_ENGINE_0.5.0", MAXIM_AR_ENGINE_VERSION, GR_ENGINE_VERSION],
     }
 
 
@@ -353,6 +375,52 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
     try:
         cfg = _to_maxim_ar_config(payload)
         return _serialize_result(cfg, calculate_maxim_ar(cfg))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.get("/api/v1/engine/gr/options")
+def gr_options():
+    return {
+        "engine_version": GR_ENGINE_VERSION,
+        "phase": 1,
+        "application": "PORTA",
+        "leaf_counts": [1],
+        "leaf_systems": [
+            {
+                "value": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                "label": "Design 60x104 — abertura interna",
+            }
+        ],
+        "panel_modes": ["PAINEL COMPLETO"],
+        "module_modes": ["MÓDULO ÚNICO"],
+        "closures": ["MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"],
+        "hinges": ["DOBRADIÇA 90MM"],
+        "internal_finishes": ["GUARNIÇÃO DE 70MM"],
+        "external_finishes": ["BARRA CHATA DE 30MM"],
+        "screen": {"supported": False},
+        "shutter": {"supported": False},
+        "fixed_panels": {"supported": False},
+        "leaf_grid": {"supported": False},
+        "structural_reinforcement": {"supported": False},
+        "purchase_plan": {
+            "supported": False,
+            "reason": "Fase 1 homologa somente geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física.",
+        },
+        "technical_gate": {
+            "status": "CANDIDATO À AUDITORIA",
+            "open_questions": [
+                "GR!G83 cobra 4 calços AC0312 em PAINEL COMPLETO; confirmação física pendente."
+            ],
+        },
+    }
+
+
+@app.post("/api/v1/engine/gr/calculate")
+def calculate_gr_endpoint(payload: GrItemRequest):
+    try:
+        cfg = _to_gr_config(payload)
+        return _serialize_result(cfg, calculate_gr(cfg))
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
