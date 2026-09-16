@@ -9,6 +9,8 @@ web/node_modules/
 web/dist/
 web/.env
 web/.env.local
+deploy/hostinger/.env
+.run/
 
 # IDE / OS
 .vscode/

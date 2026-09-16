@@ -1,0 +1,17 @@
+.git
+.venv
+**/__pycache__
+**/*.pyc
+web/node_modules
+web/dist
+web/.env
+web/.env.local
+deploy/hostinger/.env
+**/*.xlsm
+**/*.rar
+**/*.tmp
+**/*.pdf
+**/*.jpg
+**/*.png
+**/*.db
+test_outputs

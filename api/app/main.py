@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -52,12 +53,19 @@ app = FastAPI(
     description="API inicial da Plataforma de Gestão e Engenharia para Esquadrias.",
 )
 
+def _cors_origins() -> list[str]:
+    raw = os.getenv("CORS_ALLOWED_ORIGINS")
+    if raw is None:
+        return ["http://127.0.0.1:5173", "http://localhost:5173"]
+    origins = [origin.strip().rstrip("/") for origin in raw.split(",") if origin.strip()]
+    if any(origin == "*" or not origin.startswith(("http://", "https://")) for origin in origins):
+        raise ValueError("CORS_ALLOWED_ORIGINS deve conter origens HTTP(S) explícitas.")
+    return origins
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:5173",
-        "http://localhost:5173",
-    ],
+    allow_origins=_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
