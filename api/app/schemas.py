@@ -118,7 +118,10 @@ class GrItemRequest(BaseModel):
     application: Literal["PORTA"] = "PORTA"
     panel_mode: Literal["PAINEL COMPLETO"] = "PAINEL COMPLETO"
     module_mode: Literal["MÓDULO ÚNICO"] = "MÓDULO ÚNICO"
-    closure_mode: Literal["MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+    closure_mode: Literal[
+        "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+    ] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
     hinge_description: Literal["DOBRADIÇA 90MM"] = "DOBRADIÇA 90MM"
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
