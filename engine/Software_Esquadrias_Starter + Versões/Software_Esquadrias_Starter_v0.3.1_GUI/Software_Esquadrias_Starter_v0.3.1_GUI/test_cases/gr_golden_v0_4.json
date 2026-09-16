@@ -1,0 +1,112 @@
+{
+  "official_xlsm_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "engine_version": "GR_ENGINE_0.4.0",
+  "scope": "JANELA / 1 FOLHA / ABERTURA EXTERNA DESIGN 60X78 / PAINEL COMPLETO / MODULO UNICO / MACANETA COM CREMONA 800 E:15 / DOBRADICA 90MM / SEM PERSIANA-TELA-BANDEIRAS-TRAVESSAS",
+  "physical_evidence": {
+    "date": "2026-09-16",
+    "panel_blocks": "4 x AC0312 obrigatórios mesmo sem vidro; usados para manter a folha no esquadro e impedir que ceda.",
+    "window_closure": "Equipe informa que em mais de 90% dos casos a janela de giro usa maçaneta com cremona, padrão aproximado de 800 mm. O baseline v0.4 congela CRE12 800mm E:15mm.",
+    "classification": "RESOLVED_PHYSICAL"
+  },
+  "historical_note": "ORCS registra Q/Cremona vazio nos casos de janela usados como referência. Por isso os totais históricos gravados não são usados como golden exato da v0.4; a expectativa v0.4 usa fórmulas atuais do XLSM, catálogo atual e a cremona física confirmada.",
+  "cases": [
+    {
+      "id": "GR-W1-PANEL-800x1300-CRE800",
+      "evidence": {"orcs_row": 17975, "orcs_saved_total": 808.27, "use": "geometria/configuração histórica; custo v0.4 normalizado pela evidência física"},
+      "input": {
+        "width_mm": 800,
+        "height_mm": 1300,
+        "quantity": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "PAINEL COMPLETO",
+        "module_mode": "MÓDULO ÚNICO",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "geometry": {
+        "frame_width_final_mm": 800.0,
+        "frame_width_cut_mm": 805.0,
+        "frame_height_final_mm": 1300.0,
+        "frame_height_cut_mm": 1305.0,
+        "leaf_width_final_mm": 736.0,
+        "leaf_width_cut_mm": 741.0,
+        "leaf_height_final_mm": 1236.0,
+        "leaf_height_cut_mm": 1241.0,
+        "panel_bead_width_mm": 616.0,
+        "panel_bead_height_mm": 1116.0,
+        "panel_fill_strip_length_mm": 616.0,
+        "panel_fill_strip_quantity": 7.414286,
+        "frame_reinforcement_width_mm": 720.0,
+        "frame_reinforcement_height_mm": 1220.0,
+        "leaf_reinforcement_width_mm": 616.0,
+        "leaf_reinforcement_height_mm": 1116.0
+      },
+      "cost_by_group": {
+        "PERFIS PRINCIPAIS": 434.960304,
+        "BAGUETES": 37.13408,
+        "ACABAMENTOS": 84.0244,
+        "REFORÇOS": 65.68,
+        "VIDROS": 0.0,
+        "TELA": 0.0,
+        "VEDAÇÕES": 0.0,
+        "ACESSÓRIOS": 3.4,
+        "FERRAGENS": 202.5236,
+        "TOTAL": 827.722384
+      },
+      "unit_cost": 827.722384
+    },
+    {
+      "id": "GR-W2-PANEL-1120x1850-CRE800",
+      "evidence": {"orcs_row": 18400, "orcs_saved_total": 1159.33, "use": "geometria/configuração histórica; custo v0.4 normalizado pela evidência física"},
+      "input": {
+        "width_mm": 1120,
+        "height_mm": 1850,
+        "quantity": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "PAINEL COMPLETO",
+        "module_mode": "MÓDULO ÚNICO",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "geometry": {
+        "frame_width_final_mm": 1120.0,
+        "frame_width_cut_mm": 1125.0,
+        "frame_height_final_mm": 1850.0,
+        "frame_height_cut_mm": 1855.0,
+        "leaf_width_final_mm": 1056.0,
+        "leaf_width_cut_mm": 1061.0,
+        "leaf_height_final_mm": 1786.0,
+        "leaf_height_cut_mm": 1791.0,
+        "panel_bead_width_mm": 936.0,
+        "panel_bead_height_mm": 1666.0,
+        "panel_fill_strip_length_mm": 936.0,
+        "panel_fill_strip_quantity": 11.342857,
+        "frame_reinforcement_width_mm": 1040.0,
+        "frame_reinforcement_height_mm": 1770.0,
+        "leaf_reinforcement_width_mm": 936.0,
+        "leaf_reinforcement_height_mm": 1666.0
+      },
+      "cost_by_group": {
+        "PERFIS PRINCIPAIS": 703.556613,
+        "BAGUETES": 55.78688,
+        "ACABAMENTOS": 115.1182,
+        "REFORÇOS": 97.0,
+        "VIDROS": 0.0,
+        "TELA": 0.0,
+        "VEDAÇÕES": 0.0,
+        "ACESSÓRIOS": 3.4,
+        "FERRAGENS": 203.9156,
+        "TOTAL": 1178.777293
+      },
+      "unit_cost": 1178.777293
+    }
+  ]
+}
