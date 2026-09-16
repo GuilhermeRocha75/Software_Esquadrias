@@ -12,6 +12,21 @@ class ApplicationType(str, Enum):
     DOOR = "PORTA"
 
 
+class MaximArLeafSystem(str, Enum):
+    PRIME_WINDOW_42x63 = "PRIME_WINDOW_42x63"
+    DESIGN_WINDOW_60x78 = "DESIGN_WINDOW_60x78"
+
+
+class MaximArOrientation(str, Enum):
+    HORIZONTAL = "HORIZONTAL"
+    VERTICAL = "VERTICAL"
+
+
+class MaximArModuleMode(str, Enum):
+    SINGLE = "MÓDULO ÚNICO"
+    SEPARATE = "MÓDULOS SEPARADOS"
+
+
 class GridAxis(str, Enum):
     COLUMNS = "COLUMNS"
     ROWS = "ROWS"
@@ -109,6 +124,41 @@ class SlidingConfiguration:
     bottom_fixed_panel: FixedPanelConfiguration | None = None
     top_fixed_panel: FixedPanelConfiguration | None = None
     structural_reinforcement: StructuralReinforcement | None = None
+
+
+@dataclass(frozen=True)
+class MaximArConfiguration:
+    """Contrato técnico do Maxim-Ar comprovado na aba MX/ORCS."""
+
+    width_mm: float
+    height_mm: float
+    quantity: int
+    leaf_system: MaximArLeafSystem
+    leaf_count: int = 1
+    orientation: MaximArOrientation = MaximArOrientation.HORIZONTAL
+    module_mode: MaximArModuleMode = MaximArModuleMode.SINGLE
+    glass_description: str = "04mm MINI BOREAL"
+    closure_mode: str = "FECHO 1 PONTO"
+    cremona_description: str | None = None
+    internal_finish: str = "GUARNIÇÃO DE 70MM"
+    external_finish: str = "BARRA CHATA DE 30MM"
+    screen_enabled: bool = False
+    leaf_grid: LeafGrid = field(default_factory=LeafGrid)
+    bottom_fixed_panel: FixedPanelConfiguration | None = None
+    top_fixed_panel: FixedPanelConfiguration | None = None
+    structural_reinforcement: StructuralReinforcement | None = None
+    sealing: "MaximArSealingConfiguration" = field(
+        default_factory=lambda: MaximArSealingConfiguration()
+    )
+
+
+@dataclass(frozen=True)
+class MaximArSealingConfiguration:
+    """Material comercial configurável; não representa código legado comprovado."""
+
+    internal_material_id: str = "MX-SEALING-CONFIGURABLE"
+    description: str = "VEDAÇÃO MAXIM-AR CONFIGURÁVEL"
+    unit_price_per_meter: float = 0.0
 
 
 @dataclass(frozen=True)

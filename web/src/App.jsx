@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000'
+const API_URL = (import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000')).replace(/\/$/, '')
 
 const baseDefaults = {
+  family: 'CR',
   quantity: 1,
   leaf_count: 2,
   application: 'JANELA',
@@ -22,6 +23,28 @@ const baseDefaults = {
   bottom_fixed_panel: null,
   top_fixed_panel: null,
   structural_reinforcement: null,
+}
+
+const maximArDefaults = {
+  family: 'MAXIM_AR',
+  quantity: 1,
+  leaf_count: 1,
+  width_mm: 800,
+  height_mm: 800,
+  leaf_system: 'PRIME_WINDOW_42x63',
+  orientation: 'HORIZONTAL',
+  module_mode: 'MÓDULO ÚNICO',
+  glass_description: '04mm MINI BOREAL',
+  closure_mode: 'FECHO 1 PONTO',
+  cremona_description: null,
+  internal_finish: 'GUARNIÇÃO DE 70MM',
+  external_finish: 'BARRA CHATA DE 30MM',
+  screen_enabled: false,
+  leaf_grid: { horizontal_transoms: 0, vertical_transoms: 0, custom_dimensions: [] },
+  bottom_fixed_panel: null,
+  top_fixed_panel: null,
+  structural_reinforcement: null,
+  sealing: { internal_material_id: 'MX-SEALING-CONFIGURABLE', description: 'VEDAÇÃO MAXIM-AR CONFIGURÁVEL', unit_price_per_meter: 0 },
 }
 
 const fallbackOptions = {
@@ -63,6 +86,26 @@ const fallbackOptions = {
     boxes: ['CAIXA DE 200MM'],
     slats: ['TALA DE PVC 40MM'],
   },
+}
+
+const fallbackMaximArOptions = {
+  leaf_systems: [
+    { value: 'PRIME_WINDOW_42x63', label: 'Prime Janela 42x63' },
+    { value: 'DESIGN_WINDOW_60x78', label: 'Design Janela 60x78' },
+  ],
+  leaf_counts: [1, 2, 3, 4, 5, 6, 7, 8],
+  orientations: ['HORIZONTAL', 'VERTICAL'],
+  module_modes: ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS'],
+  glasses: [{ description: '04mm MINI BOREAL', compatible_systems: ['PRIME_WINDOW_42x63', 'DESIGN_WINDOW_60x78'] }],
+  closures: ['FECHO 1 PONTO', 'MAÇANETA COM CREMONA'],
+  cremonas: [
+    'CREMONA MAXIM-AR 2 PONTOS COMP. 300mm',
+    'CREMONA MAXIM-AR 2 PONTOS COMP. 400mm',
+    'CREMONA MAXIM-AR 2 PONTOS COMP. 600mm',
+    'CREMONA MAXIM-AR 2 PONTOS COMP. 800mm',
+  ],
+  internal_finishes: ['GUARNIÇÃO DE 70MM'],
+  external_finishes: ['BARRA CHATA DE 30MM'],
 }
 
 const initialItems = [
@@ -110,13 +153,15 @@ const money = (value = 0) =>
 const number = (value = 0, digits = 2) =>
   new Intl.NumberFormat('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(Number(value || 0))
 
-const modelLabel = (system) => ({
+const modelLabel = (item) => ({
   PRIME_WINDOW_42x66: 'Correr Prime 42x66',
   PRIME_DOOR_42x88: 'Correr Prime 42x88',
   DESIGN_DOOR_60x111: 'Correr Design 60x111',
-}[system] || system)
+  PRIME_WINDOW_42x63: 'Maxim-Ar Prime 42x63',
+  DESIGN_WINDOW_60x78: 'Maxim-Ar Design 60x78',
+}[item.leaf_system] || item.leaf_system)
 
-function Sidebar() {
+function Sidebar({ onAddMaximAr }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -130,7 +175,7 @@ function Sidebar() {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={item === 'Inserir Modelo Maxim-Ar' ? onAddMaximAr : undefined} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -174,12 +219,12 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAdd, onEdit }) {
+function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onEdit }) {
   return (
     <section className="card items-card">
       <div className="section-head">
         <div className="section-title">Itens do Orçamento</div>
-        <button className="primary" onClick={onAdd}>＋ Inserir Modelo Correr</button>
+        <div className="page-actions"><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
       </div>
       <div className="table-scroll">
         <table>
@@ -188,8 +233,8 @@ function ItemsTable({ items, onRemove, onAdd, onEdit }) {
             {items.map((item, index) => (
               <tr key={item.id}>
                 <td><strong>{String(index + 1).padStart(2, '0')}</strong></td>
-                <td>{modelLabel(item.leaf_system)}</td>
-                <td>{item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
+                <td>{modelLabel(item)}</td>
+                <td>{item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
                 <td>{item.leaf_count}</td>
                 <td>{item.width_mm}</td>
                 <td>{item.height_mm}</td>
@@ -308,6 +353,104 @@ function Warnings({ warnings }) {
 
 function FieldSection({ title, children }) {
   return <div className="field-section"><div className="field-section-title">{title}</div><div className="modal-grid">{children}</div></div>
+}
+
+function MaximArModal({ onClose, onSave, options, item }) {
+  const [form, setForm] = useState(() => ({ ...maximArDefaults, ...(item || {}) }))
+  const [validation, setValidation] = useState('')
+  const set = (key) => (event) => {
+    const value = event.target.type === 'checkbox' ? event.target.checked : (event.target.type === 'number' || key === 'leaf_count') ? Number(event.target.value) : event.target.value
+    setForm((previous) => ({
+      ...previous,
+      [key]: value,
+      ...(key === 'closure_mode' && value === 'FECHO 1 PONTO' ? { cremona_description: null } : {}),
+    }))
+  }
+  const togglePanel = (key) => (event) => setForm((previous) => {
+    const enabled = event.target.checked
+    const next = { ...previous, [key]: enabled ? { height_mm: 600, horizontal_transoms: 0, vertical_transoms: 0 } : null }
+    if (!next.bottom_fixed_panel && !next.top_fixed_panel) {
+      next.module_mode = 'MÓDULO ÚNICO'
+      next.structural_reinforcement = null
+    }
+    return next
+  })
+  const setPanelHeight = (key) => (event) => setForm((previous) => ({
+    ...previous,
+    [key]: { ...previous[key], height_mm: Number(event.target.value) },
+  }))
+  const setFixedTransoms = (panel, axis) => (event) => setForm((previous) => ({
+    ...previous,
+    [panel]: { ...previous[panel], [axis]: Number(event.target.value) },
+  }))
+  const setStructural = (event) => setForm((previous) => ({
+    ...previous,
+    structural_reinforcement: event.target.value ? { material_code: event.target.value } : null,
+  }))
+  const compatibleGlasses = options.glasses.filter((glass) =>
+    !glass.compatible_systems || glass.compatible_systems.includes(form.leaf_system))
+  const submit = (event) => {
+    event.preventDefault()
+    if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
+    if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
+    if (form.module_mode === 'MÓDULOS SEPARADOS' && !form.bottom_fixed_panel && !form.top_fixed_panel) return setValidation('Módulos separados exigem ao menos uma bandeira.')
+    if ((form.leaf_grid.horizontal_transoms || form.leaf_grid.vertical_transoms)) return setValidation('AF/AG na folha móvel são fisicamente inválidos.')
+    if (form.module_mode === 'MÓDULOS SEPARADOS' && [form.bottom_fixed_panel, form.top_fixed_panel].filter(Boolean).some((p) => p.horizontal_transoms || p.vertical_transoms)) return setValidation('Módulos separados não admitem travessas internas.')
+    if (form.structural_reinforcement && form.module_mode !== 'MÓDULOS SEPARADOS') return setValidation('Reforço estrutural só é permitido em módulos separados.')
+    if (form.closure_mode === 'MAÇANETA COM CREMONA' && !form.cremona_description) return setValidation('Selecione a cremona Maxim-Ar.')
+    onSave({ ...form, family: 'MAXIM_AR', id: item?.id || crypto.randomUUID() })
+  }
+  return (
+    <div className="modal-backdrop" onMouseDown={onClose}>
+      <form className="modal modal-large" onSubmit={submit} onMouseDown={(event) => event.stopPropagation()}>
+        <div className="modal-head">
+          <div><strong>{item ? 'Editar Modelo Maxim-Ar' : 'Inserir Modelo Maxim-Ar'}</strong><span>Fase 3B conectada à MX_ENGINE_0.3.0</span></div>
+          <button type="button" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-scroll">
+          {validation && <div className="error-banner compact">⚠ {validation}</div>}
+          <FieldSection title="Medidas e sistema">
+            <label>Largura (mm)<input type="number" min="1" value={form.width_mm} onChange={set('width_mm')} /></label>
+            <label>Altura (mm)<input type="number" min="1" value={form.height_mm} onChange={set('height_mm')} /></label>
+            <label>Quantidade<input type="number" min="1" value={form.quantity} onChange={set('quantity')} /></label>
+            <label>Folhas<select value={form.leaf_count} onChange={set('leaf_count')}>{options.leaf_counts.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+            <label>Tipo de folha<select value={form.leaf_system} onChange={set('leaf_system')}>{options.leaf_systems.map((row) => <option key={row.value} value={row.value}>{row.label}</option>)}</select></label>
+            <label>Orientação<select value={form.orientation} onChange={set('orientation')}>{(options.orientations || ['HORIZONTAL', 'VERTICAL']).map((value) => <option key={value}>{value}</option>)}</select></label>
+          </FieldSection>
+          <FieldSection title="Vidro">
+            <label className="span-2">Vidro<select value={form.glass_description} onChange={set('glass_description')}>{compatibleGlasses.map((glass) => <option key={`${glass.code || ''}-${glass.description}`} value={glass.description}>{glass.description}{glass.price != null ? ` · ${money(glass.price)}/m²` : ''}</option>)}</select></label>
+            <label className="checkbox-row"><input type="checkbox" checked={form.screen_enabled} onChange={set('screen_enabled')} /> Tela recolhível TL3</label>
+            <div className="info-note">A tela é um conjunto comprado: largura + altura + valor unitário, conforme MX!64.</div>
+          </FieldSection>
+          <FieldSection title="Bandeiras e módulos">
+            <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.bottom_fixed_panel)} onChange={togglePanel('bottom_fixed_panel')} /> Bandeira inferior</label>
+            {form.bottom_fixed_panel && <label>Altura inferior (mm)<input type="number" min="1" value={form.bottom_fixed_panel.height_mm} onChange={setPanelHeight('bottom_fixed_panel')} /></label>}
+            <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.top_fixed_panel)} onChange={togglePanel('top_fixed_panel')} /> Bandeira superior</label>
+            {form.top_fixed_panel && <label>Altura superior (mm)<input type="number" min="1" value={form.top_fixed_panel.height_mm} onChange={setPanelHeight('top_fixed_panel')} /></label>}
+            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Modo<select value={form.module_mode} onChange={set('module_mode')}>{(options.module_modes || ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS']).map((value) => <option key={value}>{value}</option>)}</select></label>}
+            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V inferior<div className="inline-inputs"><input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.bottom_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'vertical_transoms')} /></div></label>}
+            {form.top_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V superior<div className="inline-inputs"><input type="number" min="0" value={form.top_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.top_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'vertical_transoms')} /></div></label>}
+            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Reforço estrutural<select disabled={form.module_mode !== 'MÓDULOS SEPARADOS'} value={form.structural_reinforcement?.material_code || ''} onChange={setStructural}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238 · 102x50</option><option value="ALUM15338">ALUM15338 · 138x50</option></select></label>}
+            <div className="info-note">Travessas pertencem apenas a bandeiras integradas. Reforço estrutural é opcional e exclusivo de módulos separados.</div>
+          </FieldSection>
+          <FieldSection title="Vedação configurável">
+            <label className="span-2">Descrição<input value={form.sealing.description} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, description: e.target.value } }))} /></label>
+            <label>Identificador interno<input value={form.sealing.internal_material_id} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, internal_material_id: e.target.value } }))} /></label>
+            <label>Preço por metro<input type="number" min="0" step="0.01" value={form.sealing.unit_price_per_meter} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, unit_price_per_meter: Number(e.target.value) } }))} /></label>
+          </FieldSection>
+          <FieldSection title="Fechamento e ferragens">
+            <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>
+            {form.closure_mode === 'MAÇANETA COM CREMONA' && <label className="span-2">Cremona<select value={form.cremona_description || ''} onChange={set('cremona_description')}><option value="">Selecione</option>{options.cremonas.map((value) => <option key={value}>{value}</option>)}</select></label>}
+          </FieldSection>
+          <FieldSection title="Acabamentos comprovados">
+            <label>Interno<select value={form.internal_finish} onChange={set('internal_finish')}>{options.internal_finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Externo<select value={form.external_finish} onChange={set('external_finish')}>{options.external_finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
+          </FieldSection>
+        </div>
+        <div className="modal-actions"><button type="button" className="secondary" onClick={onClose}>Cancelar</button><button className="primary" type="submit">{item ? 'Salvar e recalcular' : 'Adicionar e recalcular'}</button></div>
+      </form>
+    </div>
+  )
 }
 
 function AddItemModal({ onClose, onSave, options, item }) {
@@ -452,19 +595,26 @@ export default function App() {
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
   const [options, setOptions] = useState(fallbackOptions)
+  const [maximArOptions, setMaximArOptions] = useState(fallbackMaximArOptions)
 
   useEffect(() => { localStorage.setItem('software-esquadrias-items', JSON.stringify(items)) }, [items])
   useEffect(() => { localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote)) }, [quote])
 
   const loadOptions = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/v1/engine/cr/options`)
-      if (!response.ok) throw new Error('Falha ao carregar opções')
-      setOptions(await response.json())
+      const [crResponse, maximArResponse] = await Promise.all([
+        fetch(`${API_URL}/api/v1/engine/cr/options`),
+        fetch(`${API_URL}/api/v1/engine/maxim-ar/options`),
+      ])
+      if (!crResponse.ok || !maximArResponse.ok) throw new Error('Falha ao carregar opções')
+      setOptions(await crResponse.json())
+      setMaximArOptions(await maximArResponse.json())
     } catch {
       setOptions(fallbackOptions)
+      setMaximArOptions(fallbackMaximArOptions)
     }
   }
 
@@ -472,8 +622,8 @@ export default function App() {
     if (!nextItems.length) { setData(null); return }
     setLoading(true); setError('')
     try {
-      const payload = { items: nextItems.map(({ id, ...item }) => item) }
-      const response = await fetch(`${API_URL}/api/v1/purchase-plans/calculate`, {
+      const payload = { items: nextItems.map(({ id, ...item }) => ({ ...item, family: item.family || 'CR' })) }
+      const response = await fetch(`${API_URL}/api/v1/purchase-plans/calculate-all`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       })
       if (!response.ok) {
@@ -500,8 +650,9 @@ export default function App() {
     setItems(next); setModalOpen(false); setEditingItem(null); calculate(next)
   }
 
-  const openNew = () => { setEditingItem(null); setModalOpen(true) }
-  const openEdit = (item) => { setEditingItem(item); setModalOpen(true) }
+  const openNewCR = () => { setEditingItem(null); setModalFamily('CR'); setModalOpen(true) }
+  const openNewMaximAr = () => { setEditingItem(null); setModalFamily('MAXIM_AR'); setModalOpen(true) }
+  const openEdit = (item) => { setEditingItem(item); setModalFamily(item.family || 'CR'); setModalOpen(true) }
 
   const resetBaseline = () => {
     setItems(initialItems); calculate(initialItems)
@@ -509,7 +660,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar onAddMaximAr={openNewMaximAr} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -518,14 +669,16 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAdd={openNew} onEdit={openEdit} />
+              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onEdit={openEdit} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />
           </div>
         </main>
       </div>
-      {modalOpen && <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />}
+      {modalOpen && (modalFamily === 'MAXIM_AR'
+        ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
+        : <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />)}
     </div>
   )
 }

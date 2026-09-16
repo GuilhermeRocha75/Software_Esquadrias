@@ -1,0 +1,136 @@
+{
+  "source_workbook_sha256": "96514D7818BCBBC1DB86F94F86D8ED0239675E9F8D3A6B64DF651F30FD90C160",
+  "engine_version": "MX_ENGINE_0.2.0",
+  "cases": [
+    {
+      "orcs_row": 106,
+      "description": "Design, duas folhas horizontais, módulo único",
+      "excel_unit_total": 1074.13412,
+      "engine_unit_total": 1074.13412,
+      "geometry": {"leaf_width_final_mm": 658.0, "leaf_height_final_mm": 936.0, "glass_width_mm": 530.0, "glass_height_mm": 808.0}
+    },
+    {
+      "orcs_row": 342,
+      "description": "Prime, duas folhas verticais; transpasse Prime corrigido",
+      "excel_unit_total": 467.486,
+      "engine_unit_total": 466.34656,
+      "intentional_delta": -1.13944,
+      "geometry": {"leaf_width_final_mm": 396.0, "leaf_height_final_mm": 490.0, "glass_width_mm": 300.0, "glass_height_mm": 394.0}
+    },
+    {
+      "orcs_row": 162,
+      "description": "Prime com tela recolhível TL3",
+      "excel_unit_total": 518.2004,
+      "engine_unit_total": 518.2004,
+      "screen_unit_cost": 231.0
+    },
+    {
+      "orcs_row": 343,
+      "description": "Design com bandeiras integradas inferior e superior",
+      "excel_unit_total": 2135.58184,
+      "engine_unit_total": 2135.58184,
+      "glass_panel_count": 3.0
+    },
+    {
+      "orcs_row": 990,
+      "description": "Design com bandeiras inferior e superior em módulos separados",
+      "excel_unit_total": 1514.14116,
+      "engine_unit_total": 1573.93316,
+      "intentional_delta": 59.792,
+      "corrected_reinforcement_cost": 128.304,
+      "order_quantity": 2,
+      "purchase": {"technical_total": 3147.86632, "bar_stock_purchase_cost": 2837.074, "procurement_total_estimate": 3736.7092}
+    }
+  ],
+  "stress_case": {
+    "input": {
+      "width_mm": 1600,
+      "height_mm": 5000,
+      "quantity": 2,
+      "leaf_count": 8,
+      "leaf_system": "DESIGN_WINDOW_60x78",
+      "orientation": "VERTICAL",
+      "glass_description": "20mm DUPLO FLOAT INCOLOR (4/10/6)",
+      "closure_mode": "MAÇANETA COM CREMONA",
+      "cremona_description": "CREMONA MAXIM-AR 2 PONTOS COMP. 800mm",
+      "screen_enabled": true
+    },
+    "geometry": {
+      "frame_width_final_mm": 1600.0,
+      "frame_height_final_mm": 5000.0,
+      "frame_width_cut_mm": 1605.0,
+      "frame_height_cut_mm": 5005.0,
+      "leaf_width_final_mm": 1536.0,
+      "leaf_height_final_mm": 599.5,
+      "leaf_width_cut_mm": 1541.0,
+      "leaf_height_cut_mm": 604.5,
+      "baguette_width_mm": 1416.0,
+      "baguette_height_mm": 479.5,
+      "glass_width_mm": 1408.0,
+      "glass_height_mm": 471.5,
+      "leaf_count": 8.0,
+      "leaf_glass_panel_count": 8.0,
+      "total_glass_panel_count": 8.0,
+      "screen_panel_count": 1.0
+    },
+    "bom": [
+      ["FRAME_HORIZONTAL", "DE6058", 1605.0, 2.0, 123.4245],
+      ["FRAME_VERTICAL", "DE6058", 5005.0, 2.0, 384.8845],
+      ["LEAF_HORIZONTAL", "DE6078", 1541.0, 16.0, 1120.36864],
+      ["LEAF_VERTICAL", "DE6078", 604.5, 16.0, 439.49568],
+      ["LEAF_SEPARATOR_HORIZONTAL", "DE6072", 1532.0, 7.0, 419.73736],
+      ["GLAZING_BEAD_HORIZONTAL", "BA2018", 1416.0, 16.0, 225.20064],
+      ["GLAZING_BEAD_VERTICAL", "BA2018", 479.5, 16.0, 76.25968],
+      ["INTERNAL_FINISH_HORIZONTAL", "AC7012", 1740.0, 2.0, 50.9124],
+      ["INTERNAL_FINISH_VERTICAL", "AC7012", 5140.0, 2.0, 150.3964],
+      ["EXTERNAL_FINISH_HORIZONTAL", "AC3004", 1660.0, 2.0, 10.7568],
+      ["EXTERNAL_FINISH_VERTICAL", "AC3004", 5060.0, 2.0, 32.7888],
+      ["FRAME_REINFORCEMENT_HORIZONTAL", "RAG - DE6058", 1484.0, 2.0, 23.744],
+      ["FRAME_REINFORCEMENT_VERTICAL", "RAG - DE6058", 4884.0, 2.0, 78.144],
+      ["LEAF_REINFORCEMENT_HORIZONTAL", "RAG - DE6078", 1416.0, 16.0, 226.56],
+      ["LEAF_REINFORCEMENT_VERTICAL", "RAG - DE6078", 479.5, 16.0, 76.72],
+      ["LEAF_SEPARATOR_TRANSOM_REINFORCEMENT_HORIZONTAL", "RAG - DE6072", 1532.0, 7.0, 75.068],
+      ["GLASS_PANEL", "20FI(4/10/6)", null, 8.0, 1433.96352],
+      ["RETRACTABLE_SCREEN_ASSEMBLY", "TL3", null, 1.0, 836.0],
+      ["GLAZING_BLOCK", "AC0312", null, 32.0, 11.2],
+      ["DRAIN_CAP", "AC0001", null, 2.0, 2.0],
+      ["MAXIM_AR_ARM", "BRA7", null, 8.0, 480.0],
+      ["MAXIM_AR_HANDLE", "MAC3", null, 8.0, 160.0],
+      ["CREMONA", "CRE20", null, 8.0, 175.84],
+      ["COUNTER_LATCH", "CON1", null, 16.0, 86.4],
+      ["REINFORCEMENT_SCREWS", "PAR2", null, 233.088, 23.3088],
+      ["HARDWARE_SCREWS", "PAR1", null, 128.0, 19.2]
+    ],
+    "cost_by_group": {
+      "PERFIS PRINCIPAIS": 2487.91068,
+      "BAGUETES": 301.46032,
+      "ACABAMENTOS": 244.8544,
+      "REFORÇOS": 480.236,
+      "VIDROS": 1433.96352,
+      "TELA": 836.0,
+      "VEDAÇÕES": 0,
+      "ACESSÓRIOS": 13.2,
+      "FERRAGENS": 944.7488,
+      "TOTAL": 6742.37372
+    },
+    "glass": [1408.0, 471.5, 8.0, 1433.96352],
+    "warnings": ["LEGACY-MX-DESIGN-SEALING-OMITTED", "PENDING-MX-DESIGN-SEALING-PHYSICAL-DEFINITION"],
+    "purchase": {
+      "technical_total": 13484.74744,
+      "bar_stock_purchase_cost": 8149.316,
+      "procurement_total_estimate": 14605.14064,
+      "kerf_mm": 3.0,
+      "lines": [
+        ["BA2018", 64, 60656.0, 11, 4244.0],
+        ["AC3004", 8, 26880.0, 6, 8520.0],
+        ["DE6078", 64, 68656.0, 12, 2144.0],
+        ["AC7012", 8, 27520.0, 6, 7880.0],
+        ["DE6058", 8, 26440.0, 6, 8960.0],
+        ["RAG - DE6078", 64, 60656.0, 11, 4244.0],
+        ["RAG - DE6058", 8, 25472.0, 6, 9928.0],
+        ["RAG - DE6072", 14, 21448.0, 5, 8052.0],
+        ["DE6072", 14, 21448.0, 5, 8052.0]
+      ]
+    }
+  }
+}

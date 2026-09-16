@@ -12,6 +12,10 @@ Endpoints já criados:
 - `GET /api/v1/engine/cr/options`
 - `POST /api/v1/engine/cr/calculate`
 - `POST /api/v1/purchase-plans/calculate`
+- `GET /api/v1/engine/maxim-ar/options`
+- `POST /api/v1/engine/maxim-ar/calculate`
+- `POST /api/v1/engine/maxim-ar/purchase-plan`
+- `POST /api/v1/purchase-plans/calculate-all` (pedido misto CR + Maxim-Ar)
 
 A resposta do cálculo CR já inclui:
 
@@ -56,6 +60,11 @@ http://127.0.0.1:8000/docs
 ## Regra arquitetural
 
 A API **não deve conter fórmulas de engenharia**. Ela valida entrada, chama a Engine e serializa a resposta.
+
+O Maxim-Ar Fase 2 expõe a matriz comprovada da `MX_ENGINE_0.2.0`: uma a oito
+folhas, horizontal/vertical, tela recolhível e bandeiras simples. O endpoint
+de opções também declara as restrições e o gate técnico reprovado. Combinações
+ambíguas do XLSM são recusadas pela Engine com HTTP 422.
 
 ### Ponte temporária
 

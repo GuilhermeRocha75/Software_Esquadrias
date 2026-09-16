@@ -26,6 +26,12 @@ class StructuralReinforcementRequest(BaseModel):
     material_code: Literal["ALUM10238", "ALUM15338"]
 
 
+class MaximArSealingRequest(BaseModel):
+    internal_material_id: str = Field(default="MX-SEALING-CONFIGURABLE", min_length=1)
+    description: str = Field(default="VEDAÇÃO MAXIM-AR CONFIGURÁVEL", min_length=1)
+    unit_price_per_meter: float = Field(default=0.0, ge=0)
+
+
 class ShutterRequest(BaseModel):
     mode: Literal[
         "SEM PERSIANA",
@@ -44,6 +50,7 @@ class ShutterRequest(BaseModel):
 
 
 class CRItemRequest(BaseModel):
+    family: Literal["CR"] = "CR"
     width_mm: float = Field(gt=0)
     height_mm: float = Field(gt=0)
     quantity: int = Field(default=1, ge=1)
@@ -71,4 +78,36 @@ class CRItemRequest(BaseModel):
 
 class PurchasePlanRequest(BaseModel):
     items: list[CRItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)
+
+
+class MaximArItemRequest(BaseModel):
+    family: Literal["MAXIM_AR"] = "MAXIM_AR"
+    width_mm: float = Field(gt=0)
+    height_mm: float = Field(gt=0)
+    quantity: int = Field(default=1, ge=1)
+    leaf_count: Literal[1, 2, 3, 4, 5, 6, 7, 8] = 1
+    orientation: Literal["HORIZONTAL", "VERTICAL"] = "HORIZONTAL"
+    module_mode: Literal["MÓDULO ÚNICO", "MÓDULOS SEPARADOS"] = "MÓDULO ÚNICO"
+    leaf_system: Literal["PRIME_WINDOW_42x63", "DESIGN_WINDOW_60x78"]
+    glass_description: str = "04mm MINI BOREAL"
+    closure_mode: Literal["FECHO 1 PONTO", "MAÇANETA COM CREMONA"] = "FECHO 1 PONTO"
+    cremona_description: str | None = None
+    internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
+    external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
+    screen_enabled: bool = False
+    leaf_grid: LeafGridRequest = Field(default_factory=LeafGridRequest)
+    bottom_fixed_panel: FixedPanelRequest | None = None
+    top_fixed_panel: FixedPanelRequest | None = None
+    structural_reinforcement: StructuralReinforcementRequest | None = None
+    sealing: MaximArSealingRequest = Field(default_factory=MaximArSealingRequest)
+
+
+class MaximArPurchasePlanRequest(BaseModel):
+    items: list[MaximArItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)
+
+
+class UnifiedPurchasePlanRequest(BaseModel):
+    items: list[CRItemRequest | MaximArItemRequest] = Field(min_length=1)
     kerf_mm: float = Field(default=0.0, ge=0)

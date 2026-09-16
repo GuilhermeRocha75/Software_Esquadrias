@@ -1,0 +1,239 @@
+# Homologação técnica — Maxim-Ar Fase 3A
+
+Data: 2026-09-10
+
+Branch: `feature/maxim-ar-engine-v3`
+
+Base exata: `ce7c9c9addde3d8ab076e188b7c2906d37244071`
+
+Engine preservada: `MX_ENGINE_0.2.0`
+
+## Resultado executivo
+
+A investigação foi concluída, mas nenhum dos seis bloqueadores recebeu prova
+física suficiente para virar regra produtiva. O XLSM e o histórico permitem
+confirmar inconsistências e delimitar candidatos; não permitem inferir a
+construção correta. A Engine, a API e a Web não foram alteradas.
+
+Fonte oficial: `SOFTBETA_ PERFIL PRE DELL AMANDA.xlsm`
+
+SHA-256 confirmado: `96514D7818BCBBC1DB86F94F86D8ED0239675E9F8D3A6B64DF651F30FD90C160`
+
+## Matriz de homologação
+
+### Atualização Fase 3B — evidência direta de fabricação (2026-09-11)
+
+Esta matriz substitui os estados de bloqueio abaixo. A fonte humana foi
+anonimizada e nenhum dado de cliente foi reproduzido.
+
+| Bloqueador | Novo status | Evidência consolidada | Regra produtiva |
+| --- | --- | --- | --- |
+| Vedação PRIME/DESIGN | `RESOLVED_PHYSICAL` | Fabricação confirmou três percursos reais em ambos os sistemas | vidro/folha, perímetro externo da folha e contato no marco; material e R$/m configuráveis |
+| AF/AG na folha móvel | `RESOLVED_PHYSICAL` + `LEGACY_BUG_CONFIRMED` | Fabricação confirmou inexistência física | rejeitar Engine/API/Web |
+| Bandeiras `(V,H)` | `RESOLVED_EXCEL` + `RESOLVED_PHYSICAL_TOPOLOGY` | Fabricação confirmou `(03)=3` travessas/4 vidros; XLSM/LISTAPERFIS identifica `PR4263` e `DE6072` como perfis normais e `RAG - PR4263`/`RAG - DE6072` como reforços | `(V+1)*(H+1)` painéis; gerar travessas normais, nunca ALUM estrutural |
+| Módulos separados + travessas | `RESOLVED_PHYSICAL` + `LEGACY_BUG_CONFIRMED` | Fabricação confirmou combinação impossível | rejeitar Engine/API/Web |
+| Calços | `RESOLVED_PHYSICAL` | Fabricação confirmou quatro por painel de vidro | `4 * total_paineis_vidro * quantidade` |
+| Reforço estrutural | `RESOLVED_PHYSICAL` + `RESOLVED_EXCEL` | somente em módulo separado, opcional; XLSM/catálogo comprovam escolha manual e cortes | proibir no módulo único; não selecionar automaticamente |
+
+Correção expressa: **reforço estrutural não é obrigatório em módulo
+separado; é opcional e somente permitido nessa condição.**
+
+| Bloqueador | Status | Evidência Excel | Evidência ORCS | Evidência física | Regra candidata | Confiança | Próxima ação |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Vedações DESIGN | BLOCKED | MX 67:69 restringe três vedações ao PRIME; catálogo traz `AC0708` a R$ 1,80/m, sem ligação MX/percurso | 2.423 descrições DESIGN; nenhum código de vedação em 238 PDFs | ausente | `AC0708` é candidato por catálogo/analogia CR, mas material e percursos de vidro/folha/marco não estão provados | BAIXA | obter lista/foto de uma fabricação DESIGN |
+| Travessas AF/AG da folha | BLOCKED | `G12/G13` multiplicam vidro/baguete; não há linha de perfil, reforço ou vedação correspondente | AF=0 e AG=0 em 3.644 MX e snapshots; três croquis de pinázio externo não são travessas estruturais | ausente | provavelmente requer travessa PRIME `PR4263` ou DESIGN `DE6072` e reforço, mas dimensões/encontros não estão provados | BAIXA | obter folha real dividida ou confirmação de opção não fabricável |
+| Bandeiras complexas | PARTIAL | fórmulas existem, mas ignoram grades independentes e `G18` usa `AI` inferior no painel superior | 119 casos ORCS; 291 itens em PDFs e 237 croquis MX; `(VH)` e ORCS 8696/8701 comprovados | croqui comercial confirma topologia, não BOM/cortes | grade `(V+1)×(H+1)` é `RESOLVED_HISTORY`; descontos e materiais continuam pendentes | MÉDIA | obter listas de corte/BOM dos casos 8696, 8701 e 10075 |
+| Módulos separados + travessas | PARTIAL | dimensões dependem de folhas, não da grade; `G30:G31` usa `AH/AI` em vez de `AJ/AK` | 13 módulos separados; seis com travessas; três croquis com redação de módulos | elevação comercial sem detalhe construtivo | cada módulo deve ter quadro e grade próprios, mas folgas e cortes físicos faltam | MÉDIA | obter desenho de fabricação e listas dos seis casos |
+| Calços de bandeiras | BLOCKED | `MX!G72=G10*2` conta somente folhas móveis; CR usa `SUM(G84:G94)*2`, por painel, mas é outra família | ORCS não registra BOM; `AC0312` não aparece nos 238 PDFs | ausente | adicionar calços por vidro fixo é plausível; quantidade/posição não comprovadas | BAIXA | contar calços em bandeira real e validar `AC0312` |
+| Reforço ALUM10238/ALUM15338 | BLOCKED | catálogo: 102 × 50 e 138 × 50, ambos R$ 46/m; MX usa largura total, uma peça por bandeira; desconto de 50 mm só para 102 em módulo separado | zero registro preenchido; códigos ausentes dos 238 PDFs e snapshots | ausente | regra de planilha está inventariada, mas critério de seleção e instalação não têm prova física | BAIXA | obter caso real, FFD e critério estrutural |
+
+Status de evidência: vedações, AF/AG, calços e reforço permanecem
+`PENDING_PHYSICAL_HOMOLOGATION`; bandeiras complexas e módulos separados são
+`LEGACY_AMBIGUOUS`, com erros de referência/consistência demonstrados. A
+topologia `(V,H) -> (V+1)×(H+1)` das bandeiras é `RESOLVED_HISTORY`, e o uso de
+`AI` no painel superior dos casos 8696/8701 é `LEGACY_BUG_CONFIRMED`. A
+existência de uma fórmula ou de um custo histórico não foi tratada como prova
+de fabricação.
+
+## Auditoria sistemática da ORCS
+
+O script `tools/audit_maxim_ar_phase3a.py` lê OpenXML sem Excel, identifica MX
+por `ORCS!X="MX"` e nunca emite cliente, nome, item, local, código comercial ou
+descrição comercial. Resultado do XLSM oficial:
+
+| Medida | Resultado |
+| --- | ---: |
+| Registros MX | 3.644 |
+| AF não nulo | 0 |
+| AG não nulo | 0 |
+| Alguma bandeira | 539 |
+| Bandeira inferior | 483 |
+| Bandeira superior | 163 |
+| Bandeira complexa (múltiplas folhas ou alguma travessa) | 119 |
+| Múltiplas folhas | 508 |
+| Tela | 593 |
+| Módulos separados | 13 |
+| Módulos separados com travessa | 6 |
+| Reforço estrutural preenchido | 0 |
+
+Distribuição de folhas: 1: 3.136; 2: 374; 3: 91; 4: 33; 5: 2; 6: 3;
+7: 2; 8: 3. Sistemas: PRIME 1.221 e DESIGN 2.423 (inclui duas grafias DESIGN
+fora do texto canônico). Orientações: 3.591 horizontal e 53 vertical.
+
+Travessas de bandeira: `AH` 78, `AI` 1, `AJ` 54 e `AK` 10. Os casos de módulo
+separado com travessa são os IDs técnicos ORCS 61, 75, 76, 1073, 18214 e
+18306. Casos úteis para confronto físico: 5959 (duas bandeiras com travessas
+verticais), 8696 (bandeira superior com três travessas horizontais) e 10075
+(duas folhas, duas bandeiras e travessas H/V).
+
+## 1. Vedações DESIGN
+
+### Evidência
+
+- `MX!B67:B69` e `G67:G69` habilitam borracha de vidro `ACB606` e borracha
+  Maxim-Ar `AC0002` somente quando a folha é PRIME. DESIGN produz zero.
+- `LISTAPERFIS!A54:C54` contém `AC0708`, “BORRACHA DESIGN 7X8”, R$ 1,80/m.
+- CR seleciona `AC0708` para sua variante DESIGN em `CR!B108`, usando o
+  perímetro dos painéis em `G108`. Isso é analogia de outra família, não prova
+  do encaixe/percurso em Maxim-Ar.
+- Nomes definidos apenas apontam para tabelas amplas (`LISTAP`, `PAFAB` etc.);
+  nenhum nome cria regra oculta MX. O projeto VBA não contém os códigos de
+  material pesquisados.
+- Os 2.423 registros DESIGN guardam somente custo agregado. Recalcular pelo
+  XLSM continua zerando vedações, portanto o histórico não revela material.
+
+Conclusão: alternativa C, evidência insuficiente. Classificação
+`PENDING_PHYSICAL_HOMOLOGATION`. `AC0708` é candidato, não regra.
+
+## 2. Travessas AF/AG dentro da folha móvel
+
+`MX!G12` e `G13` usam AF/AG para multiplicar baguetes e, por consequência,
+`G59=G12/2` multiplica vidros. Cotas auxiliares podem alterar alguns ramos, mas
+não existe no BOM MX uma linha que gere o perfil da travessa, seu reforço, seus
+cortes ou vedação adicional. O perfil `PR4263`/`DE6072` aparece como travessa
+de folhas/bandeiras em outros ramos, mas não há vínculo suficiente para AF/AG.
+
+A busca integral encontrou AF=0 e AG=0 nos 3.644 registros. O snapshot antigo
+de 773 MX também tem zero. Classificação `LEGACY_AMBIGUOUS` e
+`PENDING_PHYSICAL_HOMOLOGATION`.
+
+## 3. Bandeiras complexas
+
+O histórico contém 119 configurações complexas e demonstra que foram orçadas,
+mas não fornece BOM físico. As fórmulas não fecham uma grade cartesiana:
+
+- no módulo único, `G16/G18` calcula baguetes por travessas horizontais e
+  separadores entre folhas, sem usar `AH/AJ` para criar as colunas de vidro;
+- `G18` usa `AI` (inferior) no painel superior, embora a altura use `AK`;
+- entradas órfãs também existem: ORCS 4299 tem `AJ=AK=800` sem bandeira
+  superior, e por isso os valores são ignorados.
+
+Os novos casos históricos provam a topologia da grade, mas não que o resultado
+de BOM calculado corresponde ao item instalado. Classificação
+`LEGACY_AMBIGUOUS`; status PARTIAL porque a regra de painéis e o defeito do
+Excel foram comprovados, mas cortes e materiais físicos não.
+
+### Adendo da fonte histórica RAR — 2026-09-11
+
+O RAR autorizado contém 238 PDFs e 1.530 imagens. Foram localizados 128 PDFs
+com Maxim-Ar, totalizando 291 ocorrências de itens, além de 237 croquis MX. Os
+croquis confirmam que `(VH)` representa contagens de travessas verticais e
+horizontais e que o painel possui `(V+1)×(H+1)` vidros.
+
+Os documentos anônimos `PDF-39689C6E9678` e `PDF-2991B48657F8` reproduzem os
+casos ORCS 8696 e 8701 com bandeira superior `(03)`. O croqui mostra quatro
+vidros empilhados; o Excel usa `AI=0` na quantidade superior em vez de `AK=3`
+e retorna um. A topologia passa a `RESOLVED_HISTORY` e o defeito a
+`LEGACY_BUG_CONFIRMED`. O bloqueador integral continua PARTIAL porque os PDFs e
+croquis não contêm BOM, folgas ou listas de corte.
+
+## 4. Módulos separados e prova geométrica
+
+Para a bandeira inferior separada, o Excel calcula:
+
+```text
+colunas = AH + 1
+linhas  = AI + 1
+quantidade de vidros = (AH + 1) × (AI + 1)     [G24/2 -> G60]
+largura de cada vidro = D24 - folga             [D60]
+altura de cada vidro  = D25 - folga             [E60]
+```
+
+Porém `D24` deriva a largura do número de folhas `G3`, não da grade `AH+1`, e
+`D25` não divide a altura por `AI+1`. O resultado só coincide horizontalmente
+quando `AH+1=G3`, como nos seis casos separados encontrados. Se a grade for
+independente das folhas, a quantidade e as dimensões divergem; qualquer
+`AI>0` multiplica vidros sem subdividir sua altura.
+
+No painel superior, perfis usam `AJ/AK` em `G28/G29`, mas baguetes/vidros usam
+novamente `AH/AI` em `G30/G31`. Assim, duas bandeiras com divisões diferentes
+não podem produzir simultaneamente quantidades coerentes.
+
+Isso é `LEGACY_BUG_CONFIRMED` quanto à matemática do XLSM. Ainda é
+`PENDING_PHYSICAL_HOMOLOGATION` para definir folgas, encontros e cortes reais.
+
+## 5. Calços físicos
+
+MX seleciona `AC0312` (R$ 0,35/un) e usa `G72=G10*2`: quatro calços por folha
+móvel na configuração básica, independentemente de bandeiras, quantidade de
+vidros fixos, área, orientação, travessas ou módulos. CR usa outra expressão,
+`SUM(G84:G94)*2`, equivalente a dois calços por painel contado naquela família.
+A divergência entre famílias impede copiar a regra.
+
+O histórico ORCS não contém detalhe de acessórios. Classificação
+`LEGACY_AMBIGUOUS` e `PENDING_PHYSICAL_HOMOLOGATION`.
+
+## 6. Reforços estruturais
+
+`LISTAPERFIS!35:36` registra:
+
+- `ALUM10238`: perfil estrutural de alumínio 102 × 50 mm, R$ 46/m;
+- `ALUM15338`: descrição 138 × 50 mm, R$ 46/m (o código e a descrição não
+  expressam a mesma largura nominal).
+
+Em MX, `B32=R2`, `D32=D8`, `G32=J32+K32`, `J32=1` com bandeira inferior e
+`K32=1` com superior. Logo há um corte na largura total por bandeira. Apenas
+`REFORÇO 102X50MM` em módulos separados aciona `U3=50`, reduzindo a altura do
+quadro separado; o corte estrutural em `D32` não recebe esse desconto.
+
+Nenhum registro MX tem `R` preenchido com reforço. Por exigência da fase, a
+classificação é `PENDING_PHYSICAL_HOMOLOGATION`.
+
+## Arquivos temporários
+
+O snapshot íntegro de 773 MX repete as fórmulas oficiais e não traz AF/AG ou
+reforço. Dois fragmentos ZIP sem diretório central e um arquivo vazio foram
+analisados sem gravação. As partes técnicas recuperáveis repetem as mesmas
+ambiguidades. Detalhes e hashes estão em
+`docs/ANALISE_ARQUIVOS_TMP_MAXIM_AR_FASE3A_2026-09-10.md`.
+
+## Fonte histórica RAR
+
+O arquivo `1.2 DELL AMANDA.rar`, SHA-256
+`E338D099359CEFA226D9ADA56A1F0C6C3B8305FC953088BC3DA0397A5410AD29`, foi
+inventariado e analisado fora do Git. Nenhum dado pessoal ou documento bruto
+foi versionado. A metodologia, contagens e evidências anonimizadas estão em
+`docs/ANALISE_FONTE_HISTORICA_RAR_MAXIM_AR_FASE3A_2026-09-11.md`.
+
+## Decisão
+
+Os seis temas foram investigados até o limite das fontes locais. A Fase 3A
+pode ser fechada como investigação concluída, mas a Fase 3B integral não deve
+implementar nenhuma dessas regras antes do retorno da fábrica/orçamento. O
+pedido objetivo está em `docs/EVIDENCIAS_NECESSARIAS_MAXIM_AR_FASE3.md`.
+
+**Bloqueadores tecnicamente resolvidos: 0/6.**
+
+## Regressão final
+
+- Engine: 85 testes aprovados, 218 subtestes; CR 57 preservados; Maxim-Ar 28
+  preservados (Fase 1: 16, Fase 2: 12).
+- API: 20 testes aprovados.
+- Web: build Vite aprovado, 30 módulos transformados.
+- Auditoria: compilação Python, `git diff --check`, hash oficial e contagens
+  ORCS verificados.
+- Fonte RAR: 1.780 arquivos inventariados; 238 PDFs/653 páginas e 1.530 imagens
+  processados pelo auditor sanitizado, sem falhas de leitura dos PDFs.
+- Falhas de produto: 0. As tentativas iniciais com `pytest` e `npm.ps1` não
+  executaram por configuração local; os runners previstos (`unittest` e
+  `npm.cmd`) foram executados com sucesso.
