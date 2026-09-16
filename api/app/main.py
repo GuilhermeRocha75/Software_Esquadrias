@@ -383,7 +383,7 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
 def gr_options():
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 1,
+        "phase": 2,
         "application": "PORTA",
         "leaf_counts": [1],
         "leaf_systems": [
@@ -394,7 +394,10 @@ def gr_options():
         ],
         "panel_modes": ["PAINEL COMPLETO"],
         "module_modes": ["MÓDULO ÚNICO"],
-        "closures": ["MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"],
+        "closures": [
+            "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+            "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+        ],
         "hinges": ["DOBRADIÇA 90MM"],
         "internal_finishes": ["GUARNIÇÃO DE 70MM"],
         "external_finishes": ["BARRA CHATA DE 30MM"],
@@ -405,7 +408,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 1 homologa somente geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física.",
+            "reason": "Fase 2 homologa somente geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
