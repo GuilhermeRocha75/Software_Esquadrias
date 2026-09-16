@@ -11,8 +11,11 @@ from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
 
 MONO = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
 MULTI = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
+WINDOW_CREMONA = "MAÇANETA COM CREMONA SEM CHAVE"
+CREMONA_800 = "CREMONA 2 PONTOS COMP. 800mm E:15mm"
 INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
 EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
+WINDOW = "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN"
 
 
 def configuration(**overrides):
@@ -21,13 +24,27 @@ def configuration(**overrides):
     return GrConfiguration(**values)
 
 
-class GrPhase3Tests(unittest.TestCase):
-    def test_version_and_model(self):
+def window_configuration(**overrides):
+    values = {
+        "width_mm": 800,
+        "height_mm": 1300,
+        "quantity": 1,
+        "leaf_system": WINDOW,
+        "application": "JANELA",
+        "closure_mode": WINDOW_CREMONA,
+        "cremona_description": CREMONA_800,
+    }
+    values.update(overrides)
+    return GrConfiguration(**values)
+
+
+class GrPhase4Tests(unittest.TestCase):
+    def test_version_and_door_model(self):
         result = calculate_gr(configuration())
-        self.assertEqual(result.calculation_version, "GR_ENGINE_0.3.0")
+        self.assertEqual(result.calculation_version, "GR_ENGINE_0.4.0")
         self.assertEqual(result.model_description, "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
 
-    def test_geometry_matches_gr_sheet_formulas(self):
+    def test_door_geometry_matches_gr_sheet_formulas(self):
         result = calculate_gr(configuration())
         expected = {
             "frame_width_final_mm": 900.0,
@@ -108,26 +125,105 @@ class GrPhase3Tests(unittest.TestCase):
         screws = next(x for x in multi.unit_bom if x.role == "HARDWARE_SCREWS")
         self.assertEqual(screws.quantity_per_unit, 36)
 
+    def test_four_panel_blocks_are_resolved_physical_squaring_blocks(self):
+        for cfg in (configuration(), window_configuration()):
+            with self.subTest(application=cfg.application):
+                result = calculate_gr(cfg)
+                block = next(x for x in result.unit_bom if x.material_code == "AC0312")
+                self.assertEqual(block.role, "SQUARING_BLOCK")
+                self.assertEqual(block.quantity_per_unit, 4)
+                self.assertIn("RESOLVED_PHYSICAL_2026-09-16", block.source)
+
+    def test_window_panel_geometry_matches_xlsm_formulas(self):
+        result = calculate_gr(window_configuration())
+        self.assertEqual(result.model_description, "JANELA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
+        self.assertEqual(result.geometry, {
+            "frame_width_final_mm": 800.0,
+            "frame_width_cut_mm": 805.0,
+            "frame_height_final_mm": 1300.0,
+            "frame_height_cut_mm": 1305.0,
+            "leaf_width_final_mm": 736.0,
+            "leaf_width_cut_mm": 741.0,
+            "leaf_height_final_mm": 1236.0,
+            "leaf_height_cut_mm": 1241.0,
+            "panel_bead_width_mm": 616.0,
+            "panel_bead_height_mm": 1116.0,
+            "panel_fill_strip_length_mm": 616.0,
+            "panel_fill_strip_quantity": 7.414286,
+            "frame_reinforcement_width_mm": 720.0,
+            "frame_reinforcement_height_mm": 1220.0,
+            "leaf_reinforcement_width_mm": 616.0,
+            "leaf_reinforcement_height_mm": 1116.0,
+        })
+
+    def test_window_baseline_includes_physically_confirmed_800mm_cremona(self):
+        result = calculate_gr(window_configuration())
+        self.assertEqual(result.unit_cost, 827.722384)
+        codes = {x.material_code for x in result.unit_bom}
+        self.assertIn("DE6078", codes)
+        self.assertIn("RAG - DE6078", codes)
+        self.assertIn("MAC1", codes)
+        self.assertIn("CRE12", codes)
+        self.assertIn("CON1", codes)
+        cremona = next(x for x in result.unit_bom if x.material_code == "CRE12")
+        self.assertEqual(cremona.description, CREMONA_800)
+        self.assertIn("RESOLVED_PHYSICAL_2026-09-16", cremona.source)
+        screws = next(x for x in result.unit_bom if x.role == "HARDWARE_SCREWS")
+        self.assertEqual(screws.quantity_per_unit, 32)
+
+    def test_window_none_cremona_normalizes_to_physical_800mm_baseline(self):
+        explicit = calculate_gr(window_configuration(cremona_description=CREMONA_800))
+        implicit = calculate_gr(window_configuration(cremona_description=None))
+        self.assertEqual(implicit.geometry, explicit.geometry)
+        self.assertEqual(implicit.cost_breakdown, explicit.cost_breakdown)
+        self.assertEqual(implicit.unit_cost, explicit.unit_cost)
+
+    def test_current_catalog_window_reference_cases(self):
+        cases = (
+            (17975, 800, 1300, 827.722384),
+            (18400, 1120, 1850, 1178.777293),
+        )
+        for row, width, height, expected in cases:
+            with self.subTest(orcs_row=row):
+                result = calculate_gr(window_configuration(width_mm=width, height_mm=height))
+                self.assertEqual(result.unit_cost, expected)
+
     def test_cost_is_exact_sum_of_bom_and_groups(self):
-        for closure in (MONO, MULTI):
-            for leaf_system in (INTERNAL, EXTERNAL):
-                with self.subTest(closure=closure, leaf_system=leaf_system):
-                    result = calculate_gr(configuration(closure_mode=closure, leaf_system=leaf_system))
-                    self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
-                    self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
+        cases = [
+            configuration(closure_mode=closure, leaf_system=leaf_system)
+            for closure in (MONO, MULTI)
+            for leaf_system in (INTERNAL, EXTERNAL)
+        ]
+        cases.append(window_configuration())
+        for cfg in cases:
+            with self.subTest(application=cfg.application, leaf_system=cfg.leaf_system, closure=cfg.closure_mode):
+                result = calculate_gr(cfg)
+                self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
+                self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
 
     def test_quantity_scales_order_bom_not_unit_cost(self):
-        one = calculate_gr(configuration(quantity=1))
-        three = calculate_gr(configuration(quantity=3))
-        self.assertEqual(one.unit_cost, three.unit_cost)
-        for item in three.unit_bom:
-            self.assertEqual(item.quantity_order, item.quantity_per_unit * 3)
+        for maker in (configuration, window_configuration):
+            with self.subTest(maker=maker.__name__):
+                one = calculate_gr(maker(quantity=1))
+                three = calculate_gr(maker(quantity=3))
+                self.assertEqual(one.unit_cost, three.unit_cost)
+                for item in three.unit_bom:
+                    self.assertEqual(item.quantity_order, item.quantity_per_unit * 3)
 
-    def test_golden_v03_is_frozen(self):
+    def test_v03_golden_remains_numerically_frozen_after_version_bump(self):
         golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_3.json").read_text(encoding="utf-8"))
         for case in golden["cases"]:
             with self.subTest(case=case["id"]):
                 result = calculate_gr(configuration(**case["input"]))
+                self.assertEqual(result.geometry, case["geometry"])
+                self.assertEqual(result.cost_breakdown, case["cost_by_group"])
+                self.assertEqual(result.unit_cost, case["unit_cost"])
+
+    def test_golden_v04_is_frozen(self):
+        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_4.json").read_text(encoding="utf-8"))
+        for case in golden["cases"]:
+            with self.subTest(case=case["id"]):
+                result = calculate_gr(GrConfiguration(**case["input"]))
                 self.assertEqual(result.calculation_version, golden["engine_version"])
                 self.assertEqual(result.geometry, case["geometry"])
                 self.assertEqual(result.cost_breakdown, case["cost_by_group"])
@@ -138,8 +234,7 @@ class GrPhase3Tests(unittest.TestCase):
             {"leaf_count": 2},
             {"application": "JANELA"},
             {"panel_mode": ""},
-            {"leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN"},
-            {"closure_mode": "MAÇANETA COM CREMONA SEM CHAVE"},
+            {"closure_mode": WINDOW_CREMONA},
             {"screen_enabled": True},
             {"shutter_enabled": True},
             {"bottom_flag_height_mm": 600},
@@ -149,6 +244,16 @@ class GrPhase3Tests(unittest.TestCase):
         for override in invalid:
             with self.subTest(override=override), self.assertRaises(ValueError):
                 calculate_gr(configuration(**override))
+
+        window_invalid = (
+            {"application": "PORTA"},
+            {"closure_mode": MONO},
+            {"cremona_description": "CREMONA 2 PONTOS COMP. 1000mm E:15mm"},
+            {"hinge_description": "DOBRADIÇA SISTEMA OB"},
+        )
+        for override in window_invalid:
+            with self.subTest(override=override), self.assertRaises(ValueError):
+                calculate_gr(window_configuration(**override))
 
     def test_nonfinite_and_impossible_dimensions_are_rejected(self):
         for value in (math.nan, math.inf, -math.inf):
@@ -160,6 +265,10 @@ class GrPhase3Tests(unittest.TestCase):
             calculate_gr(configuration(width_mm=230))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
             calculate_gr(configuration(height_mm=300))
+        with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
+            calculate_gr(window_configuration(width_mm=180))
+        with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
+            calculate_gr(window_configuration(height_mm=250))
 
 
 if __name__ == "__main__":
