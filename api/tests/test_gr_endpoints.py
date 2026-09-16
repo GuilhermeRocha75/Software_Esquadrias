@@ -14,6 +14,8 @@ from api.app.schemas import GrItemRequest  # noqa: E402
 
 MONO = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
 MULTI = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
+INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
 
 
 def request(**overrides):
@@ -32,13 +34,18 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
         self.assertEqual(
             response["engines"],
-            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.2.0"],
+            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.3.0"],
         )
 
-    def test_options_expose_only_proven_phase2_scope(self):
+    def test_options_expose_only_proven_phase3_scope(self):
         response = gr_options()
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.2.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.3.0")
+        self.assertEqual(response["phase"], 3)
         self.assertEqual(response["leaf_counts"], [1])
+        self.assertEqual(
+            {row["value"] for row in response["leaf_systems"]},
+            {INTERNAL, EXTERNAL},
+        )
         self.assertEqual(response["panel_modes"], ["PAINEL COMPLETO"])
         self.assertEqual(response["closures"], [MONO, MULTI])
         self.assertFalse(response["screen"]["supported"])
@@ -48,7 +55,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_calculate_serializes_gr_monopoint_golden(self):
         response = calculate_gr_endpoint(request(closure_mode=MONO))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.2.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.3.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 836)
         self.assertEqual(response["geometry"]["panel_bead_width_mm"], 664)
         self.assertEqual(response["unit_technical_cost"], 1384.723645)
@@ -57,12 +64,24 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_calculate_serializes_gr_multipoint_golden(self):
         response = calculate_gr_endpoint(request(closure_mode=MULTI))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.2.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.3.0")
         self.assertEqual(response["unit_technical_cost"], 1452.523645)
         self.assertIn("FEC5", {row["material_code"] for row in response["bom"]})
         self.assertIn("CON1", {row["material_code"] for row in response["bom"]})
         screws = next(row for row in response["bom"] if row["role"] == "HARDWARE_SCREWS")
         self.assertEqual(screws["quantity_per_unit"], 36)
+
+    def test_calculate_serializes_external_opening_real_orcs_golden(self):
+        response = calculate_gr_endpoint(request(
+            width_mm=800,
+            height_mm=2150,
+            leaf_system=EXTERNAL,
+            closure_mode=MULTI,
+        ))
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.3.0")
+        self.assertEqual(response["unit_technical_cost"], 1418.530855)
+        leaf_codes = {row["material_code"] for row in response["bom"] if row["role"] in {"LEAF_WIDTH", "LEAF_HEIGHT"}}
+        self.assertEqual(leaf_codes, {"DE60104-E"})
 
     def test_quantity_scales_serialized_order_cost(self):
         response = calculate_gr_endpoint(request(quantity=3))
