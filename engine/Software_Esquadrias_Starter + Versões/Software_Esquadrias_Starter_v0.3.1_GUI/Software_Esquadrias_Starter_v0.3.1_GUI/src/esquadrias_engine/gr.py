@@ -5,8 +5,10 @@ import math
 
 from .models import BomComponent, CalculationResult
 
-GR_ENGINE_VERSION = "GR_ENGINE_0.2.0"
-GR_LEAF_SYSTEM = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+GR_ENGINE_VERSION = "GR_ENGINE_0.3.0"
+GR_LEAF_SYSTEM_INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+GR_LEAF_SYSTEM_EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
+GR_LEAF_SYSTEMS = (GR_LEAF_SYSTEM_INTERNAL, GR_LEAF_SYSTEM_EXTERNAL)
 GR_APPLICATION = "PORTA"
 GR_PANEL_MODE = "PAINEL COMPLETO"
 GR_MODULE_MODE = "MÓDULO ÚNICO"
@@ -24,7 +26,7 @@ class GrConfiguration:
     height_mm: float
     quantity: int = 1
     leaf_count: int = 1
-    leaf_system: str = GR_LEAF_SYSTEM
+    leaf_system: str = GR_LEAF_SYSTEM_INTERNAL
     application: str = GR_APPLICATION
     panel_mode: str = GR_PANEL_MODE
     module_mode: str = GR_MODULE_MODE
@@ -44,6 +46,7 @@ class GrConfiguration:
 _MATERIALS = {
     "DE6058": ("MARCO ALTO DE ABRIR", 38.45, "PERFIS PRINCIPAIS"),
     "DE60104": ("FOLHA PORTA DE GIRO AB. INT.", 55.40, "PERFIS PRINCIPAIS"),
+    "DE60104-E": ("FOLHA PORTA DE GIRO AB. EXT.", 54.87, "PERFIS PRINCIPAIS"),
     "BA2516": ("BAGUETE (Vidro 4/6mm - 12/18mm)", 10.72, "BAGUETES"),
     "DE20150": ("PAINEL FECHAMENTO", 20.27, "PERFIS PRINCIPAIS"),
     "AC7012": ("GUARNIÇÃO DE 70MM", 14.63, "ACABAMENTOS"),
@@ -77,9 +80,10 @@ def _validate(cfg: GrConfiguration) -> None:
     if isinstance(cfg.quantity, bool) or not isinstance(cfg.quantity, int) or cfg.quantity < 1:
         raise ValueError("Quantidade GR deve ser inteiro maior ou igual a 1.")
     if cfg.leaf_count != 1:
-        raise ValueError("GR_ENGINE_0.2.0 suporta somente 1 folha.")
+        raise ValueError("GR_ENGINE_0.3.0 suporta somente 1 folha.")
+    if cfg.leaf_system not in GR_LEAF_SYSTEMS:
+        raise ValueError(f"tipo de folha fora do escopo do GR_ENGINE_0.3.0: {cfg.leaf_system}")
     checks = (
-        (cfg.leaf_system, GR_LEAF_SYSTEM, "tipo de folha"),
         (cfg.application, GR_APPLICATION, "aplicação"),
         (cfg.panel_mode, GR_PANEL_MODE, "painel"),
         (cfg.module_mode, GR_MODULE_MODE, "módulo"),
@@ -89,17 +93,17 @@ def _validate(cfg: GrConfiguration) -> None:
     )
     for actual, expected, label in checks:
         if actual != expected:
-            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.2.0: {actual}")
+            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.3.0: {actual}")
     if cfg.closure_mode not in GR_CLOSURES:
-        raise ValueError(f"fechamento fora do escopo do GR_ENGINE_0.2.0: {cfg.closure_mode}")
+        raise ValueError(f"fechamento fora do escopo do GR_ENGINE_0.3.0: {cfg.closure_mode}")
     if cfg.shutter_enabled or cfg.screen_enabled:
-        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta persiana ou tela.")
+        raise ValueError("GR_ENGINE_0.3.0 ainda não suporta persiana ou tela.")
     if cfg.bottom_flag_height_mm or cfg.top_flag_height_mm:
-        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta bandeiras.")
+        raise ValueError("GR_ENGINE_0.3.0 ainda não suporta bandeiras.")
     if cfg.leaf_horizontal_transoms or cfg.leaf_vertical_transoms:
-        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta travessas na folha.")
+        raise ValueError("GR_ENGINE_0.3.0 ainda não suporta travessas na folha.")
     if cfg.structural_reinforcement is not None:
-        raise ValueError("GR_ENGINE_0.2.0 ainda não suporta reforço estrutural opcional.")
+        raise ValueError("GR_ENGINE_0.3.0 ainda não suporta reforço estrutural opcional.")
 
 
 def _component(code: str, role: str, quantity: float, order_quantity: int, *,
@@ -138,6 +142,7 @@ def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
     _validate(cfg)
     width = float(cfg.width_mm)
     height = float(cfg.height_mm)
+    leaf_code = "DE60104-E" if cfg.leaf_system == GR_LEAF_SYSTEM_EXTERNAL else "DE60104"
 
     frame_width_final = width
     frame_width_cut = width + 5.0
@@ -172,13 +177,13 @@ def calculate_gr(cfg: GrConfiguration) -> CalculationResult:
     invalid = {name: value for name, value in positive.items() if value <= 0 or not math.isfinite(value)}
     if invalid:
         details = ", ".join(f"{k}={v:g}" for k, v in invalid.items())
-        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.2: {details}")
+        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.3: {details}")
 
     bom = [
         _component("DE6058", "FRAME_WIDTH", 1, cfg.quantity, length_mm=frame_width_cut, source="GR!E8/G8"),
         _component("DE6058", "FRAME_HEIGHT", 2, cfg.quantity, length_mm=frame_height_cut, source="GR!E9/G9"),
-        _component("DE60104", "LEAF_WIDTH", 2, cfg.quantity, length_mm=leaf_width_cut, source="GR!E10/G10"),
-        _component("DE60104", "LEAF_HEIGHT", 2, cfg.quantity, length_mm=leaf_height_cut, source="GR!E11/G11"),
+        _component(leaf_code, "LEAF_WIDTH", 2, cfg.quantity, length_mm=leaf_width_cut, source="GR!B10/E10/G10"),
+        _component(leaf_code, "LEAF_HEIGHT", 2, cfg.quantity, length_mm=leaf_height_cut, source="GR!B11/E11/G11"),
         _component("BA2516", "PANEL_BEAD_WIDTH", 2, cfg.quantity, length_mm=panel_bead_width, source="GR!E16/G16"),
         _component("BA2516", "PANEL_BEAD_HEIGHT", 2, cfg.quantity, length_mm=panel_bead_height, source="GR!E17/G17"),
         _component("DE20150", "PANEL_FILL", panel_strip_qty, cfg.quantity, length_mm=panel_bead_width, source="GR!E41/G41"),
