@@ -11,6 +11,8 @@ from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
 
 MONO = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
 MULTI = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
+INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
+EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
 
 
 def configuration(**overrides):
@@ -19,10 +21,10 @@ def configuration(**overrides):
     return GrConfiguration(**values)
 
 
-class GrPhase2Tests(unittest.TestCase):
+class GrPhase3Tests(unittest.TestCase):
     def test_version_and_model(self):
         result = calculate_gr(configuration())
-        self.assertEqual(result.calculation_version, "GR_ENGINE_0.2.0")
+        self.assertEqual(result.calculation_version, "GR_ENGINE_0.3.0")
         self.assertEqual(result.model_description, "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
 
     def test_geometry_matches_gr_sheet_formulas(self):
@@ -72,6 +74,27 @@ class GrPhase2Tests(unittest.TestCase):
                 actual = calculate_gr(configuration(width_mm=width, height_mm=height, closure_mode=MULTI)).unit_cost
                 self.assertLessEqual(abs(actual - expected), 1e-6)
 
+    def test_external_opening_matches_current_real_orcs(self):
+        for row in (18545, 18547, 18558):
+            with self.subTest(orcs_row=row):
+                result = calculate_gr(configuration(
+                    width_mm=800,
+                    height_mm=2150,
+                    leaf_system=EXTERNAL,
+                    closure_mode=MULTI,
+                ))
+                self.assertEqual(result.unit_cost, 1418.530855)
+                leaf_codes = {x.material_code for x in result.unit_bom if x.role in {"LEAF_WIDTH", "LEAF_HEIGHT"}}
+                self.assertEqual(leaf_codes, {"DE60104-E"})
+
+    def test_external_and_internal_opening_keep_same_geometry(self):
+        internal = calculate_gr(configuration(width_mm=800, height_mm=2150, leaf_system=INTERNAL, closure_mode=MULTI))
+        external = calculate_gr(configuration(width_mm=800, height_mm=2150, leaf_system=EXTERNAL, closure_mode=MULTI))
+        self.assertEqual(internal.geometry, external.geometry)
+        self.assertEqual(internal.unit_cost, 1421.561395)
+        self.assertEqual(external.unit_cost, 1418.530855)
+        self.assertEqual(round(internal.unit_cost - external.unit_cost, 6), 3.03054)
+
     def test_multipoint_delta_is_explained_by_exact_xlsm_hardware_rules(self):
         mono = calculate_gr(configuration(closure_mode=MONO))
         multi = calculate_gr(configuration(closure_mode=MULTI))
@@ -87,10 +110,11 @@ class GrPhase2Tests(unittest.TestCase):
 
     def test_cost_is_exact_sum_of_bom_and_groups(self):
         for closure in (MONO, MULTI):
-            with self.subTest(closure=closure):
-                result = calculate_gr(configuration(closure_mode=closure))
-                self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
-                self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
+            for leaf_system in (INTERNAL, EXTERNAL):
+                with self.subTest(closure=closure, leaf_system=leaf_system):
+                    result = calculate_gr(configuration(closure_mode=closure, leaf_system=leaf_system))
+                    self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
+                    self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
 
     def test_quantity_scales_order_bom_not_unit_cost(self):
         one = calculate_gr(configuration(quantity=1))
@@ -99,8 +123,8 @@ class GrPhase2Tests(unittest.TestCase):
         for item in three.unit_bom:
             self.assertEqual(item.quantity_order, item.quantity_per_unit * 3)
 
-    def test_golden_v02_is_frozen(self):
-        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_2.json").read_text(encoding="utf-8"))
+    def test_golden_v03_is_frozen(self):
+        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_3.json").read_text(encoding="utf-8"))
         for case in golden["cases"]:
             with self.subTest(case=case["id"]):
                 result = calculate_gr(configuration(**case["input"]))
@@ -114,7 +138,7 @@ class GrPhase2Tests(unittest.TestCase):
             {"leaf_count": 2},
             {"application": "JANELA"},
             {"panel_mode": ""},
-            {"leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"},
+            {"leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN"},
             {"closure_mode": "MAÇANETA COM CREMONA SEM CHAVE"},
             {"screen_enabled": True},
             {"shutter_enabled": True},
