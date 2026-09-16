@@ -383,14 +383,18 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
 def gr_options():
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 2,
+        "phase": 3,
         "application": "PORTA",
         "leaf_counts": [1],
         "leaf_systems": [
             {
                 "value": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "label": "Design 60x104 — abertura interna",
-            }
+            },
+            {
+                "value": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+                "label": "Design 60x104 — abertura externa",
+            },
         ],
         "panel_modes": ["PAINEL COMPLETO"],
         "module_modes": ["MÓDULO ÚNICO"],
@@ -408,7 +412,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 2 homologa somente geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física.",
+            "reason": "Fase 3 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
