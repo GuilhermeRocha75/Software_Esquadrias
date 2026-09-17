@@ -5,7 +5,7 @@ import math
 
 from .models import BomComponent, CalculationResult
 
-GR_ENGINE_VERSION = "GR_ENGINE_0.4.0"
+GR_ENGINE_VERSION = "GR_ENGINE_0.5.0"
 GR_LEAF_SYSTEM_INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
 GR_LEAF_SYSTEM_EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
 GR_LEAF_SYSTEM_WINDOW_EXTERNAL = "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN"
@@ -71,10 +71,12 @@ _MATERIALS = {
     "MAC4": ("MAÇANETA DUPLA (GIRO)", 60.00, "FERRAGENS"),
     "FEC5": ("FECHADURA MULTIPONTO (GIRO)", 100.00, "FERRAGENS"),
     "FEC6": ("FECHADURA MONOPONTO (GIRO)", 55.00, "FERRAGENS"),
+    "FEC7": ("FECHO UNHA", 5.30, "FERRAGENS"),
     "CRE12": ("CREMONA 2 PONTOS COMP. 800mm E:15mm", 18.30, "FERRAGENS"),
     "CIL1": ("CILINDRO 45X45MM", 80.00, "FERRAGENS"),
     "CON1": ("CONTRA FECHO STANDARD", 5.40, "FERRAGENS"),
     "CON2": ("CONTRA-TESTA", 11.00, "FERRAGENS"),
+    "CON3": ("CONTRA FECHO UNHA", 4.01, "FERRAGENS"),
     "PAR2": ("PARAFUSOS DE REFORÇO", 0.10, "FERRAGENS"),
     "PAR1": ("PARAFUSOS DE FERRAGEM", 0.15, "FERRAGENS"),
 }
@@ -92,10 +94,11 @@ def _validate(cfg: GrConfiguration) -> None:
         raise ValueError("Largura e altura GR devem ser positivas.")
     if isinstance(cfg.quantity, bool) or not isinstance(cfg.quantity, int) or cfg.quantity < 1:
         raise ValueError("Quantidade GR deve ser inteiro maior ou igual a 1.")
-    if cfg.leaf_count != 1:
-        raise ValueError("GR_ENGINE_0.4.0 suporta somente 1 folha.")
+    if cfg.leaf_count not in (1, 2):
+        raise ValueError("GR_ENGINE_0.5.0 suporta somente 1 ou 2 folhas.")
     if cfg.leaf_system not in GR_LEAF_SYSTEMS:
-        raise ValueError(f"tipo de folha fora do escopo do GR_ENGINE_0.4.0: {cfg.leaf_system}")
+        raise ValueError(f"tipo de folha fora do escopo do GR_ENGINE_0.5.0: {cfg.leaf_system}")
+
     checks = (
         (cfg.panel_mode, GR_PANEL_MODE, "painel"),
         (cfg.module_mode, GR_MODULE_MODE, "módulo"),
@@ -105,34 +108,34 @@ def _validate(cfg: GrConfiguration) -> None:
     )
     for actual, expected, label in checks:
         if actual != expected:
-            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.4.0: {actual}")
+            raise ValueError(f"{label} fora do escopo do GR_ENGINE_0.5.0: {actual}")
 
     is_window = cfg.leaf_system == GR_LEAF_SYSTEM_WINDOW_EXTERNAL
     if is_window:
+        if cfg.leaf_count != 1:
+            raise ValueError("janela GR 60x78 permanece homologada somente com 1 folha.")
         if cfg.application != GR_APPLICATION_WINDOW:
             raise ValueError("folha de janela GR 60x78 exige aplicação JANELA.")
         if cfg.closure_mode != GR_CLOSURE_WINDOW_CREMONA:
-            raise ValueError("janela GR v0.4 suporta somente maçaneta com cremona sem chave.")
+            raise ValueError("janela GR v0.5 suporta somente maçaneta com cremona sem chave.")
         if cfg.cremona_description not in (None, GR_CREMONA_WINDOW_800):
-            raise ValueError(
-                "janela GR v0.4 suporta somente CREMONA 2 PONTOS COMP. 800mm E:15mm."
-            )
+            raise ValueError("janela GR v0.5 suporta somente CREMONA 2 PONTOS COMP. 800mm E:15mm.")
     else:
         if cfg.application != GR_APPLICATION_DOOR:
             raise ValueError("folha de porta GR 60x104 exige aplicação PORTA.")
         if cfg.closure_mode not in GR_DOOR_CLOSURES:
-            raise ValueError(f"fechamento fora do escopo do GR_ENGINE_0.4.0: {cfg.closure_mode}")
+            raise ValueError(f"fechamento fora do escopo do GR_ENGINE_0.5.0: {cfg.closure_mode}")
         if cfg.cremona_description is not None:
-            raise ValueError("portas GR v0.4 não usam cremona neste recorte.")
+            raise ValueError("portas GR v0.5 não usam cremona neste recorte.")
 
     if cfg.shutter_enabled or cfg.screen_enabled:
-        raise ValueError("GR_ENGINE_0.4.0 ainda não suporta persiana ou tela.")
+        raise ValueError("GR_ENGINE_0.5.0 ainda não suporta persiana ou tela.")
     if cfg.bottom_flag_height_mm or cfg.top_flag_height_mm:
-        raise ValueError("GR_ENGINE_0.4.0 ainda não suporta bandeiras.")
+        raise ValueError("GR_ENGINE_0.5.0 ainda não suporta bandeiras.")
     if cfg.leaf_horizontal_transoms or cfg.leaf_vertical_transoms:
-        raise ValueError("GR_ENGINE_0.4.0 ainda não suporta travessas na folha.")
+        raise ValueError("GR_ENGINE_0.5.0 ainda não suporta travessas na folha.")
     if cfg.structural_reinforcement is not None:
-        raise ValueError("GR_ENGINE_0.4.0 ainda não suporta reforço estrutural opcional.")
+        raise ValueError("GR_ENGINE_0.5.0 ainda não suporta reforço estrutural opcional.")
 
 
 def _component(code: str, role: str, quantity: float, order_quantity: int, *,
@@ -187,13 +190,18 @@ def _finalize(model_description: str, geometry: dict[str, float], bom: list[BomC
 def _calculate_door(cfg: GrConfiguration) -> CalculationResult:
     width = float(cfg.width_mm)
     height = float(cfg.height_mm)
+    leaves = cfg.leaf_count
     leaf_code = "DE60104-E" if cfg.leaf_system == GR_LEAF_SYSTEM_EXTERNAL else "DE60104"
 
     frame_width_final = width
     frame_width_cut = width + 5.0
     frame_height_final = height
     frame_height_cut = height + 3.0
-    leaf_width_final = width - 64.0
+    if leaves == 1:
+        leaf_width_final = width - 64.0
+    else:
+        # GR!D10 com G5=2; E19=40, E18=36 e PFAB!B6=8.
+        leaf_width_final = width / 2.0 - 42.0
     leaf_width_cut = leaf_width_final + 5.0
     leaf_height_final = height - 37.0
     leaf_height_cut = leaf_height_final + 5.0
@@ -201,7 +209,10 @@ def _calculate_door(cfg: GrConfiguration) -> CalculationResult:
     panel_bead_width = leaf_width_final - 172.0
     panel_bead_height = leaf_height_final - 172.0
     panel_secondary_height = -104.0
-    panel_strip_qty = (panel_bead_height + panel_secondary_height) / 140.0
+    panel_strips_per_leaf = (panel_bead_height + panel_secondary_height) / 140.0
+    # LEGACY_BUG_CONFIRMED_2026-09-17: GR!G41 não multiplica o painel pelo nº de folhas.
+    # A fabricação confirmou um painel completo por folha; 2 folhas exigem o dobro das faixas.
+    panel_strip_qty = panel_strips_per_leaf * leaves
 
     frame_reinf_width = frame_width_final - 116.0
     frame_reinf_height = frame_height_final - 116.0
@@ -222,30 +233,34 @@ def _calculate_door(cfg: GrConfiguration) -> CalculationResult:
     invalid = {name: value for name, value in positive.items() if value <= 0 or not math.isfinite(value)}
     if invalid:
         details = ", ".join(f"{k}={v:g}" for k, v in invalid.items())
-        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.4: {details}")
+        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.5: {details}")
+
+    leaf_piece_qty = 2 * leaves
+    hinge_qty = 3 * leaves
+    squaring_block_qty = 4 * leaves
+    panel_source = "GR!E41/G41"
+    if leaves == 2:
+        panel_source += " + LEGACY_BUG_CONFIRMED_2026-09-17 + RESOLVED_PHYSICAL_2026-09-17"
 
     bom = [
         _component("DE6058", "FRAME_WIDTH", 1, cfg.quantity, length_mm=frame_width_cut, source="GR!E8/G8"),
         _component("DE6058", "FRAME_HEIGHT", 2, cfg.quantity, length_mm=frame_height_cut, source="GR!E9/G9"),
-        _component(leaf_code, "LEAF_WIDTH", 2, cfg.quantity, length_mm=leaf_width_cut, source="GR!B10/E10/G10"),
-        _component(leaf_code, "LEAF_HEIGHT", 2, cfg.quantity, length_mm=leaf_height_cut, source="GR!B11/E11/G11"),
-        _component("BA2516", "PANEL_BEAD_WIDTH", 2, cfg.quantity, length_mm=panel_bead_width, source="GR!E16/G16"),
-        _component("BA2516", "PANEL_BEAD_HEIGHT", 2, cfg.quantity, length_mm=panel_bead_height, source="GR!E17/G17"),
-        _component("DE20150", "PANEL_FILL", panel_strip_qty, cfg.quantity, length_mm=panel_bead_width, source="GR!E41/G41"),
+        _component(leaf_code, "LEAF_WIDTH", leaf_piece_qty, cfg.quantity, length_mm=leaf_width_cut, source="GR!B10/E10/G10"),
+        _component(leaf_code, "LEAF_HEIGHT", leaf_piece_qty, cfg.quantity, length_mm=leaf_height_cut, source="GR!B11/E11/G11"),
+        _component("BA2516", "PANEL_BEAD_WIDTH", leaf_piece_qty, cfg.quantity, length_mm=panel_bead_width, source="GR!E16/G16"),
+        _component("BA2516", "PANEL_BEAD_HEIGHT", leaf_piece_qty, cfg.quantity, length_mm=panel_bead_height, source="GR!E17/G17"),
+        _component("DE20150", "PANEL_FILL", panel_strip_qty, cfg.quantity, length_mm=panel_bead_width, source=panel_source),
         _component("AC7012", "INTERNAL_FINISH_WIDTH", 1, cfg.quantity, length_mm=width + 140.0, source="GR!E43/G43"),
         _component("AC7012", "INTERNAL_FINISH_HEIGHT", 2, cfg.quantity, length_mm=height + 140.0, source="GR!E44/G44"),
         _component("AC3004", "EXTERNAL_FINISH_WIDTH", 1, cfg.quantity, length_mm=width + 60.0, source="GR!E45/G45"),
         _component("AC3004", "EXTERNAL_FINISH_HEIGHT", 2, cfg.quantity, length_mm=height + 60.0, source="GR!E46/G46"),
         _component("RAG - DE6058", "FRAME_REINFORCEMENT_WIDTH", 1, cfg.quantity, length_mm=frame_reinf_width, source="GR!E58/G58"),
         _component("RAG - DE6058", "FRAME_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=frame_reinf_height, source="GR!E59/G59"),
-        _component("RAG - DE60104", "LEAF_REINFORCEMENT_WIDTH", 2, cfg.quantity, length_mm=leaf_reinf_width, source="GR!E60/G60"),
-        _component("RAG - DE60104", "LEAF_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=leaf_reinf_height, source="GR!E61/G61"),
-        _component(
-            "AC0312", "SQUARING_BLOCK", 4, cfg.quantity,
-            source="GR!G83/I83 + RESOLVED_PHYSICAL_2026-09-16",
-        ),
+        _component("RAG - DE60104", "LEAF_REINFORCEMENT_WIDTH", leaf_piece_qty, cfg.quantity, length_mm=leaf_reinf_width, source="GR!E60/G60"),
+        _component("RAG - DE60104", "LEAF_REINFORCEMENT_HEIGHT", leaf_piece_qty, cfg.quantity, length_mm=leaf_reinf_height, source="GR!E61/G61"),
+        _component("AC0312", "SQUARING_BLOCK", squaring_block_qty, cfg.quantity, source="GR!G83/I83 + RESOLVED_PHYSICAL_2026-09-16/17"),
         _component("AC0001", "DRAIN_CAP", 1, cfg.quantity, source="GR!G84/I84"),
-        _component("DOB3", "HINGE_90MM", 3, cfg.quantity, source="GR!G105/I105"),
+        _component("DOB3", "HINGE_90MM", hinge_qty, cfg.quantity, source="GR!G105/I105"),
         _component("MAC4", "DOUBLE_HANDLE", 1, cfg.quantity, source="GR!G111/I111"),
     ]
 
@@ -265,14 +280,21 @@ def _calculate_door(cfg: GrConfiguration) -> CalculationResult:
         ])
         counter_lock_qty = 0.0
 
+    if leaves == 2:
+        bom.extend([
+            _component("CON3", "PASSIVE_LEAF_COUNTER_CLAW", 2, cfg.quantity, source="GR!G116/I116 + RESOLVED_PHYSICAL_2026-09-17"),
+            _component("FEC7", "PASSIVE_LEAF_CLAW_LOCK", 2, cfg.quantity, source="GR!G117/I117 + RESOLVED_PHYSICAL_2026-09-17"),
+        ])
+
     reinforcement_screws = 4.0 * (
         (frame_width_cut + frame_height_cut) / 1000.0
-        + 2.0 * (leaf_width_cut + leaf_height_cut) / 1000.0
+        + leaf_piece_qty * (leaf_width_cut + leaf_height_cut) / 1000.0
     )
-    hardware_screws = 3.0 * 8.0 + (1.0 + 1.0 + counter_lock_qty) * 2.0
+    # GR!G119 não soma parafusos de FEC7/CON3; a fábrica confirmou que esses kits já vêm completos.
+    hardware_screws = hinge_qty * 8.0 + (1.0 + 1.0 + counter_lock_qty) * 2.0
     bom.extend([
         _component("PAR2", "REINFORCEMENT_SCREWS", reinforcement_screws, cfg.quantity, source="GR!G118/I118"),
-        _component("PAR1", "HARDWARE_SCREWS", hardware_screws, cfg.quantity, source="GR!G119/I119"),
+        _component("PAR1", "HARDWARE_SCREWS", hardware_screws, cfg.quantity, source="GR!G119/I119 + RESOLVED_PHYSICAL_2026-09-17"),
     ])
 
     geometry = {
@@ -293,14 +315,13 @@ def _calculate_door(cfg: GrConfiguration) -> CalculationResult:
         "leaf_reinforcement_width_mm": round(leaf_reinf_width, 6),
         "leaf_reinforcement_height_mm": round(leaf_reinf_height, 6),
     }
-    return _finalize("PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL", geometry, bom)
+    model = f"PORTA {leaves} {'FOLHA' if leaves == 1 else 'FOLHAS'} DE GIRO COM PAINEL HORIZONTAL"
+    return _finalize(model, geometry, bom)
 
 
 def _calculate_window(cfg: GrConfiguration) -> CalculationResult:
     width = float(cfg.width_mm)
     height = float(cfg.height_mm)
-
-    # GR!D8:E11 for JANELA / DE6078 / 1 folha / módulo único.
     frame_width_final = width
     frame_width_cut = width + 5.0
     frame_height_final = height
@@ -310,7 +331,6 @@ def _calculate_window(cfg: GrConfiguration) -> CalculationResult:
     leaf_height_final = height - 64.0
     leaf_height_cut = leaf_height_final + 5.0
 
-    # LISTAPERFIS!D16=60 and D18=18 for DE6078 / DE6072.
     panel_bead_width = leaf_width_final - 120.0
     panel_bead_height = leaf_height_final - 120.0
     panel_secondary_height = -78.0
@@ -335,7 +355,7 @@ def _calculate_window(cfg: GrConfiguration) -> CalculationResult:
     invalid = {name: value for name, value in positive.items() if value <= 0 or not math.isfinite(value)}
     if invalid:
         details = ", ".join(f"{k}={v:g}" for k, v in invalid.items())
-        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.4: {details}")
+        raise ValueError(f"Dimensões tecnicamente impossíveis para GR v0.5: {details}")
 
     bom = [
         _component("DE6058", "FRAME_WIDTH", 2, cfg.quantity, length_mm=frame_width_cut, source="GR!E8/G8"),
@@ -353,17 +373,11 @@ def _calculate_window(cfg: GrConfiguration) -> CalculationResult:
         _component("RAG - DE6058", "FRAME_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=frame_reinf_height, source="GR!E59/G59"),
         _component("RAG - DE6078", "LEAF_REINFORCEMENT_WIDTH", 2, cfg.quantity, length_mm=leaf_reinf_width, source="GR!E60/G60"),
         _component("RAG - DE6078", "LEAF_REINFORCEMENT_HEIGHT", 2, cfg.quantity, length_mm=leaf_reinf_height, source="GR!E61/G61"),
-        _component(
-            "AC0312", "SQUARING_BLOCK", 4, cfg.quantity,
-            source="GR!G83/I83 + RESOLVED_PHYSICAL_2026-09-16",
-        ),
+        _component("AC0312", "SQUARING_BLOCK", 4, cfg.quantity, source="GR!G83/I83 + RESOLVED_PHYSICAL_2026-09-16"),
         _component("AC0001", "DRAIN_CAP", 2, cfg.quantity, source="GR!G84/I84"),
         _component("DOB3", "HINGE_90MM", 3, cfg.quantity, source="GR!G105/I105"),
         _component("MAC1", "STANDARD_HANDLE", 1, cfg.quantity, source="GR!G111/I111"),
-        _component(
-            "CRE12", "CREMONA_800_E15", 1, cfg.quantity,
-            source="GR!G112/I112 + RESOLVED_PHYSICAL_2026-09-16",
-        ),
+        _component("CRE12", "CREMONA_800_E15", 1, cfg.quantity, source="GR!G112/I112 + RESOLVED_PHYSICAL_2026-09-16"),
         _component("CON1", "STANDARD_COUNTER_LOCK", 2, cfg.quantity, source="GR!G114/I114"),
     ]
 
