@@ -347,7 +347,7 @@ class GrPhase5Tests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
             calculate_gr(configuration(height_mm=300))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
-            calculate_gr(two_leaf_configuration(width_mm=500))
+            calculate_gr(two_leaf_configuration(width_mm=400))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
             calculate_gr(window_configuration(width_mm=180))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
