@@ -1,0 +1,69 @@
+{
+  "official_xlsm_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "engine_version": "GR_ENGINE_0.5.0",
+  "scope": "PORTA / 2 FOLHAS / DESIGN 60X104 / PAINEL COMPLETO / MODULO UNICO / CORRECOES FISICAS CONFIRMADAS EM 2026-09-17",
+  "cases": [
+    {
+      "id": "GR-P5-2F-INTERNA-MONO-1600x2100",
+      "evidence": {
+        "historical_orcs_clean_cases": 72,
+        "physical_panel_rule": "cada folha recebe seu painel completo; quantidade DE20150 dobra",
+        "physical_squaring_rule": "4 calcos AC0312 por folha; 8 no total",
+        "passive_leaf_rule": "2 FEC7 + 2 CON3; kits ja incluem parafusos"
+      },
+      "input": {
+        "width_mm": 1600,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "PAINEL COMPLETO",
+        "module_mode": "MÓDULO ÚNICO",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "geometry": {
+        "frame_width_final_mm": 1600.0,
+        "frame_width_cut_mm": 1605.0,
+        "frame_height_final_mm": 2100.0,
+        "frame_height_cut_mm": 2103.0,
+        "leaf_width_final_mm": 758.0,
+        "leaf_width_cut_mm": 763.0,
+        "leaf_height_final_mm": 2063.0,
+        "leaf_height_cut_mm": 2068.0,
+        "panel_bead_width_mm": 586.0,
+        "panel_bead_height_mm": 1891.0,
+        "panel_fill_strip_length_mm": 586.0,
+        "panel_fill_strip_quantity": 25.528571,
+        "frame_reinforcement_width_mm": 1484.0,
+        "frame_reinforcement_height_mm": 1984.0,
+        "leaf_reinforcement_width_mm": 638.0,
+        "leaf_reinforcement_height_mm": 1943.0
+      },
+      "cost_by_group": {
+        "PERFIS PRINCIPAIS": 1154.016538,
+        "BAGUETES": 106.21376,
+        "ACABAMENTOS": 110.3738,
+        "REFORÇOS": 301.716,
+        "VIDROS": 0.0,
+        "TELA": 0.0,
+        "VEDAÇÕES": 0.0,
+        "ACESSÓRIOS": 3.8,
+        "FERRAGENS": 547.1328,
+        "TOTAL": 2223.252898
+      },
+      "unit_cost": 2223.252898,
+      "legacy_panel_undercount_delta": 151.616994
+    }
+  ],
+  "legacy_bugs_confirmed": [
+    "GR!G41 em 2 folhas nao multiplica DE20150 pelo numero de folhas; fabrica confirmou que o painel completo existe em cada folha."
+  ],
+  "resolved_physical": [
+    "4 calcos AC0312 por folha: 8 em porta de 2 folhas.",
+    "Folha passiva usa 2 FEC7 + 2 CON3 e os kits ja incluem os proprios parafusos; nao acrescentar PAR1."
+  ]
+}
