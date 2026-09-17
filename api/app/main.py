@@ -384,24 +384,31 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
 def gr_options():
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 4,
+        "phase": 5,
         "applications": ["PORTA", "JANELA"],
-        "leaf_counts": [1],
+        "leaf_counts": [1, 2],
+        "leaf_count_constraints": {
+            "PORTA": [1, 2],
+            "JANELA": [1],
+        },
         "leaf_systems": [
             {
                 "value": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "label": "Porta Design 60x104 — abertura interna",
                 "application": "PORTA",
+                "leaf_counts": [1, 2],
             },
             {
                 "value": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
                 "label": "Porta Design 60x104 — abertura externa",
                 "application": "PORTA",
+                "leaf_counts": [1, 2],
             },
             {
                 "value": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
                 "label": "Janela Design 60x78 — abertura externa",
                 "application": "JANELA",
+                "leaf_counts": [1],
             },
         ],
         "panel_modes": ["PAINEL COMPLETO"],
@@ -420,9 +427,18 @@ def gr_options():
         "external_finishes": ["BARRA CHATA DE 30MM"],
         "panel_squaring_blocks": {
             "material_code": "AC0312",
-            "quantity": 4,
+            "quantity_per_leaf": 4,
             "status": "RESOLVED_PHYSICAL",
-            "purpose": "manter a folha no esquadro e impedir que ceda, com ou sem vidro",
+            "purpose": "manter cada folha no esquadro e impedir que ceda, com ou sem vidro",
+        },
+        "two_leaf_door": {
+            "supported": True,
+            "historical_clean_cases": 72,
+            "panel_rule_status": "LEGACY_BUG_CONFIRMED",
+            "panel_rule": "DE20150 deve ser calculado por folha; o XLSM legado não duplicava as faixas em 2 folhas",
+            "passive_leaf_hardware": ["2x FEC7", "2x CON3"],
+            "passive_hardware_screws": "incluídos nos kits; não adicionar PAR1",
+            "physical_evidence_date": "2026-09-17",
         },
         "screen": {"supported": False},
         "shutter": {"supported": False},
@@ -431,7 +447,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 4 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
+            "reason": "Fase 5 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
