@@ -24,6 +24,20 @@ def configuration(**overrides):
     return GrConfiguration(**values)
 
 
+def two_leaf_configuration(**overrides):
+    values = {
+        "width_mm": 1600,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": INTERNAL,
+        "application": "PORTA",
+        "closure_mode": MONO,
+    }
+    values.update(overrides)
+    return GrConfiguration(**values)
+
+
 def window_configuration(**overrides):
     values = {
         "width_mm": 800,
@@ -38,13 +52,13 @@ def window_configuration(**overrides):
     return GrConfiguration(**values)
 
 
-class GrPhase4Tests(unittest.TestCase):
+class GrPhase5Tests(unittest.TestCase):
     def test_version_and_door_model(self):
         result = calculate_gr(configuration())
-        self.assertEqual(result.calculation_version, "GR_ENGINE_0.4.0")
+        self.assertEqual(result.calculation_version, "GR_ENGINE_0.5.0")
         self.assertEqual(result.model_description, "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
 
-    def test_door_geometry_matches_gr_sheet_formulas(self):
+    def test_one_leaf_door_geometry_remains_frozen(self):
         result = calculate_gr(configuration())
         expected = {
             "frame_width_final_mm": 900.0,
@@ -125,14 +139,79 @@ class GrPhase4Tests(unittest.TestCase):
         screws = next(x for x in multi.unit_bom if x.role == "HARDWARE_SCREWS")
         self.assertEqual(screws.quantity_per_unit, 36)
 
-    def test_four_panel_blocks_are_resolved_physical_squaring_blocks(self):
-        for cfg in (configuration(), window_configuration()):
-            with self.subTest(application=cfg.application):
-                result = calculate_gr(cfg)
-                block = next(x for x in result.unit_bom if x.material_code == "AC0312")
-                self.assertEqual(block.role, "SQUARING_BLOCK")
-                self.assertEqual(block.quantity_per_unit, 4)
-                self.assertIn("RESOLVED_PHYSICAL_2026-09-16", block.source)
+    def test_squaring_blocks_follow_physical_rule_per_leaf(self):
+        one = calculate_gr(configuration())
+        two = calculate_gr(two_leaf_configuration())
+        window = calculate_gr(window_configuration())
+        one_block = next(x for x in one.unit_bom if x.material_code == "AC0312")
+        two_block = next(x for x in two.unit_bom if x.material_code == "AC0312")
+        window_block = next(x for x in window.unit_bom if x.material_code == "AC0312")
+        self.assertEqual(one_block.role, "SQUARING_BLOCK")
+        self.assertEqual(one_block.quantity_per_unit, 4)
+        self.assertEqual(two_block.quantity_per_unit, 8)
+        self.assertEqual(window_block.quantity_per_unit, 4)
+        self.assertIn("RESOLVED_PHYSICAL", two_block.source)
+
+    def test_two_leaf_geometry_matches_xlsm_dimensions(self):
+        result = calculate_gr(two_leaf_configuration())
+        self.assertEqual(result.model_description, "PORTA 2 FOLHAS DE GIRO COM PAINEL HORIZONTAL")
+        self.assertEqual(result.geometry, {
+            "frame_width_final_mm": 1600.0,
+            "frame_width_cut_mm": 1605.0,
+            "frame_height_final_mm": 2100.0,
+            "frame_height_cut_mm": 2103.0,
+            "leaf_width_final_mm": 758.0,
+            "leaf_width_cut_mm": 763.0,
+            "leaf_height_final_mm": 2063.0,
+            "leaf_height_cut_mm": 2068.0,
+            "panel_bead_width_mm": 586.0,
+            "panel_bead_height_mm": 1891.0,
+            "panel_fill_strip_length_mm": 586.0,
+            "panel_fill_strip_quantity": 25.528571,
+            "frame_reinforcement_width_mm": 1484.0,
+            "frame_reinforcement_height_mm": 1984.0,
+            "leaf_reinforcement_width_mm": 638.0,
+            "leaf_reinforcement_height_mm": 1943.0,
+        })
+
+    def test_two_leaf_panel_quantity_corrects_confirmed_legacy_bug(self):
+        result = calculate_gr(two_leaf_configuration())
+        panel = next(x for x in result.unit_bom if x.material_code == "DE20150")
+        one_leaf_vertical_count = (1891.0 - 104.0) / 140.0
+        self.assertAlmostEqual(panel.quantity_per_unit, one_leaf_vertical_count * 2, places=6)
+        self.assertEqual(panel.quantity_per_unit, 25.52857142857143)
+        self.assertIn("LEGACY_BUG_CONFIRMED_2026-09-17", panel.source)
+        legacy_cost = one_leaf_vertical_count * 586.0 / 1000.0 * 20.27
+        physical_cost = panel.cost_per_unit_product
+        self.assertEqual(round(physical_cost - legacy_cost, 6), 151.616994)
+
+    def test_two_leaf_passive_hardware_is_exact_and_has_no_extra_par1(self):
+        result = calculate_gr(two_leaf_configuration())
+        fec7 = next(x for x in result.unit_bom if x.material_code == "FEC7")
+        con3 = next(x for x in result.unit_bom if x.material_code == "CON3")
+        par1 = next(x for x in result.unit_bom if x.material_code == "PAR1")
+        self.assertEqual(fec7.quantity_per_unit, 2)
+        self.assertEqual(con3.quantity_per_unit, 2)
+        self.assertEqual(par1.quantity_per_unit, 52)
+        self.assertIn("RESOLVED_PHYSICAL_2026-09-17", fec7.source)
+        self.assertIn("RESOLVED_PHYSICAL_2026-09-17", con3.source)
+        self.assertIn("RESOLVED_PHYSICAL_2026-09-17", par1.source)
+
+    def test_two_leaf_current_physical_cost_is_frozen(self):
+        result = calculate_gr(two_leaf_configuration())
+        self.assertEqual(result.unit_cost, 2223.252898)
+        self.assertEqual(result.cost_breakdown, {
+            "PERFIS PRINCIPAIS": 1154.016538,
+            "BAGUETES": 106.21376,
+            "ACABAMENTOS": 110.3738,
+            "REFORÇOS": 301.716,
+            "VIDROS": 0.0,
+            "TELA": 0.0,
+            "VEDAÇÕES": 0.0,
+            "ACESSÓRIOS": 3.8,
+            "FERRAGENS": 547.1328,
+            "TOTAL": 2223.252898,
+        })
 
     def test_window_panel_geometry_matches_xlsm_formulas(self):
         result = calculate_gr(window_configuration())
@@ -194,15 +273,15 @@ class GrPhase4Tests(unittest.TestCase):
             for closure in (MONO, MULTI)
             for leaf_system in (INTERNAL, EXTERNAL)
         ]
-        cases.append(window_configuration())
+        cases.extend([two_leaf_configuration(), two_leaf_configuration(closure_mode=MULTI), window_configuration()])
         for cfg in cases:
-            with self.subTest(application=cfg.application, leaf_system=cfg.leaf_system, closure=cfg.closure_mode):
+            with self.subTest(application=cfg.application, leaves=cfg.leaf_count, leaf_system=cfg.leaf_system):
                 result = calculate_gr(cfg)
                 self.assertEqual(result.unit_cost, round(sum(x.cost_per_unit_product for x in result.unit_bom), 6))
                 self.assertEqual(result.cost_breakdown["TOTAL"], result.unit_cost)
 
     def test_quantity_scales_order_bom_not_unit_cost(self):
-        for maker in (configuration, window_configuration):
+        for maker in (configuration, two_leaf_configuration, window_configuration):
             with self.subTest(maker=maker.__name__):
                 one = calculate_gr(maker(quantity=1))
                 three = calculate_gr(maker(quantity=3))
@@ -210,17 +289,18 @@ class GrPhase4Tests(unittest.TestCase):
                 for item in three.unit_bom:
                     self.assertEqual(item.quantity_order, item.quantity_per_unit * 3)
 
-    def test_v03_golden_remains_numerically_frozen_after_version_bump(self):
-        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_3.json").read_text(encoding="utf-8"))
-        for case in golden["cases"]:
-            with self.subTest(case=case["id"]):
-                result = calculate_gr(configuration(**case["input"]))
-                self.assertEqual(result.geometry, case["geometry"])
-                self.assertEqual(result.cost_breakdown, case["cost_by_group"])
-                self.assertEqual(result.unit_cost, case["unit_cost"])
+    def test_previous_goldens_remain_numerically_frozen_after_version_bump(self):
+        for filename in ("gr_golden_v0_3.json", "gr_golden_v0_4.json"):
+            golden = json.loads((ROOT / "test_cases" / filename).read_text(encoding="utf-8"))
+            for case in golden["cases"]:
+                with self.subTest(file=filename, case=case["id"]):
+                    result = calculate_gr(GrConfiguration(**case["input"]))
+                    self.assertEqual(result.geometry, case["geometry"])
+                    self.assertEqual(result.cost_breakdown, case["cost_by_group"])
+                    self.assertEqual(result.unit_cost, case["unit_cost"])
 
-    def test_golden_v04_is_frozen(self):
-        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_4.json").read_text(encoding="utf-8"))
+    def test_golden_v05_is_frozen(self):
+        golden = json.loads((ROOT / "test_cases" / "gr_golden_v0_5.json").read_text(encoding="utf-8"))
         for case in golden["cases"]:
             with self.subTest(case=case["id"]):
                 result = calculate_gr(GrConfiguration(**case["input"]))
@@ -231,7 +311,7 @@ class GrPhase4Tests(unittest.TestCase):
 
     def test_out_of_scope_variants_are_blocked(self):
         invalid = (
-            {"leaf_count": 2},
+            {"leaf_count": 3},
             {"application": "JANELA"},
             {"panel_mode": ""},
             {"closure_mode": WINDOW_CREMONA},
@@ -246,6 +326,7 @@ class GrPhase4Tests(unittest.TestCase):
                 calculate_gr(configuration(**override))
 
         window_invalid = (
+            {"leaf_count": 2},
             {"application": "PORTA"},
             {"closure_mode": MONO},
             {"cremona_description": "CREMONA 2 PONTOS COMP. 1000mm E:15mm"},
@@ -265,6 +346,8 @@ class GrPhase4Tests(unittest.TestCase):
             calculate_gr(configuration(width_mm=230))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
             calculate_gr(configuration(height_mm=300))
+        with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
+            calculate_gr(two_leaf_configuration(width_mm=500))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
             calculate_gr(window_configuration(width_mm=180))
         with self.assertRaisesRegex(ValueError, "tecnicamente impossíveis"):
