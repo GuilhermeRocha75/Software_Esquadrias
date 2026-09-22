@@ -398,7 +398,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 7,
+        "phase": 8,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -428,19 +428,30 @@ def gr_options():
         "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO"],
         "glass_mode": {
             "supported": True,
-            "applications": ["PORTA"],
-            "leaf_counts": [1, 2],
+            "applications": ["PORTA", "JANELA"],
+            "leaf_counts_by_application": {
+                "PORTA": [1, 2],
+                "JANELA": [1],
+            },
             "leaf_systems": [
                 "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+                "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
             ],
-            "historical_one_leaf_cases": 125,
-            "historical_two_leaf_cases": 58,
+            "historical_one_leaf_door_cases": 125,
+            "historical_two_leaf_door_cases": 58,
             "two_leaf_reference_orcs_row": 17138,
             "glasses": glasses,
             "window_glass": {
-                "supported": False,
-                "reason": "Registros recentes usam também DOBRADIÇA SISTEMA OB e exigem homologação própria de ferragens antes de liberar vidro em janela GR.",
+                "supported": True,
+                "leaf_counts": [1],
+                "hinge_description": "DOBRADIÇA 90MM",
+                "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+                "cremona_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+                "historical_clean_90mm_cases": 12,
+                "reference_orcs_rows": [11480, 11558],
+                "ob_hinge_supported": False,
+                "ob_hinge_reason": "DOBRADIÇA SISTEMA OB possui conjunto próprio de ferragens e tipo de cremona ainda requer confirmação física antes da homologação.",
             },
         },
         "module_modes": ["MÓDULO ÚNICO"],
@@ -451,7 +462,7 @@ def gr_options():
         ],
         "cremonas": {
             "window_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
-            "physical_evidence": "padrão informado pela fabricação para mais de 90% das janelas de giro",
+            "physical_evidence": "padrão informado pela fabricação para mais de 90% das janelas de giro no baseline 90mm",
         },
         "hinges": ["DOBRADIÇA 90MM"],
         "internal_finishes": ["GUARNIÇÃO DE 70MM"],
@@ -504,7 +515,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 7 homologa custo técnico físico e vidro inteiro em portas GR de 1 e 2 folhas; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
+            "reason": "Fase 8 homologa custo técnico físico, vidro em portas GR de 1/2 folhas e vidro em janela GR 1 folha com dobradiça 90mm; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
