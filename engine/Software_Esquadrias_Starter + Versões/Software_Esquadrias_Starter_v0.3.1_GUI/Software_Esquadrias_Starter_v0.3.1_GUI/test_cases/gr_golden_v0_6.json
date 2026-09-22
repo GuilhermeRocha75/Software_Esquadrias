@@ -1,0 +1,73 @@
+{
+  "engine_version": "GR_ENGINE_0.6.0",
+  "basis": "XLSM geometry/catalog + factory physical confirmation 2026-09-22",
+  "cases": [
+    {
+      "id": "door-internal-one-leaf-panel-mono-900x2100",
+      "input": {
+        "width_mm": 900,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "PAINEL COMPLETO",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 836.0,
+        "leaf_height_final_mm": 2063.0,
+        "panel_bead_width_mm": 664.0,
+        "panel_bead_height_mm": 1891.0
+      },
+      "sealing_cost": 27.7516,
+      "unit_cost": 1412.475245
+    },
+    {
+      "id": "door-internal-two-leaf-panel-mono-1600x2100",
+      "input": {
+        "width_mm": 1600,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "PAINEL COMPLETO",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 758.0,
+        "leaf_height_final_mm": 2063.0,
+        "panel_bead_width_mm": 586.0,
+        "panel_bead_height_mm": 1891.0,
+        "panel_fill_strip_quantity": 25.528571
+      },
+      "sealing_cost": 53.9432,
+      "unit_cost": 2277.196098
+    },
+    {
+      "id": "door-internal-one-leaf-glass-6ti-mono-800x2100",
+      "input": {
+        "width_mm": 800,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 736.0,
+        "leaf_height_final_mm": 2063.0,
+        "glass_bead_width_mm": 564.0,
+        "glass_bead_height_mm": 1891.0,
+        "glass_width_mm": 556.0,
+        "glass_height_mm": 1883.0
+      },
+      "sealing_cost": 26.7516,
+      "unit_cost": 1358.19195
+    }
+  ]
+}
