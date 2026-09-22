@@ -198,6 +198,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         leaf_system=item.leaf_system,
         application=item.application,
         panel_mode=item.panel_mode,
+        glass_description=item.glass_description,
         module_mode=item.module_mode,
         closure_mode=item.closure_mode,
         cremona_description=item.cremona_description,
@@ -382,9 +383,22 @@ def calculate_maxim_ar_endpoint(payload: MaximArItemRequest):
 
 @app.get("/api/v1/engine/gr/options")
 def gr_options():
+    glasses = sorted(
+        [
+            {
+                "code": glass.code,
+                "description": glass.description,
+                "price": glass.unit_price,
+                "thickness_mm": glass.thickness_mm,
+            }
+            for glass in GLASSES.values()
+            if glass.code != "0" and glass.thickness_mm is not None and glass.thickness_mm < 35
+        ],
+        key=lambda row: (row["thickness_mm"], row["description"]),
+    )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 5,
+        "phase": 6,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -411,7 +425,18 @@ def gr_options():
                 "leaf_counts": [1],
             },
         ],
-        "panel_modes": ["PAINEL COMPLETO"],
+        "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO"],
+        "glass_mode": {
+            "supported": True,
+            "applications": ["PORTA"],
+            "leaf_counts": [1],
+            "leaf_systems": [
+                "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+            ],
+            "historical_clean_cases": 125,
+            "glasses": glasses,
+        },
         "module_modes": ["MÓDULO ÚNICO"],
         "closures": [
             "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
@@ -431,6 +456,31 @@ def gr_options():
             "status": "RESOLVED_PHYSICAL",
             "purpose": "manter cada folha no esquadro e impedir que ceda, com ou sem vidro",
         },
+        "sealing": {
+            "status": "LEGACY_BUG_CONFIRMED",
+            "physical_evidence_date": "2026-09-22",
+            "paths": [
+                {
+                    "role": "BORRACHA DE VIDRO / LAMBRI",
+                    "catalog_code": "ACB606",
+                    "catalog_reference": "LISTAPERFIS!A53:C53",
+                    "applies_to": "perímetro onde entra vidro ou lambri",
+                },
+                {
+                    "role": "BORRACHA REDONDA — FOLHA",
+                    "catalog_code": "AC0002",
+                    "catalog_reference": "LISTAPERFIS!A55:C55",
+                    "applies_to": "folha por fora",
+                },
+                {
+                    "role": "BORRACHA REDONDA — MARCO",
+                    "catalog_code": "AC0002",
+                    "catalog_reference": "LISTAPERFIS!A55:C55",
+                    "applies_to": "marco por dentro",
+                },
+            ],
+            "legacy_problem": "GR!76:78 zerava todas as vedações por condição de família incorreta; painel completo também omitiria a vedação do lambri.",
+        },
         "two_leaf_door": {
             "supported": True,
             "historical_clean_cases": 72,
@@ -447,7 +497,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 5 homologa geometria, BOM e custo técnico; compra/corte GR ainda requer modelagem física do painel DE20150 e dos perfis em barra.",
+            "reason": "Fase 6 homologa custo técnico físico e primeiro recorte com vidro; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
