@@ -57,19 +57,35 @@ def glass_request(**overrides):
     return GrItemRequest(**values)
 
 
+def two_leaf_glass_request(**overrides):
+    values = {
+        "width_mm": 1200,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": INTERNAL,
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": MONO,
+    }
+    values.update(overrides)
+    return GrItemRequest(**values)
+
+
 class GrEndpointTests(unittest.TestCase):
     def test_health_exposes_gr_candidate_engine(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
         self.assertEqual(
             response["engines"],
-            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.6.0"],
+            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.7.0"],
         )
 
-    def test_options_expose_phase6_physical_scope(self):
+    def test_options_expose_phase7_physical_scope(self):
         response = gr_options()
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
-        self.assertEqual(response["phase"], 6)
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
+        self.assertEqual(response["phase"], 7)
         self.assertEqual(response["applications"], ["PORTA", "JANELA"])
         self.assertEqual(response["leaf_counts"], [1, 2])
         self.assertEqual(
@@ -79,8 +95,11 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["panel_modes"], ["PAINEL COMPLETO", "VIDRO INTEIRO"])
         self.assertTrue(response["glass_mode"]["supported"])
         self.assertEqual(response["glass_mode"]["applications"], ["PORTA"])
-        self.assertEqual(response["glass_mode"]["leaf_counts"], [1])
-        self.assertEqual(response["glass_mode"]["historical_clean_cases"], 125)
+        self.assertEqual(response["glass_mode"]["leaf_counts"], [1, 2])
+        self.assertEqual(response["glass_mode"]["historical_one_leaf_cases"], 125)
+        self.assertEqual(response["glass_mode"]["historical_two_leaf_cases"], 58)
+        self.assertEqual(response["glass_mode"]["two_leaf_reference_orcs_row"], 17138)
+        self.assertFalse(response["glass_mode"]["window_glass"]["supported"])
         self.assertIn("6TI", {row["code"] for row in response["glass_mode"]["glasses"]})
         self.assertEqual(response["closures"], [MONO, MULTI, WINDOW_CREMONA])
         self.assertEqual(response["cremonas"]["window_default"], CREMONA_800)
@@ -91,6 +110,7 @@ class GrEndpointTests(unittest.TestCase):
             [row["catalog_code"] for row in response["sealing"]["paths"]],
             ["ACB606", "AC0002", "AC0002"],
         )
+        self.assertEqual(response["two_leaf_door"]["historical_glass_cases"], 58)
         self.assertEqual(response["two_leaf_door"]["panel_rule_status"], "LEGACY_BUG_CONFIRMED")
         self.assertFalse(response["screen"]["supported"])
         self.assertFalse(response["shutter"]["supported"])
@@ -100,7 +120,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_panel_monopoint_uses_physical_sealing_cost(self):
         response = calculate_gr_endpoint(request(closure_mode=MONO))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 836)
         self.assertEqual(response["geometry"]["panel_bead_width_mm"], 664)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 27.7516)
@@ -127,7 +147,7 @@ class GrEndpointTests(unittest.TestCase):
             leaf_system=EXTERNAL,
             closure_mode=MULTI,
         ))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 27.2516)
         self.assertEqual(response["unit_technical_cost"], 1445.782455)
         leaf_codes = {row["material_code"] for row in response["bom"] if row["role"] in {"LEAF_WIDTH", "LEAF_HEIGHT"}}
@@ -135,7 +155,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_window_panel_receives_same_confirmed_sealing_roles(self):
         response = calculate_gr_endpoint(window_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
         self.assertEqual(response["model_description"], "JANELA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL")
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 18.856)
         self.assertEqual(response["unit_technical_cost"], 846.578384)
@@ -151,7 +171,7 @@ class GrEndpointTests(unittest.TestCase):
             leaf_system=INTERNAL,
             closure_mode=MONO,
         ))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
         self.assertEqual(response["geometry"]["panel_fill_strip_quantity"], 25.528571)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 53.9432)
         self.assertEqual(response["unit_technical_cost"], 2277.196098)
@@ -161,14 +181,15 @@ class GrEndpointTests(unittest.TestCase):
         block = next(row for row in response["bom"] if row["material_code"] == "AC0312")
         self.assertEqual(block["quantity_per_unit"], 8)
 
-    def test_glass_door_serializes_glass_baguette_geometry_and_seals(self):
+    def test_one_leaf_glass_remains_frozen(self):
         response = calculate_gr_endpoint(glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.6.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
         self.assertEqual(response["model_description"], "PORTA 1 FOLHA DE GIRO")
         self.assertEqual(response["geometry"]["glass_bead_width_mm"], 564)
         self.assertEqual(response["geometry"]["glass_bead_height_mm"], 1891)
         self.assertEqual(response["geometry"]["glass_width_mm"], 556)
         self.assertEqual(response["geometry"]["glass_height_mm"], 1883)
+        self.assertEqual(response["geometry"]["glass_panel_count"], 1.0)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 26.7516)
         self.assertEqual(response["unit_technical_cost"], 1358.19195)
         self.assertEqual(len(response["glass_panels"]), 1)
@@ -179,16 +200,33 @@ class GrEndpointTests(unittest.TestCase):
         warning_codes = {row["code"] for row in response["warnings"]}
         self.assertIn("LEGACY-GR-SEALING-CORRECTED", warning_codes)
 
-    def test_glass_window_and_two_leaf_glass_are_rejected(self):
+    def test_orcs_17138_two_leaf_glass_is_serialized_with_physical_sealing(self):
+        response = calculate_gr_endpoint(two_leaf_glass_request())
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.7.0")
+        self.assertEqual(response["model_description"], "PORTA 2 FOLHAS DE GIRO")
+        self.assertEqual(response["geometry"]["leaf_width_final_mm"], 558)
+        self.assertEqual(response["geometry"]["glass_bead_width_mm"], 386)
+        self.assertEqual(response["geometry"]["glass_bead_height_mm"], 1891)
+        self.assertEqual(response["geometry"]["glass_width_mm"], 378)
+        self.assertEqual(response["geometry"]["glass_height_mm"], 1883)
+        self.assertEqual(response["geometry"]["glass_panel_count"], 2.0)
+        self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 49.9432)
+        self.assertEqual(response["unit_technical_cost"], 2071.84485)
+        self.assertEqual(round(response["unit_technical_cost"] - response["cost_by_group"]["VEDAÇÕES"], 6), 2021.90165)
+        glass = next(row for row in response["bom"] if row["role"] == "GLASS_PANEL")
+        self.assertEqual(glass["quantity_per_unit"], 2.0)
+        self.assertEqual(glass["area_m2"], 0.711774)
+        self.assertEqual(glass["cost_per_unit_product"], 177.9435)
+        block = next(row for row in response["bom"] if row["material_code"] == "AC0312")
+        self.assertEqual(block["quantity_per_unit"], 8.0)
+        self.assertEqual(response["glass_panels"][0]["quantity"], 2.0)
+
+    def test_window_glass_remains_rejected(self):
         with self.assertRaises(HTTPException) as context:
             calculate_gr_endpoint(window_request(
                 panel_mode="VIDRO INTEIRO",
                 glass_description="06mm TEMPERADO INCOLOR",
             ))
-        self.assertEqual(context.exception.status_code, 422)
-
-        with self.assertRaises(HTTPException) as context:
-            calculate_gr_endpoint(glass_request(leaf_count=2))
         self.assertEqual(context.exception.status_code, 422)
 
     def test_two_leaf_window_is_rejected_by_engine(self):
