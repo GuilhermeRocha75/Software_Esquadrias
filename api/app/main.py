@@ -398,7 +398,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 6,
+        "phase": 7,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -429,13 +429,19 @@ def gr_options():
         "glass_mode": {
             "supported": True,
             "applications": ["PORTA"],
-            "leaf_counts": [1],
+            "leaf_counts": [1, 2],
             "leaf_systems": [
                 "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
             ],
-            "historical_clean_cases": 125,
+            "historical_one_leaf_cases": 125,
+            "historical_two_leaf_cases": 58,
+            "two_leaf_reference_orcs_row": 17138,
             "glasses": glasses,
+            "window_glass": {
+                "supported": False,
+                "reason": "Registros recentes usam também DOBRADIÇA SISTEMA OB e exigem homologação própria de ferragens antes de liberar vidro em janela GR.",
+            },
         },
         "module_modes": ["MÓDULO ÚNICO"],
         "closures": [
@@ -483,7 +489,8 @@ def gr_options():
         },
         "two_leaf_door": {
             "supported": True,
-            "historical_clean_cases": 72,
+            "historical_clean_panel_cases": 72,
+            "historical_glass_cases": 58,
             "panel_rule_status": "LEGACY_BUG_CONFIRMED",
             "panel_rule": "DE20150 deve ser calculado por folha; o XLSM legado não duplicava as faixas em 2 folhas",
             "passive_leaf_hardware": ["2x FEC7", "2x CON3"],
@@ -497,7 +504,7 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 6 homologa custo técnico físico e primeiro recorte com vidro; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
+            "reason": "Fase 7 homologa custo técnico físico e vidro inteiro em portas GR de 1 e 2 folhas; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
