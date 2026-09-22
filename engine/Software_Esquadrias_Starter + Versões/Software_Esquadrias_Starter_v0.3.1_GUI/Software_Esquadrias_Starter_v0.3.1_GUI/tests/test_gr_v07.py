@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
+from esquadrias_engine.gr_v07 import GrConfiguration, calculate_gr  # noqa: E402
 
 MONO = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
 MULTI = "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE"
