@@ -1,23 +1,15 @@
 # GR — Reverse engineering Fase 6
 
-Status: **EM ANÁLISE — PHYSICAL_EVIDENCE_REQUIRED (VEDAÇÕES GR)**
+Status: **GR_ENGINE_0.6.0 — CANDIDATO À AUDITORIA**
 
-## Objetivo
+## Escopo
 
-A Fase 6 investiga a primeira expansão GR com vidro, começando pelo recorte mais frequente e tecnicamente limpo:
+A Fase 6 faz duas mudanças controladas:
 
-- porta GR Design 60x104;
-- 1 folha;
-- abertura interna;
-- módulo único;
-- sem persiana;
-- sem tela;
-- sem bandeiras;
-- sem travessas;
-- vidro inteiro;
-- fechamento monoponto ou multiponto.
+1. corrige fisicamente as vedações de todas as variantes GR já suportadas;
+2. libera o primeiro recorte com vidro: porta GR Design 60x104, 1 folha, abertura interna ou externa, módulo único, sem persiana/tela/bandeiras/travessas, fechamento monoponto ou multiponto.
 
-Nenhum código de cálculo para vidro deve ser liberado na API antes de resolver a vedação física.
+A janela com vidro e a porta de 2 folhas com vidro continuam bloqueadas até evidência própria de ferragens/topologia.
 
 ## Fonte oficial
 
@@ -31,20 +23,20 @@ SHA-256:
 
 A análise é somente leitura. O XLSM não é versionado no repositório.
 
-## Evidência ORCS
+## Evidência ORCS de vidro
 
 Há 553 registros GR com vidro preenchido no ORCS.
 
-No recorte limpo de porta interna Design 60x104, 1 folha, sem persiana/tela/bandeiras/travessas e modelo `PORTA 1 FOLHA DE GIRO`, foram encontrados **125 casos**.
+No recorte limpo de porta interna Design 60x104, 1 folha, sem persiana/tela/bandeiras/travessas e modelo `PORTA 1 FOLHA DE GIRO`, foram identificados **125 casos candidatos limpos** na auditoria de Fase 6.
 
-Combinações mais frequentes:
+Combinações de maior frequência nesse recorte incluem:
 
 - 43 casos: `06mm TEMPERADO INCOLOR` + monoponto;
 - 23 casos: `08mm TEMPERADO INCOLOR` + monoponto;
 - 11 casos: `06mm TEMPERADO INCOLOR` + multiponto;
 - 9 casos: `08mm MINI BOREAL` + monoponto.
 
-Os custos históricos são usados como evidência, porém não congelados como preço atual quando o catálogo mudou.
+Os custos históricos são evidência de estrutura/configuração, não preço corrente automático.
 
 ## Geometria do vidro — RESOLVED_EXCEL
 
@@ -85,93 +77,143 @@ A fórmula `GR!B13` seleciona a baguete pela espessura do vidro:
 - 31–33 mm: `BA1016`;
 - 34 mm: `BA0716`.
 
-A mesma tabela já é usada pela Engine Maxim-Ar Design e coincide com o XLSM atual.
-
-## Catálogo atual de referência
-
-Exemplos:
-
-- `06mm TEMPERADO INCOLOR`: código `6TI`, R$ 125,00/m²;
-- `08mm TEMPERADO INCOLOR`: código `8TI`, R$ 145,00/m²;
-- `04mm FLOAT INCOLOR`: código `4FI`, R$ 75,00/m²;
-- `20mm DUPLO FLOAT INCOLOR/TEMPERADO INCOLOR (4/10/6)`: código `20FITI(4/10/6L)`, R$ 250,00/m².
+A Engine v0.6 usa exatamente essa seleção para o recorte liberado.
 
 ## Calços — RESOLVED_PHYSICAL
 
 Permanece a regra já confirmada pela fabricação:
 
 - 4 calços `AC0312` por folha;
-- usados para esquadrejar a folha com ou sem vidro.
+- usados para manter a folha no esquadro com vidro ou sem vidro.
 
-Logo, uma porta de 1 folha com vidro continua usando 4 calços.
+Uma porta de 1 folha com vidro usa 4 calços; uma porta de 2 folhas com painel usa 8.
 
-## BLOQUEIO: vedações GR
+## Vedações — RESOLVED_PHYSICAL / LEGACY_BUG_CONFIRMED
 
-A aba GR contém três linhas explícitas:
+Confirmação da fabricação em 2026-09-22:
 
-- `GR!76 — Borracha do vidro`;
-- `GR!77 — Borracha da folha`;
-- `GR!78 — Borracha do Marco`.
+- **borracha de vidro**: aplicada onde entra vidro **ou lambri/painel**;
+- **borracha redonda**: aplicada no **marco por dentro** e na **folha por fora**;
+- existem portanto três caminhos físicos de vedação;
+- a mesma regra vale para porta GR Design 60x104 e janela GR Design 60x78.
 
-As fórmulas de comprimento representam três caminhos distintos:
+A nomenclatura da Engine é funcional/física:
 
-1. perímetro do vão de vidro;
-2. perímetro da folha;
-3. segundo perímetro de contato folha/marco.
+1. `GLASS_OR_LAMBRI_SEAL` — BORRACHA DE VIDRO / LAMBRI;
+2. `ROUND_SEAL_LEAF` — BORRACHA REDONDA na folha;
+3. `ROUND_SEAL_FRAME` — BORRACHA REDONDA no marco.
 
-Para o exemplo 800x2100, sem travessas:
+### Referência do catálogo atual
 
-- vedação de vidro: 4,910 m;
-- vedação de folha: 5,598 m;
-- vedação de marco/contato: 5,598 m;
-- total potencial: 16,106 m.
+As próprias fórmulas da aba GR apontam os materiais:
 
-Entretanto, o XLSM condiciona as três linhas a:
+- linha de vidro → `LISTAPERFIS!A53:C53` → código `ACB606`, preço atual R$ 1,80/m;
+- linhas folha/marco → `LISTAPERFIS!A55:C55` → código `AC0002`, preço atual R$ 1,60/m.
+
+Os nomes legados de catálogo (`BORRACHA PRIME 6X6` e `BORRACHA MAXIM-AR`) não são usados como descrição física da nova Engine. Os códigos/preços permanecem rastreáveis ao catálogo, enquanto os papéis são nomeados conforme confirmação da fabricação.
+
+### Bug legado 1 — condição que zera todas as vedações
+
+`GR!76:78` condiciona as três vedações a:
 
 `B10 = LISTAPERFIS!A7`
 
-e `LISTAPERFIS!A7` é `TRAVESSA (USADA COMO FOLHA) / PR4263`, não um perfil GR.
+`LISTAPERFIS!A7` é `PR4263`, mas uma GR real usa `DE60104`, `DE60104-E` ou `DE6078`.
 
-Por isso, em qualquer GR real com `DE60104`, `DE60104-E` ou `DE6078`, as três vedações ficam zeradas.
+Resultado: o Excel zera todas as borrachas da GR.
 
-Além disso, os materiais apontados nessas fórmulas são:
+Classificação: **LEGACY_BUG_CONFIRMED**.
 
-- `ACB606 — BORRACHA PRIME 6X6` para vidro;
-- `AC0002 — BORRACHA MAXIM-AR` para folha e marco.
+### Bug legado 2 — lambri/painel sem borracha de vidro
 
-Essas referências não são coerentes com a família GR Design e parecem ter sido copiadas de outra lógica.
+Mesmo se a condição acima fosse verdadeira, `GR!G76` usa o perímetro do vão de vidro (`D13/D14`). Em `PAINEL COMPLETO`, esse ramo não representa o perímetro físico do lambri (`D16/D17`).
 
-Classificação atual:
+A fabricação confirmou que a borracha de vidro também é utilizada onde entra o lambri/painel.
 
-**POSSIBLE_LEGACY_BUG / PHYSICAL_EVIDENCE_REQUIRED**
+Classificação: **LEGACY_BUG_CONFIRMED**.
 
-## Impacto sobre versões anteriores
+## Regra física adotada pela v0.6
 
-Se a fabricação confirmar que portas/janelas GR utilizam vedação física de folha/marco, o problema não afeta apenas o vidro da Fase 6.
+Por folha:
 
-Ele também significa que os custos v0.1–v0.5 reproduzem uma omissão do XLSM nas vedações de portas/janelas com painel.
+- borracha vidro/lambri = `2 × (largura do vão + altura do vão)`;
+- borracha redonda na folha = `2 × (largura da folha + altura da folha)`;
+- borracha redonda no marco = mesmo perímetro de contato da folha, conforme topologia já representada por `GR!G78=G77`.
 
-Nesse caso será necessário:
+Em duas folhas, os três caminhos são multiplicados pela quantidade de folhas.
 
-1. classificar a omissão como `LEGACY_BUG_CONFIRMED`;
-2. corrigir todas as variantes GR já suportadas;
-3. criar novo golden com o custo físico correto;
-4. preservar goldens anteriores apenas como evidência histórica/legado, não como custo físico final;
-5. rodar novamente regressão Engine + API + Web.
+## Correção dos custos já suportados
 
-## Custo preliminar sem vedação — NÃO HOMOLOGADO
+A v0.5 permanece preservada como referência histórica de paridade do Excel antigo. A v0.6 passa a ser a referência física.
 
-Usando o catálogo atual e reproduzindo literalmente a omissão do XLSM, uma porta 800x2100, 1 folha, abertura interna, vidro `06mm TEMPERADO INCOLOR`, monoponto, resulta em aproximadamente:
+Com catálogo atual:
 
-**R$ 1.331,440350**
+- porta interna 900x2100, 1 folha, painel, monoponto:
+  - v0.5 legado: R$ 1.384,723645;
+  - vedações físicas: R$ 27,751600;
+  - **v0.6: R$ 1.412,475245**.
 
-Este valor não deve ser tratado como golden físico enquanto a regra de vedação estiver aberta.
+- porta interna 900x2100, painel, multiponto:
+  - **v0.6: R$ 1.480,275245**;
+  - delta multiponto vs monoponto permanece R$ 67,80.
 
-## Próximo gate
+- porta externa 800x2150, painel, multiponto:
+  - **v0.6: R$ 1.445,782455**.
 
-A Fase 6 só avança para código após resposta da fabricação sobre:
+- janela 800x1300, painel completo:
+  - vedações: R$ 18,856000;
+  - **v0.6: R$ 846,578384**.
 
-- existência dos três caminhos de vedação;
-- material/código utilizado em cada caminho;
-- regra com painel completo versus vidro;
-- diferenças, se houver, entre porta 60x104 e janela 60x78.
+- porta 1600x2100, 2 folhas, painel, monoponto:
+  - vedações: R$ 53,943200;
+  - **v0.6: R$ 2.277,196098**.
+
+## Golden de vidro v0.6
+
+Caso principal:
+
+- porta 800x2100;
+- abertura interna Design 60x104;
+- 1 folha;
+- `VIDRO INTEIRO`;
+- `06mm TEMPERADO INCOLOR` / código `6TI` / R$ 125,00/m²;
+- fechamento monoponto;
+- baguete `BA3518`;
+- vidro 556x1883 mm;
+- área 1,046948 m²;
+- custo do vidro R$ 130,868500;
+- vedações R$ 26,751600;
+- **custo técnico físico v0.6: R$ 1.358,191950**.
+
+Golden:
+
+`test_cases/gr_golden_v0_6.json`
+
+## Limites mantidos
+
+A Fase 6 ainda não libera:
+
+- janela GR com vidro;
+- porta GR de 2 folhas com vidro;
+- composição `SUPERIOR VIDRO/INFERIOR PAINEL`;
+- tela;
+- persiana;
+- bandeiras;
+- travessas;
+- reforço estrutural opcional;
+- plano de compra/corte GR.
+
+A janela com vidro foi deliberadamente mantida fora do escopo porque os registros recentes mostram variantes com `DOBRADIÇA SISTEMA OB`/ferragens diferentes do baseline de painel já homologado. Não é correto reutilizar automaticamente a ferragem de painel.
+
+## Gate
+
+CR `CR_ENGINE_0.5.0` e Maxim-Ar `MX_ENGINE_0.3.0` permanecem congelados.
+
+A Fase 6 é candidata à auditoria somente após:
+
+1. testes v0.5 legados preservados;
+2. golden v0.6 físico;
+3. testes Engine v0.6;
+4. testes API;
+5. Web build;
+6. CI independente no SHA final.
