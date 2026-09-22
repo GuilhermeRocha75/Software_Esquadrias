@@ -1,0 +1,85 @@
+{
+  "engine_version": "GR_ENGINE_0.8.0",
+  "basis": "XLSM geometry/catalog + ORCS structural evidence + factory-confirmed 90mm/800mm window baseline",
+  "cases": [
+    {
+      "id": "orcs-11480-window-glass-6ti-90mm-700x2500",
+      "orcs_row": 11480,
+      "historical_use": "geometry/configuration evidence only; historical AO cost is not a current-price golden",
+      "input": {
+        "width_mm": 700,
+        "height_mm": 2500,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 636.0,
+        "leaf_height_final_mm": 2436.0,
+        "glass_bead_width_mm": 516.0,
+        "glass_bead_height_mm": 2316.0,
+        "glass_width_mm": 508.0,
+        "glass_height_mm": 2308.0,
+        "glass_panel_count": 1.0
+      },
+      "sealing_cost": 29.856,
+      "unit_cost": 1214.70516
+    },
+    {
+      "id": "orcs-11558-window-glass-20fiti-90mm-400x1500",
+      "orcs_row": 11558,
+      "historical_use": "geometry/configuration evidence only; historical AO cost is not a current-price golden",
+      "input": {
+        "width_mm": 400,
+        "height_mm": 1500,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "20mm DUPLO FLOAT INCOLOR/TEMPERADO INCOLOR (4/10/6)",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 336.0,
+        "leaf_height_final_mm": 1436.0,
+        "glass_bead_width_mm": 216.0,
+        "glass_bead_height_mm": 1316.0,
+        "glass_width_mm": 208.0,
+        "glass_height_mm": 1308.0,
+        "glass_panel_count": 1.0
+      },
+      "sealing_cost": 16.856,
+      "unit_cost": 765.11532
+    },
+    {
+      "id": "door-two-leaf-glass-v07-regression",
+      "input": {
+        "width_mm": 1200,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "glass_width_mm": 378.0,
+        "glass_height_mm": 1883.0,
+        "glass_panel_count": 2.0
+      },
+      "sealing_cost": 49.9432,
+      "unit_cost": 2071.84485
+    }
+  ]
+}
