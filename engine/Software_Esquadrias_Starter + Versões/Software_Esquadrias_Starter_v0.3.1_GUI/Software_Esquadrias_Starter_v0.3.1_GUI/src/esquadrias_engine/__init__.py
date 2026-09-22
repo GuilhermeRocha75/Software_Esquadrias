@@ -9,7 +9,7 @@ from .models import (
 )
 from .sliding import calculate_sliding
 from .maxim_ar import calculate_maxim_ar
-from .gr_v07 import GrConfiguration, GR_ENGINE_VERSION, calculate_gr
+from .gr_v08 import GrConfiguration, GR_ENGINE_VERSION, calculate_gr
 from .purchase import build_order_purchase_plan
 from .catalog import (
     GLASSES, CLOSURE_OPTIONS, CREMONA_OPTIONS, ROLLER_OPTIONS, FINISH_OPTIONS,
