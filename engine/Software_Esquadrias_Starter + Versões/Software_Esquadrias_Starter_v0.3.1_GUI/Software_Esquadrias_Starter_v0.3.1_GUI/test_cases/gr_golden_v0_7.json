@@ -1,0 +1,78 @@
+{
+  "engine_version": "GR_ENGINE_0.7.0",
+  "basis": "XLSM geometry/catalog + ORCS historical parity + factory physical confirmation",
+  "cases": [
+    {
+      "id": "orcs-17138-door-internal-two-leaf-glass-6ti-mono-1200x2100",
+      "orcs_row": 17138,
+      "input": {
+        "width_mm": 1200,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 558.0,
+        "leaf_height_final_mm": 2063.0,
+        "glass_bead_width_mm": 386.0,
+        "glass_bead_height_mm": 1891.0,
+        "glass_width_mm": 378.0,
+        "glass_height_mm": 1883.0,
+        "glass_panel_count": 2.0
+      },
+      "sealing_cost": 49.9432,
+      "legacy_orcs_cost_without_seals": 2021.90165,
+      "unit_cost": 2071.84485
+    },
+    {
+      "id": "door-internal-one-leaf-glass-6ti-mono-800x2100",
+      "input": {
+        "width_mm": 800,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "glass_bead_width_mm": 564.0,
+        "glass_bead_height_mm": 1891.0,
+        "glass_width_mm": 556.0,
+        "glass_height_mm": 1883.0,
+        "glass_panel_count": 1.0
+      },
+      "sealing_cost": 26.7516,
+      "unit_cost": 1358.19195
+    },
+    {
+      "id": "door-internal-two-leaf-panel-mono-1600x2100-regression",
+      "input": {
+        "width_mm": 1600,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "PAINEL COMPLETO",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 758.0,
+        "leaf_height_final_mm": 2063.0,
+        "panel_bead_width_mm": 586.0,
+        "panel_bead_height_mm": 1891.0,
+        "panel_fill_strip_quantity": 25.528571
+      },
+      "sealing_cost": 53.9432,
+      "unit_cost": 2277.196098
+    }
+  ]
+}
