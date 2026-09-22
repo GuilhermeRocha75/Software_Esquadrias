@@ -140,7 +140,7 @@ class GrPhase7Tests(unittest.TestCase):
         result = calculate_gr(two_leaf_glass())
         par2 = next(x for x in result.unit_bom if x.material_code == "PAR2")
         par1 = next(x for x in result.unit_bom if x.material_code == "PAR1")
-        self.assertEqual(par2.quantity_per_unit, 55.328)
+        self.assertAlmostEqual(par2.quantity_per_unit, 55.328, places=9)
         self.assertEqual(par1.quantity_per_unit, 52.0)
         self.assertIn("RESOLVED_PHYSICAL", par1.source)
 
