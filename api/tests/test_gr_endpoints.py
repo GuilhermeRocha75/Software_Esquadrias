@@ -3,6 +3,7 @@ from pathlib import Path
 import unittest
 
 from fastapi import HTTPException
+from pydantic import ValidationError
 
 API_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = API_ROOT.parent
@@ -129,12 +130,11 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["geometry"]["glass_height_mm"], 1308)
         self.assertIn("BA2018", {row["material_code"] for row in response["bom"]})
 
-    def test_window_glass_wrong_cremona_is_422(self):
-        with self.assertRaises(HTTPException) as context:
-            calculate_gr_endpoint(window_glass_request(
+    def test_window_glass_wrong_cremona_is_rejected_by_schema(self):
+        with self.assertRaises(ValidationError):
+            window_glass_request(
                 cremona_description="CREMONA 2 PONTOS COMP. 1000mm E:15mm"
-            ))
-        self.assertEqual(context.exception.status_code, 422)
+            )
 
     def test_two_leaf_window_is_422(self):
         with self.assertRaises(HTTPException) as context:
