@@ -45,7 +45,7 @@ class MaximArEndpointTests(unittest.TestCase):
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
         self.assertEqual(
             response["engines"],
-            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.7.0"],
+            ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.8.0"],
         )
 
     def test_options_expose_phase2_proven_variants_and_gate(self):
