@@ -463,7 +463,8 @@ def gr_options():
                 "ob_auto_selection": False,
                 "historical_ob_glass_cases": 48,
                 "ob_reference_orcs_row": 4572,
-                "ob_evidence_status": "FORMULA_ORCS_CANDIDATE",
+                "ob_evidence_status": "RESOLVED_PHYSICAL",
+                "ob_physical_confirmation_date": "2026-09-23",
             },
         },
         "module_modes": ["MÓDULO ÚNICO"],
@@ -538,10 +539,8 @@ def gr_options():
             "reason": "Fase 9 adiciona Sistema OB com cremona explícita à cobertura técnica GR; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
-            "status": "CANDIDATO À AUDITORIA",
-            "open_questions": [
-                "Confirmar em produção se a família CREMONA OSCILO/GIRO (CRE21-CRE24) é o padrão físico do Sistema OB; a v0.9 já exige seleção explícita e não infere comprimento."
-            ],
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_9",
+            "open_questions": [],
         },
     }
 
