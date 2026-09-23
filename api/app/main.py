@@ -398,7 +398,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 8,
+        "phase": 9,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -450,8 +450,20 @@ def gr_options():
                 "cremona_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
                 "historical_clean_90mm_cases": 12,
                 "reference_orcs_rows": [11480, 11558],
-                "ob_hinge_supported": False,
-                "ob_hinge_reason": "DOBRADIÇA SISTEMA OB possui conjunto próprio de ferragens e tipo de cremona ainda requer confirmação física antes da homologação.",
+                "ob_hinge_supported": True,
+                "ob_hinge_description": "DOBRADIÇA SISTEMA OB",
+                "ob_cremona_required": True,
+                "ob_cremonas": [
+                    "CREMONA OSCILO/GIRO COMP. 400mm E:15mm",
+                    "CREMONA OSCILO/GIRO COMP. 900mm E:15mm",
+                    "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+                    "CREMONA OSCILO/GIRO COMP. 1400mm E:15mm",
+                    "CREMONA OSCILO/GIRO COMP. 1900mm E:15mm",
+                ],
+                "ob_auto_selection": False,
+                "historical_ob_glass_cases": 48,
+                "ob_reference_orcs_row": 4572,
+                "ob_evidence_status": "FORMULA_ORCS_CANDIDATE",
             },
         },
         "module_modes": ["MÓDULO ÚNICO"],
@@ -463,8 +475,16 @@ def gr_options():
         "cremonas": {
             "window_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
             "physical_evidence": "padrão informado pela fabricação para mais de 90% das janelas de giro no baseline 90mm",
+            "ob_options": [
+                "CREMONA OSCILO/GIRO COMP. 400mm E:15mm",
+                "CREMONA OSCILO/GIRO COMP. 900mm E:15mm",
+                "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+                "CREMONA OSCILO/GIRO COMP. 1400mm E:15mm",
+                "CREMONA OSCILO/GIRO COMP. 1900mm E:15mm",
+            ],
+            "ob_selection": "explícita; sem inferência automática de comprimento na Fase 9",
         },
-        "hinges": ["DOBRADIÇA 90MM"],
+        "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"],
         "internal_finishes": ["GUARNIÇÃO DE 70MM"],
         "external_finishes": ["BARRA CHATA DE 30MM"],
         "panel_squaring_blocks": {
@@ -515,11 +535,13 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 8 homologa custo técnico físico, vidro em portas GR de 1/2 folhas e vidro em janela GR 1 folha com dobradiça 90mm; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
+            "reason": "Fase 9 adiciona Sistema OB com cremona explícita à cobertura técnica GR; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
             "status": "CANDIDATO À AUDITORIA",
-            "open_questions": [],
+            "open_questions": [
+                "Confirmar em produção se a família CREMONA OSCILO/GIRO (CRE21-CRE24) é o padrão físico do Sistema OB; a v0.9 já exige seleção explícita e não infere comprimento."
+            ],
         },
     }
 
