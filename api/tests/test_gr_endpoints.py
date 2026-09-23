@@ -51,6 +51,20 @@ def window_glass_request(**overrides):
     return GrItemRequest(**values)
 
 
+def ob_window_glass_request(**overrides):
+    values = {
+        "width_mm": 800, "height_mm": 1000, "quantity": 1,
+        "leaf_system": WINDOW, "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": WINDOW_CREMONA,
+        "cremona_description": "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+        "hinge_description": "DOBRADIÇA SISTEMA OB",
+    }
+    values.update(overrides)
+    return GrItemRequest(**values)
+
+
 def two_leaf_glass_request(**overrides):
     values = {
         "width_mm": 1200, "height_mm": 2100, "quantity": 1,
@@ -63,26 +77,36 @@ def two_leaf_glass_request(**overrides):
 
 
 class GrEndpointTests(unittest.TestCase):
-    def test_health_exposes_v08(self):
+    def test_health_exposes_v09(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
-        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.8.0"])
+        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.9.0"])
 
-    def test_options_expose_phase8_and_narrow_window_glass_scope(self):
+    def test_options_expose_phase9_and_ob_scope(self):
         response = gr_options()
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.8.0")
-        self.assertEqual(response["phase"], 8)
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
+        self.assertEqual(response["phase"], 9)
         self.assertTrue(response["glass_mode"]["window_glass"]["supported"])
         self.assertEqual(response["glass_mode"]["window_glass"]["hinge_description"], "DOBRADIÇA 90MM")
         self.assertEqual(response["glass_mode"]["window_glass"]["cremona_default"], CREMONA_800)
         self.assertEqual(response["glass_mode"]["window_glass"]["historical_clean_90mm_cases"], 12)
-        self.assertFalse(response["glass_mode"]["window_glass"]["ob_hinge_supported"])
+        self.assertTrue(response["glass_mode"]["window_glass"]["ob_hinge_supported"])
+        self.assertEqual(
+            response["glass_mode"]["window_glass"]["ob_hinge_description"],
+            "DOBRADIÇA SISTEMA OB",
+        )
+        self.assertTrue(response["glass_mode"]["window_glass"]["ob_cremona_required"])
+        self.assertFalse(response["glass_mode"]["window_glass"]["ob_auto_selection"])
+        self.assertEqual(response["glass_mode"]["window_glass"]["historical_ob_glass_cases"], 48)
+        self.assertEqual(response["glass_mode"]["window_glass"]["ob_reference_orcs_row"], 4572)
+        self.assertEqual(len(response["glass_mode"]["window_glass"]["ob_cremonas"]), 5)
+        self.assertIn("DOBRADIÇA SISTEMA OB", response["hinges"])
         self.assertEqual(response["sealing"]["status"], "LEGACY_BUG_CONFIRMED")
         self.assertFalse(response["purchase_plan"]["supported"])
 
     def test_panel_regression_remains_physical(self):
         response = calculate_gr_endpoint(request(closure_mode=MONO))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.8.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
         self.assertEqual(response["unit_technical_cost"], 1412.475245)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 27.7516)
 
@@ -95,20 +119,20 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_window_panel_regression(self):
         response = calculate_gr_endpoint(window_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.8.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
         self.assertEqual(response["unit_technical_cost"], 846.578384)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 18.856)
 
     def test_two_leaf_door_glass_regression(self):
         response = calculate_gr_endpoint(two_leaf_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.8.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
         self.assertEqual(response["unit_technical_cost"], 2071.84485)
         self.assertEqual(response["geometry"]["glass_panel_count"], 2.0)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 49.9432)
 
     def test_window_glass_6mm_serializes_v08_golden(self):
         response = calculate_gr_endpoint(window_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.8.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
         self.assertEqual(response["model_description"], "JANELA 1 FOLHA DE GIRO")
         self.assertEqual(response["geometry"]["glass_width_mm"], 508)
         self.assertEqual(response["geometry"]["glass_height_mm"], 2308)
@@ -135,6 +159,28 @@ class GrEndpointTests(unittest.TestCase):
             window_glass_request(
                 cremona_description="CREMONA 2 PONTOS COMP. 1000mm E:15mm"
             )
+
+    def test_ob_window_glass_serializes_v09_golden(self):
+        response = calculate_gr_endpoint(ob_window_glass_request())
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.9.0")
+        self.assertEqual(response["geometry"]["glass_width_mm"], 608)
+        self.assertEqual(response["geometry"]["glass_height_mm"], 808)
+        self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 15.856)
+        self.assertEqual(response["unit_technical_cost"], 656.42716)
+        codes = {row["material_code"] for row in response["bom"]}
+        for code in {"DOB6", "DOB7", "DOB8", "DOB9", "DOB10", "DOB11", "CRE23"}:
+            self.assertIn(code, codes)
+        self.assertNotIn("DOB3", codes)
+        self.assertNotIn("CRE12", codes)
+        screws = next(row for row in response["bom"] if row["role"] == "HARDWARE_SCREWS")
+        self.assertEqual(screws["quantity_per_unit"], 16)
+        warning_codes = {row["code"] for row in response["warnings"]}
+        self.assertIn("GR-OB-CREMONA-EXPLICIT", warning_codes)
+
+    def test_ob_window_requires_explicit_ob_cremona(self):
+        with self.assertRaises(HTTPException) as context:
+            calculate_gr_endpoint(ob_window_glass_request(cremona_description=None))
+        self.assertEqual(context.exception.status_code, 422)
 
     def test_two_leaf_window_is_422(self):
         with self.assertRaises(HTTPException) as context:
