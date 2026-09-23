@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 9
 
-Status: **GR_ENGINE_0.9.0 — CANDIDATO À AUDITORIA FÍSICA**
+Status: **GR_ENGINE_0.9.0 — APROVADO FISICAMENTE NO ESCOPO DA FASE 9**
 
 ## Escopo novo
 
@@ -148,18 +148,17 @@ ORCS 4572 reconstruído com catálogo atual, vedações físicas corrigidas e cr
 
 O AO histórico não é usado como golden de preço atual.
 
-## Gate físico ainda aberto
+## Gate físico — RESOLVED_PHYSICAL
 
-A implementação é tecnicamente reproduzível pelo XLSM e pelo registro ORCS explícito, mas falta uma confirmação de fabricação para transformar o recorte em homologação física completa:
+Em 2026-09-23 a fabricação confirmou que, nas janelas GR com `DOBRADIÇA SISTEMA OB`, a família usada é sempre a **CREMONA OSCILO/GIRO** (`CRE21/CRE22/CRE23/CRE24`) e o que muda é apenas o comprimento da cremona.
 
-> Em janela GR com DOBRADIÇA SISTEMA OB, a família usada em produção é sempre a `CREMONA OSCILO/GIRO` (CRE21/CRE22/CRE23/CRE24), escolhendo apenas o comprimento conforme a peça?
+Com isso:
 
-Enquanto isso não for confirmado:
-
-- a v0.9 permanece **CANDIDATO À AUDITORIA FÍSICA**;
-- a Engine exige seleção explícita da cremona;
-- não existe regra automática de tamanho;
-- não liberar plano de compras/corte GR.
+- o conjunto OB da Fase 9 fica **fisicamente homologado**;
+- a Engine continua exigindo seleção explícita do comprimento;
+- não existe regra automática de tamanho porque essa relação por dimensão ainda não foi definida;
+- a ausência de auto-seleção não é mais um bloqueio de cálculo, apenas uma escolha explícita no orçamento;
+- o plano de compras/corte GR continua bloqueado por motivos de estoque/corte, não por dúvida de ferragem OB.
 
 ## Compra/corte
 
