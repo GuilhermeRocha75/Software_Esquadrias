@@ -1,0 +1,58 @@
+{
+  "engine_version": "GR_ENGINE_0.9.0",
+  "basis": "XLSM GR!U2/U3 + GR!105:119 + LISTAFERRA!61:71 + ORCS 4572 explicit OB/cremona evidence + factory-confirmed GR sealing rules",
+  "cases": [
+    {
+      "id": "orcs-4572-window-glass-ob-cre23-800x1000",
+      "orcs_row": 4572,
+      "historical_use": "explicit Sistema OB + cremona oscilo/giro 1100mm evidence; AO historical value is not used as current-price golden",
+      "input": {
+        "width_mm": 800,
+        "height_mm": 1000,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+        "hinge_description": "DOBRADIÇA SISTEMA OB"
+      },
+      "geometry": {
+        "leaf_width_final_mm": 736.0,
+        "leaf_height_final_mm": 936.0,
+        "glass_bead_width_mm": 616.0,
+        "glass_bead_height_mm": 816.0,
+        "glass_width_mm": 608.0,
+        "glass_height_mm": 808.0,
+        "glass_panel_count": 1.0
+      },
+      "sealing_cost": 15.856,
+      "unit_cost": 656.42716
+    },
+    {
+      "id": "window-glass-90mm-v08-regression",
+      "input": {
+        "width_mm": 700,
+        "height_mm": 2500,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM"
+      },
+      "geometry": {
+        "glass_width_mm": 508.0,
+        "glass_height_mm": 2308.0,
+        "glass_panel_count": 1.0
+      },
+      "sealing_cost": 29.856,
+      "unit_cost": 1214.70516
+    }
+  ]
+}
