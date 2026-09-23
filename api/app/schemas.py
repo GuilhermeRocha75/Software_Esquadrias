@@ -128,8 +128,15 @@ class GrItemRequest(BaseModel):
         "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
         "MAÇANETA COM CREMONA SEM CHAVE",
     ] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
-    cremona_description: Literal["CREMONA 2 PONTOS COMP. 800mm E:15mm"] | None = None
-    hinge_description: Literal["DOBRADIÇA 90MM"] = "DOBRADIÇA 90MM"
+    cremona_description: Literal[
+        "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "CREMONA OSCILO/GIRO COMP. 400mm E:15mm",
+        "CREMONA OSCILO/GIRO COMP. 900mm E:15mm",
+        "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+        "CREMONA OSCILO/GIRO COMP. 1400mm E:15mm",
+        "CREMONA OSCILO/GIRO COMP. 1900mm E:15mm",
+    ] | None = None
+    hinge_description: Literal["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"] = "DOBRADIÇA 90MM"
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
 
