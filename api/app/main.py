@@ -212,6 +212,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
             )
             if item.shutter is not None else None
         ),
+        screen_enabled=item.screen_enabled,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
     )
@@ -407,7 +408,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 13,
+        "phase": 14,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -561,7 +562,17 @@ def gr_options():
             "passive_hardware_screws": "incluídos nos kits; não adicionar PAR1",
             "physical_evidence_date": "2026-09-17",
         },
-        "screen": {"supported": False},
+        "screen": {
+            "supported": True,
+            "material_code": "TL3",
+            "description": "TELA MOSQUITEIRA (RECOLHÍVEL)",
+            "historical_cases": 21,
+            "reference_orcs_row": 9894,
+            "pricing": "largura_marco_m * 110 + altura_marco_m * 110 + 110",
+            "dimension_rule": "largura e altura reais do marco GR; com persiana, altura útil abaixo da caixa",
+            "legacy_status": "GR!D73/E73 referencia células vazias; regra recuperada da fórmula idêntica MX!D64:E64/LISTADIV!C5:C7",
+            "status": "LEGACY_BUG_CONFIRMED_BY_SHARED_FORMULA"
+        },
         "shutter": {
             "supported": True,
             "modes": [
@@ -614,10 +625,10 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 13 adiciona persiana manual em 2 painéis com eixos independentes; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
+            "reason": "Fase 14 adiciona tela mosquiteira recolhível TL3; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana e tela.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_13",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_14",
             "open_questions": [],
         },
     }
