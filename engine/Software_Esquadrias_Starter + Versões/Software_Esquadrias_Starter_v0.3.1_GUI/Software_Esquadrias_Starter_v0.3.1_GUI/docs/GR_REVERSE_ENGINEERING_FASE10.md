@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 10
 
-Status: **GR_ENGINE_0.10.0 — CANDIDATO À AUDITORIA**
+Status: **GR_ENGINE_0.10.0 — APROVADO NO ESCOPO DA FASE 10**
 
 ## Objetivo
 
