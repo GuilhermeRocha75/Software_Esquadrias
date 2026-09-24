@@ -135,6 +135,24 @@ def button_shutter_request(**overrides):
     return GrItemRequest(**values)
 
 
+def independent_shutter_request(**overrides):
+    values = {
+        "width_mm": 2550, "height_mm": 2260, "quantity": 1,
+        "leaf_count": 2, "leaf_system": INTERNAL, "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": MONO,
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+            "mode": "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
+            "box_description": "CAIXA DE 200MM",
+            "slat_description": "TALA DE PVC 40MM",
+        },
+    }
+    values.update(overrides)
+    return GrItemRequest(**values)
+
+
 def two_leaf_glass_request(**overrides):
     values = {
         "width_mm": 1200, "height_mm": 2100, "quantity": 1,
@@ -147,15 +165,15 @@ def two_leaf_glass_request(**overrides):
 
 
 class GrEndpointTests(unittest.TestCase):
-    def test_health_exposes_v012(self):
+    def test_health_exposes_v013(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
-        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.12.0"])
+        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.13.0"])
 
-    def test_options_expose_phase12_and_automated_shutter_scope(self):
+    def test_options_expose_phase13_and_independent_shutter_scope(self):
         response = gr_options()
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
-        self.assertEqual(response["phase"], 12)
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
+        self.assertEqual(response["phase"], 13)
         self.assertTrue(response["glass_mode"]["window_glass"]["supported"])
         self.assertEqual(response["glass_mode"]["window_glass"]["hinge_description"], "DOBRADIÇA 90MM")
         self.assertEqual(response["glass_mode"]["window_glass"]["cremona_default"], CREMONA_800)
@@ -171,7 +189,7 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["glass_mode"]["window_glass"]["ob_reference_orcs_row"], 4572)
         self.assertEqual(len(response["glass_mode"]["window_glass"]["ob_cremonas"]), 5)
         self.assertEqual(response["glass_mode"]["window_glass"]["ob_evidence_status"], "RESOLVED_PHYSICAL")
-        self.assertEqual(response["technical_gate"]["status"], "APROVADO_NO_ESCOPO_DA_FASE_12")
+        self.assertEqual(response["technical_gate"]["status"], "CANDIDATO_A_AUDITORIA_FASE_13")
         self.assertEqual(response["technical_gate"]["open_questions"], [])
         self.assertIn("DOBRADIÇA SISTEMA OB", response["hinges"])
         self.assertTrue(response["mixed_mode"]["supported"])
@@ -184,19 +202,25 @@ class GrEndpointTests(unittest.TestCase):
             "MANUAL EM PAINEL ÚNICO",
             "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
             "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO",
+            "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
         ])
         self.assertEqual(response["shutter"]["historical_total_cases"], 67)
         self.assertEqual(response["shutter"]["historical_manual_single_cases"], 44)
         self.assertEqual(response["shutter"]["historical_remote_single_cases"], 10)
         self.assertEqual(response["shutter"]["historical_button_single_cases"], 7)
-        self.assertEqual(response["shutter"]["reference_orcs_rows"], [18132, 11111, 11417, 12395])
+        self.assertEqual(response["shutter"]["historical_manual_double_independent_cases"], 6)
+        self.assertEqual(response["shutter"]["reference_orcs_rows"], [18132, 11111, 11417, 12395, 4109])
+        self.assertTrue(response["shutter"]["independent_double"]["supported"])
+        self.assertEqual(response["shutter"]["independent_double"]["shaft_quantity"], 2)
+        self.assertEqual(response["shutter"]["independent_double"]["independent_divider"], "371127")
+        self.assertIsNone(response["shutter"]["independent_double"]["shared_divider"])
         self.assertEqual(response["shutter"]["physical_slats"], "ceil(altura_total / 40)")
         self.assertEqual(response["sealing"]["status"], "LEGACY_BUG_CONFIRMED")
         self.assertFalse(response["purchase_plan"]["supported"])
 
     def test_panel_regression_remains_physical(self):
         response = calculate_gr_endpoint(request(closure_mode=MONO))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["unit_technical_cost"], 1412.475245)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 27.7516)
 
@@ -209,20 +233,20 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_window_panel_regression(self):
         response = calculate_gr_endpoint(window_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["unit_technical_cost"], 846.578384)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 18.856)
 
     def test_two_leaf_door_glass_regression(self):
         response = calculate_gr_endpoint(two_leaf_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["unit_technical_cost"], 2071.84485)
         self.assertEqual(response["geometry"]["glass_panel_count"], 2.0)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 49.9432)
 
     def test_window_glass_6mm_serializes_v08_golden(self):
         response = calculate_gr_endpoint(window_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["model_description"], "JANELA 1 FOLHA DE GIRO")
         self.assertEqual(response["geometry"]["glass_width_mm"], 508)
         self.assertEqual(response["geometry"]["glass_height_mm"], 2308)
@@ -252,7 +276,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_ob_window_glass_serializes_v09_golden(self):
         response = calculate_gr_endpoint(ob_window_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["geometry"]["glass_width_mm"], 608)
         self.assertEqual(response["geometry"]["glass_height_mm"], 808)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 15.856)
@@ -274,7 +298,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_mixed_orcs_270_serializes_v010_golden(self):
         response = calculate_gr_endpoint(mixed_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["model_description"], "PORTA 1 FOLHA DE GIRO SUPERIOR VIDRO / INFERIOR PAINEL")
         self.assertEqual(response["geometry"]["mixed_split_from_bottom_mm"], 900)
         self.assertEqual(response["geometry"]["horizontal_transom_length_mm"], 576)
@@ -306,7 +330,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_manual_single_shutter_serializes_v011_door_golden(self):
         response = calculate_gr_endpoint(manual_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["model_description"], "PORTA 1 FOLHA DE GIRO COM PERSIANA")
         self.assertEqual(response["geometry"]["shutter_box_height_mm"], 200)
         self.assertEqual(response["geometry"]["shutter_main_opening_height_mm"], 1960)
@@ -336,7 +360,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_remote_single_shutter_serializes_v012_golden(self):
         response = calculate_gr_endpoint(remote_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["cost_by_group"]["PERSIANA"], 1073.83925)
         self.assertEqual(response["unit_technical_cost"], 2034.04641)
         motor = next(row for row in response["bom"] if row["role"] == "SHUTTER_MOTOR")
@@ -345,7 +369,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_button_single_shutter_serializes_mot2_fix(self):
         response = calculate_gr_endpoint(button_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.12.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
         self.assertEqual(response["cost_by_group"]["PERSIANA"], 574.08925)
         self.assertEqual(response["unit_technical_cost"], 1128.45121)
         motor = next(row for row in response["bom"] if row["role"] == "SHUTTER_MOTOR")
@@ -354,11 +378,29 @@ class GrEndpointTests(unittest.TestCase):
         warning_codes = {row["code"] for row in response["warnings"]}
         self.assertIn("LEGACY-GR-SHUTTER-BUTTON-MOTOR-CORRECTED", warning_codes)
 
-    def test_unreleased_double_shutter_mode_returns_422(self):
+    def test_independent_double_shutter_serializes_v013_golden(self):
+        response = calculate_gr_endpoint(independent_shutter_request())
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.13.0")
+        self.assertEqual(response["geometry"]["shutter_panel_count"], 2)
+        self.assertEqual(response["geometry"]["shutter_shaft_quantity"], 2)
+        self.assertEqual(response["geometry"]["shutter_slat_quantity"], 114)
+        self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 62.6432)
+        self.assertEqual(response["cost_by_group"]["PERSIANA"], 1783.63425)
+        self.assertEqual(response["unit_technical_cost"], 4503.65075)
+        codes = {row["material_code"] for row in response["bom"] if row["category"] == "PERSIANA"}
+        self.assertIn("371127", codes)
+        self.assertNotIn("371143", codes)
+        shaft = next(row for row in response["bom"] if row["role"] == "SHUTTER_SHAFT")
+        self.assertEqual(shaft["quantity_per_unit"], 2)
+        warning_codes = {row["code"] for row in response["warnings"]}
+        self.assertIn("LEGACY-GR-SHUTTER-INDEPENDENT-SHAFT-QTY-CORRECTED", warning_codes)
+        self.assertIn("LEGACY-GR-SHUTTER-DIVIDER-TYPO-CORRECTED", warning_codes)
+
+    def test_shared_shaft_double_mode_remains_blocked(self):
         with self.assertRaises(HTTPException) as context:
-            calculate_gr_endpoint(manual_shutter_request(
+            calculate_gr_endpoint(independent_shutter_request(
                 shutter={
-                    "mode": "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
+                    "mode": "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO",
                     "box_description": "CAIXA DE 200MM",
                     "slat_description": "TALA DE PVC 40MM",
                 }
