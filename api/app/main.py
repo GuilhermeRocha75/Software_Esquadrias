@@ -628,7 +628,7 @@ def gr_options():
             "reason": "Fase 14 adiciona tela mosquiteira recolhível TL3; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana e tela.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_14",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_14",
             "open_questions": [],
         },
     }
