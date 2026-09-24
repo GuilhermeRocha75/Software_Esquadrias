@@ -139,6 +139,7 @@ class GrItemRequest(BaseModel):
     ] | None = None
     hinge_description: Literal["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"] = "DOBRADIÇA 90MM"
     shutter: ShutterRequest | None = None
+    screen_enabled: bool = False
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
 
