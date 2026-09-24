@@ -120,8 +120,9 @@ class GrItemRequest(BaseModel):
         "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
     ] = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
     application: Literal["PORTA", "JANELA"] = "PORTA"
-    panel_mode: Literal["PAINEL COMPLETO", "VIDRO INTEIRO"] = "PAINEL COMPLETO"
+    panel_mode: Literal["PAINEL COMPLETO", "VIDRO INTEIRO", "SUPERIOR VIDRO/INFERIOR PAINEL"] = "PAINEL COMPLETO"
     glass_description: str | None = None
+    mixed_split_from_bottom_mm: float | None = Field(default=None, gt=0)
     module_mode: Literal["MÓDULO ÚNICO"] = "MÓDULO ÚNICO"
     closure_mode: Literal[
         "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
