@@ -407,7 +407,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 11,
+        "phase": 12,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -564,13 +564,19 @@ def gr_options():
         "screen": {"supported": False},
         "shutter": {
             "supported": True,
-            "modes": ["MANUAL EM PAINEL ÚNICO"],
+            "modes": [
+                "MANUAL EM PAINEL ÚNICO",
+                "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
+                "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO"
+            ],
             "box_description": "CAIXA DE 200MM",
             "slat_description": "TALA DE PVC 40MM",
             "panel_modes": ["VIDRO INTEIRO"],
             "historical_total_cases": 67,
             "historical_manual_single_cases": 44,
-            "reference_orcs_rows": [18132, 11111],
+            "historical_remote_single_cases": 10,
+            "historical_button_single_cases": 7,
+            "reference_orcs_rows": [18132, 11111, 11417, 12395],
             "geometry": {
                 "box_height_mm": 200,
                 "box_length_rule": "largura_total - 15",
@@ -582,7 +588,8 @@ def gr_options():
             "legacy_status": [
                 "GR!85:102 referencia auxiliares inexistentes 143:156",
                 "GR!I103 omite os acessórios da persiana do subtotal",
-                "a v0.11 recupera o kit manual de painel único pela CR homologada com os mesmos códigos"
+                "a v0.11 recupera o kit manual de painel único pela CR homologada com os mesmos códigos",
+                "a v0.12 recupera os kits automatizados e corrige botoeira para MOT2 (GR!B98 apontava MOT1)"
             ]
         },
         "fixed_panels": {"supported": False},
@@ -590,10 +597,10 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 11 adiciona persiana manual em painel único com kit físico completo; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
+            "reason": "Fase 12 adiciona persiana automatizada em painel único (MOT1 remoto / MOT2 botoeira); compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_11",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_12",
             "open_questions": [],
         },
     }
