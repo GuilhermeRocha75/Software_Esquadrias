@@ -407,7 +407,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 12,
+        "phase": 13,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -567,7 +567,8 @@ def gr_options():
             "modes": [
                 "MANUAL EM PAINEL ÚNICO",
                 "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
-                "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO"
+                "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO",
+                "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES"
             ],
             "box_description": "CAIXA DE 200MM",
             "slat_description": "TALA DE PVC 40MM",
@@ -576,7 +577,22 @@ def gr_options():
             "historical_manual_single_cases": 44,
             "historical_remote_single_cases": 10,
             "historical_button_single_cases": 7,
-            "reference_orcs_rows": [18132, 11111, 11417, 12395],
+            "historical_manual_double_independent_cases": 6,
+            "reference_orcs_rows": [18132, 11111, 11417, 12395, 4109],
+            "independent_double": {
+                "supported": true,
+                "application": "PORTA",
+                "leaf_count": 2,
+                "panel_count": 2,
+                "central_guide": "327204",
+                "shaft_quantity": 2,
+                "independent_divider": "371127",
+                "shared_divider": null,
+                "physical_corrections": [
+                    "2 eixos físicos, um por painel",
+                    "corrige typo INDEPENDNETES do XLSM e não usa divisor compartilhado"
+                ]
+            },
             "geometry": {
                 "box_height_mm": 200,
                 "box_length_rule": "largura_total - 15",
@@ -589,7 +605,8 @@ def gr_options():
                 "GR!85:102 referencia auxiliares inexistentes 143:156",
                 "GR!I103 omite os acessórios da persiana do subtotal",
                 "a v0.11 recupera o kit manual de painel único pela CR homologada com os mesmos códigos",
-                "a v0.12 recupera os kits automatizados e corrige botoeira para MOT2 (GR!B98 apontava MOT1)"
+                "a v0.12 recupera os kits automatizados e corrige botoeira para MOT2 (GR!B98 apontava MOT1)",
+                "a v0.13 corrige 2 eixos físicos e divisor independente no modo manual de 2 painéis"
             ]
         },
         "fixed_panels": {"supported": False},
@@ -597,10 +614,10 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 12 adiciona persiana automatizada em painel único (MOT1 remoto / MOT2 botoeira); compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
+            "reason": "Fase 13 adiciona persiana manual em 2 painéis com eixos independentes; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_12",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_13",
             "open_questions": [],
         },
     }
