@@ -199,6 +199,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         application=item.application,
         panel_mode=item.panel_mode,
         glass_description=item.glass_description,
+        mixed_split_from_bottom_mm=item.mixed_split_from_bottom_mm,
         module_mode=item.module_mode,
         closure_mode=item.closure_mode,
         cremona_description=item.cremona_description,
@@ -398,7 +399,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 9,
+        "phase": 10,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -425,7 +426,30 @@ def gr_options():
                 "leaf_counts": [1],
             },
         ],
-        "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO"],
+        "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO", "SUPERIOR VIDRO/INFERIOR PAINEL"],
+        "mixed_mode": {
+            "supported": True,
+            "application": "PORTA",
+            "leaf_systems": [
+                "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+            ],
+            "leaf_counts": [1, 2],
+            "hinge_description": "DOBRADIÇA 90MM",
+            "closures": [
+                "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+                "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+            ],
+            "split_field": "mixed_split_from_bottom_mm",
+            "split_measurement": "da extremidade inferior da folha pronta para cima até a travessa horizontal",
+            "split_is_flexible": True,
+            "transom_profile": "DE6072",
+            "transom_reinforcement": "RAG - DE6072",
+            "reinforcement_screw_rule": "ceil(comprimento_da_travessa_mm / 400) PAR2 por travessa",
+            "reinforcement_screw_rule_status": "RESOLVED_PHYSICAL",
+            "historical_cases": 119,
+            "explicit_reference_orcs_rows": [270, 285, 3560]
+        },
         "glass_mode": {
             "supported": True,
             "applications": ["PORTA", "JANELA"],
@@ -536,10 +560,10 @@ def gr_options():
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 9 adiciona Sistema OB com cremona explícita à cobertura técnica GR; compra/corte GR ainda requer modelagem de estoque, barras e painel DE20150.",
+            "reason": "Fase 10 adiciona porta GR com vidro superior/painel inferior e divisão flexível; compra/corte GR ainda requer modelagem definitiva de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_9",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_10",
             "open_questions": [],
         },
     }
