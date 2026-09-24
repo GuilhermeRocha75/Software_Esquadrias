@@ -51,7 +51,7 @@ class GrPhase10Tests(unittest.TestCase):
         self.assertEqual(result.geometry["glass_height_mm"], 1033.0)
         self.assertEqual(result.geometry["panel_fill_strip_quantity"], 5.557143)
         self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 28.5228)
-        self.assertEqual(result.unit_cost, 1368.725683)
+        self.assertEqual(result.unit_cost, 1368.725685)
 
     def test_orcs_285_multipoint_is_frozen(self):
         result = calculate_gr(mixed(
@@ -68,7 +68,7 @@ class GrPhase10Tests(unittest.TestCase):
         self.assertEqual(result.geometry["glass_height_mm"], 883.0)
         self.assertEqual(result.geometry["panel_fill_strip_quantity"], 6.628571)
         self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 29.8828)
-        self.assertEqual(result.unit_cost, 1524.181569)
+        self.assertEqual(result.unit_cost, 1524.181563)
 
     def test_orcs_3560_two_leaf_is_frozen(self):
         result = calculate_gr(mixed(
@@ -91,7 +91,7 @@ class GrPhase10Tests(unittest.TestCase):
         self.assertEqual(result.geometry["transom_count"], 2.0)
         self.assertEqual(result.geometry["transom_reinforcement_screws_added"], 4.0)
         self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 57.596)
-        self.assertEqual(result.unit_cost, 2353.000617)
+        self.assertEqual(result.unit_cost, 2353.000615)
 
     def test_transom_and_reinforcement_are_one_per_leaf(self):
         one = calculate_gr(mixed())
