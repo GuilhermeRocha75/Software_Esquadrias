@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass, fields, replace
 import math
 
+from . import gr as legacy
 from . import gr_v06 as v06
 from . import gr_v07 as v07
 from . import gr_v09 as v09
@@ -210,7 +211,9 @@ def _calculate_mixed(cfg: GrConfiguration) -> CalculationResult:
             "DE20150", "LOWER_PANEL_FILL", bead_width,
             geom["panel_fill_strip_quantity"], cfg.quantity,
             "GR!E41/G41 + RESOLVED_PHYSICAL panel por folha",
+            description=legacy._MATERIALS["DE20150"][0],
             category="PERFIS PRINCIPAIS",
+            unit_price=legacy._MATERIALS["DE20150"][1],
         ),
     ])
 
