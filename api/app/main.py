@@ -617,7 +617,7 @@ def gr_options():
             "reason": "Fase 13 adiciona persiana manual em 2 painéis com eixos independentes; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_13",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_13",
             "open_questions": [],
         },
     }
