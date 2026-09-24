@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 10
 
-Status: **EM ANÁLISE — SUPERIOR VIDRO / INFERIOR PAINEL**
+Status: **GR_ENGINE_0.10.0 — CANDIDATO À AUDITORIA**
 
 ## Objetivo
 
@@ -110,40 +110,79 @@ Permanece a regra física confirmada:
 - 4 calços `AC0312` por folha;
 - não duplicar por quantidade de preenchimentos dentro da mesma folha.
 
-## Reforço da travessa
+## Reforço da travessa — RESOLVED_PHYSICAL
 
-O XLSM adiciona automaticamente:
+A fabricação confirmou em 2026-09-24:
 
-- `DE6072` em `GR!12`;
-- `RAG - DE6072` em `GR!62`, com o mesmo comprimento e quantidade da travessa.
+- a divisão é sempre feita com a travessa horizontal `DE6072`;
+- dentro dela é usado o reforço `RAG - DE6072`;
+- o reforço é fixado com parafuso `PAR2`;
+- regra prática: aproximadamente **1 parafuso a cada 40 cm**.
 
-Porém `GR!G118`, que calcula `PAR2 — PARAFUSOS DE REFORÇO`, soma marco, folha e alguns perfis de bandeira, mas **não inclui GR!62**.
+A Engine adota uma regra determinística equivalente:
 
-Classificação atual:
+`ceil(comprimento_da_travessa_mm / 400)`
 
-**POSSIBLE_LEGACY_BUG / PHYSICAL_EVIDENCE_REQUIRED**
+por travessa, garantindo espaçamento nominal não superior a aproximadamente 400 mm.
 
-Não corrigir por suposição.
+O XLSM não inclui esse reforço em `GR!G118`. Com a confirmação da fabricação, essa omissão passa a ser:
 
-## Cota I — semântica física a confirmar
+**LEGACY_BUG_CONFIRMED**
 
-As fórmulas mostram que `AC2 / Cota I` posiciona a divisão horizontal, mas para a API e futura interface é necessário registrar de forma inequívoca de onde até onde essa medida é tomada na fabricação.
+A v0.10 corrige a quantidade de `PAR2` sem alterar a fórmula histórica dos demais reforços.
 
-Classificação atual:
+## Cota I — RESOLVED_PHYSICAL
 
-**PHYSICAL_SEMANTICS_REQUIRED**
+A fabricação confirmou que a medida deve ser **flexível** e tomada:
 
-## Próximo gate
+**da extremidade inferior da folha pronta para cima até a posição desejada da travessa horizontal.**
 
-Antes de implementar `GR_ENGINE_0.10.0`, confirmar com a fabricação:
+Não existe uma altura fixa obrigatória.
 
-1. existência e referência física da Cota I no modelo misto;
-2. uso do reforço `RAG-DE6072` dentro da travessa;
-3. regra real de parafusos desse reforço.
+Na API essa medida é representada por:
 
-Após essa resposta:
+`mixed_split_from_bottom_mm`
 
-- implementar primeiro porta 1 folha interna/externa, mono/multiponto;
-- congelar ORCS 270 e 285 como evidência geométrica;
-- depois ampliar para 2 folhas usando ORCS 3560 e a regra física já confirmada de duplicação de painel;
-- preservar plano de compras/corte GR bloqueado até a fase própria.
+A Engine valida apenas se a medida gera vidro superior e painel inferior geometricamente positivos; não inventa limites comerciais adicionais.
+
+## Escopo implementado da v0.10
+
+A Fase 10 implementa:
+
+- porta GR Design 60x104;
+- abertura interna ou externa;
+- 1 ou 2 folhas;
+- `SUPERIOR VIDRO/INFERIOR PAINEL`;
+- uma travessa horizontal `DE6072` por folha;
+- um reforço `RAG - DE6072` por travessa;
+- divisão flexível a partir da base da folha pronta;
+- fechamento monoponto ou multiponto;
+- dobradiça 90 mm;
+- vidro superior com baguete selecionada pela espessura;
+- painel inferior com `BA2516 + DE20150`;
+- painel calculado por folha;
+- 4 calços `AC0312` por folha;
+- borracha de vidro/lambri nos dois preenchimentos;
+- borracha redonda em folha e marco;
+- correção dos parafusos do reforço da travessa.
+
+Goldens físicos atuais:
+
+- ORCS 270: 800x2100, Cota I 900, vidro 4 mm, monoponto;
+- ORCS 285: 900x2100, Cota I 1050, vidro 6 mm, multiponto;
+- ORCS 3560: 1670x2050, 2 folhas, Cota I 510, vidro 6 mm, monoponto.
+
+Os custos históricos AO continuam preservados somente como evidência do legado; o golden da Engine usa catálogo atual e regras físicas corrigidas.
+
+## Gate técnico
+
+Para aprovar a Fase 10:
+
+- suíte completa Engine verde;
+- suíte completa API verde;
+- Web build verde;
+- regressão das Fases 1–9;
+- nenhum toque nos módulos internos de cálculo de CR/Maxim-Ar;
+- comparação limpa contra a `main`.
+
+O plano de compras/corte GR continua bloqueado até sua fase própria.
