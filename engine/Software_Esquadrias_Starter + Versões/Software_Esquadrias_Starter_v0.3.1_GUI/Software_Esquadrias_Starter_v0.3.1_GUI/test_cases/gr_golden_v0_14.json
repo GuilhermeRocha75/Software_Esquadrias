@@ -1,0 +1,59 @@
+{
+  "engine_version": "GR_ENGINE_0.14.0",
+  "basis": "GR!73 TL3 formula recovered from identical MX!64 + LISTADIV!C5:C7; screen dimensions use actual GR frame",
+  "cases": [
+    {
+      "id": "orcs-9894-external-panel-screen-900x2100",
+      "orcs_row": 9894,
+      "historical_ao_cost": 1412.89,
+      "historical_use": "screen configuration evidence; AO is legacy/archived and not current physical-cost golden",
+      "input": {
+        "width_mm": 900,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "PAINEL COMPLETO",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "screen_enabled": true
+      },
+      "geometry": {
+        "screen_width_mm": 900.0,
+        "screen_height_mm": 2100.0,
+        "screen_panel_count": 1.0
+      },
+      "screen_cost": 440.0,
+      "unit_cost": 1849.391705
+    },
+    {
+      "id": "door-manual-shutter-plus-screen-height-below-box",
+      "input": {
+        "width_mm": 870,
+        "height_mm": 2160,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "screen_enabled": true,
+        "shutter": {
+          "mode": "MANUAL EM PAINEL ÚNICO",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "screen_width_mm": 870.0,
+        "screen_height_mm": 1960.0,
+        "screen_panel_count": 1.0
+      },
+      "screen_cost": 421.3,
+      "unit_cost": 2471.29025
+    }
+  ]
+}
