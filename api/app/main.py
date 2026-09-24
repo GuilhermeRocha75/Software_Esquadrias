@@ -593,7 +593,7 @@ def gr_options():
             "reason": "Fase 11 adiciona persiana manual em painel único com kit físico completo; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_11",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_11",
             "open_questions": [],
         },
     }
