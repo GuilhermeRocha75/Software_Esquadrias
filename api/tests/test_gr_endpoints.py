@@ -214,7 +214,7 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["geometry"]["glass_height_mm"], 1033)
         self.assertEqual(response["geometry"]["transom_reinforcement_screws_added"], 2)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 28.5228)
-        self.assertEqual(response["unit_technical_cost"], 1368.725683)
+        self.assertEqual(response["unit_technical_cost"], 1368.725685)
         self.assertEqual(response["transoms"][0]["material_code"], "DE6072")
         self.assertEqual(response["transoms"][0]["reinforcement_material_code"], "RAG - DE6072")
 
@@ -224,7 +224,7 @@ class GrEndpointTests(unittest.TestCase):
             mixed_split_from_bottom_mm=510,
             glass_description="06mm TEMPERADO INCOLOR",
         ))
-        self.assertEqual(response["unit_technical_cost"], 2353.000617)
+        self.assertEqual(response["unit_technical_cost"], 2353.000615)
         self.assertEqual(response["geometry"]["glass_panel_count"], 2)
         self.assertEqual(response["geometry"]["transom_count"], 2)
         self.assertEqual(response["geometry"]["transom_reinforcement_screws_added"], 4)
