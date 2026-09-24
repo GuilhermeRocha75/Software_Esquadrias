@@ -563,7 +563,7 @@ def gr_options():
             "reason": "Fase 10 adiciona porta GR com vidro superior/painel inferior e divisão flexível; compra/corte GR ainda requer modelagem definitiva de estoque, barras e painel DE20150.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_10",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_10",
             "open_questions": [],
         },
     }
