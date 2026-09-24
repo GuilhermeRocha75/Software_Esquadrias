@@ -1,0 +1,84 @@
+{
+  "engine_version": "GR_ENGINE_0.12.0",
+  "basis": "GR automated single-panel formulas + homologated CR shutter accessory recovery + LISTAFERRA MOT1/MOT2 correction",
+  "cases": [
+    {
+      "id": "orcs-11417-window-remote-single-800x1800",
+      "orcs_row": 11417,
+      "historical_ao_cost": 1320.7,
+      "historical_use": "configuration evidence; current physical cost includes omitted shutter accessories and corrected GR sealing",
+      "input": {
+        "width_mm": 800,
+        "height_mm": 1800,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+          "mode": "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "shutter_main_opening_height_mm": 1600.0,
+        "leaf_width_final_mm": 736.0,
+        "leaf_height_final_mm": 1536.0,
+        "glass_width_mm": 608.0,
+        "glass_height_mm": 1408.0,
+        "shutter_box_length_mm": 785.0,
+        "shutter_side_guide_length_mm": 1600.0,
+        "shutter_slat_width_mm": 726.0,
+        "shutter_slat_quantity": 45.0,
+        "shutter_shaft_length_mm": 760.0
+      },
+      "sealing_cost": 21.856,
+      "shutter_cost": 1073.83925,
+      "unit_cost": 2034.04641
+    },
+    {
+      "id": "orcs-12395-window-button-single-300x1200",
+      "orcs_row": 12395,
+      "historical_ao_cost": 683.51,
+      "historical_use": "configuration evidence; GR legacy points botoeira to MOT1 but physical/catalog mapping is MOT2",
+      "input": {
+        "width_mm": 300,
+        "height_mm": 1200,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "04mm FLOAT INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+          "mode": "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "shutter_main_opening_height_mm": 1000.0,
+        "leaf_width_final_mm": 236.0,
+        "leaf_height_final_mm": 936.0,
+        "glass_width_mm": 108.0,
+        "glass_height_mm": 808.0,
+        "shutter_box_length_mm": 285.0,
+        "shutter_side_guide_length_mm": 1000.0,
+        "shutter_slat_width_mm": 226.0,
+        "shutter_slat_quantity": 30.0,
+        "shutter_shaft_length_mm": 260.0
+      },
+      "sealing_cost": 10.856,
+      "shutter_cost": 574.08925,
+      "unit_cost": 1128.45121
+    }
+  ]
+}
