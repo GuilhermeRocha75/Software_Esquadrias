@@ -204,6 +204,14 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         closure_mode=item.closure_mode,
         cremona_description=item.cremona_description,
         hinge_description=item.hinge_description,
+        shutter=(
+            ShutterConfiguration(
+                mode=ShutterMode(item.shutter.mode),
+                box_description=item.shutter.box_description,
+                slat_description=item.shutter.slat_description,
+            )
+            if item.shutter is not None else None
+        ),
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
     )
@@ -399,7 +407,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 10,
+        "phase": 11,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -554,16 +562,38 @@ def gr_options():
             "physical_evidence_date": "2026-09-17",
         },
         "screen": {"supported": False},
-        "shutter": {"supported": False},
+        "shutter": {
+            "supported": True,
+            "modes": ["MANUAL EM PAINEL ÚNICO"],
+            "box_description": "CAIXA DE 200MM",
+            "slat_description": "TALA DE PVC 40MM",
+            "panel_modes": ["VIDRO INTEIRO"],
+            "historical_total_cases": 67,
+            "historical_manual_single_cases": 44,
+            "reference_orcs_rows": [18132, 11111],
+            "geometry": {
+                "box_height_mm": 200,
+                "box_length_rule": "largura_total - 15",
+                "side_guide_length_rule": "altura_total - 200",
+                "slat_width_rule": "largura_total - 74",
+                "shaft_length_rule": "largura_total - 40"
+            },
+            "physical_slats": "ceil(altura_total / 40)",
+            "legacy_status": [
+                "GR!85:102 referencia auxiliares inexistentes 143:156",
+                "GR!I103 omite os acessórios da persiana do subtotal",
+                "a v0.11 recupera o kit manual de painel único pela CR homologada com os mesmos códigos"
+            ]
+        },
         "fixed_panels": {"supported": False},
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 10 adiciona porta GR com vidro superior/painel inferior e divisão flexível; compra/corte GR ainda requer modelagem definitiva de estoque, barras e painel DE20150.",
+            "reason": "Fase 11 adiciona persiana manual em painel único com kit físico completo; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_10",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_11",
             "open_questions": [],
         },
     }
