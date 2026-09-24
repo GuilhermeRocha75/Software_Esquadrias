@@ -1,0 +1,47 @@
+{
+  "engine_version": "GR_ENGINE_0.13.0",
+  "basis": "ORCS 4109 + GR manual independent formulas + homologated CR physical corrections for shaft quantity/divider + current catalog",
+  "cases": [
+    {
+      "id": "orcs-4109-door-2leaf-independent-shutters-2550x2260",
+      "orcs_row": 4109,
+      "historical_ao_cost": 3842.0,
+      "historical_use": "configuration evidence; current physical cost corrects shaft quantity, divider typo, omitted accessories, sealing and slat rounding",
+      "input": {
+        "width_mm": 2550,
+        "height_mm": 2260,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+          "mode": "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "shutter_main_opening_height_mm": 2060.0,
+        "leaf_width_final_mm": 1233.0,
+        "leaf_height_final_mm": 2023.0,
+        "glass_width_mm": 1053.0,
+        "glass_height_mm": 1843.0,
+        "shutter_panel_count": 2.0,
+        "shutter_box_length_mm": 2535.0,
+        "shutter_side_guide_length_mm": 2060.0,
+        "shutter_central_guide_length_mm": 2060.0,
+        "shutter_slat_width_mm": 1218.0,
+        "shutter_slat_quantity": 114.0,
+        "shutter_shaft_length_mm": 1235.0,
+        "shutter_shaft_quantity": 2.0
+      },
+      "sealing_cost": 62.6432,
+      "shutter_cost": 1783.63425,
+      "unit_cost": 4503.65075
+    }
+  ]
+}
