@@ -1,0 +1,87 @@
+{
+  "engine_version": "GR_ENGINE_0.11.0",
+  "basis": "GR!L2:L3/V3/D47:D52 + GR!85:102 recovered from homologated CR shutter kit + current catalog + physical GR sealing rules",
+  "cases": [
+    {
+      "id": "orcs-18132-door-manual-single-shutter-870x2160",
+      "orcs_row": 18132,
+      "historical_ao_cost": 1810.46189,
+      "historical_use": "configuration/geometry evidence only; legacy GR omits shutter accessories and sealing from total",
+      "input": {
+        "width_mm": 870,
+        "height_mm": 2160,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+          "mode": "MANUAL EM PAINEL ÚNICO",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "overall_height_mm": 2160.0,
+        "shutter_box_height_mm": 200.0,
+        "shutter_main_opening_height_mm": 1960.0,
+        "leaf_width_final_mm": 806.0,
+        "leaf_height_final_mm": 1923.0,
+        "glass_width_mm": 626.0,
+        "glass_height_mm": 1743.0,
+        "shutter_box_length_mm": 855.0,
+        "shutter_side_guide_length_mm": 1960.0,
+        "shutter_slat_width_mm": 796.0,
+        "shutter_slat_quantity": 54.0,
+        "shutter_shaft_length_mm": 830.0
+      },
+      "sealing_cost": 26.0516,
+      "shutter_cost": 706.53125,
+      "unit_cost": 2049.99025
+    },
+    {
+      "id": "orcs-11111-window-manual-single-shutter-500x1100",
+      "orcs_row": 11111,
+      "historical_ao_cost": 772.94,
+      "historical_use": "configuration/geometry evidence; physical slat count rounds 27.5 up to 28",
+      "input": {
+        "width_mm": 500,
+        "height_mm": 1100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "shutter": {
+          "mode": "MANUAL EM PAINEL ÚNICO",
+          "box_description": "CAIXA DE 200MM",
+          "slat_description": "TALA DE PVC 40MM"
+        }
+      },
+      "geometry": {
+        "overall_height_mm": 1100.0,
+        "shutter_box_height_mm": 200.0,
+        "shutter_main_opening_height_mm": 900.0,
+        "leaf_width_final_mm": 436.0,
+        "leaf_height_final_mm": 836.0,
+        "glass_width_mm": 308.0,
+        "glass_height_mm": 708.0,
+        "shutter_box_length_mm": 485.0,
+        "shutter_side_guide_length_mm": 900.0,
+        "shutter_slat_width_mm": 426.0,
+        "shutter_slat_quantity": 28.0,
+        "shutter_shaft_length_mm": 460.0
+      },
+      "sealing_cost": 11.856,
+      "shutter_cost": 412.94925,
+      "unit_cost": 1015.78641
+    }
+  ]
+}
