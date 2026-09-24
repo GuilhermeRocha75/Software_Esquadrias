@@ -600,7 +600,7 @@ def gr_options():
             "reason": "Fase 12 adiciona persiana automatizada em painel único (MOT1 remoto / MOT2 botoeira); compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150 e persiana.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_12",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_12",
             "open_questions": [],
         },
     }
