@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
+from esquadrias_engine.gr_v09 import GrConfiguration, calculate_gr  # noqa: E402
 
 WINDOW = "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN"
 WINDOW_CREMONA = "MAÇANETA COM CREMONA SEM CHAVE"
