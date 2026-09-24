@@ -580,7 +580,7 @@ def gr_options():
             "historical_manual_double_independent_cases": 6,
             "reference_orcs_rows": [18132, 11111, 11417, 12395, 4109],
             "independent_double": {
-                "supported": true,
+                "supported": True,
                 "application": "PORTA",
                 "leaf_count": 2,
                 "panel_count": 2,
