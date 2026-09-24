@@ -587,7 +587,7 @@ def gr_options():
                 "central_guide": "327204",
                 "shaft_quantity": 2,
                 "independent_divider": "371127",
-                "shared_divider": null,
+                "shared_divider": None,
                 "physical_corrections": [
                     "2 eixos físicos, um por painel",
                     "corrige typo INDEPENDNETES do XLSM e não usa divisor compartilhado"
