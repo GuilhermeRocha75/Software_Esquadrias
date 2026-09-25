@@ -213,6 +213,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
             if item.shutter is not None else None
         ),
         screen_enabled=item.screen_enabled,
+        top_flag_height_mm=item.top_flag_height_mm,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
     )
@@ -408,7 +409,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 14,
+        "phase": 15,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -620,15 +621,36 @@ def gr_options():
                 "a v0.13 corrige 2 eixos físicos e divisor independente no modo manual de 2 painéis"
             ]
         },
-        "fixed_panels": {"supported": False},
+        "fixed_panels": {
+            "supported": True,
+            "phase15_scope": "BANDEIRA SUPERIOR SIMPLES",
+            "field": "top_flag_height_mm",
+            "application": "PORTA",
+            "leaf_count": 1,
+            "leaf_systems": [
+                "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
+            ],
+            "panel_mode": "VIDRO INTEIRO",
+            "hinge_description": "DOBRADIÇA 90MM",
+            "internal_dividers": 0,
+            "screen_supported_with_flag": False,
+            "shutter_supported_with_flag": False,
+            "boundary_profile": "DE6072",
+            "boundary_reinforcement": "RAG - DE6072",
+            "opening_rule": "largura_total - 80 por altura_bandeira - 58",
+            "glass_rule": "vão da bandeira - 8 mm em cada eixo",
+            "historical_reference_orcs_rows": [14891, 11251],
+            "legacy_status": "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada"
+        },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 14 adiciona tela mosquiteira recolhível TL3; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana e tela.",
+            "reason": "Fase 15 adiciona bandeira superior simples integrada; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_14",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_15",
             "open_questions": [],
         },
     }
