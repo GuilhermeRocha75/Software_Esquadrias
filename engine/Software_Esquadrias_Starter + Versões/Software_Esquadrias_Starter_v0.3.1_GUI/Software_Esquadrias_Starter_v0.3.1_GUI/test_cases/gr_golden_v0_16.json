@@ -1,0 +1,41 @@
+{
+  "engine_version": "GR_ENGINE_0.16.0",
+  "basis": "GR!G8/G10/G19/G118 + ORCS 14051 + Fase 15 fixed-panel topology recovery",
+  "cases": [
+    {
+      "id": "orcs-14051-two-leaf-top-flag-1472x2700",
+      "orcs_row": 14051,
+      "historical_ao_cost": 2383.82,
+      "historical_use": "configuration/geometry evidence; current physical cost uses corrected seals and frame topology",
+      "input": {
+        "width_mm": 1472,
+        "height_mm": 2700,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "top_flag_height_mm": 400
+      },
+      "geometry": {
+        "frame_height_final_mm": 2700.0,
+        "leaf_width_final_mm": 694.0,
+        "leaf_height_final_mm": 2285.0,
+        "glass_width_mm": 514.0,
+        "glass_height_mm": 2105.0,
+        "glass_panel_count": 2.0,
+        "top_flag_height_mm": 400.0,
+        "top_flag_boundary_transom_length_mm": 1404.0,
+        "top_flag_bead_width_mm": 1392.0,
+        "top_flag_bead_height_mm": 342.0,
+        "top_flag_glass_width_mm": 1384.0,
+        "top_flag_glass_height_mm": 334.0
+      },
+      "sealing_cost": 63.3456,
+      "unit_cost": 2576.57885
+    }
+  ]
+}
