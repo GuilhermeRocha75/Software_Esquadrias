@@ -216,7 +216,7 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["glass_mode"]["window_glass"]["ob_reference_orcs_row"], 4572)
         self.assertEqual(len(response["glass_mode"]["window_glass"]["ob_cremonas"]), 5)
         self.assertEqual(response["glass_mode"]["window_glass"]["ob_evidence_status"], "RESOLVED_PHYSICAL")
-        self.assertEqual(response["technical_gate"]["status"], "CANDIDATO_A_AUDITORIA_FASE_16")
+        self.assertEqual(response["technical_gate"]["status"], "APROVADO_NO_ESCOPO_DA_FASE_16")
         self.assertEqual(response["technical_gate"]["open_questions"], [])
         self.assertIn("DOBRADIÇA SISTEMA OB", response["hinges"])
         self.assertTrue(response["mixed_mode"]["supported"])
