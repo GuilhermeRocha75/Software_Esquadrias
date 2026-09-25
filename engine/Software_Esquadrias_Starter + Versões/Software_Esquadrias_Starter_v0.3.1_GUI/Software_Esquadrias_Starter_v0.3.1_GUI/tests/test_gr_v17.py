@@ -80,9 +80,9 @@ class GrPhase17Tests(unittest.TestCase):
         self.assertIn("LEGACY-GR-BOTTOM-FLAG-HEIGHT-DOUBLE-SUBTRACTION-CORRECTED", warnings)
         self.assertIn("LEGACY-GR-FLAG-E40-REFERENCE-CORRECTED", warnings)
 
-    def test_current_cost_probe(self):
+    def test_orcs_10588_current_physical_cost_is_frozen(self):
         result = calculate_gr(bottom_flag())
-        self.assertEqual(result.unit_cost, -1.0)
+        self.assertEqual(result.unit_cost, 1034.8366)
 
     def test_shutter_screen_and_two_leaf_remain_blocked(self):
         with self.assertRaises(ValueError):
