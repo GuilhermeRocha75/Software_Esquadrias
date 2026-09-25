@@ -668,7 +668,7 @@ def gr_options():
             "reason": "Fase 17 adiciona bandeira inferior simples em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_17",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_17",
             "open_questions": [],
         },
     }
