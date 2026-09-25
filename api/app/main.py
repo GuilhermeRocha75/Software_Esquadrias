@@ -214,6 +214,7 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         ),
         screen_enabled=item.screen_enabled,
         top_flag_height_mm=item.top_flag_height_mm,
+        bottom_flag_height_mm=item.bottom_flag_height_mm,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
     )
@@ -409,7 +410,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 16,
+        "phase": 17,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -623,17 +624,31 @@ def gr_options():
         },
         "fixed_panels": {
             "supported": True,
-            "phase15_scope": "BANDEIRA SUPERIOR SIMPLES",
-            "field": "top_flag_height_mm",
-            "application": "PORTA",
-            "leaf_counts": [1, 2],
-            "two_leaf_constraint": "2 folhas homologado somente em porta interna, vidro inteiro, bandeira superior simples",
-            "leaf_systems": [
-                "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
-                "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
-            ],
-            "panel_mode": "VIDRO INTEIRO",
-            "hinge_description": "DOBRADIÇA 90MM",
+            "top_flag": {
+                "supported": True,
+                "field": "top_flag_height_mm",
+                "application": "PORTA",
+                "leaf_counts": [1, 2],
+                "two_leaf_constraint": "2 folhas homologado somente em porta interna, vidro inteiro, bandeira superior simples",
+                "leaf_systems": [
+                    "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                    "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
+                ],
+                "hinge_description": "DOBRADIÇA 90MM",
+                "historical_reference_orcs_rows": [14891, 11251, 14051]
+            },
+            "bottom_flag": {
+                "supported": True,
+                "field": "bottom_flag_height_mm",
+                "application": "JANELA",
+                "leaf_count": 1,
+                "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                "panel_mode": "VIDRO INTEIRO",
+                "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"],
+                "historical_cases": 23,
+                "reference_orcs_row": 10588,
+                "historical_cremona_note": "ORCS 10588 não gravou Q; no Sistema OB a cremona deve ser selecionada explicitamente"
+            },
             "internal_dividers": 0,
             "screen_supported_with_flag": False,
             "shutter_supported_with_flag": False,
@@ -641,17 +656,19 @@ def gr_options():
             "boundary_reinforcement": "RAG - DE6072",
             "opening_rule": "largura_total - 80 por altura_bandeira - 58",
             "glass_rule": "vão da bandeira - 8 mm em cada eixo",
-            "historical_reference_orcs_rows": [14891, 11251, 14051],
-            "legacy_status": "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada"
+            "legacy_status": [
+                "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada",
+                "GR!D9/J11 subtrai AA2 duas vezes no caminho de bandeira inferior; v0.17 usa H_folha = H_total - H_bandeira - 42"
+            ]
         },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 16 amplia a bandeira superior simples para porta interna de 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "Fase 17 adiciona bandeira inferior simples em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_16",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_17",
             "open_questions": [],
         },
     }
