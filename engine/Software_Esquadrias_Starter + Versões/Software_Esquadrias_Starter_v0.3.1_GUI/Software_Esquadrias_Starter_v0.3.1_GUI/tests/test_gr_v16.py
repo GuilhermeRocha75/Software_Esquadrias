@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from esquadrias_engine import GrConfiguration, calculate_gr  # noqa: E402
+from esquadrias_engine.gr_v16 import GrConfiguration, calculate_gr  # noqa: E402
 
 INTERNAL = "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN"
 EXTERNAL = "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
