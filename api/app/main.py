@@ -650,7 +650,7 @@ def gr_options():
             "reason": "Fase 15 adiciona bandeira superior simples integrada; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_15",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_15",
             "open_questions": [],
         },
     }
