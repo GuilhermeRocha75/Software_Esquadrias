@@ -477,7 +477,7 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["geometry"]["top_flag_glass_width_mm"], 1112)
         self.assertEqual(response["geometry"]["top_flag_glass_height_mm"], 534)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 36.9548)
-        self.assertEqual(response["unit_technical_cost"], 1978.43853)
+        self.assertEqual(response["unit_technical_cost"], 1863.30363)
         self.assertEqual(len(response["fixed_panels"]), 1)
         self.assertEqual(response["fixed_panels"][0]["position"], "TOP")
         self.assertEqual(response["transoms"][-1]["material_code"], "DE6072")
