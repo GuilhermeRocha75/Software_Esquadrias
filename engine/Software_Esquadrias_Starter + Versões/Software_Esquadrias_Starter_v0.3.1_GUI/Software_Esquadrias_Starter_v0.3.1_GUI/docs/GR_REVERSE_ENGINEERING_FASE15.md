@@ -120,11 +120,14 @@ A travessa DE6072 recebe:
 - RAG - DE6072;
 - inclusão no cálculo de PAR2 do conjunto integrado.
 
-O marco passa a possuir três segmentos horizontais estruturais no módulo:
+Em porta módulo único, `GR!G8=1`: permanece **um único horizontal DE6058 do marco**. A bandeira acrescenta separadamente a travessa `DE6072`.
 
-- base;
-- travessa superior externa;
-- limite da bandeira.
+Uma revisão da primeira implementação da Fase 15 detectou e corrigiu uma supercontagem de dois horizontais DE6058, dois reforços RAG-DE6058 e dois tapa-deságues. O teste de regressão agora congela explicitamente:
+
+- `FRAME_WIDTH = 1`;
+- `FRAME_REINFORCEMENT_WIDTH = 1`;
+- `DRAIN_CAP = 1`;
+- `TOP_FLAG_BOUNDARY_TRANSOM = 1`.
 
 A Engine preserva o custo por BOM e a rastreabilidade por papel de cada peça.
 
@@ -145,7 +148,7 @@ Custo de vedações:
 
 Custo técnico atual:
 
-**R$ 1.978,438530**
+**R$ 1.863,303630**
 
 ## Golden ORCS 11251 — abertura externa
 
@@ -164,7 +167,7 @@ Custo de vedações:
 
 Custo técnico atual:
 
-**R$ 1.896,606170**
+**R$ 1.790,841270**
 
 ## API
 
