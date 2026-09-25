@@ -1,0 +1,74 @@
+{
+  "engine_version": "GR_ENGINE_0.15.0",
+  "basis": "GR!8:40 + GR!68:70 + ORCS 14891/11251 + MX Design fixed-panel topology recovery for legacy E40 reference",
+  "cases": [
+    {
+      "id": "orcs-14891-top-flag-internal-1200x2700",
+      "orcs_row": 14891,
+      "historical_ao_cost": 1704.1,
+      "historical_use": "configuration/geometry evidence; current physical cost includes corrected seals and fixed-panel geometry",
+      "input": {
+        "width_mm": 1200,
+        "height_mm": 2700,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "08mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "top_flag_height_mm": 600
+      },
+      "geometry": {
+        "frame_height_final_mm": 2700.0,
+        "leaf_width_final_mm": 1136.0,
+        "leaf_height_final_mm": 2085.0,
+        "glass_width_mm": 956.0,
+        "glass_height_mm": 1905.0,
+        "top_flag_height_mm": 600.0,
+        "top_flag_boundary_transom_length_mm": 1132.0,
+        "top_flag_bead_width_mm": 1120.0,
+        "top_flag_bead_height_mm": 542.0,
+        "top_flag_glass_width_mm": 1112.0,
+        "top_flag_glass_height_mm": 534.0
+      },
+      "sealing_cost": 36.9548,
+      "unit_cost": 1978.43853
+    },
+    {
+      "id": "orcs-11251-top-flag-external-1100x2700",
+      "orcs_row": 11251,
+      "historical_ao_cost": 1592.19419,
+      "historical_use": "configuration/geometry evidence; external leaf profile DE60104-E preserved",
+      "input": {
+        "width_mm": 1100,
+        "height_mm": 2700,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "08mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "top_flag_height_mm": 600
+      },
+      "geometry": {
+        "frame_height_final_mm": 2700.0,
+        "leaf_width_final_mm": 1036.0,
+        "leaf_height_final_mm": 2085.0,
+        "glass_width_mm": 856.0,
+        "glass_height_mm": 1905.0,
+        "top_flag_height_mm": 600.0,
+        "top_flag_boundary_transom_length_mm": 1032.0,
+        "top_flag_bead_width_mm": 1020.0,
+        "top_flag_bead_height_mm": 542.0,
+        "top_flag_glass_width_mm": 1012.0,
+        "top_flag_glass_height_mm": 534.0
+      },
+      "sealing_cost": 35.5948,
+      "unit_cost": 1896.60617
+    }
+  ]
+}
