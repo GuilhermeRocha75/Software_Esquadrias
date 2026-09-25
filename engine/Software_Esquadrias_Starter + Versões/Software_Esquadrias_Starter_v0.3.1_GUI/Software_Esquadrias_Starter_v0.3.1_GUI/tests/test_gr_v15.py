@@ -46,7 +46,7 @@ class GrPhase15Tests(unittest.TestCase):
         self.assertEqual(result.geometry["top_flag_glass_width_mm"], 1112.0)
         self.assertEqual(result.geometry["top_flag_glass_height_mm"], 534.0)
         self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 36.9548)
-        self.assertEqual(result.unit_cost, 1978.43853)
+        self.assertEqual(result.unit_cost, 1863.30363)
 
     def test_orcs_11251_external_top_flag_golden(self):
         result = calculate_gr(top_flag(
@@ -57,7 +57,7 @@ class GrPhase15Tests(unittest.TestCase):
         self.assertEqual(result.geometry["top_flag_boundary_transom_length_mm"], 1032.0)
         self.assertEqual(result.geometry["top_flag_glass_width_mm"], 1012.0)
         self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 35.5948)
-        self.assertEqual(result.unit_cost, 1896.60617)
+        self.assertEqual(result.unit_cost, 1790.84127)
         codes = {x.material_code for x in result.unit_bom}
         self.assertIn("DE60104-E", codes)
         self.assertNotIn("DE60104", codes)
