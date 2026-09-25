@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 16
 
-Status: **GR_ENGINE_0.16.0 — CANDIDATO À AUDITORIA**
+Status: **GR_ENGINE_0.16.0 — APROVADO NO ESCOPO DA FASE 16**
 
 ## Escopo novo
 
