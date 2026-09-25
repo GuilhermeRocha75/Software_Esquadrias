@@ -62,6 +62,14 @@ class GrPhase15Tests(unittest.TestCase):
         self.assertIn("DE60104-E", codes)
         self.assertNotIn("DE60104", codes)
 
+    def test_integrated_door_keeps_single_frame_horizontal(self):
+        result = calculate_gr(top_flag())
+        by_role = {x.role: x for x in result.unit_bom}
+        self.assertEqual(by_role["FRAME_WIDTH"].quantity_per_unit, 1.0)
+        self.assertEqual(by_role["FRAME_REINFORCEMENT_WIDTH"].quantity_per_unit, 1.0)
+        self.assertEqual(by_role["DRAIN_CAP"].quantity_per_unit, 1.0)
+        self.assertEqual(by_role["TOP_FLAG_BOUNDARY_TRANSOM"].quantity_per_unit, 1.0)
+
     def test_flag_boundary_and_fixed_panel_are_explicit(self):
         result = calculate_gr(top_flag())
         self.assertEqual(len(result.fixed_panels), 1)
