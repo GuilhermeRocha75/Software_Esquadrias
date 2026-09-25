@@ -1,0 +1,43 @@
+{
+  "engine_version": "GR_ENGINE_0.17.0",
+  "basis": "GR!D19/G19/G118 + shared Design fixed-panel topology + ORCS 10588 geometry evidence + explicit OB cremona selection",
+  "cases": [
+    {
+      "id": "orcs-10588-bottom-flag-ob-800x2100",
+      "orcs_row": 10588,
+      "historical_ao_cost": 1134.0,
+      "historical_use": "geometry/configuration evidence; Q cremona length is blank in ORCS, therefore current golden uses explicit OB 1100mm only for deterministic present-day costing",
+      "input": {
+        "width_mm": 800,
+        "height_mm": 2100,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
+        "hinge_description": "DOBRADIÇA SISTEMA OB",
+        "bottom_flag_height_mm": 600
+      },
+      "geometry": {
+        "frame_height_final_mm": 2100.0,
+        "frame_height_cut_mm": 2105.0,
+        "leaf_width_final_mm": 736.0,
+        "leaf_height_final_mm": 1458.0,
+        "glass_width_mm": 608.0,
+        "glass_height_mm": 1330.0,
+        "bottom_flag_height_mm": 600.0,
+        "bottom_flag_boundary_transom_length_mm": 732.0,
+        "bottom_flag_bead_width_mm": 720.0,
+        "bottom_flag_bead_height_mm": 542.0,
+        "bottom_flag_glass_width_mm": 712.0,
+        "bottom_flag_glass_height_mm": 534.0
+      },
+      "reinforcement_screws": 43.84,
+      "sealing_cost": 25.6192,
+      "unit_cost": 1034.8366
+    }
+  ]
+}
