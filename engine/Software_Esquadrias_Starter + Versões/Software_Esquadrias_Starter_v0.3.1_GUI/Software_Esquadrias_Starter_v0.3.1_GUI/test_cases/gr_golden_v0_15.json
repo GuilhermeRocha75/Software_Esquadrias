@@ -34,7 +34,7 @@
         "top_flag_glass_height_mm": 534.0
       },
       "sealing_cost": 36.9548,
-      "unit_cost": 1978.43853
+      "unit_cost": 1863.30363
     },
     {
       "id": "orcs-11251-top-flag-external-1100x2700",
@@ -68,7 +68,7 @@
         "top_flag_glass_height_mm": 534.0
       },
       "sealing_cost": 35.5948,
-      "unit_cost": 1896.60617
+      "unit_cost": 1790.84127
     }
   ]
 }
