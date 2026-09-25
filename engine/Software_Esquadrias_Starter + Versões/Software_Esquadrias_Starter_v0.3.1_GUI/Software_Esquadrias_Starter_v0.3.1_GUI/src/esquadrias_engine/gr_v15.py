@@ -134,12 +134,7 @@ def _calculate_simple_top_flag(cfg: GrConfiguration) -> CalculationResult:
 
     bom = []
     for item in base.unit_bom:
-        if item.role == "FRAME_WIDTH":
-            bom.append(_replace_linear(
-                item, quantity=3.0,
-                source_suffix=" / GR!G8 porta + bandeira superior integrada",
-            ))
-        elif item.role == "FRAME_HEIGHT":
+        if item.role == "FRAME_HEIGHT":
             bom.append(_replace_linear(
                 item, length_mm=height + 3.0,
                 source_suffix=" / GR!D9/E9 mantém altura total no módulo único",
@@ -148,20 +143,10 @@ def _calculate_simple_top_flag(cfg: GrConfiguration) -> CalculationResult:
             bom.append(_replace_linear(item, length_mm=height + 140.0))
         elif item.role == "EXTERNAL_FINISH_HEIGHT":
             bom.append(_replace_linear(item, length_mm=height + 60.0))
-        elif item.role == "FRAME_REINFORCEMENT_WIDTH":
-            bom.append(_replace_linear(
-                item, quantity=3.0,
-                source_suffix=" / GR!G58=G8",
-            ))
         elif item.role == "FRAME_REINFORCEMENT_HEIGHT":
             bom.append(_replace_linear(
                 item, length_mm=height - 116.0,
                 source_suffix=" / GR!D59 com altura total",
-            ))
-        elif item.role == "DRAIN_CAP":
-            bom.append(_replace_linear(
-                item, quantity=3.0,
-                source_suffix=" / GR!G84=G8",
             ))
         elif item.role == "REINFORCEMENT_SCREWS":
             # Substituído abaixo após incluir a travessa da bandeira.
@@ -237,7 +222,7 @@ def _calculate_simple_top_flag(cfg: GrConfiguration) -> CalculationResult:
     frame_height_cut = height + 3.0
     # Preserva GR!G118 para o quadro integrado e inclui explicitamente GR!E19/G19.
     reinforcement_screws = 4.0 * (
-        ((frame_width_cut + frame_height_cut) / 1000.0) * 3.0
+        (frame_width_cut + frame_height_cut) / 1000.0
         + ((leaf_width_cut + leaf_height_cut) / 1000.0) * 2.0
         + boundary_length / 1000.0
     )
@@ -249,7 +234,7 @@ def _calculate_simple_top_flag(cfg: GrConfiguration) -> CalculationResult:
         quantity_per_unit=reinforcement_screws,
         quantity_order=reinforcement_screws * cfg.quantity,
         cost_per_unit_product=round(reinforcement_screws * screw_template.unit_price, 6),
-        source="GR!G118 / quadro + folha + travessa de bandeira superior",
+        source="GR!G118 / G8=1 em porta módulo único + folha + travessa de bandeira superior",
     ))
 
     geometry = dict(base.geometry)
