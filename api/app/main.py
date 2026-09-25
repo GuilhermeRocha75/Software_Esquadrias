@@ -651,7 +651,7 @@ def gr_options():
             "reason": "Fase 16 amplia a bandeira superior simples para porta interna de 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_16",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_16",
             "open_questions": [],
         },
     }
