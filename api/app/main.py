@@ -409,7 +409,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 15,
+        "phase": 16,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -626,7 +626,8 @@ def gr_options():
             "phase15_scope": "BANDEIRA SUPERIOR SIMPLES",
             "field": "top_flag_height_mm",
             "application": "PORTA",
-            "leaf_count": 1,
+            "leaf_counts": [1, 2],
+            "two_leaf_constraint": "2 folhas homologado somente em porta interna, vidro inteiro, bandeira superior simples",
             "leaf_systems": [
                 "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
@@ -640,17 +641,17 @@ def gr_options():
             "boundary_reinforcement": "RAG - DE6072",
             "opening_rule": "largura_total - 80 por altura_bandeira - 58",
             "glass_rule": "vão da bandeira - 8 mm em cada eixo",
-            "historical_reference_orcs_rows": [14891, 11251],
+            "historical_reference_orcs_rows": [14891, 11251, 14051],
             "legacy_status": "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada"
         },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 15 adiciona bandeira superior simples integrada; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "Fase 16 amplia a bandeira superior simples para porta interna de 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_15",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_16",
             "open_questions": [],
         },
     }
