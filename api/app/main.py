@@ -215,6 +215,10 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         screen_enabled=item.screen_enabled,
         top_flag_height_mm=item.top_flag_height_mm,
         bottom_flag_height_mm=item.bottom_flag_height_mm,
+        bottom_flag_vertical_transoms=item.bottom_flag_vertical_transoms,
+        bottom_flag_horizontal_transoms=item.bottom_flag_horizontal_transoms,
+        top_flag_vertical_transoms=item.top_flag_vertical_transoms,
+        top_flag_horizontal_transoms=item.top_flag_horizontal_transoms,
         internal_finish=item.internal_finish,
         external_finish=item.external_finish,
     )
@@ -410,7 +414,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 18,
+        "phase": 19,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -659,7 +663,35 @@ def gr_options():
                 "hinge_description": "DOBRADIÇA 90MM",
                 "screen_supported": False,
                 "shutter_supported": False,
-                "internal_dividers": 0,
+                "internal_dividers": {
+                "supported": True,
+                "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
+                "fields": [
+                    "bottom_flag_vertical_transoms",
+                    "bottom_flag_horizontal_transoms",
+                    "top_flag_vertical_transoms",
+                    "top_flag_horizontal_transoms"
+                ],
+                "supported_combination": {
+                    "bottom_flag_vertical_transoms": 0,
+                    "bottom_flag_horizontal_transoms": 0,
+                    "top_flag_vertical_transoms": 1,
+                    "top_flag_horizontal_transoms": 0
+                },
+                "application": "PORTA",
+                "leaf_count": 2,
+                "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                "panel_mode": "VIDRO INTEIRO",
+                "hinge_description": "DOBRADIÇA 90MM",
+                "reference_orcs_row": 15295,
+                "historical_subdivision_cases": 9,
+                "historical_top_vertical_one_cases": 6,
+                "divider_profile": "DE6072",
+                "divider_reinforcement": "RAG - DE6072",
+                "opening_width_rule": "(largura_total - 80 - divisores_verticais*36) / (divisores_verticais+1)",
+                "divider_length_rule": "altura_vão + 12",
+                "divider_screw_rule": "ceil(comprimento_divisor_mm / 400) PAR2"
+            },
                 "reference_orcs_row": 16482,
                 "historical_cremona_note": "ORCS 16482 não gravou Q; golden atual usa cremona 800mm explicitamente",
                 "leaf_height_rule": "altura_total - bandeira_inferior - bandeira_superior - 42",
@@ -675,17 +707,19 @@ def gr_options():
             "legacy_status": [
                 "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada",
                 "GR!D9/J11 subtrai AA2 duas vezes no caminho de bandeira inferior; v0.17 usa H_folha = H_total - H_bandeira - 42",
-                "GR!D9/K11 volta a subtrair AA2+AB2 no caminho combinado; v0.18 usa H_folha = H_total - H_inferior - H_superior - 42"
+                "GR!D9/K11 volta a subtrair AA2+AB2 no caminho combinado; v0.18 usa H_folha = H_total - H_inferior - H_superior - 42",
+                "GR!G27/G28 não representa o perímetro completo dos dois vãos quando AJ2=1; v0.19 corrige baguetes e vidros por abertura",
+                "GR!G118 não inclui a travessa vertical interna da bandeira; v0.19 inclui RAG-DE6072 e PAR2 físico"
             ]
         },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 18 adiciona bandeiras inferior + superior simultâneas em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "Fase 19 adiciona 1 divisão vertical na bandeira superior de porta interna GR 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_18",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_19",
             "open_questions": [],
         },
     }
