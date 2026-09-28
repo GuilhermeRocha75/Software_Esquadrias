@@ -241,6 +241,21 @@ def divided_bottom_flag_request(**overrides):
     return GrItemRequest(**values)
 
 
+def phase21_window_request(**overrides):
+    values = {
+        "width_mm": 4200, "height_mm": 1900, "quantity": 1,
+        "leaf_count": 2, "leaf_system": WINDOW, "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "20mm DUPLO FLOAT INCOLOR/TEMPERADO INCOLOR (4/10/6)",
+        "closure_mode": WINDOW_CREMONA,
+        "hinge_description": "DOBRADIÇA 90MM",
+        "bottom_flag_height_mm": 700,
+        "bottom_flag_vertical_transoms": 3,
+    }
+    values.update(overrides)
+    return GrItemRequest(**values)
+
+
 def two_leaf_glass_request(**overrides):
     values = {
         "width_mm": 1200, "height_mm": 2100, "quantity": 1,
@@ -253,15 +268,15 @@ def two_leaf_glass_request(**overrides):
 
 
 class GrEndpointTests(unittest.TestCase):
-    def test_health_exposes_v020(self):
+    def test_health_exposes_v021(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
-        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.20.0"])
+        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.21.0"])
 
-    def test_options_expose_phase20_and_flag_grid_scope(self):
+    def test_options_expose_phase21_and_flag_grid_scope(self):
         response = gr_options()
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
-        self.assertEqual(response["phase"], 20)
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
+        self.assertEqual(response["phase"], 21)
         self.assertTrue(response["glass_mode"]["window_glass"]["supported"])
         self.assertEqual(response["glass_mode"]["window_glass"]["hinge_description"], "DOBRADIÇA 90MM")
         self.assertEqual(response["glass_mode"]["window_glass"]["cremona_default"], CREMONA_800)
@@ -346,8 +361,9 @@ class GrEndpointTests(unittest.TestCase):
         self.assertEqual(response["fixed_panels"]["internal_dividers"]["historical_top_vertical_one_cases"], 6)
         self.assertEqual(response["fixed_panels"]["internal_dividers"]["historical_bottom_vertical_cases"], 3)
         self.assertEqual(response["fixed_panels"]["internal_dividers"]["phase20_reference_orcs_row"], 10024)
-        self.assertEqual(response["fixed_panels"]["internal_dividers"]["phase20_pending_orcs_rows"], [14179, 16527])
-        self.assertEqual(len(response["fixed_panels"]["internal_dividers"]["supported_combinations"]), 2)
+        self.assertEqual(response["fixed_panels"]["internal_dividers"]["phase20_pending_orcs_rows"], [16527])
+        self.assertEqual(response["fixed_panels"]["internal_dividers"]["phase21_reference_orcs_row"], 14179)
+        self.assertEqual(len(response["fixed_panels"]["internal_dividers"]["supported_combinations"]), 3)
         self.assertEqual(response["fixed_panels"]["internal_dividers"]["divider_profile"], "DE6072")
         self.assertEqual(response["fixed_panels"]["internal_dividers"]["divider_reinforcement"], "RAG - DE6072")
         self.assertEqual(response["fixed_panels"]["boundary_profile"], "DE6072")
@@ -363,7 +379,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_panel_regression_remains_physical(self):
         response = calculate_gr_endpoint(request(closure_mode=MONO))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["unit_technical_cost"], 1412.475245)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 27.7516)
 
@@ -376,20 +392,20 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_window_panel_regression(self):
         response = calculate_gr_endpoint(window_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["unit_technical_cost"], 846.578384)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 18.856)
 
     def test_two_leaf_door_glass_regression(self):
         response = calculate_gr_endpoint(two_leaf_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["unit_technical_cost"], 2071.84485)
         self.assertEqual(response["geometry"]["glass_panel_count"], 2.0)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 49.9432)
 
     def test_window_glass_6mm_serializes_v08_golden(self):
         response = calculate_gr_endpoint(window_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["model_description"], "JANELA 1 FOLHA DE GIRO")
         self.assertEqual(response["geometry"]["glass_width_mm"], 508)
         self.assertEqual(response["geometry"]["glass_height_mm"], 2308)
@@ -419,7 +435,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_ob_window_glass_serializes_v09_golden(self):
         response = calculate_gr_endpoint(ob_window_glass_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["glass_width_mm"], 608)
         self.assertEqual(response["geometry"]["glass_height_mm"], 808)
         self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 15.856)
@@ -441,7 +457,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_mixed_orcs_270_serializes_v010_golden(self):
         response = calculate_gr_endpoint(mixed_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["model_description"], "PORTA 1 FOLHA DE GIRO SUPERIOR VIDRO / INFERIOR PAINEL")
         self.assertEqual(response["geometry"]["mixed_split_from_bottom_mm"], 900)
         self.assertEqual(response["geometry"]["horizontal_transom_length_mm"], 576)
@@ -473,7 +489,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_manual_single_shutter_serializes_v011_door_golden(self):
         response = calculate_gr_endpoint(manual_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["model_description"], "PORTA 1 FOLHA DE GIRO COM PERSIANA")
         self.assertEqual(response["geometry"]["shutter_box_height_mm"], 200)
         self.assertEqual(response["geometry"]["shutter_main_opening_height_mm"], 1960)
@@ -503,7 +519,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_remote_single_shutter_serializes_v012_golden(self):
         response = calculate_gr_endpoint(remote_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["cost_by_group"]["PERSIANA"], 1073.83925)
         self.assertEqual(response["unit_technical_cost"], 2034.04641)
         motor = next(row for row in response["bom"] if row["role"] == "SHUTTER_MOTOR")
@@ -512,7 +528,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_button_single_shutter_serializes_mot2_fix(self):
         response = calculate_gr_endpoint(button_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["cost_by_group"]["PERSIANA"], 574.08925)
         self.assertEqual(response["unit_technical_cost"], 1128.45121)
         motor = next(row for row in response["bom"] if row["role"] == "SHUTTER_MOTOR")
@@ -523,7 +539,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_independent_double_shutter_serializes_v013_golden(self):
         response = calculate_gr_endpoint(independent_shutter_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["shutter_panel_count"], 2)
         self.assertEqual(response["geometry"]["shutter_shaft_quantity"], 2)
         self.assertEqual(response["geometry"]["shutter_slat_quantity"], 114)
@@ -552,7 +568,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_screen_serializes_v014_golden(self):
         response = calculate_gr_endpoint(screen_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["screen_width_mm"], 900)
         self.assertEqual(response["geometry"]["screen_height_mm"], 2100)
         self.assertEqual(response["cost_by_group"]["TELA"], 440)
@@ -574,7 +590,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_simple_top_flag_serializes_v015_golden(self):
         response = calculate_gr_endpoint(top_flag_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["top_flag_height_mm"], 600)
         self.assertEqual(response["geometry"]["top_flag_boundary_transom_length_mm"], 1132)
         self.assertEqual(response["geometry"]["top_flag_glass_width_mm"], 1112)
@@ -596,7 +612,7 @@ class GrEndpointTests(unittest.TestCase):
             glass_description="06mm TEMPERADO INCOLOR",
             top_flag_height_mm=400,
         ))
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 694)
         self.assertEqual(response["geometry"]["leaf_height_final_mm"], 2285)
         self.assertEqual(response["geometry"]["glass_panel_count"], 2)
@@ -626,7 +642,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_simple_bottom_flag_serializes_v017_golden(self):
         response = calculate_gr_endpoint(bottom_flag_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 736)
         self.assertEqual(response["geometry"]["leaf_height_final_mm"], 1458)
         self.assertEqual(response["geometry"]["glass_width_mm"], 608)
@@ -648,7 +664,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_dual_flags_serialize_v018_golden(self):
         response = calculate_gr_endpoint(dual_flag_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 336)
         self.assertEqual(response["geometry"]["leaf_height_final_mm"], 1158)
         self.assertEqual(response["geometry"]["glass_width_mm"], 208)
@@ -686,7 +702,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_top_flag_vertical_subdivision_serializes_v019_golden(self):
         response = calculate_gr_endpoint(divided_top_flag_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 763)
         self.assertEqual(response["geometry"]["leaf_height_final_mm"], 2415)
         self.assertEqual(response["geometry"]["glass_width_mm"], 583)
@@ -714,7 +730,7 @@ class GrEndpointTests(unittest.TestCase):
 
     def test_bottom_flag_two_vertical_subdivisions_serialize_v020_golden(self):
         response = calculate_gr_endpoint(divided_bottom_flag_request())
-        self.assertEqual(response["engine_version"], "GR_ENGINE_0.20.0")
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
         self.assertEqual(response["geometry"]["leaf_width_final_mm"], 1916)
         self.assertEqual(response["geometry"]["leaf_height_final_mm"], 1285)
         self.assertEqual(response["geometry"]["bottom_flag_vertical_transoms"], 2)
@@ -740,6 +756,25 @@ class GrEndpointTests(unittest.TestCase):
         warning_codes = {row["code"] for row in response["warnings"]}
         self.assertIn("LEGACY-GR-BOTTOM-FLAG-GRID-BAGUETTE-COUNT-CORRECTED", warning_codes)
         self.assertIn("GR-OB-DOOR-HARDWARE-SCOPE", warning_codes)
+
+    def test_orcs_14179_three_vertical_subdivisions_serialize_v021_golden(self):
+        response = calculate_gr_endpoint(phase21_window_request())
+        self.assertEqual(response["engine_version"], "GR_ENGINE_0.21.0")
+        self.assertEqual(response["geometry"]["leaf_width_final_mm"], 2058)
+        self.assertEqual(response["geometry"]["leaf_height_final_mm"], 1158)
+        self.assertEqual(response["geometry"]["glass_panel_count"], 2)
+        self.assertEqual(response["geometry"]["bottom_flag_vertical_transoms"], 3)
+        self.assertEqual(response["geometry"]["bottom_flag_opening_count"], 4)
+        self.assertEqual(response["geometry"]["bottom_flag_glass_width_mm"], 995)
+        self.assertEqual(response["geometry"]["bottom_flag_glass_height_mm"], 634)
+        self.assertEqual(response["geometry"]["bottom_flag_glass_panel_count"], 4)
+        self.assertEqual(response["cost_by_group"]["VEDAÇÕES"], 86.28)
+        self.assertEqual(response["unit_technical_cost"], 4131.00088)
+        self.assertEqual(len(response["fixed_panels"][0]["openings"]), 4)
+        self.assertEqual(len(response["glass_panels"]), 6)
+        by_role = {row["role"]: row for row in response["bom"]}
+        self.assertEqual(by_role["REINFORCEMENT_SCREWS"]["quantity_per_unit"], 123.024)
+        self.assertEqual(by_role["HARDWARE_SCREWS"]["quantity_per_unit"], 56)
 
     def test_other_flag_subdivision_combinations_are_422(self):
         for overrides in (

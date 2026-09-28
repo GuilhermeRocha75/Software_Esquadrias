@@ -414,12 +414,12 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 20,
+        "phase": 21,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
             "PORTA": [1, 2],
-            "JANELA": [1],
+            "JANELA": [1, 2],
         },
         "leaf_systems": [
             {
@@ -438,7 +438,7 @@ def gr_options():
                 "value": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
                 "label": "Janela Design 60x78 — abertura externa",
                 "application": "JANELA",
-                "leaf_counts": [1],
+                "leaf_counts": [1, 2],
             },
         ],
         "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO", "SUPERIOR VIDRO/INFERIOR PAINEL"],
@@ -470,7 +470,7 @@ def gr_options():
             "applications": ["PORTA", "JANELA"],
             "leaf_counts_by_application": {
                 "PORTA": [1, 2],
-                "JANELA": [1],
+                "JANELA": [1, 2],
             },
             "leaf_systems": [
                 "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
@@ -483,7 +483,8 @@ def gr_options():
             "glasses": glasses,
             "window_glass": {
                 "supported": True,
-                "leaf_counts": [1],
+                "leaf_counts": [1, 2],
+                "two_leaf_scope": "somente ORCS 14179 com bandeira inferior AH=3",
                 "hinge_description": "DOBRADIÇA 90MM",
                 "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
                 "cremona_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
@@ -673,6 +674,7 @@ def gr_options():
                 "supported": True,
                 "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
                 "phase20_scope": "2 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
+                "phase21_scope": "3 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
                 "fields": [
                     "bottom_flag_vertical_transoms",
                     "bottom_flag_horizontal_transoms",
@@ -701,6 +703,14 @@ def gr_options():
                         "top_flag_vertical_transoms": 0,
                         "top_flag_horizontal_transoms": 0,
                         "reference_orcs_row": 10024
+                    },
+                    {
+                        "phase": 21,
+                        "bottom_flag_vertical_transoms": 3,
+                        "bottom_flag_horizontal_transoms": 0,
+                        "top_flag_vertical_transoms": 0,
+                        "top_flag_horizontal_transoms": 0,
+                        "reference_orcs_row": 14179
                     }
                 ],
                 "application": "PORTA",
@@ -717,7 +727,12 @@ def gr_options():
                 "phase20_leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
                 "phase20_hinge_description": "DOBRADIÇA SISTEMA OB",
                 "phase20_reference_orcs_row": 10024,
-                "phase20_pending_orcs_rows": [14179, 16527],
+                "phase20_pending_orcs_rows": [16527],
+                "phase21_application": "JANELA",
+                "phase21_leaf_count": 2,
+                "phase21_leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                "phase21_hinge_description": "DOBRADIÇA 90MM",
+                "phase21_reference_orcs_row": 14179,
                 "divider_profile": "DE6072",
                 "divider_reinforcement": "RAG - DE6072",
                 "opening_width_rule": "(largura_total - 80 - divisores_verticais*36) / (divisores_verticais+1)",

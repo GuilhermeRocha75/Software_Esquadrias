@@ -1,0 +1,45 @@
+{
+  "engine_version": "GR_ENGINE_0.21.0",
+  "source": {
+    "workbook": "SOFTBETA_ PERFIL PRE DELL AMANDA.xlsm",
+    "sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+    "reference_orcs_row": 14179,
+    "historical_total": 3418.45,
+    "note": "O total histórico identifica a configuração; o golden usa catálogo atual e correções físicas homologadas."
+  },
+  "cases": [
+    {
+      "id": "ORCS-14179-BOTTOM-AH3-TWO-LEAF-WINDOW",
+      "input": {
+        "width_mm": 4200,
+        "height_mm": 1900,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "20mm DUPLO FLOAT INCOLOR/TEMPERADO INCOLOR (4/10/6)",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "bottom_flag_height_mm": 700,
+        "bottom_flag_vertical_transoms": 3
+      },
+      "geometry": {
+        "leaf_width_final_mm": 2058.0,
+        "leaf_height_final_mm": 1158.0,
+        "glass_width_mm": 1930.0,
+        "glass_height_mm": 1030.0,
+        "bottom_flag_opening_count": 4.0,
+        "bottom_flag_bead_width_mm": 1003.0,
+        "bottom_flag_bead_height_mm": 642.0,
+        "bottom_flag_glass_width_mm": 995.0,
+        "bottom_flag_glass_height_mm": 634.0,
+        "bottom_flag_internal_vertical_transom_length_mm": 654.0,
+        "bottom_flag_glass_panel_count": 4.0
+      },
+      "reinforcement_screws": 123.024,
+      "sealing_cost": 86.28,
+      "unit_cost": 4131.00088
+    }
+  ]
+}
