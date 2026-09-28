@@ -1,0 +1,51 @@
+{
+  "engine_version": "GR_ENGINE_0.18.0",
+  "basis": "GR!G19/G118 + dual fixed-panel topology from phases 15-17 + ORCS 16482 configuration evidence",
+  "cases": [
+    {
+      "id": "orcs-16482-dual-flags-window-400x2000",
+      "orcs_row": 16482,
+      "historical_ao_cost": 811.69,
+      "historical_use": "configuration/geometry evidence; ORCS cremona field Q is blank, so current golden uses explicit 800mm cremona for deterministic present-day costing",
+      "input": {
+        "width_mm": 400,
+        "height_mm": 2000,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+        "application": "JANELA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "04mm MINI BOREAL",
+        "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
+        "cremona_description": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "bottom_flag_height_mm": 400,
+        "top_flag_height_mm": 400
+      },
+      "geometry": {
+        "frame_height_final_mm": 2000.0,
+        "frame_height_cut_mm": 2005.0,
+        "leaf_width_final_mm": 336.0,
+        "leaf_height_final_mm": 1158.0,
+        "glass_width_mm": 208.0,
+        "glass_height_mm": 1030.0,
+        "bottom_flag_height_mm": 400.0,
+        "top_flag_height_mm": 400.0,
+        "bottom_flag_boundary_transom_length_mm": 332.0,
+        "top_flag_boundary_transom_length_mm": 332.0,
+        "bottom_flag_bead_width_mm": 320.0,
+        "bottom_flag_bead_height_mm": 342.0,
+        "top_flag_bead_width_mm": 320.0,
+        "top_flag_bead_height_mm": 342.0,
+        "bottom_flag_glass_width_mm": 312.0,
+        "bottom_flag_glass_height_mm": 334.0,
+        "top_flag_glass_width_mm": 312.0,
+        "top_flag_glass_height_mm": 334.0,
+        "flag_boundary_transom_count": 2.0
+      },
+      "reinforcement_screws": 33.968,
+      "sealing_cost": 18.8424,
+      "unit_cost": 849.55152
+    }
+  ]
+}
