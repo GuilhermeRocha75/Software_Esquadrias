@@ -142,6 +142,10 @@ class GrItemRequest(BaseModel):
     screen_enabled: bool = False
     top_flag_height_mm: float = Field(default=0.0, ge=0)
     bottom_flag_height_mm: float = Field(default=0.0, ge=0)
+    bottom_flag_vertical_transoms: int = Field(default=0, ge=0)
+    bottom_flag_horizontal_transoms: int = Field(default=0, ge=0)
+    top_flag_vertical_transoms: int = Field(default=0, ge=0)
+    top_flag_horizontal_transoms: int = Field(default=0, ge=0)
     internal_finish: Literal["GUARNIÇÃO DE 70MM"] = "GUARNIÇÃO DE 70MM"
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
 
