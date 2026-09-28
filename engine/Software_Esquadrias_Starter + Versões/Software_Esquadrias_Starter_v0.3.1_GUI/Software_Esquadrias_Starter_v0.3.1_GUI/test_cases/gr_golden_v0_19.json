@@ -1,0 +1,48 @@
+{
+  "engine_version": "GR_ENGINE_0.19.0",
+  "basis": "GR!D24/G24, GR!D27:D28, GR!G118 + ORCS 15295 + physical DE6072 reinforcement rules already confirmed",
+  "cases": [
+    {
+      "id": "orcs-15295-top-flag-one-vertical-divider",
+      "orcs_row": 15295,
+      "historical_ao_cost": 3217.45871,
+      "historical_use": "configuration and formula evidence; current golden uses corrected physical baguettes, divider reinforcement, seals and current catalog",
+      "input": {
+        "width_mm": 1610,
+        "height_mm": 5220,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "10mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA 90MM",
+        "top_flag_height_mm": 2790,
+        "top_flag_vertical_transoms": 1
+      },
+      "geometry": {
+        "frame_height_final_mm": 5220.0,
+        "leaf_width_final_mm": 763.0,
+        "leaf_height_final_mm": 2415.0,
+        "glass_width_mm": 583.0,
+        "glass_height_mm": 2235.0,
+        "glass_panel_count": 2.0,
+        "top_flag_height_mm": 2790.0,
+        "top_flag_vertical_transoms": 1.0,
+        "top_flag_horizontal_transoms": 0.0,
+        "top_flag_opening_count": 2.0,
+        "top_flag_bead_width_mm": 747.0,
+        "top_flag_bead_height_mm": 2732.0,
+        "top_flag_glass_width_mm": 739.0,
+        "top_flag_glass_height_mm": 2724.0,
+        "top_flag_internal_vertical_transom_length_mm": 2744.0,
+        "top_flag_internal_vertical_reinforcement_screws_added": 7.0,
+        "top_flag_glass_panel_count": 2.0
+      },
+      "reinforcement_screws": 91.528,
+      "sealing_cost": 86.132,
+      "unit_cost": 5594.46035
+    }
+  ]
+}
