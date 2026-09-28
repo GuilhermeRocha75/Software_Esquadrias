@@ -410,7 +410,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 17,
+        "phase": 18,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -649,6 +649,22 @@ def gr_options():
                 "reference_orcs_row": 10588,
                 "historical_cremona_note": "ORCS 10588 não gravou Q; no Sistema OB a cremona deve ser selecionada explicitamente"
             },
+            "dual_flags": {
+                "supported": True,
+                "fields": ["bottom_flag_height_mm", "top_flag_height_mm"],
+                "application": "JANELA",
+                "leaf_count": 1,
+                "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                "panel_mode": "VIDRO INTEIRO",
+                "hinge_description": "DOBRADIÇA 90MM",
+                "screen_supported": False,
+                "shutter_supported": False,
+                "internal_dividers": 0,
+                "reference_orcs_row": 16482,
+                "historical_cremona_note": "ORCS 16482 não gravou Q; golden atual usa cremona 800mm explicitamente",
+                "leaf_height_rule": "altura_total - bandeira_inferior - bandeira_superior - 42",
+                "boundary_count": 2
+            },
             "internal_dividers": 0,
             "screen_supported_with_flag": False,
             "shutter_supported_with_flag": False,
@@ -658,17 +674,18 @@ def gr_options():
             "glass_rule": "vão da bandeira - 8 mm em cada eixo",
             "legacy_status": [
                 "GR!26/28 referencia LISTAPERFIS!E40 vazio; topologia recuperada da MX Design homologada",
-                "GR!D9/J11 subtrai AA2 duas vezes no caminho de bandeira inferior; v0.17 usa H_folha = H_total - H_bandeira - 42"
+                "GR!D9/J11 subtrai AA2 duas vezes no caminho de bandeira inferior; v0.17 usa H_folha = H_total - H_bandeira - 42",
+                "GR!D9/K11 volta a subtrair AA2+AB2 no caminho combinado; v0.18 usa H_folha = H_total - H_inferior - H_superior - 42"
             ]
         },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 17 adiciona bandeira inferior simples em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "Fase 18 adiciona bandeiras inferior + superior simultâneas em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_17",
+            "status": "CANDIDATO_A_AUDITORIA_FASE_18",
             "open_questions": [],
         },
     }
