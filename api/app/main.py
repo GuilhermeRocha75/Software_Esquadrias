@@ -746,10 +746,8 @@ def gr_options():
             "reason": "Fase 20 adiciona 2 divisões verticais na bandeira inferior de porta externa GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_DA_FASE_20",
-            "open_questions": [
-                "auditar ORCS 10024 e gate completo antes de aprovar a Fase 20"
-            ],
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_20",
+            "open_questions": [],
         },
     }
 

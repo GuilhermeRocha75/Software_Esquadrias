@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 20
 
-Status: **GR_ENGINE_0.20.0 — CANDIDATO À AUDITORIA**
+Status: **GR_ENGINE_0.20.0 — APROVADO NO ESCOPO DA FASE 20**
 
 ## Escopo novo
 
@@ -119,3 +119,4 @@ Compra/corte continua bloqueado para GR.
 - Engine: 290 testes verdes;
 - API: 61 testes verdes;
 - Web: build Vite verde.
+- GitHub Actions: execução 233 verde no commit candidato.
