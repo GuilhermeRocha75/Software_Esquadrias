@@ -113,3 +113,9 @@ Aprovar somente se:
 - branch linear sobre a base aprovada da Fase 19.
 
 Compra/corte continua bloqueado para GR.
+
+## Validação candidata
+
+- Engine: 290 testes verdes;
+- API: 61 testes verdes;
+- Web: build Vite verde.
