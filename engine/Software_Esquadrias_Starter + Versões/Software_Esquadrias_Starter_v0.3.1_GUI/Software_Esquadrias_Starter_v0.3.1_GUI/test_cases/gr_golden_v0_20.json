@@ -1,0 +1,49 @@
+{
+  "engine_version": "GR_ENGINE_0.20.0",
+  "basis": "GR!D22/G22, GR!D25:D26, GR!G105:G119 + ORCS 10024 + physical DE6072 reinforcement and fixed-glazing perimeter rules",
+  "cases": [
+    {
+      "name": "orcs_10024_bottom_flag_two_vertical_dividers",
+      "historical_reference": {
+        "orcs_row": 10024,
+        "stored_ao": 3625.96,
+        "historical_use": "configuration and geometry evidence; current golden uses the present catalog and approved physical corrections"
+      },
+      "input": {
+        "width_mm": 1980,
+        "height_mm": 2150,
+        "quantity": 1,
+        "leaf_count": 1,
+        "leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+        "application": "PORTA",
+        "panel_mode": "VIDRO INTEIRO",
+        "glass_description": "06mm TEMPERADO INCOLOR",
+        "closure_mode": "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+        "hinge_description": "DOBRADIÇA SISTEMA OB",
+        "bottom_flag_height_mm": 850,
+        "bottom_flag_vertical_transoms": 2
+      },
+      "unit_cost": 2010.312591,
+      "sealing_cost": 45.906,
+      "reinforcement_screws": 55.888,
+      "geometry": {
+        "leaf_width_final_mm": 1916.0,
+        "leaf_height_final_mm": 1285.0,
+        "frame_reinforcement_height_mm": 2034.0,
+        "glass_width_mm": 1736.0,
+        "glass_height_mm": 1105.0,
+        "bottom_flag_height_mm": 850.0,
+        "bottom_flag_boundary_transom_length_mm": 1912.0,
+        "bottom_flag_vertical_transoms": 2.0,
+        "bottom_flag_opening_count": 3.0,
+        "bottom_flag_bead_width_mm": 609.333333,
+        "bottom_flag_bead_height_mm": 792.0,
+        "bottom_flag_glass_width_mm": 601.333333,
+        "bottom_flag_glass_height_mm": 784.0,
+        "bottom_flag_internal_vertical_transom_length_mm": 804.0,
+        "bottom_flag_internal_vertical_reinforcement_screws_added": 6.0,
+        "bottom_flag_glass_panel_count": 3.0
+      }
+    }
+  ]
+}

@@ -414,7 +414,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 19,
+        "phase": 20,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -672,6 +672,7 @@ def gr_options():
             "internal_dividers": {
                 "supported": True,
                 "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
+                "phase20_scope": "2 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
                 "fields": [
                     "bottom_flag_vertical_transoms",
                     "bottom_flag_horizontal_transoms",
@@ -684,6 +685,24 @@ def gr_options():
                     "top_flag_vertical_transoms": 1,
                     "top_flag_horizontal_transoms": 0
                 },
+                "supported_combinations": [
+                    {
+                        "phase": 19,
+                        "bottom_flag_vertical_transoms": 0,
+                        "bottom_flag_horizontal_transoms": 0,
+                        "top_flag_vertical_transoms": 1,
+                        "top_flag_horizontal_transoms": 0,
+                        "reference_orcs_row": 15295
+                    },
+                    {
+                        "phase": 20,
+                        "bottom_flag_vertical_transoms": 2,
+                        "bottom_flag_horizontal_transoms": 0,
+                        "top_flag_vertical_transoms": 0,
+                        "top_flag_horizontal_transoms": 0,
+                        "reference_orcs_row": 10024
+                    }
+                ],
                 "application": "PORTA",
                 "leaf_count": 2,
                 "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
@@ -692,6 +711,13 @@ def gr_options():
                 "reference_orcs_row": 15295,
                 "historical_subdivision_cases": 9,
                 "historical_top_vertical_one_cases": 6,
+                "historical_bottom_vertical_cases": 3,
+                "phase20_application": "PORTA",
+                "phase20_leaf_count": 1,
+                "phase20_leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+                "phase20_hinge_description": "DOBRADIÇA SISTEMA OB",
+                "phase20_reference_orcs_row": 10024,
+                "phase20_pending_orcs_rows": [14179, 16527],
                 "divider_profile": "DE6072",
                 "divider_reinforcement": "RAG - DE6072",
                 "opening_width_rule": "(largura_total - 80 - divisores_verticais*36) / (divisores_verticais+1)",
@@ -709,18 +735,21 @@ def gr_options():
                 "GR!D9/J11 subtrai AA2 duas vezes no caminho de bandeira inferior; v0.17 usa H_folha = H_total - H_bandeira - 42",
                 "GR!D9/K11 volta a subtrair AA2+AB2 no caminho combinado; v0.18 usa H_folha = H_total - H_inferior - H_superior - 42",
                 "GR!G27/G28 não representa o perímetro completo dos dois vãos quando AJ2=1; v0.19 corrige baguetes e vidros por abertura",
-                "GR!G118 não inclui a travessa vertical interna da bandeira; v0.19 inclui RAG-DE6072 e PAR2 físico"
+                "GR!G25/G26 não representa o perímetro completo dos três vãos quando AH2=2; v0.20 corrige baguetes e vidros por abertura",
+                "GR!G118 não inclui travessas verticais internas da bandeira; v0.19/v0.20 incluem RAG-DE6072 e PAR2 físico"
             ]
         },
         "leaf_grid": {"supported": False},
         "structural_reinforcement": {"supported": False},
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 19 adiciona 1 divisão vertical na bandeira superior de porta interna GR 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "Fase 20 adiciona 2 divisões verticais na bandeira inferior de porta externa GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_19",
-            "open_questions": [],
+            "status": "CANDIDATO_A_AUDITORIA_DA_FASE_20",
+            "open_questions": [
+                "auditar ORCS 10024 e gate completo antes de aprovar a Fase 20"
+            ],
         },
     }
 
