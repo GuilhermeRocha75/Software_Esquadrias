@@ -1,3 +1,4 @@
+import json
 import sys
 from pathlib import Path
 import unittest
@@ -110,6 +111,21 @@ class GrPhase18Tests(unittest.TestCase):
                 hinge_description="DOBRADIÇA SISTEMA OB",
                 cremona_description="CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
             ))
+
+    def test_golden_v018_is_frozen(self):
+        golden = json.loads(
+            (ROOT / "test_cases" / "gr_golden_v0_18.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(golden["engine_version"], "GR_ENGINE_0.18.0")
+        for case in golden["cases"]:
+            result = calculate_gr(GrConfiguration(**case["input"]))
+            self.assertEqual(result.calculation_version, golden["engine_version"])
+            self.assertEqual(result.unit_cost, case["unit_cost"])
+            self.assertEqual(result.cost_breakdown["VEDAÇÕES"], case["sealing_cost"])
+            screws = next(x for x in result.unit_bom if x.role == "REINFORCEMENT_SCREWS")
+            self.assertEqual(screws.quantity_per_unit, case["reinforcement_screws"])
+            for key, expected in case["geometry"].items():
+                self.assertEqual(result.geometry[key], expected)
 
     def test_cost_is_exact_sum_of_bom(self):
         result = calculate_gr(dual_flag())
