@@ -685,7 +685,7 @@ def gr_options():
             "reason": "Fase 18 adiciona bandeiras inferior + superior simultâneas em janela GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_18",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_18",
             "open_questions": [],
         },
     }
