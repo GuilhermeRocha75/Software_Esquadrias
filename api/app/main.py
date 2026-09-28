@@ -719,7 +719,7 @@ def gr_options():
             "reason": "Fase 19 adiciona 1 divisão vertical na bandeira superior de porta interna GR 2 folhas; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "technical_gate": {
-            "status": "CANDIDATO_A_AUDITORIA_FASE_19",
+            "status": "APROVADO_NO_ESCOPO_DA_FASE_19",
             "open_questions": [],
         },
     }
