@@ -663,7 +663,13 @@ def gr_options():
                 "hinge_description": "DOBRADIÇA 90MM",
                 "screen_supported": False,
                 "shutter_supported": False,
-                "internal_dividers": {
+                "internal_dividers": 0,
+                "reference_orcs_row": 16482,
+                "historical_cremona_note": "ORCS 16482 não gravou Q; golden atual usa cremona 800mm explicitamente",
+                "leaf_height_rule": "altura_total - bandeira_inferior - bandeira_superior - 42",
+                "boundary_count": 2
+            },
+            "internal_dividers": {
                 "supported": True,
                 "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
                 "fields": [
@@ -692,12 +698,6 @@ def gr_options():
                 "divider_length_rule": "altura_vão + 12",
                 "divider_screw_rule": "ceil(comprimento_divisor_mm / 400) PAR2"
             },
-                "reference_orcs_row": 16482,
-                "historical_cremona_note": "ORCS 16482 não gravou Q; golden atual usa cremona 800mm explicitamente",
-                "leaf_height_rule": "altura_total - bandeira_inferior - bandeira_superior - 42",
-                "boundary_count": 2
-            },
-            "internal_dividers": 0,
             "screen_supported_with_flag": False,
             "shutter_supported_with_flag": False,
             "boundary_profile": "DE6072",
