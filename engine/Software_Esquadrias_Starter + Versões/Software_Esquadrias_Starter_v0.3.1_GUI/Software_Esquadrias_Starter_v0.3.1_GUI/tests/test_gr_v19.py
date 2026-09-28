@@ -111,9 +111,10 @@ class GrPhase19Tests(unittest.TestCase):
         self.assertIn("LEGACY-GR-TOP-FLAG-GRID-REINFORCEMENT-CORRECTED", warnings)
         self.assertIn("LEGACY-GR-FLAG-E40-REFERENCE-CORRECTED", warnings)
 
-    def test_current_cost_probe(self):
+    def test_orcs_15295_current_physical_cost_is_frozen(self):
         result = calculate_gr(divided_top_flag())
-        self.assertEqual(result.unit_cost, -1.0)
+        self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 86.132)
+        self.assertEqual(result.unit_cost, 5594.46035)
 
     def test_other_flag_grids_remain_blocked(self):
         with self.assertRaises(ValueError):
