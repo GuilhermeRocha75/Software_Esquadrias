@@ -95,9 +95,10 @@ class GrPhase18Tests(unittest.TestCase):
         self.assertIn("LEGACY-GR-DUAL-FLAG-HEIGHT-DOUBLE-SUBTRACTION-CORRECTED", warnings)
         self.assertIn("LEGACY-GR-FLAG-E40-REFERENCE-CORRECTED", warnings)
 
-    def test_current_cost_probe(self):
+    def test_orcs_16482_current_physical_cost_is_frozen(self):
         result = calculate_gr(dual_flag())
-        self.assertEqual(result.unit_cost, -1.0)
+        self.assertEqual(result.unit_cost, 849.55152)
+        self.assertEqual(result.cost_breakdown["VEDAÇÕES"], 18.8424)
 
     def test_screen_shutter_ob_and_two_leaf_remain_blocked_in_phase18(self):
         with self.assertRaises(ValueError):
