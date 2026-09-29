@@ -414,7 +414,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 21,
+        "phase": 22,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -675,6 +675,7 @@ def gr_options():
                 "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
                 "phase20_scope": "2 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
                 "phase21_scope": "3 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
+                "phase22_scope": "1 DIVISÃO VERTICAL NA BANDEIRA INFERIOR COM TELA",
                 "fields": [
                     "bottom_flag_vertical_transoms",
                     "bottom_flag_horizontal_transoms",
@@ -711,6 +712,15 @@ def gr_options():
                         "top_flag_vertical_transoms": 0,
                         "top_flag_horizontal_transoms": 0,
                         "reference_orcs_row": 14179
+                    },
+                    {
+                        "phase": 22,
+                        "bottom_flag_vertical_transoms": 1,
+                        "bottom_flag_horizontal_transoms": 0,
+                        "top_flag_vertical_transoms": 0,
+                        "top_flag_horizontal_transoms": 0,
+                        "screen_enabled": True,
+                        "reference_orcs_row": 16527
                     }
                 ],
                 "application": "PORTA",
@@ -727,19 +737,26 @@ def gr_options():
                 "phase20_leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
                 "phase20_hinge_description": "DOBRADIÇA SISTEMA OB",
                 "phase20_reference_orcs_row": 10024,
-                "phase20_pending_orcs_rows": [16527],
+                "phase20_pending_orcs_rows": [],
                 "phase21_application": "JANELA",
                 "phase21_leaf_count": 2,
                 "phase21_leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
                 "phase21_hinge_description": "DOBRADIÇA 90MM",
                 "phase21_reference_orcs_row": 14179,
+                "phase22_application": "JANELA",
+                "phase22_leaf_count": 2,
+                "phase22_leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                "phase22_hinge_description": "DOBRADIÇA 90MM",
+                "phase22_screen_enabled": True,
+                "phase22_reference_orcs_row": 16527,
                 "divider_profile": "DE6072",
                 "divider_reinforcement": "RAG - DE6072",
                 "opening_width_rule": "(largura_total - 80 - divisores_verticais*36) / (divisores_verticais+1)",
                 "divider_length_rule": "altura_vão + 12",
                 "divider_screw_rule": "ceil(comprimento_divisor_mm / 400) PAR2"
             },
-            "screen_supported_with_flag": False,
+            "screen_supported_with_flag": True,
+            "screen_with_flag_scope": "somente ORCS 16527: janela 2 folhas, bandeira inferior AH=1",
             "shutter_supported_with_flag": False,
             "boundary_profile": "DE6072",
             "boundary_reinforcement": "RAG - DE6072",
@@ -751,7 +768,8 @@ def gr_options():
                 "GR!D9/K11 volta a subtrair AA2+AB2 no caminho combinado; v0.18 usa H_folha = H_total - H_inferior - H_superior - 42",
                 "GR!G27/G28 não representa o perímetro completo dos dois vãos quando AJ2=1; v0.19 corrige baguetes e vidros por abertura",
                 "GR!G25/G26 não representa o perímetro completo dos três vãos quando AH2=2; v0.20 corrige baguetes e vidros por abertura",
-                "GR!G118 não inclui travessas verticais internas da bandeira; v0.19/v0.20 incluem RAG-DE6072 e PAR2 físico"
+                "GR!G118 não inclui travessas verticais internas da bandeira; v0.19-v0.22 incluem RAG-DE6072 e PAR2 físico",
+                "GR!D73/E73 referencia células vazias; v0.22 usa a fórmula TL3 homologada na Fase 14"
             ]
         },
         "leaf_grid": {"supported": False},
