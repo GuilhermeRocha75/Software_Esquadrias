@@ -105,9 +105,10 @@ homologação dessas combinações.
 
 ## Validação candidata
 
-- auditoria do XLSM contra o snapshot: pendente;
-- Engine completa: pendente;
-- API completa: pendente;
-- Web build: pendente;
-- GitHub Actions: pendente;
-- `main`: deve permanecer intacta.
+- auditoria do XLSM contra o snapshot: verde;
+- Engine completa: 318 testes verdes;
+- API completa: 63 testes verdes;
+- Web: build Vite verde;
+- commit candidato: `2ce91da7ab459a4c85584e2d7ee999f2dca9fa68`;
+- GitHub Actions: execução 239 verde no commit candidato;
+- `main`: intacta.
