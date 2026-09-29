@@ -1,6 +1,6 @@
 # GR — Reverse engineering Fase 22
 
-Status: **GR_ENGINE_0.22.0 — CANDIDATO À HOMOLOGAÇÃO**
+Status: **GR_ENGINE_0.22.0 — APROVADO NO ESCOPO DA FASE 22**
 
 ## Escopo novo
 
@@ -99,4 +99,5 @@ Compra/corte continua bloqueado para GR.
 - Engine: 314 testes verdes;
 - API: 63 testes verdes;
 - Web: build Vite verde;
-- GitHub Actions: a preencher após publicar o commit candidato.
+- commit candidato: `6da1471b16d580f5697efa06673185afb1f8066a`;
+- GitHub Actions: execução 237 verde no commit candidato.
