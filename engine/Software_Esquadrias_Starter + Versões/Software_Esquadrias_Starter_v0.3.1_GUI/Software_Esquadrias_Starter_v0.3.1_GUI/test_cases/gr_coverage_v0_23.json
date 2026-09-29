@@ -1,0 +1,59 @@
+{
+  "audit_version": "GR_COVERAGE_AUDIT_0.23.0",
+  "official_xlsm_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "orcs_gr_rows": 1684,
+  "historical_inventory": {
+    "flag_rows": 46,
+    "flag_subdivision_rows": 9,
+    "mixed_panel_rows": 119,
+    "mixed_panel_explicit_split_rows": 3,
+    "screens": {
+      "SEM TELA MOSQUITEIRA": 1664,
+      "COM TELA MOSQUITEIRA": 20
+    },
+    "shutters": {
+      "SEM PERSIANA": 1617,
+      "MANUAL EM PAINEL ÚNICO": 44,
+      "AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO": 10,
+      "AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO": 7,
+      "MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES": 6
+    },
+    "module_modes": {
+      "MÓDULO ÚNICO": 1683,
+      "": 1
+    },
+    "structural_reinforcement": {
+      "SEM REFORÇO EXTRUTURAL": 1683,
+      "": 1
+    }
+  },
+  "historically_absent": {
+    "separate_modules": 0,
+    "structural_reinforcement": 0
+  },
+  "resolved_or_prohibited": {
+    "leaf_grid_inside_mobile_leaf": {
+      "status": "PROHIBITED_PHYSICAL",
+      "rows": [9155],
+      "count": 1
+    }
+  },
+  "pending_real": {
+    "application_leaf_system_independence": {"count": 47},
+    "flag_combinations_outside_v022": {"count": 21},
+    "special_closures": {"count": 18},
+    "closure_application_compatibility": {"count": 66},
+    "glass_catalog_missing": {"count": 24},
+    "hinge_pernio_or_invalid": {"count": 5}
+  },
+  "source_data_review": {
+    "count": 2,
+    "rows": [543, 914]
+  },
+  "gate": {
+    "historical_coverage_closed": false,
+    "purchase_plan_supported": false,
+    "main_ready": false,
+    "status": "FASE_23_AUDITADA_COM_PENDENCIAS_REAIS"
+  }
+}

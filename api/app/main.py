@@ -22,6 +22,7 @@ from .engine_bridge import (
     MaximArModuleMode,
     MaximArSealingConfiguration,
     GrConfiguration,
+    GR_COVERAGE_AUDIT,
     GR_ENGINE_VERSION,
     build_order_purchase_plan,
     calculate_sliding,
@@ -414,7 +415,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 22,
+        "phase": 23,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -508,6 +509,12 @@ def gr_options():
             },
         },
         "module_modes": ["MÓDULO ÚNICO"],
+        "module_mode_audit": {
+            "supported": ["MÓDULO ÚNICO"],
+            "separate_modules_supported": False,
+            "separate_modules_historical_cases": 0,
+            "status": "NO_HISTORICAL_EVIDENCE",
+        },
         "closures": [
             "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
             "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
@@ -573,7 +580,7 @@ def gr_options():
             "supported": True,
             "material_code": "TL3",
             "description": "TELA MOSQUITEIRA (RECOLHÍVEL)",
-            "historical_cases": 21,
+            "historical_cases": 20,
             "reference_orcs_row": 9894,
             "pricing": "largura_marco_m * 110 + altura_marco_m * 110 + 110",
             "dimension_rule": "largura e altura reais do marco GR; com persiana, altura útil abaixo da caixa",
@@ -732,6 +739,7 @@ def gr_options():
                 "historical_subdivision_cases": 9,
                 "historical_top_vertical_one_cases": 6,
                 "historical_bottom_vertical_cases": 3,
+                "phase23_pending_flag_scope_rows": 21,
                 "phase20_application": "PORTA",
                 "phase20_leaf_count": 1,
                 "phase20_leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
@@ -772,15 +780,29 @@ def gr_options():
                 "GR!D73/E73 referencia células vazias; v0.22 usa a fórmula TL3 homologada na Fase 14"
             ]
         },
-        "leaf_grid": {"supported": False},
-        "structural_reinforcement": {"supported": False},
+        "leaf_grid": {
+            "supported": False,
+            "status": "PROHIBITED_PHYSICAL",
+            "historical_prohibited_cases": 1,
+            "reference_orcs_rows": [9155],
+            "reason": "AF/AG não pertencem à folha móvel GR; AF dos três casos mistos é representado por mixed_split_from_bottom_mm.",
+        },
+        "structural_reinforcement": {
+            "supported": False,
+            "status": "NO_HISTORICAL_EVIDENCE",
+            "historical_cases": 0,
+            "reason": "A ORCS oficial não contém GR com reforço estrutural opcional.",
+        },
         "purchase_plan": {
             "supported": False,
-            "reason": "Fase 20 adiciona 2 divisões verticais na bandeira inferior de porta externa GR 1 folha; compra/corte GR ainda requer modelagem definitiva de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "A Fase 23 confirmou pendências de cobertura histórica antes do plano definitivo de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
+        "coverage_audit": GR_COVERAGE_AUDIT,
         "technical_gate": {
-            "status": "APROVADO_NO_ESCOPO_DA_FASE_20",
-            "open_questions": [],
+            "status": "FASE_23_AUDITADA_COM_PENDENCIAS_REAIS",
+            "historical_coverage_closed": False,
+            "main_ready": False,
+            "open_questions": list(GR_COVERAGE_AUDIT["pending_real"].keys()),
         },
     }
 
