@@ -415,30 +415,37 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 23,
+        "phase": 24,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
             "PORTA": [1, 2],
             "JANELA": [1, 2],
         },
+        "application_policy": {
+            "independent_from_leaf_system": True,
+            "physical_driver": "leaf_system",
+            "affects_geometry_or_cost": False,
+            "resolved_historical_cases": 47,
+            "confirmation_date": "2026-09-30",
+        },
         "leaf_systems": [
             {
                 "value": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "label": "Porta Design 60x104 — abertura interna",
-                "application": "PORTA",
+                "applications": ["PORTA", "JANELA"],
                 "leaf_counts": [1, 2],
             },
             {
                 "value": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
                 "label": "Porta Design 60x104 — abertura externa",
-                "application": "PORTA",
+                "applications": ["PORTA", "JANELA"],
                 "leaf_counts": [1, 2],
             },
             {
                 "value": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
                 "label": "Janela Design 60x78 — abertura externa",
-                "application": "JANELA",
+                "applications": ["PORTA", "JANELA"],
                 "leaf_counts": [1, 2],
             },
         ],
@@ -795,11 +802,11 @@ def gr_options():
         },
         "purchase_plan": {
             "supported": False,
-            "reason": "A Fase 23 confirmou pendências de cobertura histórica antes do plano definitivo de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "reason": "A Fase 24 mantém pendências de cobertura histórica antes do plano definitivo de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
         },
         "coverage_audit": GR_COVERAGE_AUDIT,
         "technical_gate": {
-            "status": "FASE_23_AUDITADA_COM_PENDENCIAS_REAIS",
+            "status": GR_COVERAGE_AUDIT["gate"]["status"],
             "historical_coverage_closed": False,
             "main_ready": False,
             "open_questions": list(GR_COVERAGE_AUDIT["pending_real"].keys()),

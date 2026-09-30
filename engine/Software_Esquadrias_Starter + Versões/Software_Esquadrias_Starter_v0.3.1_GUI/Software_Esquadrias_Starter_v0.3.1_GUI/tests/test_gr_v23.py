@@ -6,7 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from esquadrias_engine import (  # noqa: E402
+from esquadrias_engine.gr_v23 import (  # noqa: E402
     GR_COVERAGE_AUDIT,
     GrConfiguration,
     calculate_gr,
