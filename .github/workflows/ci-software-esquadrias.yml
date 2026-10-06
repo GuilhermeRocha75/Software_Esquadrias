@@ -98,6 +98,19 @@ jobs:
         working-directory: web
         run: npm ci
 
+      - name: Web tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'web_test_command=npm test (working-directory: web)' >> software-esquadrias-ci-evidence.txt
+          set +e
+          (cd web && npm test) > web-test-ci.log 2>&1
+          code=$?
+          set -e
+          cat web-test-ci.log
+          echo "web_test_exit_code=$code" >> software-esquadrias-ci-evidence.txt
+          exit "$code"
+
       - name: Web production build
         shell: bash
         run: |
@@ -140,5 +153,6 @@ jobs:
             software-esquadrias-ci-evidence.txt
             engine-ci.log
             api-ci.log
+            web-test-ci.log
             web-ci.log
           if-no-files-found: error

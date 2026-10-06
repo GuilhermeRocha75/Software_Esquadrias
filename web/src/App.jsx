@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { sidebarModelAction } from './sidebarActions.js'
+
 const API_URL = (import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000')).replace(/\/$/, '')
 
 const baseDefaults = {
@@ -235,7 +237,7 @@ const modelLabel = (item) => ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddMaximAr, onAddGr }) {
+function Sidebar({ onAddCR, onAddMaximAr, onAddGr }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -249,7 +251,7 @@ function Sidebar({ onAddMaximAr, onAddGr }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={item === 'Inserir Modelo Maxim-Ar' ? onAddMaximAr : item === 'Inserir Modelo Giro' ? onAddGr : undefined} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -879,7 +881,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} />
+      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
