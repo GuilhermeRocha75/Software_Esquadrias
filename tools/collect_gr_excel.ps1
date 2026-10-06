@@ -30,10 +30,7 @@ function Test-RetryableExcelComError($exception) {
 function Invoke-ExcelComRetry([scriptblock]$Action, [int]$Attempts = 120) {
     for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
         try {
-            $result = & $Action
-            if ($null -ne $result) {
-                Write-Output -NoEnumerate $result
-            }
+            & $Action | Out-Null
             return
         } catch {
             if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq $Attempts) {
@@ -45,14 +42,37 @@ function Invoke-ExcelComRetry([scriptblock]$Action, [int]$Attempts = 120) {
 }
 
 function Get-Cell($ws, [string]$address) {
-    $cell = Invoke-ExcelComRetry { $ws.Range($address) }
-    try { return (Invoke-ExcelComRetry { $cell.Value2 }) }
-    finally { [void][Runtime.InteropServices.Marshal]::ReleaseComObject($cell) }
+    for ($attempt = 1; $attempt -le 120; $attempt++) {
+        $cell = $null
+        try {
+            $cell = $ws.Range($address)
+            return $cell.Value2
+        } catch {
+            if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq 120) {
+                throw
+            }
+            Start-Sleep -Milliseconds 500
+        } finally {
+            if ($cell) { [void][Runtime.InteropServices.Marshal]::ReleaseComObject($cell) }
+        }
+    }
 }
 function Set-Cell($ws, [string]$address, $value) {
-    $cell = Invoke-ExcelComRetry { $ws.Range($address) }
-    try { Invoke-ExcelComRetry { $cell.Value2 = $value } }
-    finally { [void][Runtime.InteropServices.Marshal]::ReleaseComObject($cell) }
+    for ($attempt = 1; $attempt -le 120; $attempt++) {
+        $cell = $null
+        try {
+            $cell = $ws.Range($address)
+            $cell.Value2 = $value
+            return
+        } catch {
+            if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq 120) {
+                throw
+            }
+            Start-Sleep -Milliseconds 500
+        } finally {
+            if ($cell) { [void][Runtime.InteropServices.Marshal]::ReleaseComObject($cell) }
+        }
+    }
 }
 try {
     $excel = New-Object -ComObject Excel.Application
@@ -62,14 +82,31 @@ try {
     $excel.AutomationSecurity = 3
     # The official workbook has large volatile/legacy sheets. Disable global
     # automatic recalculation before opening; recalculate GR explicitly below.
-    $blank = Invoke-ExcelComRetry { $excel.Workbooks.Add() }
-    Invoke-ExcelComRetry { $excel.Calculation = -4135 } # xlCalculationManual
-    Invoke-ExcelComRetry { $blank.Close($false) }
+    $blank = $excel.Workbooks.Add()
+    $excel.Calculation = -4135 # xlCalculationManual
+    $blank.Close($false)
     $stage = 'open workbook'
-    $book = Invoke-ExcelComRetry { $excel.Workbooks.Open($WorkbookPath, 0, $true) }
+    $book = $excel.Workbooks.Open($WorkbookPath, 0, $true)
+    Start-Sleep -Seconds 10
     $stage = 'get worksheets'
-    $sheet = Invoke-ExcelComRetry { $book.Worksheets.Item('GR') }
-    $orcs = Invoke-ExcelComRetry { $book.Worksheets.Item('ORCS') }
+    for ($attempt = 1; $attempt -le 120; $attempt++) {
+        try {
+            $sheet = $book.Worksheets.Item('GR')
+            break
+        } catch {
+            if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq 120) { throw }
+            Start-Sleep -Milliseconds 500
+        }
+    }
+    for ($attempt = 1; $attempt -le 120; $attempt++) {
+        try {
+            $orcs = $book.Worksheets.Item('ORCS')
+            break
+        } catch {
+            if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq 120) { throw }
+            Start-Sleep -Milliseconds 500
+        }
+    }
     $output = @()
     $columns = @('D','E','F','G','H','I','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK')
     foreach ($row in $OrcsRows) {
