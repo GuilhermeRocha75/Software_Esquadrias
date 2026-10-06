@@ -48,6 +48,7 @@ from .schemas import (
     MaximArItemRequest,
     MaximArPurchasePlanRequest,
     GrItemRequest,
+    GrPurchasePlanRequest,
     PurchasePlanRequest,
     UnifiedPurchasePlanRequest,
 )
@@ -200,11 +201,15 @@ def _to_gr_config(item: GrItemRequest) -> GrConfiguration:
         application=item.application,
         panel_mode=item.panel_mode,
         glass_description=item.glass_description,
+        custom_glass_code=item.custom_glass_code,
+        custom_glass_unit_price=item.custom_glass_unit_price,
+        custom_glass_thickness_mm=item.custom_glass_thickness_mm,
         mixed_split_from_bottom_mm=item.mixed_split_from_bottom_mm,
         module_mode=item.module_mode,
         closure_mode=item.closure_mode,
         cremona_description=item.cremona_description,
         hinge_description=item.hinge_description,
+        window_lock_length_mm=item.window_lock_length_mm,
         shutter=(
             ShutterConfiguration(
                 mode=ShutterMode(item.shutter.mode),
@@ -415,7 +420,7 @@ def gr_options():
     )
     return {
         "engine_version": GR_ENGINE_VERSION,
-        "phase": 24,
+        "phase": 25,
         "applications": ["PORTA", "JANELA"],
         "leaf_counts": [1, 2],
         "leaf_count_constraints": {
@@ -450,18 +455,22 @@ def gr_options():
             },
         ],
         "panel_modes": ["PAINEL COMPLETO", "VIDRO INTEIRO", "SUPERIOR VIDRO/INFERIOR PAINEL"],
+        "glasses": glasses,
         "mixed_mode": {
             "supported": True,
-            "application": "PORTA",
+            "applications": ["PORTA", "JANELA"],
             "leaf_systems": [
                 "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
                 "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
             ],
             "leaf_counts": [1, 2],
-            "hinge_description": "DOBRADIÇA 90MM",
+            "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB", "DOBRADIÇA PÊRNIO"],
             "closures": [
                 "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
                 "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+                "MAÇANETA COM CREMONA SEM CHAVE",
+                "MAÇANETA COM CHAVE E CREMONA",
+                "MAÇANETA COM CREMONA",
             ],
             "split_field": "mixed_split_from_bottom_mm",
             "split_measurement": "da extremidade inferior da folha pronta para cima até a travessa horizontal",
@@ -492,7 +501,14 @@ def gr_options():
             "window_glass": {
                 "supported": True,
                 "leaf_counts": [1, 2],
-                "two_leaf_scope": "somente ORCS 14179 com bandeira inferior AH=3",
+                "two_leaf_scope": "generalizado pela fórmula G5=2 do XLSM",
+                "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB", "DOBRADIÇA PÊRNIO"],
+                "closures": [
+                    "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+                    "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+                    "MAÇANETA COM CREMONA SEM CHAVE",
+                    "MAÇANETA COM CREMONA",
+                ],
                 "hinge_description": "DOBRADIÇA 90MM",
                 "closure_mode": "MAÇANETA COM CREMONA SEM CHAVE",
                 "cremona_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
@@ -526,10 +542,30 @@ def gr_options():
             "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
             "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
             "MAÇANETA COM CREMONA SEM CHAVE",
+            "MAÇANETA COM CHAVE E CREMONA",
+            "MAÇANETA COM CREMONA",
         ],
         "cremonas": {
             "window_default": "CREMONA 2 PONTOS COMP. 800mm E:15mm",
-            "physical_evidence": "padrão informado pela fabricação para mais de 90% das janelas de giro no baseline 90mm",
+            "selection": "explícita em cada orçamento; CRE12 existe apenas como compatibilidade legada",
+            "standard_options": [
+                "CREMONA 1 PONTO E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 400mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 600mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 800mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 1000mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 1200mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 1400mm E:7,5mm",
+                "CREMONA 2 PONTOS COMP. 1600mm E:7,5mm",
+                "CREMONA 1 PONTO E:15mm",
+                "CREMONA 2 PONTOS COMP. 400mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 600mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 800mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 1000mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 1200mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 1400mm E:15mm",
+                "CREMONA 2 PONTOS COMP. 1600mm E:15mm",
+            ],
             "ob_options": [
                 "CREMONA OSCILO/GIRO COMP. 400mm E:15mm",
                 "CREMONA OSCILO/GIRO COMP. 900mm E:15mm",
@@ -539,7 +575,33 @@ def gr_options():
             ],
             "ob_selection": "explícita; sem inferência automática de comprimento na Fase 9",
         },
-        "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"],
+        "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB", "DOBRADIÇA PÊRNIO"],
+        "pernio": {
+            "supported": True,
+            "material_code": "DOB5",
+            "quantity_per_leaf": 3,
+            "screws_per_hinge": 8,
+            "historical_cases": 5,
+        },
+        "window_lock": {
+            "supported": True,
+            "closures": [
+                "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
+                "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
+            ],
+            "uses_key_or_cylinder": False,
+            "length_field": "window_lock_length_mm",
+            "length_required": True,
+        },
+        "custom_glass": {
+            "supported": True,
+            "required_fields": [
+                "custom_glass_code",
+                "custom_glass_unit_price",
+                "custom_glass_thickness_mm",
+            ],
+            "historical_uncatalogued_rows": 24,
+        },
         "internal_finishes": ["GUARNIÇÃO DE 70MM"],
         "external_finishes": ["BARRA CHATA DE 30MM"],
         "panel_squaring_blocks": {
@@ -646,24 +708,33 @@ def gr_options():
             "top_flag": {
                 "supported": True,
                 "field": "top_flag_height_mm",
-                "application": "PORTA",
+                "applications": ["PORTA", "JANELA"],
                 "leaf_counts": [1, 2],
-                "two_leaf_constraint": "2 folhas homologado somente em porta interna, vidro inteiro, bandeira superior simples",
                 "leaf_systems": [
                     "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
-                    "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN"
+                    "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+                    "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
                 ],
-                "hinge_description": "DOBRADIÇA 90MM",
+                "vertical_dividers_supported": True,
+                "horizontal_dividers_supported": False,
+                "screen_supported": True,
+                "shutter_supported_with_glass": True,
                 "historical_reference_orcs_rows": [14891, 11251, 14051]
             },
             "bottom_flag": {
                 "supported": True,
                 "field": "bottom_flag_height_mm",
-                "application": "JANELA",
-                "leaf_count": 1,
-                "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
-                "panel_mode": "VIDRO INTEIRO",
-                "hinges": ["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"],
+                "applications": ["PORTA", "JANELA"],
+                "leaf_counts": [1, 2],
+                "leaf_systems": [
+                    "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
+                    "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
+                    "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
+                ],
+                "vertical_dividers_supported": True,
+                "horizontal_dividers_supported": False,
+                "screen_supported": True,
+                "shutter_supported_with_glass": True,
                 "historical_cases": 23,
                 "reference_orcs_row": 10588,
                 "historical_cremona_note": "ORCS 10588 não gravou Q; no Sistema OB a cremona deve ser selecionada explicitamente"
@@ -671,14 +742,12 @@ def gr_options():
             "dual_flags": {
                 "supported": True,
                 "fields": ["bottom_flag_height_mm", "top_flag_height_mm"],
-                "application": "JANELA",
-                "leaf_count": 1,
-                "leaf_system": "FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN",
-                "panel_mode": "VIDRO INTEIRO",
-                "hinge_description": "DOBRADIÇA 90MM",
-                "screen_supported": False,
-                "shutter_supported": False,
-                "internal_dividers": 0,
+                "applications": ["PORTA", "JANELA"],
+                "leaf_counts": [1, 2],
+                "vertical_dividers_supported": True,
+                "horizontal_dividers_supported": False,
+                "screen_supported": True,
+                "shutter_supported_with_glass": True,
                 "reference_orcs_row": 16482,
                 "historical_cremona_note": "ORCS 16482 não gravou Q; golden atual usa cremona 800mm explicitamente",
                 "leaf_height_rule": "altura_total - bandeira_inferior - bandeira_superior - 42",
@@ -686,6 +755,8 @@ def gr_options():
             },
             "internal_dividers": {
                 "supported": True,
+                "scope": "zero ou mais divisões verticais por bandeira, com um vidro por vão",
+                "horizontal_dividers_supported": False,
                 "phase19_scope": "1 DIVISÃO VERTICAL NA BANDEIRA SUPERIOR",
                 "phase20_scope": "2 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
                 "phase21_scope": "3 DIVISÕES VERTICAIS NA BANDEIRA INFERIOR",
@@ -737,16 +808,12 @@ def gr_options():
                         "reference_orcs_row": 16527
                     }
                 ],
-                "application": "PORTA",
-                "leaf_count": 2,
-                "leaf_system": "FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN",
-                "panel_mode": "VIDRO INTEIRO",
-                "hinge_description": "DOBRADIÇA 90MM",
                 "reference_orcs_row": 15295,
                 "historical_subdivision_cases": 9,
                 "historical_top_vertical_one_cases": 6,
                 "historical_bottom_vertical_cases": 3,
-                "phase23_pending_flag_scope_rows": 21,
+                "phase23_pending_flag_scope_rows": 0,
+                "phase25_resolved_flag_scope_rows": 21,
                 "phase20_application": "PORTA",
                 "phase20_leaf_count": 1,
                 "phase20_leaf_system": "FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN",
@@ -771,8 +838,9 @@ def gr_options():
                 "divider_screw_rule": "ceil(comprimento_divisor_mm / 400) PAR2"
             },
             "screen_supported_with_flag": True,
-            "screen_with_flag_scope": "somente ORCS 16527: janela 2 folhas, bandeira inferior AH=1",
-            "shutter_supported_with_flag": False,
+            "screen_with_flag_scope": "toda combinação de bandeira válida na matriz final",
+            "shutter_supported_with_flag": True,
+            "shutter_with_flag_scope": "VIDRO INTEIRO e um dos quatro modos de persiana GR homologados",
             "boundary_profile": "DE6072",
             "boundary_reinforcement": "RAG - DE6072",
             "opening_rule": "largura_total - 80 por altura_bandeira - 58",
@@ -801,15 +869,17 @@ def gr_options():
             "reason": "A ORCS oficial não contém GR com reforço estrutural opcional.",
         },
         "purchase_plan": {
-            "supported": False,
-            "reason": "A Fase 24 mantém pendências de cobertura histórica antes do plano definitivo de estoque, barras, painel DE20150, persiana, tela e bandeiras.",
+            "supported": True,
+            "endpoint": "/api/v1/engine/gr/purchase-plan",
+            "stock_length_mm": 5900,
         },
         "coverage_audit": GR_COVERAGE_AUDIT,
         "technical_gate": {
             "status": GR_COVERAGE_AUDIT["gate"]["status"],
-            "historical_coverage_closed": False,
-            "main_ready": False,
-            "open_questions": list(GR_COVERAGE_AUDIT["pending_real"].keys()),
+            "historical_coverage_closed": True,
+            "main_ready": True,
+            "open_questions": [],
+            "manual_review_exceptions": GR_COVERAGE_AUDIT["manual_review_exceptions"],
         },
     }
 
@@ -819,6 +889,25 @@ def calculate_gr_endpoint(payload: GrItemRequest):
     try:
         cfg = _to_gr_config(payload)
         return _serialize_result(cfg, calculate_gr(cfg))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/engine/gr/purchase-plan")
+def calculate_gr_purchase_plan(payload: GrPurchasePlanRequest):
+    try:
+        order_items = []
+        serialized_items = []
+        for item in payload.items:
+            cfg = _to_gr_config(item)
+            result = calculate_gr(cfg)
+            order_items.append((cfg, result))
+            serialized_items.append(_serialize_result(cfg, result))
+        plan = build_order_purchase_plan(order_items, kerf_mm=payload.kerf_mm)
+        return {
+            "items": serialized_items,
+            "purchase_plan": _serialize_purchase_plan(plan),
+        }
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
@@ -849,7 +938,10 @@ def calculate_unified_purchase_plan(payload: UnifiedPurchasePlanRequest):
         order_items = []
         serialized_items = []
         for item in payload.items:
-            if isinstance(item, MaximArItemRequest):
+            if isinstance(item, GrItemRequest):
+                cfg = _to_gr_config(item)
+                result = calculate_gr(cfg)
+            elif isinstance(item, MaximArItemRequest):
                 cfg = _to_maxim_ar_config(item)
                 result = calculate_maxim_ar(cfg)
             else:

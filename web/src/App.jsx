@@ -47,6 +47,37 @@ const maximArDefaults = {
   sealing: { internal_material_id: 'MX-SEALING-CONFIGURABLE', description: 'VEDAÇÃO MAXIM-AR CONFIGURÁVEL', unit_price_per_meter: 0 },
 }
 
+const grDefaults = {
+  family: 'GR',
+  quantity: 1,
+  leaf_count: 1,
+  width_mm: 900,
+  height_mm: 2100,
+  leaf_system: 'FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN',
+  application: 'PORTA',
+  panel_mode: 'PAINEL COMPLETO',
+  glass_description: null,
+  custom_glass_code: null,
+  custom_glass_unit_price: null,
+  custom_glass_thickness_mm: null,
+  mixed_split_from_bottom_mm: null,
+  module_mode: 'MÓDULO ÚNICO',
+  closure_mode: 'MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE',
+  cremona_description: null,
+  hinge_description: 'DOBRADIÇA 90MM',
+  window_lock_length_mm: null,
+  shutter: null,
+  screen_enabled: false,
+  top_flag_height_mm: 0,
+  bottom_flag_height_mm: 0,
+  bottom_flag_vertical_transoms: 0,
+  bottom_flag_horizontal_transoms: 0,
+  top_flag_vertical_transoms: 0,
+  top_flag_horizontal_transoms: 0,
+  internal_finish: 'GUARNIÇÃO DE 70MM',
+  external_finish: 'BARRA CHATA DE 30MM',
+}
+
 const fallbackOptions = {
   leaf_systems: [
     { value: 'PRIME_WINDOW_42x66', label: 'Prime Janela 42x66' },
@@ -108,6 +139,46 @@ const fallbackMaximArOptions = {
   external_finishes: ['BARRA CHATA DE 30MM'],
 }
 
+const fallbackGrOptions = {
+  leaf_systems: [
+    { value: 'FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN', label: 'Porta Design 60x104 — abertura interna' },
+    { value: 'FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN', label: 'Porta Design 60x104 — abertura externa' },
+    { value: 'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN', label: 'Janela Design 60x78 — abertura externa' },
+  ],
+  applications: ['PORTA', 'JANELA'],
+  leaf_counts: [1, 2],
+  panel_modes: ['PAINEL COMPLETO', 'VIDRO INTEIRO', 'SUPERIOR VIDRO/INFERIOR PAINEL'],
+  glasses: [{ description: '04mm FLOAT INCOLOR' }, { description: '06mm TEMPERADO INCOLOR' }],
+  closures: [
+    'MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE',
+    'MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE',
+    'MAÇANETA COM CREMONA SEM CHAVE',
+    'MAÇANETA COM CHAVE E CREMONA',
+    'MAÇANETA COM CREMONA',
+  ],
+  cremonas: {
+    standard_options: ['CREMONA 2 PONTOS COMP. 800mm E:15mm'],
+    ob_options: [
+      'CREMONA OSCILO/GIRO COMP. 400mm E:15mm',
+      'CREMONA OSCILO/GIRO COMP. 900mm E:15mm',
+      'CREMONA OSCILO/GIRO COMP. 1100mm E:15mm',
+      'CREMONA OSCILO/GIRO COMP. 1400mm E:15mm',
+      'CREMONA OSCILO/GIRO COMP. 1900mm E:15mm',
+    ],
+  },
+  hinges: ['DOBRADIÇA 90MM', 'DOBRADIÇA SISTEMA OB', 'DOBRADIÇA PÊRNIO'],
+  shutter: {
+    modes: [
+      'MANUAL EM PAINEL ÚNICO',
+      'AUTOMATIZADA COM BOTOEIRA EM PAINEL ÚNICO',
+      'AUTOMATIZADA COM CONTROLE REMOTO EM PAINEL ÚNICO',
+      'MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES',
+    ],
+    box_description: 'CAIXA DE 200MM',
+    slat_description: 'TALA DE PVC 40MM',
+  },
+}
+
 const initialItems = [
   {
     ...baseDefaults,
@@ -159,9 +230,12 @@ const modelLabel = (item) => ({
   DESIGN_DOOR_60x111: 'Correr Design 60x111',
   PRIME_WINDOW_42x63: 'Maxim-Ar Prime 42x63',
   DESIGN_WINDOW_60x78: 'Maxim-Ar Design 60x78',
+  'FOLHA DE PORTA ABERTURA INTERNA 60X104MM - DESIGN': 'Giro GR 60x104 interna',
+  'FOLHA DE PORTA ABERTURA EXTERNA 60X104MM - DESIGN': 'Giro GR 60x104 externa',
+  'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddMaximAr }) {
+function Sidebar({ onAddMaximAr, onAddGr }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -175,7 +249,7 @@ function Sidebar({ onAddMaximAr }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={item === 'Inserir Modelo Maxim-Ar' ? onAddMaximAr : undefined} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={item === 'Inserir Modelo Maxim-Ar' ? onAddMaximAr : item === 'Inserir Modelo Giro' ? onAddGr : undefined} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -219,12 +293,12 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onEdit }) {
+function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onEdit }) {
   return (
     <section className="card items-card">
       <div className="section-head">
         <div className="section-title">Itens do Orçamento</div>
-        <div className="page-actions"><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
+        <div className="page-actions"><button className="secondary" onClick={onAddGr}>+ Inserir Giro GR</button><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
       </div>
       <div className="table-scroll">
         <table>
@@ -239,7 +313,7 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onEdit }) {
                 <td>{item.width_mm}</td>
                 <td>{item.height_mm}</td>
                 <td>{item.quantity}</td>
-                <td>{item.glass_description.replace(' FLOAT ', ' ')}</td>
+                <td>{item.glass_description?.replace(' FLOAT ', ' ') || 'Painel'}</td>
                 <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
                 <td>{item.shutter?.mode && item.shutter.mode !== 'SEM PERSIANA' ? item.shutter.mode : (item.shutter_enabled ? 'Legado' : 'Não')}</td>
                 <td><span className="status">● Calculado</span></td>
@@ -453,6 +527,146 @@ function MaximArModal({ onClose, onSave, options, item }) {
   )
 }
 
+function GrModal({ onClose, onSave, options, item }) {
+  const [form, setForm] = useState(() => ({ ...grDefaults, ...(item || {}) }))
+  const [customGlass, setCustomGlass] = useState(Boolean(item?.custom_glass_code))
+  const [validation, setValidation] = useState('')
+  const numericFields = new Set([
+    'width_mm', 'height_mm', 'quantity', 'leaf_count', 'mixed_split_from_bottom_mm',
+    'window_lock_length_mm', 'top_flag_height_mm', 'bottom_flag_height_mm',
+    'bottom_flag_vertical_transoms', 'top_flag_vertical_transoms',
+    'custom_glass_unit_price', 'custom_glass_thickness_mm',
+  ])
+  const set = (key) => (event) => {
+    const raw = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+    const value = numericFields.has(key) ? (raw === '' ? null : Number(raw)) : raw
+    setForm((previous) => ({ ...previous, [key]: value }))
+  }
+  const setShutter = (event) => {
+    const mode = event.target.value
+    setForm((previous) => ({
+      ...previous,
+      shutter: mode === 'SEM PERSIANA' ? null : {
+        mode,
+        box_description: 'CAIXA DE 200MM',
+        slat_description: 'TALA DE PVC 40MM',
+      },
+    }))
+  }
+  const setCatalogGlass = (event) => {
+    const value = event.target.value
+    if (value === '__CUSTOM__') {
+      setCustomGlass(true)
+      setForm((previous) => ({
+        ...previous,
+        glass_description: '',
+        custom_glass_code: '',
+        custom_glass_unit_price: null,
+        custom_glass_thickness_mm: null,
+      }))
+    } else {
+      setCustomGlass(false)
+      setForm((previous) => ({
+        ...previous,
+        glass_description: value || null,
+        custom_glass_code: null,
+        custom_glass_unit_price: null,
+        custom_glass_thickness_mm: null,
+      }))
+    }
+  }
+  const usesCremona = form.closure_mode.includes('CREMONA')
+  const isPhysicalWindow = form.leaf_system.includes('FOLHA DE JANELA')
+  const usesWindowLock = isPhysicalWindow && (
+    form.closure_mode.includes('MONOPONTO') || form.closure_mode.includes('MULTIPONTO')
+  )
+  const closureOptions = isPhysicalWindow
+    ? options.closures.filter((value) => value !== 'MAÇANETA COM CHAVE E CREMONA')
+    : options.closures
+  const hasFlag = Number(form.bottom_flag_height_mm || 0) > 0 || Number(form.top_flag_height_mm || 0) > 0
+  const needsGlass = form.panel_mode !== 'PAINEL COMPLETO' || hasFlag
+  const cremonaOptions = form.hinge_description === 'DOBRADIÇA SISTEMA OB'
+    ? (options.cremonas?.ob_options || [])
+    : (options.cremonas?.standard_options || [])
+  const submit = (event) => {
+    event.preventDefault()
+    if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
+    if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
+    if (isPhysicalWindow && form.closure_mode === 'MAÇANETA COM CHAVE E CREMONA') return setValidation('Folha de janela não recebe maçaneta com chave.')
+    if (usesCremona && !form.cremona_description) return setValidation('Selecione a cremona deste orçamento.')
+    if (needsGlass && !form.glass_description) return setValidation('Selecione ou cadastre o vidro.')
+    if (customGlass && (!form.custom_glass_code || form.custom_glass_unit_price == null || !form.custom_glass_thickness_mm)) return setValidation('Vidro personalizado exige código, preço por m² e espessura.')
+    if (form.panel_mode === 'SUPERIOR VIDRO/INFERIOR PAINEL' && !form.mixed_split_from_bottom_mm) return setValidation('Informe a altura da divisão do modo misto.')
+    if (usesWindowLock && !form.window_lock_length_mm) return setValidation('Informe o comprimento da fechadura de janela.')
+    if (form.shutter && form.panel_mode !== 'VIDRO INTEIRO') return setValidation('Persiana GR exige preenchimento VIDRO INTEIRO.')
+    if (form.shutter?.mode === 'MANUAL EM 2 PAINÉIS COM EIXOS INDEPENDENTES' && form.leaf_count !== 2) return setValidation('Persiana em 2 painéis com eixos independentes exige GR de 2 folhas.')
+    setValidation('')
+    onSave({
+      ...form,
+      family: 'GR',
+      id: item?.id || crypto.randomUUID(),
+      cremona_description: usesCremona ? form.cremona_description : null,
+      window_lock_length_mm: usesWindowLock ? form.window_lock_length_mm : null,
+      mixed_split_from_bottom_mm: form.panel_mode === 'SUPERIOR VIDRO/INFERIOR PAINEL' ? form.mixed_split_from_bottom_mm : null,
+      glass_description: needsGlass ? form.glass_description : null,
+      custom_glass_code: needsGlass && customGlass ? form.custom_glass_code : null,
+      custom_glass_unit_price: needsGlass && customGlass ? form.custom_glass_unit_price : null,
+      custom_glass_thickness_mm: needsGlass && customGlass ? form.custom_glass_thickness_mm : null,
+      bottom_flag_vertical_transoms: form.bottom_flag_height_mm ? form.bottom_flag_vertical_transoms : 0,
+      top_flag_vertical_transoms: form.top_flag_height_mm ? form.top_flag_vertical_transoms : 0,
+    })
+  }
+  return (
+    <div className="modal-backdrop" onMouseDown={onClose}>
+      <form className="modal modal-large" onSubmit={submit} onMouseDown={(event) => event.stopPropagation()}>
+        <div className="modal-head">
+          <div><strong>{item ? 'Editar Modelo Giro GR' : 'Inserir Modelo Giro GR'}</strong><span>Fase 25 final · GR_ENGINE_0.25.0</span></div>
+          <button type="button" onClick={onClose}>×</button>
+        </div>
+        <div className="modal-scroll">
+          {validation && <div className="error-banner compact">⚠ {validation}</div>}
+          <FieldSection title="Medidas e sistema">
+            <label>Largura (mm)<input type="number" min="1" value={form.width_mm} onChange={set('width_mm')} /></label>
+            <label>Altura (mm)<input type="number" min="1" value={form.height_mm} onChange={set('height_mm')} /></label>
+            <label>Quantidade<input type="number" min="1" value={form.quantity} onChange={set('quantity')} /></label>
+            <label>Folhas<select value={form.leaf_count} onChange={set('leaf_count')}>{options.leaf_counts.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+            <label className="span-2">Tipo físico da folha<select value={form.leaf_system} onChange={set('leaf_system')}>{options.leaf_systems.map((row) => <option key={row.value} value={row.value}>{row.label}</option>)}</select></label>
+            <label>Aplicação comercial<select value={form.application} onChange={set('application')}>{options.applications.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Preenchimento<select value={form.panel_mode} onChange={set('panel_mode')}>{options.panel_modes.map((value) => <option key={value}>{value}</option>)}</select></label>
+            {form.panel_mode === 'SUPERIOR VIDRO/INFERIOR PAINEL' && <label>Divisão desde a base (mm)<input type="number" min="1" value={form.mixed_split_from_bottom_mm || ''} onChange={set('mixed_split_from_bottom_mm')} /></label>}
+          </FieldSection>
+          <FieldSection title="Vidro">
+            <label className="span-2">Vidro<select value={customGlass ? '__CUSTOM__' : (form.glass_description || '')} onChange={setCatalogGlass}><option value="">Sem vidro na folha</option>{options.glasses.map((glass) => <option key={`${glass.code || ''}-${glass.description}`} value={glass.description}>{glass.description}{glass.price != null ? ` · ${money(glass.price)}/m²` : ''}</option>)}<option value="__CUSTOM__">Outro vidro / preço manual…</option></select></label>
+            {customGlass && <label className="span-2">Descrição<input value={form.glass_description || ''} onChange={set('glass_description')} /></label>}
+            {customGlass && <label>Código<input value={form.custom_glass_code || ''} onChange={set('custom_glass_code')} /></label>}
+            {customGlass && <label>Preço por m²<input type="number" min="0" step="0.01" value={form.custom_glass_unit_price ?? ''} onChange={set('custom_glass_unit_price')} /></label>}
+            {customGlass && <label>Espessura (mm)<input type="number" min="0.1" max="34.9" step="0.1" value={form.custom_glass_thickness_mm ?? ''} onChange={set('custom_glass_thickness_mm')} /></label>}
+            <label className="checkbox-row"><input type="checkbox" checked={form.screen_enabled} onChange={set('screen_enabled')} /> Tela recolhível TL3</label>
+          </FieldSection>
+          <FieldSection title="Bandeiras integradas">
+            <label>Altura inferior (mm)<input type="number" min="0" value={form.bottom_flag_height_mm || 0} onChange={set('bottom_flag_height_mm')} /></label>
+            <label>Divisões verticais inferiores<input type="number" min="0" value={form.bottom_flag_vertical_transoms || 0} onChange={set('bottom_flag_vertical_transoms')} /></label>
+            <label>Altura superior (mm)<input type="number" min="0" value={form.top_flag_height_mm || 0} onChange={set('top_flag_height_mm')} /></label>
+            <label>Divisões verticais superiores<input type="number" min="0" value={form.top_flag_vertical_transoms || 0} onChange={set('top_flag_vertical_transoms')} /></label>
+            <div className="info-note">A ORCS GR não possui divisões horizontais de bandeira; a migração mantém apenas a matriz comprovada.</div>
+          </FieldSection>
+          <FieldSection title="Fechamento e ferragens">
+            <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{closureOptions.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Dobradiça<select value={form.hinge_description} onChange={set('hinge_description')}>{options.hinges.map((value) => <option key={value}>{value}</option>)}</select></label>
+            {usesCremona && <label>Cremona<select value={form.cremona_description || ''} onChange={set('cremona_description')}><option value="">Selecione</option>{cremonaOptions.map((value) => <option key={value}>{value}</option>)}</select></label>}
+            {usesWindowLock && <label>Comprimento da fechadura (mm)<input type="number" min="1" value={form.window_lock_length_mm || ''} onChange={set('window_lock_length_mm')} /></label>}
+            {usesWindowLock && <div className="info-note">Fechadura de janela sem chave e sem cilindro. O comprimento é escolhido para cada orçamento.</div>}
+          </FieldSection>
+          <FieldSection title="Persiana">
+            <label className="span-2">Modo<select value={form.shutter?.mode || 'SEM PERSIANA'} onChange={setShutter}><option>SEM PERSIANA</option>{(options.shutter?.modes || []).map((value) => <option key={value}>{value}</option>)}</select></label>
+          </FieldSection>
+        </div>
+        <div className="modal-actions"><button type="button" className="secondary" onClick={onClose}>Cancelar</button><button className="primary" type="submit">{item ? 'Salvar e recalcular' : 'Adicionar e recalcular'}</button></div>
+      </form>
+    </div>
+  )
+}
+
 function AddItemModal({ onClose, onSave, options, item }) {
   const [form, setForm] = useState(() => ({
     ...baseDefaults,
@@ -599,22 +813,26 @@ export default function App() {
   const [editingItem, setEditingItem] = useState(null)
   const [options, setOptions] = useState(fallbackOptions)
   const [maximArOptions, setMaximArOptions] = useState(fallbackMaximArOptions)
+  const [grOptions, setGrOptions] = useState(fallbackGrOptions)
 
   useEffect(() => { localStorage.setItem('software-esquadrias-items', JSON.stringify(items)) }, [items])
   useEffect(() => { localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote)) }, [quote])
 
   const loadOptions = async () => {
     try {
-      const [crResponse, maximArResponse] = await Promise.all([
+      const [crResponse, maximArResponse, grResponse] = await Promise.all([
         fetch(`${API_URL}/api/v1/engine/cr/options`),
         fetch(`${API_URL}/api/v1/engine/maxim-ar/options`),
+        fetch(`${API_URL}/api/v1/engine/gr/options`),
       ])
-      if (!crResponse.ok || !maximArResponse.ok) throw new Error('Falha ao carregar opções')
+      if (!crResponse.ok || !maximArResponse.ok || !grResponse.ok) throw new Error('Falha ao carregar opções')
       setOptions(await crResponse.json())
       setMaximArOptions(await maximArResponse.json())
+      setGrOptions(await grResponse.json())
     } catch {
       setOptions(fallbackOptions)
       setMaximArOptions(fallbackMaximArOptions)
+      setGrOptions(fallbackGrOptions)
     }
   }
 
@@ -652,6 +870,7 @@ export default function App() {
 
   const openNewCR = () => { setEditingItem(null); setModalFamily('CR'); setModalOpen(true) }
   const openNewMaximAr = () => { setEditingItem(null); setModalFamily('MAXIM_AR'); setModalOpen(true) }
+  const openNewGr = () => { setEditingItem(null); setModalFamily('GR'); setModalOpen(true) }
   const openEdit = (item) => { setEditingItem(item); setModalFamily(item.family || 'CR'); setModalOpen(true) }
 
   const resetBaseline = () => {
@@ -660,7 +879,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddMaximAr={openNewMaximAr} />
+      <Sidebar onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -669,7 +888,7 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onEdit={openEdit} />
+              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onEdit={openEdit} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />
@@ -678,7 +897,9 @@ export default function App() {
       </div>
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
-        : <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />)}
+        : modalFamily === 'GR'
+          ? <GrModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={grOptions} item={editingItem} />
+          : <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />)}
     </div>
   )
 }

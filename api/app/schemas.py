@@ -128,16 +128,19 @@ class GrItemRequest(BaseModel):
         "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE",
         "MAÇANETA DUPLA COM FECHADURA MULTIPONTO E CHAVE",
         "MAÇANETA COM CREMONA SEM CHAVE",
+        "MAÇANETA COM CHAVE E CREMONA",
+        "MAÇANETA COM CREMONA",
     ] = "MAÇANETA DUPLA COM FECHADURA MONOPONTO E CHAVE"
-    cremona_description: Literal[
-        "CREMONA 2 PONTOS COMP. 800mm E:15mm",
-        "CREMONA OSCILO/GIRO COMP. 400mm E:15mm",
-        "CREMONA OSCILO/GIRO COMP. 900mm E:15mm",
-        "CREMONA OSCILO/GIRO COMP. 1100mm E:15mm",
-        "CREMONA OSCILO/GIRO COMP. 1400mm E:15mm",
-        "CREMONA OSCILO/GIRO COMP. 1900mm E:15mm",
-    ] | None = None
-    hinge_description: Literal["DOBRADIÇA 90MM", "DOBRADIÇA SISTEMA OB"] = "DOBRADIÇA 90MM"
+    cremona_description: str | None = None
+    hinge_description: Literal[
+        "DOBRADIÇA 90MM",
+        "DOBRADIÇA SISTEMA OB",
+        "DOBRADIÇA PÊRNIO",
+    ] = "DOBRADIÇA 90MM"
+    window_lock_length_mm: float | None = Field(default=None, gt=0)
+    custom_glass_code: str | None = None
+    custom_glass_unit_price: float | None = Field(default=None, ge=0)
+    custom_glass_thickness_mm: float | None = Field(default=None, gt=0, lt=35)
     shutter: ShutterRequest | None = None
     screen_enabled: bool = False
     top_flag_height_mm: float = Field(default=0.0, ge=0)
@@ -150,6 +153,11 @@ class GrItemRequest(BaseModel):
     external_finish: Literal["BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
 
 
+class GrPurchasePlanRequest(BaseModel):
+    items: list[GrItemRequest] = Field(min_length=1)
+    kerf_mm: float = Field(default=0.0, ge=0)
+
+
 class UnifiedPurchasePlanRequest(BaseModel):
-    items: list[CRItemRequest | MaximArItemRequest] = Field(min_length=1)
+    items: list[CRItemRequest | MaximArItemRequest | GrItemRequest] = Field(min_length=1)
     kerf_mm: float = Field(default=0.0, ge=0)

@@ -9,7 +9,7 @@ from .models import (
 )
 from .sliding import calculate_sliding
 from .maxim_ar import calculate_maxim_ar
-from .gr_v24 import (
+from .gr_v25 import (
     GrConfiguration, GR_COVERAGE_AUDIT, GR_ENGINE_VERSION, calculate_gr,
 )
 from .purchase import build_order_purchase_plan

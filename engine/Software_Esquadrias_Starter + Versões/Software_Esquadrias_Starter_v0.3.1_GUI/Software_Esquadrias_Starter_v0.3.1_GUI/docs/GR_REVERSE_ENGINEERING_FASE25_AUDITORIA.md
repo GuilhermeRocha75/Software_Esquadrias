@@ -2,6 +2,9 @@
 
 Status: **auditoria reproduzível; nenhuma fórmula da Engine alterada**.
 
+> Este é o registro histórico da auditoria anterior à implementação. O
+> fechamento da fase está em `GR_REVERSE_ENGINEERING_FASE25_FINAL.md`.
+
 ## Fonte e método
 
 - fonte oficial: `SOFTBETA_ PERFIL PRE DELL AMANDA.xlsm`;
