@@ -30,7 +30,11 @@ function Test-RetryableExcelComError($exception) {
 function Invoke-ExcelComRetry([scriptblock]$Action, [int]$Attempts = 120) {
     for ($attempt = 1; $attempt -le $Attempts; $attempt++) {
         try {
-            return & $Action
+            $result = & $Action
+            if ($null -ne $result) {
+                Write-Output -NoEnumerate $result
+            }
+            return
         } catch {
             if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq $Attempts) {
                 throw
@@ -42,7 +46,7 @@ function Invoke-ExcelComRetry([scriptblock]$Action, [int]$Attempts = 120) {
 
 function Get-Cell($ws, [string]$address) {
     $cell = Invoke-ExcelComRetry { $ws.Range($address) }
-    try { return Invoke-ExcelComRetry { $cell.Value2 } }
+    try { return (Invoke-ExcelComRetry { $cell.Value2 }) }
     finally { [void][Runtime.InteropServices.Marshal]::ReleaseComObject($cell) }
 }
 function Set-Cell($ws, [string]$address, $value) {
