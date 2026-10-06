@@ -62,7 +62,11 @@ function Set-Cell($ws, [string]$address, $value) {
         $cell = $null
         try {
             $cell = $ws.Range($address)
-            $cell.Value2 = $value
+            if ($null -eq $value -or $value -is [DBNull]) {
+                $cell.ClearContents()
+            } else {
+                $cell.Value2 = $value
+            }
             return
         } catch {
             if (-not (Test-RetryableExcelComError $_.Exception) -or $attempt -eq 120) {
@@ -113,6 +117,7 @@ try {
         $stage = "copy ORCS row $row"
         if ((Get-Cell $orcs "X$row") -ne 'GR') { throw "ORCS row $row is not GR" }
         foreach ($col in $columns) {
+            $stage = "copy ORCS row $row column $col"
             $value = Get-Cell $orcs "$col$row"
             Set-Cell $sheet "${col}2" $value
         }
