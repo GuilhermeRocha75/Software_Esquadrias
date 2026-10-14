@@ -1,0 +1,52 @@
+{
+  "audit_version": "GR_FORMULA_AUDIT_0.25.0",
+  "source_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "method": "OpenXML formula interpreter without Microsoft Office",
+  "rows_evaluated": 1684,
+  "numeric_total_rows": 1659,
+  "formula_error_rows": 25,
+  "errors": {
+    "#N/A": {
+      "count": 24,
+      "reason": "uncatalogued glass descriptions already handled by the configurable custom-glass contract",
+      "orcs_rows": [
+        1177,
+        8179,
+        8577,
+        8750,
+        10590,
+        11268,
+        11544,
+        12458,
+        13503,
+        13585,
+        13699,
+        13702,
+        14362,
+        14826,
+        15152,
+        15153,
+        16228,
+        16229,
+        16231,
+        16233,
+        16298,
+        16299,
+        16502,
+        17071
+      ]
+    },
+    "#VALUE!": {
+      "count": 1,
+      "reason": "invalid legacy source row; retained for manual review",
+      "orcs_rows": [15816]
+    }
+  },
+  "canonical_comparison": {
+    "rows": [270, 11480, 14891, 15295, 16527, 18132, 18545],
+    "passed": 7,
+    "failed": 0,
+    "policy": "literal equality or an explicitly frozen physical correction"
+  },
+  "privacy": "Only technical ORCS columns D:I and K:AK plus row identifiers were read or emitted."
+}
