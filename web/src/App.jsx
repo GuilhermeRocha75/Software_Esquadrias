@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
+import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
 
-const API_URL = (import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000')).replace(/\/$/, '')
+const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
 const baseDefaults = {
   family: 'CR',
@@ -269,8 +270,8 @@ function Header({ apiOnline }) {
       <select className="company-select"><option>Empresa Demo</option></select>
       <div className="global-search">⌕ <input placeholder="Buscar clientes, orçamentos, modelos, itens..." /><kbd>Ctrl + K</kbd></div>
       <div className="header-actions">
-        <span className={`api-dot ${apiOnline ? 'online' : 'offline'}`}></span>
-        <span className="api-label">API {apiOnline ? 'online' : 'offline'}</span>
+        <span className={`api-dot ${apiOnline === null ? 'checking' : apiOnline ? 'online' : 'offline'}`}></span>
+        <span className="api-label" role="status">API {apiOnline === null ? 'verificando…' : apiOnline ? 'online' : 'offline'}</span>
         <div className="avatar">AD</div>
         <div><strong>Administrador</strong><small>admin@demo.com</small></div>
       </div>
@@ -810,7 +811,7 @@ export default function App() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [apiOnline, setApiOnline] = useState(false)
+  const [apiOnline, setApiOnline] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
@@ -856,13 +857,22 @@ export default function App() {
         throw new Error(body?.detail || `API respondeu ${response.status}`)
       }
       const result = await response.json()
-      setData(result); setApiOnline(true)
+      setData(result)
     } catch (err) {
-      setApiOnline(false); setError(`Não foi possível calcular: ${err.message}. Confirme se a API está rodando na porta 8000.`)
+      setData(null); setError(`Não foi possível calcular: ${err.message}.`)
     } finally { setLoading(false) }
   }
 
-  useEffect(() => { loadOptions(); calculate(items) }, [])
+  useEffect(() => {
+    let wasOnline = false
+    return monitorApiHealth(API_URL, (online) => {
+      setApiOnline(online)
+      if (online && !wasOnline) loadOptions()
+      wasOnline = online
+    })
+  }, [])
+
+  useEffect(() => { calculate(items) }, [])
 
   const removeItem = (id) => {
     const next = items.filter((item) => item.id !== id)
