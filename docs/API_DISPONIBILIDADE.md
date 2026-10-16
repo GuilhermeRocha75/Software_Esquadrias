@@ -21,6 +21,9 @@ marcava a API como online. Um orçamento vazio permanecia offline e uma resposta
 - O desenvolvimento usa o proxy do Vite: navegador → `127.0.0.1:5173/health`
   e `/api/*` → FastAPI em `127.0.0.1:8000`. Isso mantém a mesma origem e evita
   depender de configurações CORS de produção no desenvolvimento.
+- O teste de porta do iniciador agora confirma a conexão com `EndConnect`: uma
+  tentativa encerrada por conexão recusada não significa porta ocupada. O teste
+  `tools/test_launcher_ports.ps1` verifica porta livre/ocupada no Windows CI.
 - O iniciador Windows define essa mesma origem explicitamente e protege o
   caminho do Vite com aspas quando houver espaços. O script é salvo com BOM
   UTF-8 para as mensagens funcionarem também no Windows PowerShell 5.1.

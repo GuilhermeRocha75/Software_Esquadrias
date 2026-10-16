@@ -28,7 +28,11 @@ function Test-PortBusy([int]$port) {
     $client = New-Object Net.Sockets.TcpClient
     try {
         $attempt = $client.BeginConnect('127.0.0.1', $port, $null, $null)
-        return $attempt.AsyncWaitHandle.WaitOne(300)
+        if (-not $attempt.AsyncWaitHandle.WaitOne(300)) { return $false }
+        # WaitOne apenas informa que a tentativa terminou; EndConnect confirma
+        # se houve conexao ou lanca a excecao de conexao recusada.
+        $client.EndConnect($attempt)
+        return $client.Connected
     } catch { return $false }
     finally { $client.Close() }
 }
