@@ -35,3 +35,6 @@ __all__ = [
     "FINISH_OPTIONS", "BAR_STOCK_CODES", "DEFAULT_BAR_LENGTH_MM",
     "SHUTTER_MODES", "SHUTTER_BOX_OPTIONS", "SHUTTER_SLAT_OPTIONS",
 ]
+
+from .fixo import FixoConfiguration, FIXO_ENGINE_VERSION, FIXO_GLASS_OPTIONS, FIXO_FINISHES, calculate_fixo
+__all__ += ["FixoConfiguration", "FIXO_ENGINE_VERSION", "FIXO_GLASS_OPTIONS", "FIXO_FINISHES", "calculate_fixo"]
