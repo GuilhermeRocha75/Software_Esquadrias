@@ -2,7 +2,7 @@ name: Software Esquadrias CI
 
 on:
   push:
-    branches: [feature/maxim-ar-engine-v3, feature/gr-engine-v1]
+    branches: [feature/maxim-ar-engine-v3, feature/gr-engine-v1, fix/api-availability]
   workflow_dispatch:
     inputs:
       target_sha:
@@ -156,3 +156,16 @@ jobs:
             web-test-ci.log
             web-ci.log
           if-no-files-found: error
+
+  launcher-windows:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout requested commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_sha || github.sha }}
+          persist-credentials: false
+      - name: Validate launcher port detection on Windows PowerShell
+        shell: powershell
+        run: .\tools\test_launcher_ports.ps1
