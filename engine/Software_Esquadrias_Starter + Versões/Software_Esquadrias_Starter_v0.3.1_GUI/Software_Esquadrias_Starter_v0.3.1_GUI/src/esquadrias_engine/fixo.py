@@ -110,6 +110,8 @@ def calculate_fixo(cfg: FixoConfiguration) -> CalculationResult:
     count = columns * rows
     area = glass_w * glass_h / 1_000_000
     glass_cost = area * count * glass["price"]
+    if not math.isfinite(area) or not math.isfinite(glass_cost):
+        raise ValueError("Dimensões FX excedem a capacidade numérica do cálculo.")
     bom.append(BomComponent("VIDROS", "Vidros", glass["code"], glass["description"], "m²", None,
                             glass_w, glass_h, area, float(count), float(count * cfg.quantity),
                             glass["price"], glass_cost, "FX!27"))
@@ -118,6 +120,8 @@ def calculate_fixo(cfg: FixoConfiguration) -> CalculationResult:
     breakdown = {group: sum(item.cost_per_unit_product for item in bom if item.category == group)
                  for group in ("PERFIS PRINCIPAIS", "BAGUETES", "ACABAMENTOS", "REFORÇOS", "VIDROS", "ACESSÓRIOS")}
     total = sum(item.cost_per_unit_product for item in bom)
+    if not math.isfinite(total) or any(not math.isfinite(value) for value in breakdown.values()):
+        raise ValueError("Dimensões FX excedem a capacidade numérica do cálculo.")
     breakdown["TOTAL"] = total
     openings = [GridOpening(f"FX:{row}:{col}", row, col, opening_w, opening_h, 1)
                 for row in range(rows) for col in range(columns)]

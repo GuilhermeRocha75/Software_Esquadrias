@@ -151,6 +151,11 @@ class FixoTests(unittest.TestCase):
             report, _ = audit(oracle)
         self.assertEqual(report["counts"], {"UNEXPECTED_ENGINE_REJECTION": 1})
 
+    def test_extreme_finite_dimensions_reject_overflow_instead_of_returning_infinity(self):
+        for width, height in ((1e200, 1e200), (1e308, 1e308)):
+            with self.subTest(dimensions=(width, height)), self.assertRaisesRegex(ValueError, "capacidade numérica"):
+                calculate_fixo(FixoConfiguration(width, height))
+
 
 if __name__ == "__main__":
     unittest.main()

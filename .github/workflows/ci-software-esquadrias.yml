@@ -126,6 +126,23 @@ jobs:
           echo "web_exit_code=$code" >> software-esquadrias-ci-evidence.txt
           exit "$code"
 
+      - name: Install Chromium for browser validation
+        working-directory: web
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser integration suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'web_e2e_command=npm run test:e2e (working-directory: web)' >> software-esquadrias-ci-evidence.txt
+          set +e
+          (cd web && npm run test:e2e) > web-e2e-ci.log 2>&1
+          code=$?
+          set -e
+          cat web-e2e-ci.log
+          echo "web_e2e_exit_code=$code" >> software-esquadrias-ci-evidence.txt
+          exit "$code"
+
       - name: Publish evidence summary
         if: always()
         shell: bash
@@ -155,6 +172,7 @@ jobs:
             api-ci.log
             web-test-ci.log
             web-ci.log
+            web-e2e-ci.log
           if-no-files-found: error
 
   launcher-windows:

@@ -34,7 +34,8 @@ class FixoEndpointTests(unittest.TestCase):
                 FixoItemRequest(**{"width_mm": 1200, "height_mm": 1000, **extra})
 
     def test_source_errors_and_impossible_openings_return_422(self):
-        for extra in ({"glass_description": "VIDRO NÃO CADASTRADO"}, {"width_mm": 150, "vertical_transoms": 2}):
+        for extra in ({"glass_description": "VIDRO NÃO CADASTRADO"}, {"width_mm": 150, "vertical_transoms": 2},
+                      {"width_mm": 1e200, "height_mm": 1e200}):
             with self.subTest(extra=extra), self.assertRaises(HTTPException) as caught:
                 calculate_fixo_endpoint(FixoItemRequest(**{"width_mm": 1200, "height_mm": 1000, **extra}))
             self.assertEqual(caught.exception.status_code, 422)

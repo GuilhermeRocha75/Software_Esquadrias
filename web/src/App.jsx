@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
@@ -297,7 +297,7 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit }) {
+function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit, calculated }) {
   return (
     <section className="card items-card">
       <div className="section-head">
@@ -320,7 +320,7 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
                 <td>{item.glass_description?.replace(' FLOAT ', ' ') || 'Painel'}</td>
                 <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
                 <td>{item.shutter?.mode && item.shutter.mode !== 'SEM PERSIANA' ? item.shutter.mode : (item.shutter_enabled ? 'Legado' : 'Não')}</td>
-                <td><span className="status">● Calculado</span></td>
+                <td><span className={calculated ? "status" : "status-pending"}>{calculated ? "● Calculado" : "Não calculado"}</span></td>
                 <td><button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
               </tr>
             ))}
@@ -809,6 +809,7 @@ export default function App() {
   const [margin, setMargin] = useState(25)
   const [activeTab, setActiveTab] = useState('Custo por Grupo')
   const [data, setData] = useState(null)
+  const calculationVersion = useRef(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(null)
@@ -845,8 +846,9 @@ export default function App() {
   }
 
   const calculate = async (nextItems = items) => {
-    if (!nextItems.length) { setData(null); return }
-    setLoading(true); setError('')
+    const version = ++calculationVersion.current
+    if (!nextItems.length) { setData(null); setError(''); setLoading(false); return }
+    setLoading(true); setError(''); setData(null)
     try {
       const payload = { items: nextItems.map(({ id, ...item }) => ({ ...item, family: item.family || 'CR' })) }
       const response = await fetch(`${API_URL}/api/v1/purchase-plans/calculate-all`, {
@@ -857,10 +859,14 @@ export default function App() {
         throw new Error(body?.detail || `API respondeu ${response.status}`)
       }
       const result = await response.json()
-      setData(result)
+      if (version === calculationVersion.current) setData(result)
     } catch (err) {
-      setData(null); setError(`Não foi possível calcular: ${err.message}.`)
-    } finally { setLoading(false) }
+      if (version === calculationVersion.current) {
+        setData(null); setError(`Não foi possível calcular: ${err.message}.`)
+      }
+    } finally {
+      if (version === calculationVersion.current) setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -906,7 +912,7 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} />
+              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />

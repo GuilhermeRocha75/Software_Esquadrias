@@ -120,12 +120,13 @@ As suítes Engine/API e os testes/build Web são executados no workflow
 `ci-software-esquadrias.yml`, incluindo pushes desta branch. Os testes técnicos
 rodam sem o XLSM privado a partir das evidências congeladas.
 
-Validação local em 16/10/2026: 364 testes Engine, 75 testes API, 3 testes Web e
-build de produção aprovados. Smoke HTTP/ASGI cobriu cálculo, pedido, compra e
-rejeições 422. O componente React foi renderizado em servidor com os campos e
-valores iniciais esperados. A conferência visual/interativa em navegador ficou
-pendente: o navegador local não estava instalado e seu download não concluiu.
-Não se apresenta essa renderização como teste visual ou de ponta a ponta.
+Validação ampliada em 16/10/2026: 365 testes Engine, 75 testes API, 8 testes
+unitários Web, build de produção e 8 testes em navegador real aprovados.
+Foram examinadas mais 2.824 combinações, sem divergências nos cálculos válidos.
+Os fluxos de inclusão, edição, persistência, exclusão, erro, resposta fora de
+ordem e uso em celular foram exercitados com a API real.
+Veja [VALIDACAO_FIXO_V1.md](VALIDACAO_FIXO_V1.md) para os resultados, correções
+de validação e casos de conferência funcional.
 
 ## Estado para merge
 
