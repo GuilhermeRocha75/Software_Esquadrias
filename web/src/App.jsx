@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 import { sidebarModelAction } from './sidebarActions.js'
+import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 
 const API_URL = (import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000')).replace(/\/$/, '')
 
@@ -226,7 +227,7 @@ const money = (value = 0) =>
 const number = (value = 0, digits = 2) =>
   new Intl.NumberFormat('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(Number(value || 0))
 
-const modelLabel = (item) => ({
+const modelLabel = (item) => item.family === 'FX' ? 'Painel Fixo' : ({
   PRIME_WINDOW_42x66: 'Correr Prime 42x66',
   PRIME_DOOR_42x88: 'Correr Prime 42x88',
   DESIGN_DOOR_60x111: 'Correr Design 60x111',
@@ -237,7 +238,7 @@ const modelLabel = (item) => ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddCR, onAddMaximAr, onAddGr }) {
+function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -251,7 +252,7 @@ function Sidebar({ onAddCR, onAddMaximAr, onAddGr }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -295,12 +296,12 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onEdit }) {
+function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit }) {
   return (
     <section className="card items-card">
       <div className="section-head">
         <div className="section-title">Itens do Orçamento</div>
-        <div className="page-actions"><button className="secondary" onClick={onAddGr}>+ Inserir Giro GR</button><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
+        <div className="page-actions"><button className="secondary" onClick={onAddFixo}>+ Inserir Fixo</button><button className="secondary" onClick={onAddGr}>+ Inserir Giro GR</button><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
       </div>
       <div className="table-scroll">
         <table>
@@ -310,8 +311,8 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onEdit })
               <tr key={item.id}>
                 <td><strong>{String(index + 1).padStart(2, '0')}</strong></td>
                 <td>{modelLabel(item)}</td>
-                <td>{item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
-                <td>{item.leaf_count}</td>
+                <td>{item.family === 'FX' ? 'Fixo' : item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
+                <td>{item.family === 'FX' ? '—' : item.leaf_count}</td>
                 <td>{item.width_mm}</td>
                 <td>{item.height_mm}</td>
                 <td>{item.quantity}</td>
@@ -816,25 +817,29 @@ export default function App() {
   const [options, setOptions] = useState(fallbackOptions)
   const [maximArOptions, setMaximArOptions] = useState(fallbackMaximArOptions)
   const [grOptions, setGrOptions] = useState(fallbackGrOptions)
+  const [fixoOptions, setFixoOptions] = useState(fallbackFixoOptions)
 
   useEffect(() => { localStorage.setItem('software-esquadrias-items', JSON.stringify(items)) }, [items])
   useEffect(() => { localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote)) }, [quote])
 
   const loadOptions = async () => {
     try {
-      const [crResponse, maximArResponse, grResponse] = await Promise.all([
+      const [crResponse, maximArResponse, grResponse, fixoResponse] = await Promise.all([
         fetch(`${API_URL}/api/v1/engine/cr/options`),
         fetch(`${API_URL}/api/v1/engine/maxim-ar/options`),
         fetch(`${API_URL}/api/v1/engine/gr/options`),
+        fetch(`${API_URL}/api/v1/engine/fixo/options`),
       ])
-      if (!crResponse.ok || !maximArResponse.ok || !grResponse.ok) throw new Error('Falha ao carregar opções')
+      if (!crResponse.ok || !maximArResponse.ok || !grResponse.ok || !fixoResponse.ok) throw new Error('Falha ao carregar opções')
       setOptions(await crResponse.json())
       setMaximArOptions(await maximArResponse.json())
       setGrOptions(await grResponse.json())
+      setFixoOptions(await fixoResponse.json())
     } catch {
       setOptions(fallbackOptions)
       setMaximArOptions(fallbackMaximArOptions)
       setGrOptions(fallbackGrOptions)
+      setFixoOptions(fallbackFixoOptions)
     }
   }
 
@@ -872,6 +877,7 @@ export default function App() {
 
   const openNewCR = () => { setEditingItem(null); setModalFamily('CR'); setModalOpen(true) }
   const openNewMaximAr = () => { setEditingItem(null); setModalFamily('MAXIM_AR'); setModalOpen(true) }
+  const openNewFixo = () => { setEditingItem(null); setModalFamily('FX'); setModalOpen(true) }
   const openNewGr = () => { setEditingItem(null); setModalFamily('GR'); setModalOpen(true) }
   const openEdit = (item) => { setEditingItem(item); setModalFamily(item.family || 'CR'); setModalOpen(true) }
 
@@ -881,7 +887,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} />
+      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -890,7 +896,7 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onEdit={openEdit} />
+              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />
@@ -899,6 +905,8 @@ export default function App() {
       </div>
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
+        : modalFamily === 'FX'
+          ? <FixoModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={fixoOptions} item={editingItem} />
         : modalFamily === 'GR'
           ? <GrModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={grOptions} item={editingItem} />
           : <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />)}

@@ -30,3 +30,13 @@ test('os três modelos da lateral mantêm ações independentes', () => {
   assert.equal(sidebarModelAction('Inserir Modelo Giro', handlers)(), 'GR')
   assert.equal(sidebarModelAction('Dashboard', handlers), undefined)
 })
+
+test('Fixo abre seu configurador sem executar as ações dos outros modelos', () => {
+  const opened = []
+  const handlers = {
+    onAddCR: () => opened.push('CR'), onAddMaximAr: () => opened.push('MAXIM_AR'),
+    onAddGr: () => opened.push('GR'), onAddFixo: () => opened.push('FX'),
+  }
+  sidebarModelAction('Inserir Modelo Fixo', handlers)()
+  assert.deepEqual(opened, ['FX'])
+})
