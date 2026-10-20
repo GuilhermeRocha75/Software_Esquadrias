@@ -53,13 +53,29 @@ class FixoEndpointTests(unittest.TestCase):
         self.assertTrue(result["items"][0]["engine_version"].startswith("FX_"))
         self.assertAlmostEqual(result["purchase_plan"]["technical_total"], sum(item["order_technical_cost"] for item in result["items"]), places=5)
 
-    def test_fixo_purchase_supports_stock_length_and_rejects_oversized_cut(self):
-        item = FixoItemRequest(width_mm=7500, height_mm=2500, vertical_transoms=3)
-        with self.assertRaises(HTTPException) as caught:
-            calculate_fixo_purchase_plan(FixoPurchasePlanRequest(items=[item]))
-        self.assertEqual(caught.exception.status_code, 422)
-        result = calculate_fixo_purchase_plan(FixoPurchasePlanRequest(items=[item], stock_length_mm=8000, kerf_mm=3))
-        self.assertTrue(all(line["stock_length_mm"] == 8000 for line in result["purchase_plan"]["lines"]))
+    def test_fixo_purchase_preserves_oversized_piece_for_manual_splice(self):
+        from fastapi.testclient import TestClient
+        from api.app.main import app
+        client = TestClient(app)
+        item = {"family": "FX", "width_mm": 7500, "height_mm": 2500, "vertical_transoms": 3, "quantity": 2}
+        for endpoint in ("/api/v1/engine/fixo/purchase-plan", "/api/v1/purchase-plans/calculate-all"):
+            response = client.post(endpoint, json={"items": [
+                {"family": "FX", "width_mm": 1200, "height_mm": 1000}, item]})
+            self.assertEqual(response.status_code, 200, response.text)
+            result = response.json()
+            plan = result["purchase_plan"]
+            self.assertAlmostEqual(plan["technical_total"], sum(x["order_technical_cost"] for x in result["items"]), places=5)
+            reserves = [bar for line in plan["lines"] for bar in line["bars"] if "stock_bars_required" in bar]
+            self.assertTrue(reserves)
+            for bar in reserves:
+                self.assertEqual(len(bar["pieces"]), 1)
+                self.assertGreater(bar["pieces"][0]["length_mm"], 5900)
+                self.assertEqual(bar["pieces"][0]["source_item"], 2)
+                self.assertGreater(bar["stock_bars_required"], 1)
+        configured = calculate_fixo_purchase_plan(FixoPurchasePlanRequest(items=[FixoItemRequest(**item)], stock_length_mm=8000, kerf_mm=3))
+        self.assertTrue(all(line["stock_length_mm"] == 8000 for line in configured["purchase_plan"]["lines"]))
+        self.assertFalse(configured["purchase_plan"]["warnings"])
+
 
 
 if __name__ == "__main__":

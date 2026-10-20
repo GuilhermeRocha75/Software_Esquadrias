@@ -93,13 +93,39 @@ class FixoTests(unittest.TestCase):
             for bar in line.bars:
                 self.assertLessEqual(bar.used_mm, bar.stock_length_mm)
 
-    def test_purchase_rejects_oversize_without_changing_technical_calculation(self):
+    def test_purchase_preserves_integral_oversize_and_reserves_real_stock(self):
+        from esquadrias_engine.models import ManualSpliceAllocation
+        for width in (5900, 7500, 12000):
+            cfg = FixoConfiguration(width, 2500, quantity=2, vertical_transoms=3)
+            result = calculate_fixo(cfg)
+            original_bom = list(result.unit_bom)
+            plan = build_order_purchase_plan([(cfg, result)], kerf_mm=3)
+            self.assertAlmostEqual(plan.technical_total, result.unit_cost * 2, places=5)
+            self.assertEqual(result.unit_bom, original_bom)
+            self.assertTrue(any(w.code == "FX-MANUAL-SPLICE" for w in plan.warnings))
+            for line in plan.lines:
+                pieces = [piece for bar in line.bars for piece in bar.pieces]
+                expected = [comp.length_mm for comp in result.unit_bom
+                            if comp.material_code == line.material_code
+                            for _ in range(int(comp.quantity_order))]
+                self.assertEqual(sorted(p.length_mm for p in pieces), sorted(expected))
+                count = 0
+                for bar in line.bars:
+                    if isinstance(bar, ManualSpliceAllocation):
+                        self.assertEqual(len(bar.pieces), 1)
+                        self.assertEqual(bar.stock_bars_required, math.ceil(bar.used_mm / 5900))
+                        count += bar.stock_bars_required
+                        self.assertGreaterEqual(bar.leftover_mm, 0)
+                    else:
+                        count += 1
+                        self.assertLessEqual(bar.used_mm, 5900)
+                self.assertEqual(line.bars_required, count)
+                self.assertAlmostEqual(line.purchased_length_mm, count * 5900)
+                self.assertGreaterEqual(line.purchased_length_mm, line.consumed_length_mm + line.kerf_loss_mm)
+                self.assertAlmostEqual(line.purchase_cost, count * 5.9 * line.unit_price_per_m, places=5)
         cfg = FixoConfiguration(7500, 2500, vertical_transoms=3)
-        result = calculate_fixo(cfg)
-        self.assertGreater(result.unit_cost, 0)
-        with self.assertRaisesRegex(ValueError, "maior que a barra"):
-            build_order_purchase_plan([(cfg, result)])
-        self.assertTrue(build_order_purchase_plan([(cfg, result)], stock_length_mm=8000).lines)
+        plan = build_order_purchase_plan([(cfg, calculate_fixo(cfg))], stock_length_mm=8000)
+        self.assertFalse(any(w.code == "FX-MANUAL-SPLICE" for w in plan.warnings))
 
     def test_invalid_engine_inputs_are_rejected(self):
         cases = [{"width_mm": value} for value in (0, -1, float("nan"), float("inf"), True)]

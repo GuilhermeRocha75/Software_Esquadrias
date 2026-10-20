@@ -142,3 +142,23 @@ test('configurador Fixo permite inclusão em tela de celular', async ({ page }) 
   expect((await saveFixo(page)).status()).toBe(200)
   await expect(total(page)).toHaveText(money(cases[0].expected.order_technical_cost))
 })
+
+
+test('Fixo maior que a barra mantém peça integral e permite divisão pela fabricação', async ({ page }) => {
+  await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+  await fillFixo(page, { ...cases[0].configuration, width_mm: 7500, height_mm: 2500, vertical_transoms: 3, quantity: 2 })
+  const response = await saveFixo(page)
+  expect(response.status()).toBe(200)
+  const result = await response.json()
+  const expected = await page.request.post('/api/v1/engine/fixo/calculate', { data: {
+    family: 'FX', width_mm: 7500, height_mm: 2500, vertical_transoms: 3, quantity: 2,
+  } })
+  expect(expected.status()).toBe(200)
+  expect(result.items[0].order_technical_cost).toBe((await expected.json()).order_technical_cost)
+  await expect(fxRow(page)).toContainText('Calculado')
+  await expect(page.locator('.error-banner')).toHaveCount(0)
+  await page.getByRole('button', { name: 'Plano de Corte', exact: true }).click()
+  await expect(page.locator('.cut-label').filter({ hasText: 'divisão e emenda pela fabricação' }).first()).toBeVisible()
+  await expect(page.locator('.cut-pieces').filter({ hasText: '7.505 mm' }).first()).toBeVisible()
+  await page.screenshot({ path: test.info().outputPath('fixo-emenda.png') })
+})

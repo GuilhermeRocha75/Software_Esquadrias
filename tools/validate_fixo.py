@@ -12,16 +12,59 @@ import json
 from pathlib import Path
 
 from compare_fixo_formula_engine import (
-    FixoConfiguration, calculate_fixo, compare, audit, source_input_issues,
+    FixoConfiguration, calculate_fixo, compare, audit, source_input_issues, configuration,
 )
 from fixo_formula_oracle import FixoFormulaOracle
 from esquadrias_engine.fixo import FIXO_ENGINE_VERSION, FIXO_GLASS_OPTIONS
+from esquadrias_engine import build_order_purchase_plan
+from esquadrias_engine.models import ManualSpliceAllocation
+import math
 
 
 def inputs_for(cfg):
     return {"D": cfg.width_mm, "E": cfg.height_mm, "F": cfg.quantity,
             "K": cfg.glass_description, "S": cfg.internal_finish, "T": cfg.external_finish,
             "AJ": cfg.vertical_transoms, "AK": cfg.horizontal_transoms}
+
+
+def audit_purchase(oracle, historical):
+    failures, manual_rows, passed = [], [], 0
+    max_length = 0.0
+    for record in historical["cases"]:
+        if record["status"] != "PARITY_OK":
+            continue
+        row = record["orcs_row"]
+        cfg = configuration(oracle.technical_inputs(row))
+        result = calculate_fixo(cfg)
+        try:
+            plan = build_order_purchase_plan([(cfg, result)])
+            assert math.isclose(plan.technical_total, result.unit_cost * cfg.quantity, abs_tol=1e-6)
+            manual = []
+            for line in plan.lines:
+                actual = [p.length_mm for bar in line.bars for p in bar.pieces]
+                expected = [comp.length_mm for comp in result.unit_bom
+                            if comp.material_code == line.material_code
+                            for _ in range(int(comp.quantity_order))]
+                assert sorted(actual) == sorted(expected), line.material_code
+                assert line.purchased_length_mm >= line.consumed_length_mm + line.kerf_loss_mm - 1e-6
+                assert line.bars_required == sum(getattr(bar, "stock_bars_required", 1) for bar in line.bars)
+                for bar in line.bars:
+                    if isinstance(bar, ManualSpliceAllocation):
+                        assert len(bar.pieces) == 1
+                        assert bar.stock_bars_required == math.ceil(bar.used_mm / line.stock_length_mm)
+                        manual.append(bar.pieces[0].length_mm)
+                    assert bar.leftover_mm >= -1e-6
+            if manual:
+                manual_rows.append(row)
+                max_length = max(max_length, *manual)
+            passed += 1
+        except (ValueError, AssertionError) as exc:
+            failures.append({"orcs_row": row, "error": str(exc)})
+    return {"historical_valid_passed": passed, "manual_splice_row_count": len(manual_rows),
+            "manual_splice_rows": manual_rows, "maximum_integral_piece_mm": max_length,
+            "policy": "KEEP_INTEGRAL_PIECE_MANUAL_FACTORY_SPLICE",
+            "purchase_estimate": "Reserve whole stock bars per oversize piece; no assumed segment lengths, extra splice allowance or reuse between reserves.",
+            "failures": failures}
 
 
 def validate(oracle):
@@ -89,7 +132,8 @@ def validate(oracle):
         }})
     historical_failed = any(historical["counts"].get(key, 0) for key in (
         "PARITY_MISMATCH", "UNEXPECTED_ENGINE_ACCEPTANCE", "UNEXPECTED_ENGINE_REJECTION"))
-    passed = not failures and not historical_failed and historical["cached_formula_check"]["mismatch_count"] == 0
+    purchase = audit_purchase(oracle, historical)
+    passed = not purchase["failures"] and not failures and not historical_failed and historical["cached_formula_check"]["mismatch_count"] == 0
     return {
         "validation_version": "FX_VALIDATION_1.0", "engine_version": FIXO_ENGINE_VERSION,
         "source_sha256": oracle.sha256, "technical_validation_passed": passed,
@@ -104,6 +148,7 @@ def validate(oracle):
                               "invalid_geometry_rows": [r["orcs_row"] for r in exceptions if r["status"] == "INVALID_SOURCE_GEOMETRY_OR_INPUT"],
                               "policy": "REJECT_WITHOUT_PRICE_OR_GLASS_SUBSTITUTION"},
         "manual_cases": manual,
+        "purchase_validation": purchase,
         "gate": {"main_ready": False, "status": "PENDING_HOMOLOGATION",
                  "remaining": "Aceite funcional e da rejeição dos 74 registros inválidos da fonte."},
     }

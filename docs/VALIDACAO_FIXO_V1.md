@@ -2,7 +2,7 @@
 
 Fonte: aba FX do XLSM oficial, SHA-256
 `96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160`.
-Branch: `feature/fixo-engine-v1`. Data: 16/10/2026.
+Branch: `feature/fixo-engine-v1`. Atualização: 20/10/2026.
 
 ## Resultado
 
@@ -52,7 +52,7 @@ Reutilizá-las como novos orçamentos exige corrigir os dados de origem.
 ## Regressão e interface
 
 Validação local: **365 testes Engine, 75 API, 8 testes unitários Web, build de
-produção e 8 testes de navegador aprovados**. Os testes anteriores de CR, MX e
+produção e 9 testes de navegador aprovados**. Os testes anteriores de CR, MX e
 GR continuam aprovados. O fluxo de navegador utiliza API real pelo proxy do Vite,
 sem simular preços ou resultados de engenharia.
 
@@ -68,6 +68,33 @@ dos cálculos.
 O CI instala Chromium e executa a mesma suíte de navegador. O teste existente
 do inicializador Windows continua no workflow. A aprovação remota deve referir
 o commit final publicado, não apenas a contagem local.
+
+## Peças maiores que a barra — confirmação da fabricação em 20/10/2026
+
+A equipe confirmou que fabrica janelas maiores que a barra por divisão e emenda.
+O software deve calcular a metragem e manter a peça integral na informação de
+produção; a fabricação define a divisão. O bloqueio anterior foi removido para
+peças FX, inclusive em pedidos mistos, sem alterar fórmulas, BOM ou custo técnico.
+As demais famílias conservam o comportamento já validado.
+
+Dos 1.538 registros válidos, 90 exigem essa operação; a maior peça tem 12.140 mm.
+O plano mantém cada comprimento, quantidade e referência de origem, sem gerar
+segmentos ou posições de emenda. A interface identifica essas peças como
+“Peça integral” e informa que divisão e emenda ficam com a fabricação.
+
+Para estimar a compra, cada peça que excede a barra recebe uma reserva de barras
+reais, arredondada para cima a partir de seu comprimento mais a perda de serra
+já configurada. A reserva não é uma barra física de comprimento maior nem uma
+instrução de corte. Não se pressupõe reaproveitamento entre reservas, nem se
+inventam acréscimos de emenda ou perdas dos cortes que a fabricação decidir.
+O custo de compra continua separado do custo técnico por consumo.
+
+O relatório automático verifica o plano de todos os históricos válidos,
+preservação dos comprimentos integrais, quantidades, totais, material reservado
+e ausência de sobras negativas. A regressão cobre 5.900, 7.500 e 12.000 mm,
+quantidade dois, barras configuráveis, API dedicada e compartilhada, pedido
+com outro Fixo e fluxo completo no navegador. Esta confirmação encerra a dúvida
+sobre emendas; o aceite funcional geral permanece separado.
 
 ## Casos para conferência funcional
 

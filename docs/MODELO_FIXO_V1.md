@@ -67,7 +67,7 @@ Divisões personalizadas não existem nas fórmulas FX e não são oferecidas.
 | Maior diferença absoluta de total, por ponto flutuante | 3,64 × 10⁻¹² |
 | Erros #N/A da planilha, vidro ausente do catálogo | 69 |
 | Erros #VALUE! da planilha, vidro não preenchido | 4 |
-| Entrada com largura inválida (ORCS 8152) | 1 |
+| Entrada sem largura e altura (ORCS 8152) | 1 |
 | Fórmulas FX recalculadas contra os valores salvos na fonte | 148, sem divergências |
 | Casos históricos congelados por grade e espessura | 66 |
 
@@ -120,13 +120,21 @@ As suítes Engine/API e os testes/build Web são executados no workflow
 `ci-software-esquadrias.yml`, incluindo pushes desta branch. Os testes técnicos
 rodam sem o XLSM privado a partir das evidências congeladas.
 
-Validação ampliada em 16/10/2026: 365 testes Engine, 75 testes API, 8 testes
-unitários Web, build de produção e 8 testes em navegador real aprovados.
+Validação ampliada, atualizada em 20/10/2026: 365 testes Engine, 75 testes API, 8 testes
+unitários Web, build de produção e 9 testes em navegador real aprovados.
 Foram examinadas mais 2.824 combinações, sem divergências nos cálculos válidos.
 Os fluxos de inclusão, edição, persistência, exclusão, erro, resposta fora de
 ordem e uso em celular foram exercitados com a API real.
 Veja [VALIDACAO_FIXO_V1.md](VALIDACAO_FIXO_V1.md) para os resultados, correções
 de validação e casos de conferência funcional.
+
+## Peças FX maiores que o estoque
+
+Confirmação da equipe em 20/10/2026: manter cálculo e peça integral, com divisão
+e emenda definidas pela fabricação. O plano aceita os 90 históricos desse tipo
+(maior peça: 12.140 mm), preserva medidas e indica a operação manual. A compra
+estima reserva de barras reais por peça, sem simular a divisão ou emenda.
+Detalhes e limites da estimativa em `VALIDACAO_FIXO_V1.md`.
 
 ## Estado para merge
 

@@ -353,7 +353,7 @@ function Summary({ data, margin, setMargin }) {
         <label className="margin-row">Margem<input type="number" min="0" max="90" value={margin} onChange={(e) => setMargin(Number(e.target.value))} /><span>%</span></label>
         <div className="sale-price"><span>Preço de venda sugerido</span><strong>{money(suggested)}</strong></div>
       </section>
-      {plan?.warnings?.map((warning) => <div className="warning-card" key={warning.code}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
+      {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
   )
 }
@@ -421,7 +421,7 @@ function PurchaseTable({ plan }) {
 }
 
 function CutPlan({ plan }) {
-  return <div className="cut-grid">{(plan?.lines || []).map((line) => <div className="cut-material" key={line.material_code}><div className="cut-head"><strong>{line.material_code}</strong><span>{line.bars_required} barra(s)</span></div>{(line.bars || []).map((bar) => <div className="cut-bar" key={bar.bar_number}><div className="cut-label">Barra {bar.bar_number} · 5.900 mm</div><div className="cut-pieces">{bar.pieces.map((piece, index) => <span key={`${piece.source_item}-${index}`}>{number(piece.length_mm, 0)} mm · I{piece.source_item}</span>)}</div></div>)}</div>)}</div>
+  return <div className="cut-grid">{(plan?.lines || []).map((line) => <div className="cut-material" key={line.material_code}><div className="cut-head"><strong>{line.material_code}</strong><span>{line.bars_required} barra(s)</span></div>{(line.bars || []).map((bar) => <div className="cut-bar" key={bar.bar_number}><div className="cut-label">{bar.stock_bars_required ? 'Peça integral · reserva de ' + bar.stock_bars_required + ' barras · divisão e emenda pela fabricação' : 'Barra ' + bar.bar_number + ' · ' + number(bar.stock_length_mm, 0) + ' mm'}</div><div className="cut-pieces">{bar.pieces.map((piece, index) => <span key={`${piece.source_item}-${index}`}>{number(piece.length_mm, 0)} mm · I{piece.source_item}</span>)}</div></div>)}</div>)}</div>
 }
 
 function Warnings({ warnings }) {

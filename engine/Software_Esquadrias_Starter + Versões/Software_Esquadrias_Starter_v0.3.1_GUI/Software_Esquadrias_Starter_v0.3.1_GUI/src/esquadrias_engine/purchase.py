@@ -5,9 +5,10 @@ import math
 from typing import Iterable, Protocol, Sequence
 
 from .catalog import MATERIALS, BAR_STOCK_CODES, DEFAULT_BAR_LENGTH_MM, PARAMETERS
+from .fixo import FixoConfiguration
 from .models import (
     CalculationResult, CutPiece, BarAllocation,
-    PurchaseLine, OrderPurchasePlan, EngineeringWarning
+    PurchaseLine, OrderPurchasePlan, EngineeringWarning, ManualSpliceAllocation
 )
 
 _EPS = 1e-7
@@ -58,6 +59,7 @@ def _first_fit_decreasing(
     pieces: Iterable[CutPiece],
     stock_length_mm: float,
     kerf_mm: float = 0.0,
+    manual_splice_items: frozenset[int] = frozenset(),
 ) -> list[BarAllocation]:
     """Replica a lógica observada no legado: ordenar cortes do maior para o
     menor e encaixar cada corte na primeira barra com espaço disponível.
@@ -72,6 +74,17 @@ def _first_fit_decreasing(
     for piece in sorted_pieces:
         required_mm = piece.length_mm + kerf_mm
         if required_mm > stock_length_mm + _EPS:
+            # FX: preservar a peça integral e reservar material. A fabricação
+            # decide a divisão; não inventar segmentos ou posições de emenda.
+            if piece.source_item in manual_splice_items:
+                bars.append(ManualSpliceAllocation(
+                    bar_number=len(bars) + 1,
+                    stock_length_mm=stock_length_mm,
+                    pieces=[piece],
+                    kerf_mm=kerf_mm,
+                    stock_bars_required=math.ceil(required_mm / stock_length_mm),
+                ))
+                continue
             raise ValueError(
                 f"Corte {piece.material_code} de {piece.length_mm:.1f} mm "
                 f"é maior que a barra de {stock_length_mm:.1f} mm."
@@ -79,6 +92,8 @@ def _first_fit_decreasing(
 
         placed = False
         for bar in bars:
+            if isinstance(bar, ManualSpliceAllocation):
+                continue
             if required_mm <= bar.leftover_mm + _EPS:
                 bar.pieces.append(piece)
                 placed = True
@@ -119,15 +134,28 @@ def build_order_purchase_plan(
             warnings=[],
         )
 
+    manual_splice_items = frozenset(
+        index for index, (cfg, _) in enumerate(order_items, start=1)
+        if isinstance(cfg, FixoConfiguration)
+    )
     grouped = _explode_pieces(order_items)
     lines: list[PurchaseLine] = []
     warnings: list[EngineeringWarning] = []
 
     for code, pieces in sorted(grouped.items(), key=lambda kv: MATERIALS[kv[0]].description):
         material = MATERIALS[code]
-        bars = _first_fit_decreasing(pieces, stock_length_mm, float(kerf_mm))
+        bars = _first_fit_decreasing(pieces, stock_length_mm, float(kerf_mm), manual_splice_items)
+        bars_required = sum(bar.stock_bars_required if isinstance(bar, ManualSpliceAllocation)
+                            else 1 for bar in bars)
+        if any(isinstance(bar, ManualSpliceAllocation) for bar in bars):
+            warnings.append(EngineeringWarning(
+                "FX-MANUAL-SPLICE",
+                f"{code}: peça integral mantida; divisão e emenda pela fabricação. "
+                "Compra estimada reserva barras por peça, sem reaproveitamento "
+                "entre reservas nem acréscimos de emenda/serra da divisão manual."
+            ))
         consumed = sum(p.length_mm for p in pieces)
-        purchased = len(bars) * stock_length_mm
+        purchased = bars_required * stock_length_mm
         waste = purchased - consumed
         kerf_loss = len(pieces) * float(kerf_mm)
         utilization = (consumed / purchased * 100.0) if purchased else 0.0
@@ -142,7 +170,7 @@ def build_order_purchase_plan(
                 stock_length_mm=stock_length_mm,
                 pieces_count=len(pieces),
                 consumed_length_mm=round(consumed, 6),
-                bars_required=len(bars),
+                bars_required=bars_required,
                 purchased_length_mm=round(purchased, 6),
                 waste_length_mm=round(waste, 6),
                 utilization_pct=round(utilization, 6),
