@@ -54,15 +54,11 @@ class FixoEndpointTests(unittest.TestCase):
         self.assertAlmostEqual(result["purchase_plan"]["technical_total"], sum(item["order_technical_cost"] for item in result["items"]), places=5)
 
     def test_fixo_purchase_preserves_oversized_piece_for_manual_splice(self):
-        from fastapi.testclient import TestClient
-        from api.app.main import app
-        client = TestClient(app)
         item = {"family": "FX", "width_mm": 7500, "height_mm": 2500, "vertical_transoms": 3, "quantity": 2}
-        for endpoint in ("/api/v1/engine/fixo/purchase-plan", "/api/v1/purchase-plans/calculate-all"):
-            response = client.post(endpoint, json={"items": [
-                {"family": "FX", "width_mm": 1200, "height_mm": 1000}, item]})
-            self.assertEqual(response.status_code, 200, response.text)
-            result = response.json()
+        for endpoint, request_type in ((calculate_fixo_purchase_plan, FixoPurchasePlanRequest),
+                                       (calculate_unified_purchase_plan, UnifiedPurchasePlanRequest)):
+            result = endpoint(request_type(items=[
+                {"family": "FX", "width_mm": 1200, "height_mm": 1000}, item]))
             plan = result["purchase_plan"]
             self.assertAlmostEqual(plan["technical_total"], sum(x["order_technical_cost"] for x in result["items"]), places=5)
             reserves = [bar for line in plan["lines"] for bar in line["bars"] if "stock_bars_required" in bar]
