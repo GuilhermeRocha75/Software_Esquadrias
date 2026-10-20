@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from .engine_bridge import (
+    FixoConfiguration, FIXO_ENGINE_VERSION, FIXO_GLASS_OPTIONS, FIXO_FINISHES, calculate_fixo,
     ApplicationType,
     CustomDimension,
     FixedPanelConfiguration,
@@ -44,6 +45,7 @@ from .engine_bridge import (
     MAXIM_AR_EXTERNAL_FINISH_OPTIONS,
 )
 from .schemas import (
+    FixoItemRequest, FixoPurchasePlanRequest,
     CRItemRequest,
     MaximArItemRequest,
     MaximArPurchasePlanRequest,
@@ -261,7 +263,7 @@ def health():
         "status": "ok",
         "api_version": "0.1.4",
         "engine": "CR_ENGINE_0.5.0",
-        "engines": ["CR_ENGINE_0.5.0", MAXIM_AR_ENGINE_VERSION, GR_ENGINE_VERSION],
+        "engines": ["CR_ENGINE_0.5.0", MAXIM_AR_ENGINE_VERSION, GR_ENGINE_VERSION, FIXO_ENGINE_VERSION],
     }
 
 
@@ -938,7 +940,10 @@ def calculate_unified_purchase_plan(payload: UnifiedPurchasePlanRequest):
         order_items = []
         serialized_items = []
         for item in payload.items:
-            if isinstance(item, GrItemRequest):
+            if isinstance(item, FixoItemRequest):
+                cfg = _to_fixo_config(item)
+                result = calculate_fixo(cfg)
+            elif isinstance(item, GrItemRequest):
                 cfg = _to_gr_config(item)
                 result = calculate_gr(cfg)
             elif isinstance(item, MaximArItemRequest):
@@ -974,5 +979,44 @@ def calculate_purchase_plan(payload: PurchasePlanRequest):
             "items": serialized_items,
             "purchase_plan": _serialize_purchase_plan(plan),
         }
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def _to_fixo_config(item: FixoItemRequest) -> FixoConfiguration:
+    return FixoConfiguration(**item.model_dump(exclude={"family"}))
+
+
+@app.get("/api/v1/engine/fixo/options")
+def fixo_options():
+    return {
+        "family": "FX", "engine_version": FIXO_ENGINE_VERSION,
+        "glasses": list(FIXO_GLASS_OPTIONS),
+        "internal_finishes": list(FIXO_FINISHES), "external_finishes": list(FIXO_FINISHES),
+        "transoms": {"vertical": True, "horizontal": True, "custom_dimensions": False},
+        "technical_gate": {"main_ready": False, "status": "PENDING_HOMOLOGATION"},
+    }
+
+
+@app.post("/api/v1/engine/fixo/calculate")
+def calculate_fixo_endpoint(payload: FixoItemRequest):
+    try:
+        cfg = _to_fixo_config(payload)
+        return _serialize_result(cfg, calculate_fixo(cfg))
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/engine/fixo/purchase-plan")
+def calculate_fixo_purchase_plan(payload: FixoPurchasePlanRequest):
+    try:
+        order_items, serialized_items = [], []
+        for item in payload.items:
+            cfg = _to_fixo_config(item)
+            result = calculate_fixo(cfg)
+            order_items.append((cfg, result))
+            serialized_items.append(_serialize_result(cfg, result))
+        plan = build_order_purchase_plan(order_items, stock_length_mm=payload.stock_length_mm, kerf_mm=payload.kerf_mm)
+        return {"items": serialized_items, "purchase_plan": _serialize_purchase_plan(plan)}
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc

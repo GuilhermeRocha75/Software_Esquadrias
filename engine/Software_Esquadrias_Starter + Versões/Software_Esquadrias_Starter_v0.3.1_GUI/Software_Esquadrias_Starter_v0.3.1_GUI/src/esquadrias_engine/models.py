@@ -268,6 +268,16 @@ class BarAllocation:
         return self.stock_length_mm - self.used_mm
 
 @dataclass
+class ManualSpliceAllocation(BarAllocation):
+    """Reserva para uma peça integral; a fabricação define cortes e emendas."""
+    stock_bars_required: int = 1
+
+    @property
+    def leftover_mm(self) -> float:
+        return self.stock_length_mm * self.stock_bars_required - self.used_mm
+
+
+@dataclass
 class PurchaseLine:
     material_code: str
     description: str

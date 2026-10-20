@@ -1,0 +1,339 @@
+{
+  "validation_version": "FX_VALIDATION_1.0",
+  "engine_version": "FX_ENGINE_0.1.0",
+  "source_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "technical_validation_passed": true,
+  "historical_counts": {
+    "PARITY_OK": 1538,
+    "SOURCE_FORMULA_ERROR": 73,
+    "INVALID_SOURCE_GEOMETRY_OR_INPUT": 1
+  },
+  "historical_rows": 1612,
+  "cached_formula_check": {
+    "checked": 148,
+    "mismatch_count": 0,
+    "mismatches": []
+  },
+  "expanded_matrix": {
+    "counts": {
+      "catalog_grid:parity_ok": 2440,
+      "dimensions_finishes_quantity:parity_ok": 312,
+      "dimensions_finishes_quantity:source_invalid_rejected": 72
+    },
+    "total": 2824,
+    "glass_catalog_count": 61,
+    "max_total_absolute_delta": 3.637978807091713e-12,
+    "failures": []
+  },
+  "source_exceptions": {
+    "total": 74,
+    "missing_catalog_descriptions": {
+      "08mm CRISTAL FUMÊ": [
+        1199
+      ],
+      "08mm LAMINADO REFLETIVO CHAMPANHE": [
+        5814,
+        6288,
+        9217,
+        9218,
+        9223,
+        9224,
+        10630,
+        12115,
+        12116,
+        12117,
+        12118,
+        14004
+      ],
+      "22mm DUPLO TEMPERADO INCOLOR/LAMIANDO INCOLOR (6/10/6)": [
+        6850,
+        6851,
+        6852,
+        6853,
+        6854
+      ],
+      "22mm DUPLO TEMPERADO INCOLOR/LAMINADO INCOLOR (5/9/4+4)": [
+        8016
+      ],
+      "08mm TEMPERADO ACIDATO ": [
+        8413
+      ],
+      "06mm LAMINADO REFLETIVO": [
+        8433
+      ],
+      "24mm DUPLO TEMPERADO INCOLOR  REFLETIVO CHAMPANHE (6/10/4+4)": [
+        11254,
+        11255
+      ],
+      "06mm TEMPERADO VERDE": [
+        12064,
+        12066,
+        12075
+      ],
+      "10mm LAMINADO REFLETIVO CHAMPANHE": [
+        12955,
+        12956
+      ],
+      "06mm LAMINADO LEITOSO - OPACO VB": [
+        13072
+      ],
+      "20mm DUPLO TEMPERADO INCOLOR 6MM/ C9/5MM TEMPERADO INC": [
+        13333,
+        13334,
+        13422,
+        13426,
+        13427,
+        13428,
+        13429,
+        13430,
+        13431,
+        13492,
+        13500,
+        13502,
+        13504,
+        13687,
+        13692
+      ],
+      "20mm DUPLO TEMPERADO INCOLOR 6MM/ C6/8MM TEMPERADO INC": [
+        13511,
+        13519
+      ],
+      "31mm DUPLO TEMPERADO LAMINADO INCOLOR  (8/15/4+4)": [
+        14356,
+        14357
+      ],
+      "24mm DUPLO LAMINADO INCOLOR (3+3/10/4+4)": [
+        14363,
+        16349
+      ],
+      "21mm DUPLO TEMPERADO LAMINADO INCOLOR (5/10/3+3)": [
+        14828
+      ],
+      "12mm LAMINADO INCOLOR": [
+        15831,
+        15834
+      ],
+      "20mm DUPLO LAMINADO E TEMPERADO (3+3/9/5T)": [
+        15910,
+        16168,
+        16181,
+        16182,
+        16183,
+        16184,
+        16227,
+        16230,
+        16232,
+        16301,
+        16304,
+        16305,
+        16318,
+        16319
+      ],
+      " 10mm LAMINADO TEMPERADO INCOLOR (5+5)": [
+        16048,
+        16049
+      ]
+    },
+    "missing_glass_rows": [
+      3677,
+      10481,
+      17743,
+      17744
+    ],
+    "invalid_geometry_rows": [
+      8152
+    ],
+    "policy": "REJECT_WITHOUT_PRICE_OR_GLASS_SUBSTITUTION"
+  },
+  "manual_cases": [
+    {
+      "name": "SIMPLES",
+      "configuration": {
+        "width_mm": 1200,
+        "height_mm": 1000,
+        "quantity": 1,
+        "vertical_transoms": 0,
+        "horizontal_transoms": 0,
+        "glass_description": "04mm FLOAT INCOLOR",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "expected": {
+        "glass_width_mm": 1112.0,
+        "glass_height_mm": 912.0,
+        "glass_quantity_per_product": 1.0,
+        "glass_quantity_order": 1.0,
+        "unit_technical_cost": 422.0162,
+        "order_technical_cost": 422.0162
+      }
+    },
+    {
+      "name": "GRADE_2V_3H_Q2",
+      "configuration": {
+        "width_mm": 2000,
+        "height_mm": 2200,
+        "quantity": 2,
+        "vertical_transoms": 2,
+        "horizontal_transoms": 3,
+        "glass_description": "08mm TEMPERADO INCOLOR",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "expected": {
+        "glass_width_mm": 608.0,
+        "glass_height_mm": 495.0,
+        "glass_quantity_per_product": 12.0,
+        "glass_quantity_order": 24.0,
+        "unit_technical_cost": 1876.5420400000003,
+        "order_technical_cost": 3753.0840800000005
+      }
+    },
+    {
+      "name": "HISTORICO_14_Q3",
+      "configuration": {
+        "width_mm": 1560,
+        "height_mm": 2200,
+        "quantity": 3,
+        "vertical_transoms": 0,
+        "horizontal_transoms": 0,
+        "glass_description": "06mm FLOAT INCOLOR",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "expected": {
+        "glass_width_mm": 1472.0,
+        "glass_height_mm": 2112.0,
+        "glass_quantity_per_product": 1.0,
+        "glass_quantity_order": 3.0,
+        "unit_technical_cost": 945.4931600000001,
+        "order_technical_cost": 2836.4794800000004
+      }
+    },
+    {
+      "name": "VIDRO_DUPLO",
+      "configuration": {
+        "width_mm": 3400,
+        "height_mm": 1800,
+        "quantity": 1,
+        "vertical_transoms": 3,
+        "horizontal_transoms": 1,
+        "glass_description": "20mm DUPLO FLOAT INCOLOR (4/10/6)",
+        "internal_finish": "GUARNIÇÃO DE 70MM",
+        "external_finish": "BARRA CHATA DE 30MM"
+      },
+      "expected": {
+        "glass_width_mm": 795.0,
+        "glass_height_mm": 834.0,
+        "glass_quantity_per_product": 8.0,
+        "glass_quantity_order": 8.0,
+        "unit_technical_cost": 2762.76508,
+        "order_technical_cost": 2762.76508
+      }
+    }
+  ],
+  "purchase_validation": {
+    "historical_valid_passed": 1538,
+    "manual_splice_row_count": 90,
+    "manual_splice_rows": [
+      133,
+      134,
+      151,
+      287,
+      1937,
+      2053,
+      2055,
+      2414,
+      2563,
+      3229,
+      3555,
+      4091,
+      4616,
+      4618,
+      4619,
+      4622,
+      4687,
+      4688,
+      4689,
+      4690,
+      4691,
+      5112,
+      5113,
+      5350,
+      5601,
+      5602,
+      5603,
+      5604,
+      5605,
+      5884,
+      6105,
+      6106,
+      6107,
+      6108,
+      6109,
+      6299,
+      6308,
+      7759,
+      8182,
+      8219,
+      8907,
+      9438,
+      9470,
+      9638,
+      9663,
+      9719,
+      9977,
+      9978,
+      9979,
+      10072,
+      10385,
+      10699,
+      10713,
+      10714,
+      10715,
+      10815,
+      10999,
+      11316,
+      11781,
+      12311,
+      12312,
+      12489,
+      12566,
+      12990,
+      13019,
+      13020,
+      13051,
+      13052,
+      13053,
+      13212,
+      14259,
+      14260,
+      14647,
+      15192,
+      15193,
+      15536,
+      15574,
+      16095,
+      17029,
+      17031,
+      17033,
+      17035,
+      17290,
+      17626,
+      17770,
+      18412,
+      18556,
+      18557,
+      18608,
+      18681
+    ],
+    "maximum_integral_piece_mm": 12140.0,
+    "policy": "KEEP_INTEGRAL_PIECE_MANUAL_FACTORY_SPLICE",
+    "purchase_estimate": "Reserve whole stock bars per oversize piece; no assumed segment lengths, extra splice allowance or reuse between reserves.",
+    "failures": []
+  },
+  "gate": {
+    "main_ready": false,
+    "status": "PENDING_HOMOLOGATION",
+    "remaining": "Aceite funcional e da rejeição dos 74 registros inválidos da fonte."
+  }
+}

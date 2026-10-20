@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import { sidebarModelAction } from './sidebarActions.js'
+import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
+import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
 
-const API_URL = (import.meta.env.VITE_API_URL ?? (import.meta.env.PROD ? '' : 'http://127.0.0.1:8000')).replace(/\/$/, '')
+const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
 const baseDefaults = {
   family: 'CR',
@@ -226,7 +228,7 @@ const money = (value = 0) =>
 const number = (value = 0, digits = 2) =>
   new Intl.NumberFormat('pt-BR', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(Number(value || 0))
 
-const modelLabel = (item) => ({
+const modelLabel = (item) => item.family === 'FX' ? 'Painel Fixo' : ({
   PRIME_WINDOW_42x66: 'Correr Prime 42x66',
   PRIME_DOOR_42x88: 'Correr Prime 42x88',
   DESIGN_DOOR_60x111: 'Correr Design 60x111',
@@ -237,7 +239,7 @@ const modelLabel = (item) => ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddCR, onAddMaximAr, onAddGr }) {
+function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -251,7 +253,7 @@ function Sidebar({ onAddCR, onAddMaximAr, onAddGr }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -268,8 +270,8 @@ function Header({ apiOnline }) {
       <select className="company-select"><option>Empresa Demo</option></select>
       <div className="global-search">⌕ <input placeholder="Buscar clientes, orçamentos, modelos, itens..." /><kbd>Ctrl + K</kbd></div>
       <div className="header-actions">
-        <span className={`api-dot ${apiOnline ? 'online' : 'offline'}`}></span>
-        <span className="api-label">API {apiOnline ? 'online' : 'offline'}</span>
+        <span className={`api-dot ${apiOnline === null ? 'checking' : apiOnline ? 'online' : 'offline'}`}></span>
+        <span className="api-label" role="status">API {apiOnline === null ? 'verificando…' : apiOnline ? 'online' : 'offline'}</span>
         <div className="avatar">AD</div>
         <div><strong>Administrador</strong><small>admin@demo.com</small></div>
       </div>
@@ -295,12 +297,12 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onEdit }) {
+function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit, calculated }) {
   return (
     <section className="card items-card">
       <div className="section-head">
         <div className="section-title">Itens do Orçamento</div>
-        <div className="page-actions"><button className="secondary" onClick={onAddGr}>+ Inserir Giro GR</button><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
+        <div className="page-actions"><button className="secondary" onClick={onAddFixo}>+ Inserir Fixo</button><button className="secondary" onClick={onAddGr}>+ Inserir Giro GR</button><button className="secondary" onClick={onAddMaximAr}>+ Inserir Maxim-Ar</button><button className="primary" onClick={onAddCR}>＋ Inserir Modelo Correr</button></div>
       </div>
       <div className="table-scroll">
         <table>
@@ -310,15 +312,15 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onEdit })
               <tr key={item.id}>
                 <td><strong>{String(index + 1).padStart(2, '0')}</strong></td>
                 <td>{modelLabel(item)}</td>
-                <td>{item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
-                <td>{item.leaf_count}</td>
+                <td>{item.family === 'FX' ? 'Fixo' : item.family === 'MAXIM_AR' || item.application === 'JANELA' ? 'Janela' : 'Porta'}</td>
+                <td>{item.family === 'FX' ? '—' : item.leaf_count}</td>
                 <td>{item.width_mm}</td>
                 <td>{item.height_mm}</td>
                 <td>{item.quantity}</td>
                 <td>{item.glass_description?.replace(' FLOAT ', ' ') || 'Painel'}</td>
                 <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
                 <td>{item.shutter?.mode && item.shutter.mode !== 'SEM PERSIANA' ? item.shutter.mode : (item.shutter_enabled ? 'Legado' : 'Não')}</td>
-                <td><span className="status">● Calculado</span></td>
+                <td><span className={calculated ? "status" : "status-pending"}>{calculated ? "● Calculado" : "Não calculado"}</span></td>
                 <td><button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
               </tr>
             ))}
@@ -351,7 +353,7 @@ function Summary({ data, margin, setMargin }) {
         <label className="margin-row">Margem<input type="number" min="0" max="90" value={margin} onChange={(e) => setMargin(Number(e.target.value))} /><span>%</span></label>
         <div className="sale-price"><span>Preço de venda sugerido</span><strong>{money(suggested)}</strong></div>
       </section>
-      {plan?.warnings?.map((warning) => <div className="warning-card" key={warning.code}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
+      {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
   )
 }
@@ -419,7 +421,7 @@ function PurchaseTable({ plan }) {
 }
 
 function CutPlan({ plan }) {
-  return <div className="cut-grid">{(plan?.lines || []).map((line) => <div className="cut-material" key={line.material_code}><div className="cut-head"><strong>{line.material_code}</strong><span>{line.bars_required} barra(s)</span></div>{(line.bars || []).map((bar) => <div className="cut-bar" key={bar.bar_number}><div className="cut-label">Barra {bar.bar_number} · 5.900 mm</div><div className="cut-pieces">{bar.pieces.map((piece, index) => <span key={`${piece.source_item}-${index}`}>{number(piece.length_mm, 0)} mm · I{piece.source_item}</span>)}</div></div>)}</div>)}</div>
+  return <div className="cut-grid">{(plan?.lines || []).map((line) => <div className="cut-material" key={line.material_code}><div className="cut-head"><strong>{line.material_code}</strong><span>{line.bars_required} barra(s)</span></div>{(line.bars || []).map((bar) => <div className="cut-bar" key={bar.bar_number}><div className="cut-label">{bar.stock_bars_required ? 'Peça integral · reserva de ' + bar.stock_bars_required + ' barras · divisão e emenda pela fabricação' : 'Barra ' + bar.bar_number + ' · ' + number(bar.stock_length_mm, 0) + ' mm'}</div><div className="cut-pieces">{bar.pieces.map((piece, index) => <span key={`${piece.source_item}-${index}`}>{number(piece.length_mm, 0)} mm · I{piece.source_item}</span>)}</div></div>)}</div>)}</div>
 }
 
 function Warnings({ warnings }) {
@@ -807,40 +809,46 @@ export default function App() {
   const [margin, setMargin] = useState(25)
   const [activeTab, setActiveTab] = useState('Custo por Grupo')
   const [data, setData] = useState(null)
+  const calculationVersion = useRef(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [apiOnline, setApiOnline] = useState(false)
+  const [apiOnline, setApiOnline] = useState(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
   const [options, setOptions] = useState(fallbackOptions)
   const [maximArOptions, setMaximArOptions] = useState(fallbackMaximArOptions)
   const [grOptions, setGrOptions] = useState(fallbackGrOptions)
+  const [fixoOptions, setFixoOptions] = useState(fallbackFixoOptions)
 
   useEffect(() => { localStorage.setItem('software-esquadrias-items', JSON.stringify(items)) }, [items])
   useEffect(() => { localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote)) }, [quote])
 
   const loadOptions = async () => {
     try {
-      const [crResponse, maximArResponse, grResponse] = await Promise.all([
+      const [crResponse, maximArResponse, grResponse, fixoResponse] = await Promise.all([
         fetch(`${API_URL}/api/v1/engine/cr/options`),
         fetch(`${API_URL}/api/v1/engine/maxim-ar/options`),
         fetch(`${API_URL}/api/v1/engine/gr/options`),
+        fetch(`${API_URL}/api/v1/engine/fixo/options`),
       ])
-      if (!crResponse.ok || !maximArResponse.ok || !grResponse.ok) throw new Error('Falha ao carregar opções')
+      if (!crResponse.ok || !maximArResponse.ok || !grResponse.ok || !fixoResponse.ok) throw new Error('Falha ao carregar opções')
       setOptions(await crResponse.json())
       setMaximArOptions(await maximArResponse.json())
       setGrOptions(await grResponse.json())
+      setFixoOptions(await fixoResponse.json())
     } catch {
       setOptions(fallbackOptions)
       setMaximArOptions(fallbackMaximArOptions)
       setGrOptions(fallbackGrOptions)
+      setFixoOptions(fallbackFixoOptions)
     }
   }
 
   const calculate = async (nextItems = items) => {
-    if (!nextItems.length) { setData(null); return }
-    setLoading(true); setError('')
+    const version = ++calculationVersion.current
+    if (!nextItems.length) { setData(null); setError(''); setLoading(false); return }
+    setLoading(true); setError(''); setData(null)
     try {
       const payload = { items: nextItems.map(({ id, ...item }) => ({ ...item, family: item.family || 'CR' })) }
       const response = await fetch(`${API_URL}/api/v1/purchase-plans/calculate-all`, {
@@ -851,13 +859,26 @@ export default function App() {
         throw new Error(body?.detail || `API respondeu ${response.status}`)
       }
       const result = await response.json()
-      setData(result); setApiOnline(true)
+      if (version === calculationVersion.current) setData(result)
     } catch (err) {
-      setApiOnline(false); setError(`Não foi possível calcular: ${err.message}. Confirme se a API está rodando na porta 8000.`)
-    } finally { setLoading(false) }
+      if (version === calculationVersion.current) {
+        setData(null); setError(`Não foi possível calcular: ${err.message}.`)
+      }
+    } finally {
+      if (version === calculationVersion.current) setLoading(false)
+    }
   }
 
-  useEffect(() => { loadOptions(); calculate(items) }, [])
+  useEffect(() => {
+    let wasOnline = false
+    return monitorApiHealth(API_URL, (online) => {
+      setApiOnline(online)
+      if (online && !wasOnline) loadOptions()
+      wasOnline = online
+    })
+  }, [])
+
+  useEffect(() => { calculate(items) }, [])
 
   const removeItem = (id) => {
     const next = items.filter((item) => item.id !== id)
@@ -872,6 +893,7 @@ export default function App() {
 
   const openNewCR = () => { setEditingItem(null); setModalFamily('CR'); setModalOpen(true) }
   const openNewMaximAr = () => { setEditingItem(null); setModalFamily('MAXIM_AR'); setModalOpen(true) }
+  const openNewFixo = () => { setEditingItem(null); setModalFamily('FX'); setModalOpen(true) }
   const openNewGr = () => { setEditingItem(null); setModalFamily('GR'); setModalOpen(true) }
   const openEdit = (item) => { setEditingItem(item); setModalFamily(item.family || 'CR'); setModalOpen(true) }
 
@@ -881,7 +903,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} />
+      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -890,7 +912,7 @@ export default function App() {
           <div className="dashboard-grid">
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
-              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onEdit={openEdit} />
+              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />
@@ -899,6 +921,8 @@ export default function App() {
       </div>
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
+        : modalFamily === 'FX'
+          ? <FixoModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={fixoOptions} item={editingItem} />
         : modalFamily === 'GR'
           ? <GrModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={grOptions} item={editingItem} />
           : <AddItemModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={options} item={editingItem} />)}
