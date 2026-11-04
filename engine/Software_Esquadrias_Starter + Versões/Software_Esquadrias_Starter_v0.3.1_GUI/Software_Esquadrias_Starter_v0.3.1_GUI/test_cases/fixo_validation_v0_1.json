@@ -332,8 +332,9 @@
     "failures": []
   },
   "gate": {
-    "main_ready": false,
-    "status": "PENDING_HOMOLOGATION",
-    "remaining": "Aceite funcional e da rejeição dos 74 registros inválidos da fonte."
+    "main_ready": true,
+    "status": "HOMOLOGATED",
+    "date": "2026-11-04",
+    "scope": "Modelo Fixo: cálculos, interface e compra; entradas inválidas recusadas; emendas definidas pela fabricação."
   }
 }

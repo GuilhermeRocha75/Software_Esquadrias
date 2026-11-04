@@ -994,7 +994,7 @@ def fixo_options():
         "glasses": list(FIXO_GLASS_OPTIONS),
         "internal_finishes": list(FIXO_FINISHES), "external_finishes": list(FIXO_FINISHES),
         "transoms": {"vertical": True, "horizontal": True, "custom_dimensions": False},
-        "technical_gate": {"main_ready": False, "status": "PENDING_HOMOLOGATION"},
+        "technical_gate": {"main_ready": True, "status": "HOMOLOGATED"},
     }
 
 

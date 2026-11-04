@@ -156,13 +156,13 @@ class FixoTests(unittest.TestCase):
         self.assertEqual(self.snapshot["source_sha256"], self.golden["source_sha256"])
         self.assertEqual(self.oracle.verify_cached_fx()["mismatches"], [])
 
-    def test_historical_coverage_requires_review_of_all_source_exceptions(self):
+    def test_historical_coverage_preserves_reviewed_source_exceptions(self):
         report = load("fixo_coverage_v0_1.json")
         self.assertEqual(report["rows_evaluated"], 1612)
         self.assertEqual(report["counts"], {"PARITY_OK": 1538, "SOURCE_FORMULA_ERROR": 73,
                                            "INVALID_SOURCE_GEOMETRY_OR_INPUT": 1})
         self.assertEqual(sum(report["counts"].values()), report["rows_evaluated"])
-        self.assertFalse(report["gate"]["main_ready"])
+        self.assertTrue(report["gate"]["main_ready"])
         invalid = [case for case in report["cases"] if case["status"] == "INVALID_SOURCE_GEOMETRY_OR_INPUT"]
         self.assertEqual([case["orcs_row"] for case in invalid], [8152])
         self.assertLess(report["max_total_absolute_delta"], 1e-7)

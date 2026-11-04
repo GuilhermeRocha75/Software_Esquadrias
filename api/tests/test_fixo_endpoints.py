@@ -11,11 +11,12 @@ from api.app.schemas import FixoItemRequest, FixoPurchasePlanRequest, UnifiedPur
 
 
 class FixoEndpointTests(unittest.TestCase):
-    def test_options_and_health_expose_fixo_with_pending_homologation(self):
+    def test_options_and_health_expose_fixo_with_homologation(self):
         options = fixo_options()
         self.assertIn(options["engine_version"], health()["engines"])
         self.assertEqual(options["family"], "FX")
-        self.assertFalse(options["technical_gate"]["main_ready"])
+        self.assertTrue(options["technical_gate"]["main_ready"])
+        self.assertEqual(options["technical_gate"]["status"], "HOMOLOGATED")
         self.assertTrue(options["transoms"]["horizontal"])
 
     def test_calculation_serializes_full_grid_and_scales_order_cost(self):

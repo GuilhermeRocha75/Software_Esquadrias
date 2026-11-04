@@ -140,8 +140,9 @@ def audit(oracle):
     return {"source_sha256": oracle.sha256, "rows_evaluated": len(cases), "counts": dict(statuses),
             "max_total_absolute_delta": max_delta, "representative_cases": len(golden),
             "cached_formula_check": oracle.verify_cached_fx(),
-            "gate": {"main_ready": False, "status": "PENDING_HOMOLOGATION",
-                     "reason": "Homologar interface e revisar exceções de origem antes do merge."},
+            "gate": {"main_ready": not any(statuses[k] for k in ("PARITY_MISMATCH", "UNEXPECTED_ENGINE_ACCEPTANCE", "UNEXPECTED_ENGINE_REJECTION")),
+                     "status": "HOMOLOGATED" if not any(statuses[k] for k in ("PARITY_MISMATCH", "UNEXPECTED_ENGINE_ACCEPTANCE", "UNEXPECTED_ENGINE_REJECTION")) else "VALIDATION_FAILED",
+                     "homologation_date": "2026-11-04"},
             "cases": cases}, golden
 
 

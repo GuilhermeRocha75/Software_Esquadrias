@@ -136,8 +136,14 @@ localmente; no CI exige serviços próprios.
 
 ## Gate
 
-`PENDING_HOMOLOGATION`, `main_ready: false`.
+`HOMOLOGATED`, `main_ready: true`. Fechamento autorizado em 04/11/2026.
 
-O código e as evidências estão preparados para revisão funcional dos casos e
-aceite do tratamento dos dados inválidos. Não houve merge na main nem alteração
-na hospedagem. VPS e publicação externa permanecem adiados por decisão do usuário.
+Conferência guiada de casos simples, grade e persistência aprovada pelo usuário.
+Validação final interna: 365 testes Engine, 75 API, 8 Web, 9 navegador e build
+aprovados; 1.538 históricos válidos e 2.824 cenários adicionais sem divergências.
+Os 74 registros inválidos permanecem recusados, sem substituição de vidro/preço.
+Peças integrais com emenda manual seguem a confirmação da fabricação.
+
+Escopo concluído: Modelo Fixo, API, interface e plano de compra/corte. O módulo
+separado de ordem de produção e a hospedagem permanente da API ficam para fases
+posteriores. A liberação na main depende do CI aprovado do commit de fechamento.

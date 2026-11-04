@@ -149,8 +149,8 @@ def validate(oracle):
                               "policy": "REJECT_WITHOUT_PRICE_OR_GLASS_SUBSTITUTION"},
         "manual_cases": manual,
         "purchase_validation": purchase,
-        "gate": {"main_ready": False, "status": "PENDING_HOMOLOGATION",
-                 "remaining": "Aceite funcional e da rejeição dos 74 registros inválidos da fonte."},
+        "gate": {"main_ready": passed, "status": "HOMOLOGATED" if passed else "VALIDATION_FAILED",
+                 "homologation_date": "2026-11-04"},
     }
 
 

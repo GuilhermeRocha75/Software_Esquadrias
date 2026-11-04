@@ -138,8 +138,14 @@ Detalhes e limites da estimativa em `VALIDACAO_FIXO_V1.md`.
 
 ## Estado para merge
 
-`PENDING_HOMOLOGATION`, `main_ready: false`.
+`HOMOLOGATED`, `main_ready: true`. Fechamento autorizado em 04/11/2026.
 
-Antes do merge: conferir o fluxo da interface com a equipe e homologar o
-tratamento das 74 exceções de origem. Preservar os resultados de regressão e
-validar o mesmo commit no CI. Não houve merge na `main` nesta entrega.
+Conferência guiada de casos simples, grade e persistência aprovada pelo usuário.
+Validação final interna: 365 testes Engine, 75 API, 8 Web, 9 navegador e build
+aprovados; 1.538 históricos válidos e 2.824 cenários adicionais sem divergências.
+Os 74 registros inválidos permanecem recusados, sem substituição de vidro/preço.
+Peças integrais com emenda manual seguem a confirmação da fabricação.
+
+Escopo concluído: Modelo Fixo, API, interface e plano de compra/corte. O módulo
+separado de ordem de produção e a hospedagem permanente da API ficam para fases
+posteriores. A liberação na main depende do CI aprovado do commit de fechamento.
