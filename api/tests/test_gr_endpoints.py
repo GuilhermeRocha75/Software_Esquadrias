@@ -296,7 +296,7 @@ class GrEndpointTests(unittest.TestCase):
     def test_health_exposes_v025(self):
         response = health()
         self.assertEqual(response["engine"], "CR_ENGINE_0.5.0")
-        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.25.0"])
+        self.assertEqual(response["engines"], ["CR_ENGINE_0.5.0", "MX_ENGINE_0.3.0", "GR_ENGINE_0.25.0", "FX_ENGINE_0.1.0"])
 
     def test_options_expose_phase25_final_gate(self):
         response = gr_options()

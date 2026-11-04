@@ -95,3 +95,6 @@ __all__ = [
     "MAXIM_AR_INTERNAL_FINISH_OPTIONS",
     "MAXIM_AR_EXTERNAL_FINISH_OPTIONS",
 ]
+
+from esquadrias_engine.fixo import FixoConfiguration, FIXO_ENGINE_VERSION, FIXO_GLASS_OPTIONS, FIXO_FINISHES, calculate_fixo
+__all__ += ["FixoConfiguration", "FIXO_ENGINE_VERSION", "FIXO_GLASS_OPTIONS", "FIXO_FINISHES", "calculate_fixo"]

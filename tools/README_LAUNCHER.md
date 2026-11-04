@@ -6,6 +6,11 @@ abre a interface no navegador. Um novo clique reutiliza os serviços já prontos
 sem iniciar cópias. `PARAR_SOFTWARE.bat` encerra somente os processos
 registrados por este iniciador, conferindo PID, horário e linha de comando.
 
+O navegador acessa `/api` e `/health` pela própria porta 5173. O proxy do Vite
+encaminha essas requisições à API na porta 8000. Após atualizar essa configuração,
+use `PARAR_SOFTWARE.bat` e inicie novamente. O status da API é consultado pelo
+endpoint de saúde, inclusive com orçamento vazio ou cálculo recusado.
+
 Pré-requisitos: Windows com PowerShell, Node.js/npm no `PATH` e uma `.venv` na
 raiz com `api/requirements.txt` instalado. Se `web/node_modules` estiver
 ausente, o iniciador executa `npm ci` com o lockfile. Os logs e o registro de

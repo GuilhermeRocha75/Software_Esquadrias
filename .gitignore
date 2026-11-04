@@ -22,3 +22,7 @@ Thumbs.db
 test_outputs/
 *.log
 *.pyc
+
+# Browser validation
+web/test-results/
+web/playwright-report/

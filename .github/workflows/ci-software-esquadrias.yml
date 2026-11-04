@@ -2,7 +2,7 @@ name: Software Esquadrias CI
 
 on:
   push:
-    branches: [feature/maxim-ar-engine-v3, feature/gr-engine-v1]
+    branches: [feature/maxim-ar-engine-v3, feature/gr-engine-v1, feature/fixo-engine-v1, fix/api-availability]
   workflow_dispatch:
     inputs:
       target_sha:
@@ -126,6 +126,23 @@ jobs:
           echo "web_exit_code=$code" >> software-esquadrias-ci-evidence.txt
           exit "$code"
 
+      - name: Install Chromium for browser validation
+        working-directory: web
+        run: npx playwright install --with-deps chromium
+
+      - name: Browser integration suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo 'web_e2e_command=npm run test:e2e (working-directory: web)' >> software-esquadrias-ci-evidence.txt
+          set +e
+          (cd web && npm run test:e2e) > web-e2e-ci.log 2>&1
+          code=$?
+          set -e
+          cat web-e2e-ci.log
+          echo "web_e2e_exit_code=$code" >> software-esquadrias-ci-evidence.txt
+          exit "$code"
+
       - name: Publish evidence summary
         if: always()
         shell: bash
@@ -155,4 +172,18 @@ jobs:
             api-ci.log
             web-test-ci.log
             web-ci.log
+            web-e2e-ci.log
           if-no-files-found: error
+
+  launcher-windows:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout requested commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_sha || github.sha }}
+          persist-credentials: false
+      - name: Validate launcher port detection on Windows PowerShell
+        shell: powershell
+        run: .\tools\test_launcher_ports.ps1

@@ -158,6 +158,25 @@ class GrPurchasePlanRequest(BaseModel):
     kerf_mm: float = Field(default=0.0, ge=0)
 
 
+class FixoItemRequest(BaseModel):
+    model_config = {"extra": "forbid", "allow_inf_nan": False}
+    family: Literal["FX"] = "FX"
+    width_mm: float = Field(gt=0)
+    height_mm: float = Field(gt=0)
+    quantity: int = Field(default=1, ge=1, strict=True)
+    vertical_transoms: int = Field(default=0, ge=0, strict=True)
+    horizontal_transoms: int = Field(default=0, ge=0, strict=True)
+    glass_description: str = "04mm FLOAT INCOLOR"
+    internal_finish: Literal["GUARNIÇÃO DE 70MM", "BARRA CHATA DE 30MM"] = "GUARNIÇÃO DE 70MM"
+    external_finish: Literal["GUARNIÇÃO DE 70MM", "BARRA CHATA DE 30MM"] = "BARRA CHATA DE 30MM"
+
+
+class FixoPurchasePlanRequest(BaseModel):
+    items: list[FixoItemRequest] = Field(min_length=1)
+    stock_length_mm: float = Field(default=5900, gt=0, allow_inf_nan=False)
+    kerf_mm: float = Field(default=0.0, ge=0, allow_inf_nan=False)
+
+
 class UnifiedPurchasePlanRequest(BaseModel):
-    items: list[CRItemRequest | MaximArItemRequest | GrItemRequest] = Field(min_length=1)
+    items: list[CRItemRequest | MaximArItemRequest | GrItemRequest | FixoItemRequest] = Field(min_length=1)
     kerf_mm: float = Field(default=0.0, ge=0)

@@ -1,4 +1,4 @@
-param([switch]$NoBrowser)
+﻿param([switch]$NoBrowser)
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 $projectRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
@@ -28,7 +28,11 @@ function Test-PortBusy([int]$port) {
     $client = New-Object Net.Sockets.TcpClient
     try {
         $attempt = $client.BeginConnect('127.0.0.1', $port, $null, $null)
-        return $attempt.AsyncWaitHandle.WaitOne(300)
+        if (-not $attempt.AsyncWaitHandle.WaitOne(300)) { return $false }
+        # WaitOne apenas informa que a tentativa terminou; EndConnect confirma
+        # se houve conexao ou lanca a excecao de conexao recusada.
+        $client.EndConnect($attempt)
+        return $client.Connected
     } catch { return $false }
     finally { $client.Close() }
 }
@@ -76,9 +80,9 @@ try {
         if (Test-PortBusy $webPort) { throw "Porta $webPort ocupada por outro serviço; a Web não será duplicada." }
         Write-Host 'Iniciando interface Web local...'
         $previousApiUrl = $env:VITE_API_URL
-        $env:VITE_API_URL = $apiUrl
+        $env:VITE_API_URL = '/' # Usa o proxy local do Vite para /api e /health.
         try {
-            $webProcess = Start-Process -FilePath $node.Source -ArgumentList @($vitePath,'--host','127.0.0.1','--port',"$webPort",'--strictPort') -WorkingDirectory $webRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $runRoot 'web.out.log') -RedirectStandardError (Join-Path $runRoot 'web.err.log') -PassThru
+            $webProcess = Start-Process -FilePath $node.Source -ArgumentList @(('"{0}"' -f $vitePath),'--host','127.0.0.1','--port',"$webPort",'--strictPort') -WorkingDirectory $webRoot -WindowStyle Hidden -RedirectStandardOutput (Join-Path $runRoot 'web.out.log') -RedirectStandardError (Join-Path $runRoot 'web.err.log') -PassThru
         } finally { $env:VITE_API_URL = $previousApiUrl }
         $manifest.web = @{ pid = $webProcess.Id; started_utc = $webProcess.StartTime.ToUniversalTime().ToString('o') }
         $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestPath -Encoding UTF8
