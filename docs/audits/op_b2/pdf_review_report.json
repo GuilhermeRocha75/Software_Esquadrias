@@ -1,0 +1,2136 @@
+{
+  "scope": "B2_REVIEW_NOT_HOMOLOGATED_NOT_FOR_MANUFACTURING",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "family": "CR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "pdf_filename": "OP-GOLDEN-01.pdf",
+      "pdf_sha256": "a56ea6c85bb5b5b743088d0326b0a29eaeb9a26ea50e6a73872b4e36b35ac3d5",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 32,
+        "row_fragments": 32,
+        "verified_cells": 170,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 63,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 30,
+            "pdf_position": 34,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 31,
+            "pdf_position": 35,
+            "field": "quantity_total",
+            "pdf_printed": "83,424",
+            "engine": 84.224,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "8,624",
+            "engine_length_per_product_mm": 8624.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 20,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da tela",
+            "code": "TL2",
+            "pdf_order_quantity_m": "4,312",
+            "engine_length_per_product_mm": 4312.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 19,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "28,392",
+            "engine_length_per_product_mm": 28392.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 21,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "2070",
+            "measure_2": "2070",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1630",
+            "measure_2": "1630",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1990",
+            "measure_2": "1990",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1550",
+            "measure_2": "1550",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "family": "CR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "pdf_filename": "OP-GOLDEN-02.pdf",
+      "pdf_sha256": "a3a4cc5181ab3d062fc95950016e9d9a8458be8503a87e77781cb283da31c2ed",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 32,
+        "row_fragments": 32,
+        "verified_cells": 170,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 63,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 30,
+            "pdf_position": 34,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 31,
+            "pdf_position": 35,
+            "field": "quantity_total",
+            "pdf_printed": "77,424",
+            "engine": 78.224,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "8,024",
+            "engine_length_per_product_mm": 8024.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 20,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da tela",
+            "code": "TL2",
+            "pdf_order_quantity_m": "4,012",
+            "engine_length_per_product_mm": 4012.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 19,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "26,592",
+            "engine_length_per_product_mm": 26592.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 21,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1770",
+            "measure_2": "1770",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1630",
+            "measure_2": "1630",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1690",
+            "measure_2": "1690",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1550",
+            "measure_2": "1550",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "family": "GR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "pdf_filename": "OP-GOLDEN-03.pdf",
+      "pdf_sha256": "b2f1979f731d1536a4ac83f39370b87563af1a81853d41875ff04e10e4aaf12f",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 27,
+        "row_fragments": 27,
+        "verified_cells": 143,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+          "label": "Contra Fecho",
+          "code": "CON1"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 19,
+          "role": "GLASS_OR_LAMBRI_SEAL",
+          "legacy_row": 76,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 20,
+          "role": "ROUND_SEAL_LEAF",
+          "legacy_row": 77,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 21,
+          "role": "ROUND_SEAL_FRAME",
+          "legacy_row": 78,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "FEC5",
+          "engine_code": "FEC6",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 52,
+          "PRINTED_PRECISION_DIFFERENCE": 1,
+          "DIVERGENT": 1
+        },
+        "differences": [
+          {
+            "label": "Painel",
+            "role": "PANEL_FILL",
+            "engine_position": 7,
+            "pdf_position": 7,
+            "field": "quantity_total",
+            "pdf_printed": "12,8357143",
+            "engine": 12.835714285714285,
+            "status": "PRINTED_PRECISION_DIFFERENCE",
+            "classification": "PRINTED_PRECISION_DIFFERENCE",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Ferragem)",
+            "role": "HARDWARE_SCREWS",
+            "engine_position": 27,
+            "pdf_position": 25,
+            "field": "quantity_total",
+            "pdf_printed": "36",
+            "engine": 28.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [],
+        "missing_reference_rows": [
+          {
+            "label": "Contra Fecho",
+            "code": "CON1",
+            "kind": "UNIT",
+            "measure_1": null,
+            "measure_2": null,
+            "quantity": "4"
+          }
+        ],
+        "engine_additional_rows": [
+          {
+            "engine_position": 19,
+            "role": "GLASS_OR_LAMBRI_SEAL",
+            "code": "ACB606",
+            "final_length_mm": null,
+            "cut_length_mm": 5650.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 20,
+            "role": "ROUND_SEAL_LEAF",
+            "code": "AC0002",
+            "final_length_mm": null,
+            "cut_length_mm": 6338.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 21,
+            "role": "ROUND_SEAL_FRAME",
+            "code": "AC0002",
+            "final_length_mm": null,
+            "cut_length_mm": 6338.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          }
+        ],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "pdf_filename": "OP-GOLDEN-04.pdf",
+      "pdf_sha256": "d9fa8b53f992421863d8a19b02fc8d1c6df6f04c3e169c119a5b1355ce9bf3b2",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 26,
+        "row_fragments": 26,
+        "verified_cells": 134,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 48,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 28,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 29,
+            "field": "quantity_total",
+            "pdf_printed": "76,256",
+            "engine": 77.056,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "10,004",
+            "engine_length_per_product_mm": 10004.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "21,688",
+            "engine_length_per_product_mm": 21688.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "2940",
+            "measure_2": "2940",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1540",
+            "measure_2": "1540",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "2860",
+            "measure_2": "2860",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1460",
+            "measure_2": "1460",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "pdf_filename": "OP-GOLDEN-05.pdf",
+      "pdf_sha256": "786e8300fc25a66995ff7e26a63a1921ed5c4142a9c3177b57ea37525ae23002",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 43,
+        "row_fragments": 43,
+        "verified_cells": 214,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 76,
+          "DIVERGENT": 3
+        },
+        "differences": [
+          {
+            "label": "Tala",
+            "role": "SHUTTER_SLAT",
+            "engine_position": 29,
+            "pdf_position": 15,
+            "field": "quantity_total",
+            "pdf_printed": "40,25",
+            "engine": 41.0,
+            "status": "DIVERGENT",
+            "classification": "EXISTING_PHYSICAL_CORRECTION_INPUT_PENDING",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 45,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 46,
+            "field": "quantity_total",
+            "pdf_printed": "54,416",
+            "engine": 55.216,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "7,284",
+            "engine_length_per_product_mm": 7284.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "16,248",
+            "engine_length_per_product_mm": 16248.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1560",
+            "measure_2": "1560",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1750",
+            "measure_2": "1750",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1480",
+            "measure_2": "1480",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1670",
+            "measure_2": "1670",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [
+        {
+          "field": "slat.quantity_total",
+          "pdf": 40.25,
+          "engine": 41.0,
+          "status": "divergente",
+          "reason": "EXISTING_ENGINE_PHYSICAL_CORRECTION_CONDITIONAL_ON_SHUTTER_INPUT",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "pdf_filename": "OP-GOLDEN-06.pdf",
+      "pdf_sha256": "21faa25f539763a194791f798c3ecaa52318df9dde3de5c33ff095445a1b70c2",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 3,
+        "table_pages": 1,
+        "finding_pages": 2,
+        "rows": 26,
+        "row_fragments": 26,
+        "verified_cells": 134,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE11",
+          "engine_code": "CRE9",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Roldanas",
+          "pdf_code": "ROL3",
+          "engine_code": "ROL1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 48,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 28,
+            "field": "quantity_total",
+            "pdf_printed": "8",
+            "engine": 4.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 29,
+            "field": "quantity_total",
+            "pdf_printed": "133,984",
+            "engine": 135.584,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "18,432",
+            "engine_length_per_product_mm": 9216.0,
+            "engine_run_quantity_total": 2.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "41,632",
+            "engine_length_per_product_mm": 20816.0,
+            "engine_run_quantity_total": 2.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1300",
+            "measure_2": "1300",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "2240",
+            "measure_2": "2240",
+            "quantity": "4"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1220",
+            "measure_2": "1220",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "2160",
+            "measure_2": "2160",
+            "quantity": "4"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "pdf_filename": "OP-GOLDEN-07.pdf",
+      "pdf_sha256": "2478d3e6e7e1296d577510e45d5096b32f119f2646dd770caed85e31b54b26a2",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 26,
+        "row_fragments": 26,
+        "verified_cells": 134,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 48,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 28,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 29,
+            "field": "quantity_total",
+            "pdf_printed": "63,456",
+            "engine": 64.256,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "8,084",
+            "engine_length_per_product_mm": 8084.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "17,848",
+            "engine_length_per_product_mm": 17848.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "2620",
+            "measure_2": "2620",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1220",
+            "measure_2": "1220",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "2540",
+            "measure_2": "2540",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1140",
+            "measure_2": "1140",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "pdf_filename": "OP-GOLDEN-08.pdf",
+      "pdf_sha256": "c53a5aaba816c25fcb3d97f0b72cff530f87b5715ea1d32b27a5c932d13d19bd",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 24,
+        "row_fragments": 24,
+        "verified_cells": 132,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 51
+        },
+        "differences": [],
+        "unit_representation_reviews": [],
+        "missing_reference_rows": [],
+        "engine_additional_rows": [
+          {
+            "engine_position": 16,
+            "role": "GLASS_SEATING_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2384.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 17,
+            "role": "LEAF_EXTERNAL_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2864.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 18,
+            "role": "FRAME_CONTACT_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2864.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          }
+        ],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "pdf_filename": "OP-GOLDEN-09.pdf",
+      "pdf_sha256": "10a0f829eeff07a2871c004b1961e57cc48648c3ee7c412f9edfe6d47ff6f7c5",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 26,
+        "row_fragments": 26,
+        "verified_cells": 134,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 48,
+          "DIVERGENT": 2
+        },
+        "differences": [
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 28,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 29,
+            "field": "quantity_total",
+            "pdf_printed": "40,416",
+            "engine": 41.215999999999994,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "5,164",
+            "engine_length_per_product_mm": 5164.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "12,008",
+            "engine_length_per_product_mm": 12008.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1240",
+            "measure_2": "1240",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1180",
+            "measure_2": "1180",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1160",
+            "measure_2": "1160",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1100",
+            "measure_2": "1100",
+            "quantity": "2"
+          }
+        ],
+        "engine_additional_rows": [],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "pdf_filename": "OP-GOLDEN-10.pdf",
+      "pdf_sha256": "2a8ec8f8e6ebab679be38b67bb20728303caa451530bccec5cdf93df6e9721d9",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 24,
+        "row_fragments": 24,
+        "verified_cells": 132,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 51
+        },
+        "differences": [],
+        "unit_representation_reviews": [],
+        "missing_reference_rows": [],
+        "engine_additional_rows": [
+          {
+            "engine_position": 16,
+            "role": "GLASS_SEATING_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2324.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 17,
+            "role": "LEAF_EXTERNAL_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2804.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 18,
+            "role": "FRAME_CONTACT_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2804.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "run"
+          }
+        ],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "pdf_filename": "OP-GOLDEN-11.pdf",
+      "pdf_sha256": "b75502188730abce39034d5951c4641edb46f6b66b3166c6edc1dc0419ade849",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 2,
+        "table_pages": 1,
+        "finding_pages": 1,
+        "rows": 24,
+        "row_fragments": 24,
+        "verified_cells": 132,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE",
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 51
+        },
+        "differences": [],
+        "unit_representation_reviews": [],
+        "missing_reference_rows": [],
+        "engine_additional_rows": [
+          {
+            "engine_position": 16,
+            "role": "GLASS_SEATING_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2364.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 2.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 17,
+            "role": "LEAF_EXTERNAL_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2844.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 2.0,
+            "quantity_unit": "run"
+          },
+          {
+            "engine_position": 18,
+            "role": "FRAME_CONTACT_SEAL",
+            "code": "MX-SEALING-CONFIGURABLE",
+            "final_length_mm": null,
+            "cut_length_mm": 2844.0,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 2.0,
+            "quantity_unit": "run"
+          }
+        ],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [],
+      "missing_inputs": [],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "family": "CR",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "pdf_filename": "OP-GOLDEN-12.pdf",
+      "pdf_sha256": "1071d3a1f48a3db833c91ace06645a3e4d1d262cdc6d9026c22f3d92e3d1e332",
+      "checks": {
+        "integrity_valid": true,
+        "errors": [],
+        "pages": 3,
+        "table_pages": 2,
+        "finding_pages": 1,
+        "rows": 45,
+        "row_fragments": 45,
+        "verified_cells": 224,
+        "embedded_images": 3,
+        "verified_image_placements": 7,
+        "manufacturing_allowed": false
+      },
+      "comparison_status": "NOT_EQUIVALENT_PENDING_TECHNICAL_AND_VISUAL_AUDIT",
+      "reference_pages": 1,
+      "visual_status": "PAIR_GENERATED_FOR_VISUAL_AUDIT",
+      "differences": [
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INCOMPLETE_RECONSTRUCTED_INPUT",
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "kind": "REFERENCE_ROW_ABSENT",
+          "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+          "label": "Divisor central (Eixo ind)",
+          "code": "371127"
+        },
+        {
+          "kind": "ENGINE_ADDITIONAL_ROW",
+          "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+          "engine_position": 36,
+          "role": "SHUTTER_END_PLATE",
+          "legacy_row": 122,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "LEGACY_IDENTIFICATION_ANOMALY",
+          "utilization": "Divisor central (Eixo único)",
+          "pdf_code": "0",
+          "engine_code": "371143",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "kind": "CODE_DIFFERENCE",
+          "classification": "RECONSTRUCTED_OPTION_UNCONFIRMED",
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "numeric_reference_comparison": {
+        "counts": {
+          "MATCH": 71,
+          "DIVERGENT": 11
+        },
+        "differences": [
+          {
+            "label": "Tala",
+            "role": "SHUTTER_SLAT",
+            "engine_position": 29,
+            "pdf_position": 16,
+            "field": "quantity_total",
+            "pdf_printed": "59",
+            "engine": 60.0,
+            "status": "DIVERGENT",
+            "classification": "EXISTING_PHYSICAL_CORRECTION_INPUT_PENDING",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Eixo",
+            "role": "SHUTTER_SHAFT",
+            "engine_position": 31,
+            "pdf_position": 18,
+            "field": "final_length_mm",
+            "pdf_printed": "950",
+            "engine": 1940.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Eixo",
+            "role": "SHUTTER_SHAFT",
+            "engine_position": 31,
+            "pdf_position": 18,
+            "field": "cut_length_mm",
+            "pdf_printed": "950",
+            "engine": 1940.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Placa lateral (Polia)",
+            "role": "SHUTTER_PULLEY_PLATE",
+            "engine_position": 35,
+            "pdf_position": 32,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Polia",
+            "role": "SHUTTER_PULLEY",
+            "engine_position": 38,
+            "pdf_position": 35,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Ponteira",
+            "role": "SHUTTER_END_CAP",
+            "engine_position": 39,
+            "pdf_position": 36,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Adaptador da ponteira",
+            "role": "SHUTTER_END_CAP_ADAPTER",
+            "engine_position": 40,
+            "pdf_position": 37,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Recolhedor de embutir",
+            "role": "SHUTTER_RECESSED_WINDER",
+            "engine_position": 41,
+            "pdf_position": 38,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Passador",
+            "role": "SHUTTER_FRONT_PIN",
+            "engine_position": 44,
+            "pdf_position": 41,
+            "field": "quantity_total",
+            "pdf_printed": "2",
+            "engine": 1.0,
+            "status": "DIVERGENT",
+            "classification": "INPUT_SHUTTER_MODE_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Contra-fecho standard",
+            "role": "COUNTER_LATCH",
+            "engine_position": 24,
+            "pdf_position": 47,
+            "field": "quantity_total",
+            "pdf_printed": "4",
+            "engine": 2.0,
+            "status": "DIVERGENT",
+            "classification": "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED",
+            "identity_also_differs": false
+          },
+          {
+            "label": "Parafusos (Reforço)",
+            "role": "REINFORCEMENT_SCREWS",
+            "engine_position": 25,
+            "pdf_position": 48,
+            "field": "quantity_total",
+            "pdf_printed": "53,056",
+            "engine": 53.856,
+            "status": "DIVERGENT",
+            "classification": "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT",
+            "identity_also_differs": false
+          }
+        ],
+        "unit_representation_reviews": [
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Borracha da folha",
+            "code": "ACB606",
+            "pdf_order_quantity_m": "6,684",
+            "engine_length_per_product_mm": 6684.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 14,
+            "resolved": false
+          },
+          {
+            "classification": "UNIT_REPRESENTATION_REVIEW",
+            "label": "Escova da folha",
+            "code": "ACE606",
+            "pdf_order_quantity_m": "15,048",
+            "engine_length_per_product_mm": 15048.0,
+            "engine_run_quantity_total": 1.0,
+            "engine_position": 15,
+            "resolved": false
+          }
+        ],
+        "missing_reference_rows": [
+          {
+            "label": "Arremate Int. Largura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "2120",
+            "measure_2": "2120",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Int. Altura",
+            "code": "AC7012",
+            "kind": "LINEAR",
+            "measure_1": "1320",
+            "measure_2": "1320",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Largura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "2040",
+            "measure_2": "2040",
+            "quantity": "2"
+          },
+          {
+            "label": "Arremate Ext. Altura",
+            "code": "AC3004",
+            "kind": "LINEAR",
+            "measure_1": "1240",
+            "measure_2": "1240",
+            "quantity": "2"
+          },
+          {
+            "label": "Divisor central (Eixo ind)",
+            "code": "371127",
+            "kind": "UNIT",
+            "measure_1": null,
+            "measure_2": null,
+            "quantity": "1"
+          }
+        ],
+        "engine_additional_rows": [
+          {
+            "engine_position": 36,
+            "role": "SHUTTER_END_PLATE",
+            "code": "371513_2",
+            "final_length_mm": null,
+            "cut_length_mm": null,
+            "width_mm": null,
+            "height_mm": null,
+            "quantity_total": 1.0,
+            "quantity_unit": "piece"
+          }
+        ],
+        "full_equivalence": false
+      },
+      "golden_numeric_differences": [
+        {
+          "field": "slat.quantity_total",
+          "pdf": 59,
+          "engine": 60.0,
+          "status": "divergente",
+          "reason": "EXISTING_ENGINE_PHYSICAL_CORRECTION_CONDITIONAL_ON_SHUTTER_INPUT",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "presentation_differences": [
+        "REVIEW_MARK_AND_FINDINGS_ANNEX",
+        "EXPLICIT_UNITS_AND_CONSUMPTION",
+        "TEMPLATE_FONT_SPACING_AND_SECTION_HEADERS",
+        "CUSTOMER_HEADERS_ANONYMIZED"
+      ],
+      "fabrication_allowed": false
+    }
+  ],
+  "fx_own_case": {
+    "id": "FX-PROPRIO",
+    "family": "FX",
+    "pdf_filename": "FX-PROPRIO.pdf",
+    "checks": {
+      "integrity_valid": true,
+      "errors": [],
+      "pages": 2,
+      "table_pages": 1,
+      "finding_pages": 1,
+      "rows": 13,
+      "row_fragments": 13,
+      "verified_cells": 74,
+      "embedded_images": 2,
+      "verified_image_placements": 4,
+      "manufacturing_allowed": false
+    },
+    "reference": null
+  },
+  "reference_cases": 12,
+  "reference_rows_preserved": 355,
+  "b1_difference_counts": {
+    "REFERENCE_ROW_ABSENT": 34,
+    "CODE_DIFFERENCE": 26,
+    "ENGINE_ADDITIONAL_ROW": 13
+  },
+  "classification_counts": {
+    "INCOMPLETE_RECONSTRUCTED_INPUT": 32,
+    "RECONSTRUCTED_OPTION_UNCONFIRMED": 25,
+    "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT": 1,
+    "EXISTING_ENGINE_RULE_NOT_SHOWN_IN_REFERENCE": 12,
+    "INPUT_SHUTTER_MODE_UNCONFIRMED": 2,
+    "LEGACY_IDENTIFICATION_ANOMALY": 1
+  },
+  "numeric_comparison_counts": {
+    "MATCH": 670,
+    "DIVERGENT": 27,
+    "PRINTED_PRECISION_DIFFERENCE": 1
+  },
+  "numeric_difference_classifications": {
+    "RECONSTRUCTED_HARDWARE_OPTION_UNCONFIRMED": 9,
+    "POSSIBLE_ENGINEERING_OR_LEGACY_VARIANT": 8,
+    "PRINTED_PRECISION_DIFFERENCE": 1,
+    "EXISTING_PHYSICAL_CORRECTION_INPUT_PENDING": 2,
+    "INPUT_SHUTTER_MODE_UNCONFIRMED": 8
+  },
+  "reference_pdf_pages_generated": 26,
+  "private_assets_available": true,
+  "manufacturing_allowed": false
+}

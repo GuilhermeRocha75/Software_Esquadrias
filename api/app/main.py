@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import asdict
 import os
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from .engine_bridge import (
@@ -33,6 +34,7 @@ from .production_schemas import ProductionOrderRequest, ProductionOrder
 from .production_service import build_production_order
 from .production_layout import ProductionLayoutRequest, ProductionLayoutDocument, prepare_production_layout
 from .production_images import ProductionImageManifest, ProductionImageStore
+from .production_pdf import ProductionPdfRequest, ProductionPdfReadiness, production_pdf_readiness, render_production_pdf, pdf_model_headings
 from .schemas import (
     FixoItemRequest, FixoPurchasePlanRequest,
     CRItemRequest,
@@ -67,6 +69,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["Content-Disposition", "X-OP-Mode", "X-OP-Fabrication-Allowed", "X-OP-Blocking-Count", "X-OP-Pages", "X-OP-Snapshot-SHA256"],
 )
 
 
@@ -97,6 +100,36 @@ def preview_production_layout(payload: ProductionLayoutRequest, image_store=Depe
     """Prepare B1 header/images/source ordering and blocks, without rendering PDF."""
     try:
         return prepare_production_layout(payload, image_store=image_store)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/production-orders/pdf-readiness", response_model=ProductionPdfReadiness)
+def production_pdf_readiness_endpoint(payload: ProductionLayoutRequest, image_store=Depends(_production_image_store)) -> ProductionPdfReadiness:
+    """Check review assets/findings; manufacturing release remains unavailable."""
+    try:
+        layout = prepare_production_layout(payload, image_store=image_store)
+        return production_pdf_readiness(layout, image_store=image_store)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/production-orders/pdf", responses={200: {"content": {"application/pdf": {}}}, 409: {"description": "Emissão para fabricação bloqueada"}})
+def production_pdf_endpoint(payload: ProductionPdfRequest, image_store=Depends(_production_image_store)):
+    """Return private, non-cacheable review PDF; never an authorized production OP."""
+    try:
+        layout = prepare_production_layout(payload.layout_request, image_store=image_store)
+        readiness = production_pdf_readiness(layout, image_store=image_store)
+        if payload.purpose == "PRODUCTION":
+            raise HTTPException(status_code=409, detail={"code": "FABRICATION_BLOCKED", **readiness.model_dump(mode="json")})
+        result = render_production_pdf(layout, image_store=image_store, model_headings=pdf_model_headings(payload.layout_request))
+        return Response(content=result.content, media_type="application/pdf", headers={
+            "Content-Disposition": f'inline; filename="op-conferencia-{layout.layout_sha256[:12]}.pdf"',
+            "Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff",
+            "X-OP-Mode": "REVIEW", "X-OP-Fabrication-Allowed": "false",
+            "X-OP-Blocking-Count": str(len(result.audit.readiness.blockers)),
+            "X-OP-Pages": str(result.audit.page_count), "X-OP-Snapshot-SHA256": layout.layout_sha256,
+        })
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 

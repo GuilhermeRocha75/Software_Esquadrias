@@ -51,6 +51,14 @@ Fluxo atual:
 
 ## Próximas funções planejadas
 
+A Fase B2 disponibiliza `src/productionOrderPdf.js`, com
+`fetchProductionOrderReview(apiUrl, layoutRequest, {signal})`, para futura
+integração de prévia/download. O helper solicita somente `REVIEW`, verifica os
+headers de bloqueio, contagem de páginas, hash do snapshot e assinatura do PDF,
+e retorna um `Blob`. Não há botão de emissão habilitado nesta entrega.
+`PRODUCTION` permanece bloqueado na API. Detalhes em
+[OP_FASE_B2.md](../docs/OP_FASE_B2.md).
+
 - Login e multiempresa;
 - banco PostgreSQL;
 - clientes e obras persistidos;

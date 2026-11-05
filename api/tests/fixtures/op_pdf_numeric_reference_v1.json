@@ -1,0 +1,3134 @@
+{
+  "schema_version": 1,
+  "scope": "PRINTED_TECHNICAL_NUMBERS_ONLY_NO_CLIENT_DATA",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1930",
+          "measure_2": "1935",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1490",
+          "measure_2": "1495",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "954",
+          "measure_2": "959",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1402",
+          "measure_2": "1407",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Largura (Tela)",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "954",
+          "measure_2": "959",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Altura (Tela)",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1402",
+          "measure_2": "1407",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "854",
+          "measure_2": "854",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1302",
+          "measure_2": "1302",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (Tela A)",
+          "code": "BA3218",
+          "kind": "LINEAR",
+          "measure_1": "854",
+          "measure_2": "854",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Altura (Tela A)",
+          "code": "BA3218",
+          "kind": "LINEAR",
+          "measure_1": "1302",
+          "measure_2": "1302",
+          "quantity": "2"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "1392",
+          "measure_2": "1392",
+          "quantity": "3"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "1826",
+          "measure_2": "1826",
+          "quantity": "3"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2070",
+          "measure_2": "2070",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1630",
+          "measure_2": "1630",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1990",
+          "measure_2": "1990",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1550",
+          "measure_2": "1550",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1826",
+          "measure_2": "1826",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1386",
+          "measure_2": "1386",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "850",
+          "measure_2": "850",
+          "quantity": "6"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1298",
+          "measure_2": "1298",
+          "quantity": "6"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "846",
+          "measure_2": "1294",
+          "quantity": "2"
+        },
+        {
+          "label": "Telas (1)",
+          "code": "TL1",
+          "kind": "SURFACE",
+          "measure_1": "846",
+          "measure_2": "1294",
+          "quantity": "1"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8,624"
+        },
+        {
+          "label": "Borracha da tela",
+          "code": "TL2",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4,312"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "28,392"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "6"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "6"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "83,424"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "24"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1630",
+          "measure_2": "1635",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1490",
+          "measure_2": "1495",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "804",
+          "measure_2": "809",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1402",
+          "measure_2": "1407",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Largura (Tela)",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "804",
+          "measure_2": "809",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Altura (Tela)",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1402",
+          "measure_2": "1407",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "704",
+          "measure_2": "704",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1302",
+          "measure_2": "1302",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (Tela A)",
+          "code": "BA3218",
+          "kind": "LINEAR",
+          "measure_1": "704",
+          "measure_2": "704",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Altura (Tela A)",
+          "code": "BA3218",
+          "kind": "LINEAR",
+          "measure_1": "1302",
+          "measure_2": "1302",
+          "quantity": "2"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "1392",
+          "measure_2": "1392",
+          "quantity": "3"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "1526",
+          "measure_2": "1526",
+          "quantity": "3"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1770",
+          "measure_2": "1770",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1630",
+          "measure_2": "1630",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1690",
+          "measure_2": "1690",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1550",
+          "measure_2": "1550",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1526",
+          "measure_2": "1526",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR13852",
+          "kind": "LINEAR",
+          "measure_1": "1386",
+          "measure_2": "1386",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "700",
+          "measure_2": "700",
+          "quantity": "6"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1298",
+          "measure_2": "1298",
+          "quantity": "6"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "696",
+          "measure_2": "1294",
+          "quantity": "2"
+        },
+        {
+          "label": "Telas (1)",
+          "code": "TL1",
+          "kind": "SURFACE",
+          "measure_1": "696",
+          "measure_2": "1294",
+          "quantity": "1"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8,024"
+        },
+        {
+          "label": "Borracha da tela",
+          "code": "TL2",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4,012"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "26,592"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "6"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "6"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "77,424"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "24"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1160",
+          "measure_2": "1165",
+          "quantity": "1"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "2110",
+          "measure_2": "2113",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE60104",
+          "kind": "LINEAR",
+          "measure_1": "1096",
+          "measure_2": "1101",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE60104",
+          "kind": "LINEAR",
+          "measure_1": "2073",
+          "measure_2": "2078",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Largura (Painel)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "924",
+          "measure_2": "924",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Altura (Painel A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1901",
+          "measure_2": "1901",
+          "quantity": "2"
+        },
+        {
+          "label": "Painel",
+          "code": "DE20150",
+          "kind": "LINEAR",
+          "measure_1": "924",
+          "measure_2": "924",
+          "quantity": "12,8357143"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1300",
+          "measure_2": "1300",
+          "quantity": "1"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2250",
+          "measure_2": "2250",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1220",
+          "measure_2": "1220",
+          "quantity": "1"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "2170",
+          "measure_2": "2170",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1044",
+          "measure_2": "1044",
+          "quantity": "1"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1994",
+          "measure_2": "1994",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE60104",
+          "kind": "LINEAR",
+          "measure_1": "976",
+          "measure_2": "976",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE60104",
+          "kind": "LINEAR",
+          "measure_1": "1953",
+          "measure_2": "1953",
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Dobradiça",
+          "code": "DOB3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Cremona",
+          "code": "FEC5",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Cilindro",
+          "code": "CIL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Contra Fecho",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "CONTRA-TESTA",
+          "code": "CON2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "38,544"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "36"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "2800",
+          "measure_2": "2805",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1400",
+          "measure_2": "1405",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1389",
+          "measure_2": "1394",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1312",
+          "measure_2": "1317",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1289",
+          "measure_2": "1289",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1212",
+          "measure_2": "1212",
+          "quantity": "4"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "1302",
+          "measure_2": "1302",
+          "quantity": "2"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "2696",
+          "measure_2": "2696",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2940",
+          "measure_2": "2940",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1540",
+          "measure_2": "1540",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "2860",
+          "measure_2": "2860",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1460",
+          "measure_2": "1460",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "2696",
+          "measure_2": "2696",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1296",
+          "measure_2": "1296",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1285",
+          "measure_2": "1285",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1208",
+          "measure_2": "1208",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "1281",
+          "measure_2": "1204",
+          "quantity": "2"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "10,004"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "21,688"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "76,256"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1420",
+          "measure_2": "1425",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1410",
+          "measure_2": "1415",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "699",
+          "measure_2": "704",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1322",
+          "measure_2": "1327",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "599",
+          "measure_2": "599",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1222",
+          "measure_2": "1222",
+          "quantity": "4"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "1312",
+          "measure_2": "1312",
+          "quantity": "2"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "1316",
+          "measure_2": "1316",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1560",
+          "measure_2": "1560",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1750",
+          "measure_2": "1750",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1480",
+          "measure_2": "1480",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1670",
+          "measure_2": "1670",
+          "quantity": "2"
+        },
+        {
+          "label": "Caixa",
+          "code": "321040",
+          "kind": "LINEAR",
+          "measure_1": "1405",
+          "measure_2": "1405",
+          "quantity": "1"
+        },
+        {
+          "label": "Guia lateral",
+          "code": "327201",
+          "kind": "LINEAR",
+          "measure_1": "1410",
+          "measure_2": "1410",
+          "quantity": "2"
+        },
+        {
+          "label": "Tala",
+          "code": "326015_F",
+          "kind": "LINEAR",
+          "measure_1": "1346",
+          "measure_2": "1346",
+          "quantity": "40,25"
+        },
+        {
+          "label": "Terminal",
+          "code": "311712",
+          "kind": "LINEAR",
+          "measure_1": "1346",
+          "measure_2": "1346",
+          "quantity": "1"
+        },
+        {
+          "label": "Eixo",
+          "code": "375021",
+          "kind": "LINEAR",
+          "measure_1": "1380",
+          "measure_2": "1380",
+          "quantity": "1"
+        },
+        {
+          "label": "Prolongador de guia",
+          "code": "327019",
+          "kind": "LINEAR",
+          "measure_1": "1410",
+          "measure_2": "1410",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1316",
+          "measure_2": "1316",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1306",
+          "measure_2": "1306",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "595",
+          "measure_2": "595",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1218",
+          "measure_2": "1218",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "591",
+          "measure_2": "1214",
+          "quantity": "2"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "7,284"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "16,248"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tampa lateral (Polia/Pont.)",
+          "code": "370113",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Placa lateral (Polia)",
+          "code": "371513_4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Placa lateral (Ponteira)",
+          "code": "371513_2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Polia",
+          "code": "375110",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Ponteira",
+          "code": "375213",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Adaptador da ponteira",
+          "code": "375234",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Recolhedor de embutir",
+          "code": "375339",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Convite",
+          "code": "373128",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Engate",
+          "code": "375678",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Passador",
+          "code": "375415",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "54,416"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1160",
+          "measure_2": "1165",
+          "quantity": "4"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "2100",
+          "measure_2": "2105",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4288",
+          "kind": "LINEAR",
+          "measure_1": "580",
+          "measure_2": "585",
+          "quantity": "8"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4288",
+          "kind": "LINEAR",
+          "measure_1": "2012",
+          "measure_2": "2017",
+          "quantity": "8"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "436",
+          "measure_2": "436",
+          "quantity": "8"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1868",
+          "measure_2": "1868",
+          "quantity": "8"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4550",
+          "kind": "LINEAR",
+          "measure_1": "2002",
+          "measure_2": "2002",
+          "quantity": "4"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "1056",
+          "measure_2": "1056",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1300",
+          "measure_2": "1300",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2240",
+          "measure_2": "2240",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1220",
+          "measure_2": "1220",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "2160",
+          "measure_2": "2160",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1056",
+          "measure_2": "1056",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1996",
+          "measure_2": "1996",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4288",
+          "kind": "LINEAR",
+          "measure_1": "476",
+          "measure_2": "476",
+          "quantity": "8"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4288",
+          "kind": "LINEAR",
+          "measure_1": "1908",
+          "measure_2": "1908",
+          "quantity": "8"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "428",
+          "measure_2": "1860",
+          "quantity": "4"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18,432"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "41,632"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE11",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "133,984"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "36"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "2480",
+          "measure_2": "2485",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1080",
+          "measure_2": "1085",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1229",
+          "measure_2": "1234",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "992",
+          "measure_2": "997",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "1129",
+          "measure_2": "1129",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "892",
+          "measure_2": "892",
+          "quantity": "4"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "982",
+          "measure_2": "982",
+          "quantity": "2"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "2376",
+          "measure_2": "2376",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2620",
+          "measure_2": "2620",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1220",
+          "measure_2": "1220",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "2540",
+          "measure_2": "2540",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1140",
+          "measure_2": "1140",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "2376",
+          "measure_2": "2376",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "976",
+          "measure_2": "976",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "1125",
+          "measure_2": "1125",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "888",
+          "measure_2": "888",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "1121",
+          "measure_2": "884",
+          "quantity": "2"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8,084"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "17,848"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "63,456"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "530",
+          "measure_2": "535",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1030",
+          "measure_2": "1035",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "466",
+          "measure_2": "471",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "966",
+          "measure_2": "971",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "346",
+          "measure_2": "346",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "846",
+          "measure_2": "846",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "670",
+          "measure_2": "670",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1170",
+          "measure_2": "1170",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "590",
+          "measure_2": "590",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1090",
+          "measure_2": "1090",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "414",
+          "measure_2": "414",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "914",
+          "measure_2": "914",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "346",
+          "measure_2": "346",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "846",
+          "measure_2": "846",
+          "quantity": "2"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB",
+          "kind": "SURFACE",
+          "measure_1": "338",
+          "measure_2": "838",
+          "quantity": "1"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "24,096"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "10"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1100",
+          "measure_2": "1105",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1040",
+          "measure_2": "1045",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "539",
+          "measure_2": "544",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "952",
+          "measure_2": "957",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "439",
+          "measure_2": "439",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "852",
+          "measure_2": "852",
+          "quantity": "4"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "942",
+          "measure_2": "942",
+          "quantity": "2"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "996",
+          "measure_2": "996",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1240",
+          "measure_2": "1240",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1180",
+          "measure_2": "1180",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1160",
+          "measure_2": "1160",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1100",
+          "measure_2": "1100",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "996",
+          "measure_2": "996",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "936",
+          "measure_2": "936",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "435",
+          "measure_2": "435",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "848",
+          "measure_2": "848",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI",
+          "kind": "SURFACE",
+          "measure_1": "431",
+          "measure_2": "844",
+          "quantity": "2"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "5,164"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "12,008"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "40,416"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "500",
+          "measure_2": "505",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1030",
+          "measure_2": "1035",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "436",
+          "measure_2": "441",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "966",
+          "measure_2": "971",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "316",
+          "measure_2": "316",
+          "quantity": "2"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "846",
+          "measure_2": "846",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "640",
+          "measure_2": "640",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1170",
+          "measure_2": "1170",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "560",
+          "measure_2": "560",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1090",
+          "measure_2": "1090",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "384",
+          "measure_2": "384",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "914",
+          "measure_2": "914",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "316",
+          "measure_2": "316",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "846",
+          "measure_2": "846",
+          "quantity": "2"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB",
+          "kind": "SURFACE",
+          "measure_1": "308",
+          "measure_2": "838",
+          "quantity": "1"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "23,616"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "10"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "510",
+          "measure_2": "515",
+          "quantity": "4"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058",
+          "kind": "LINEAR",
+          "measure_1": "1040",
+          "measure_2": "1045",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "446",
+          "measure_2": "451",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078",
+          "kind": "LINEAR",
+          "measure_1": "976",
+          "measure_2": "981",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "326",
+          "measure_2": "326",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518",
+          "kind": "LINEAR",
+          "measure_1": "856",
+          "measure_2": "856",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "650",
+          "measure_2": "650",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1180",
+          "measure_2": "1180",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "570",
+          "measure_2": "570",
+          "quantity": "4"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1100",
+          "measure_2": "1100",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "394",
+          "measure_2": "394",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058",
+          "kind": "LINEAR",
+          "measure_1": "924",
+          "measure_2": "924",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "326",
+          "measure_2": "326",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078",
+          "kind": "LINEAR",
+          "measure_1": "856",
+          "measure_2": "856",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB",
+          "kind": "SURFACE",
+          "measure_1": "318",
+          "measure_2": "848",
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "8"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "47,872"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "20"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "source_sha256": "48af38fba7e38b4c74f9ddc70f6959af9122d276fc925126a78c1fbd32655476",
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1980",
+          "measure_2": "1985",
+          "quantity": "2"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852",
+          "kind": "LINEAR",
+          "measure_1": "980",
+          "measure_2": "985",
+          "quantity": "2"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "979",
+          "measure_2": "984",
+          "quantity": "4"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266",
+          "kind": "LINEAR",
+          "measure_1": "892",
+          "measure_2": "897",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "879",
+          "measure_2": "879",
+          "quantity": "4"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516",
+          "kind": "LINEAR",
+          "measure_1": "792",
+          "measure_2": "792",
+          "quantity": "4"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536",
+          "kind": "LINEAR",
+          "measure_1": "882",
+          "measure_2": "882",
+          "quantity": "2"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16",
+          "kind": "LINEAR",
+          "measure_1": "1876",
+          "measure_2": "1876",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "2120",
+          "measure_2": "2120",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012",
+          "kind": "LINEAR",
+          "measure_1": "1320",
+          "measure_2": "1320",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "2040",
+          "measure_2": "2040",
+          "quantity": "2"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004",
+          "kind": "LINEAR",
+          "measure_1": "1240",
+          "measure_2": "1240",
+          "quantity": "2"
+        },
+        {
+          "label": "Caixa",
+          "code": "321040",
+          "kind": "LINEAR",
+          "measure_1": "1965",
+          "measure_2": "1965",
+          "quantity": "1"
+        },
+        {
+          "label": "Guia lateral",
+          "code": "327201",
+          "kind": "LINEAR",
+          "measure_1": "980",
+          "measure_2": "980",
+          "quantity": "2"
+        },
+        {
+          "label": "Guia central",
+          "code": "327204",
+          "kind": "LINEAR",
+          "measure_1": "980",
+          "measure_2": "980",
+          "quantity": "1"
+        },
+        {
+          "label": "Tala",
+          "code": "326015_F",
+          "kind": "LINEAR",
+          "measure_1": "933",
+          "measure_2": "933",
+          "quantity": "59"
+        },
+        {
+          "label": "Terminal",
+          "code": "311712",
+          "kind": "LINEAR",
+          "measure_1": "933",
+          "measure_2": "933",
+          "quantity": "2"
+        },
+        {
+          "label": "Eixo",
+          "code": "375021",
+          "kind": "LINEAR",
+          "measure_1": "950",
+          "measure_2": "950",
+          "quantity": "1"
+        },
+        {
+          "label": "Prolongador de guia",
+          "code": "327019",
+          "kind": "LINEAR",
+          "measure_1": "980",
+          "measure_2": "980",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "1876",
+          "measure_2": "1876",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852",
+          "kind": "LINEAR",
+          "measure_1": "876",
+          "measure_2": "876",
+          "quantity": "2"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "875",
+          "measure_2": "875",
+          "quantity": "4"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266",
+          "kind": "LINEAR",
+          "measure_1": "788",
+          "measure_2": "788",
+          "quantity": "4"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "4FI",
+          "kind": "SURFACE",
+          "measure_1": "871",
+          "measure_2": "784",
+          "quantity": "2"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "6,684"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606",
+          "kind": "CONSUMPTION",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "15,048"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Tampa lateral (Polia/Pont.)",
+          "code": "370113",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Placa lateral (Polia)",
+          "code": "371513_4",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Divisor central (Eixo único)",
+          "code": "0",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Divisor central (Eixo ind)",
+          "code": "371127",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Polia",
+          "code": "375110",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Ponteira",
+          "code": "375213",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Adaptador da ponteira",
+          "code": "375234",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Recolhedor de embutir",
+          "code": "375339",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Convite",
+          "code": "373128",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Engate",
+          "code": "375678",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Passador",
+          "code": "375415",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "2"
+        },
+        {
+          "label": "Limitador",
+          "code": "375441",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "1"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "53,056"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1",
+          "kind": "UNIT",
+          "measure_1": null,
+          "measure_2": null,
+          "quantity": "18"
+        }
+      ]
+    }
+  ]
+}
