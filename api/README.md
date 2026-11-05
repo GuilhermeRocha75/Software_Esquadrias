@@ -10,6 +10,7 @@ Endpoints já criados:
 
 - `GET /health`
 - `POST /api/v1/production-orders/preview` — dados da OP Fase A, quatro famílias e pedidos mistos; sem PDF ou persistência. Contratos, unidades, limites e auditoria em [OP_FASE_A.md](../docs/OP_FASE_A.md).
+- `POST /api/v1/production-orders/layout-preview` — Fase B1: cabeçalho, identificação de imagens e blocos na sequência da fonte; sem renderizar PDF. Contrato, configuração privada e evidências em [OP_FASE_B1.md](../docs/OP_FASE_B1.md).
 - `GET /api/v1/engine/cr/options`
 - `POST /api/v1/engine/cr/calculate`
 - `POST /api/v1/purchase-plans/calculate`

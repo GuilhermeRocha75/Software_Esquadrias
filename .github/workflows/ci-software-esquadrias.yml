@@ -96,6 +96,8 @@ jobs:
           python tools/compare_op_golden.py --output-dir op-ci-comparison
           diff -u docs/audits/op_fase_a/op_golden_comparison.json op-ci-comparison/op_golden_comparison.json
           diff -u docs/audits/op_fase_a/op_golden_comparison.md op-ci-comparison/op_golden_comparison.md
+          python tools/compare_op_layout.py --output op-ci-comparison/layout_comparison.json
+          diff -u docs/audits/op_b1/layout_comparison.json op-ci-comparison/layout_comparison.json
 
       - name: Set up Node
         uses: actions/setup-node@v4

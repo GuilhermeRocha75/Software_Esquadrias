@@ -1,0 +1,1702 @@
+{
+  "schema_version": 1,
+  "scope": "ORDER_ONLY_NOT_FULL_PARITY",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "family": "CR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER + TELA MOSQUITEIRA (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR13852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR13852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Largura (Tela)",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura (Tela)",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Largura (Tela A)",
+          "code": "BA3218"
+        },
+        {
+          "label": "Baguete Altura (Tela A)",
+          "code": "BA3218"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR13852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR13852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Telas (1)",
+          "code": "TL1"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Borracha da tela",
+          "code": "TL2"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "family": "CR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER + TELA MOSQUITEIRA (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR13852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR13852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Largura (Tela)",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura (Tela)",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Largura (Tela A)",
+          "code": "BA3218"
+        },
+        {
+          "label": "Baguete Altura (Tela A)",
+          "code": "BA3218"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR13852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR13852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Telas (1)",
+          "code": "TL1"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Borracha da tela",
+          "code": "TL2"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "family": "GR",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "source_sha256": "a1322385c663449b94a66da5a25411b96d3e7bd04624d3c44c96beb9ddc581ee",
+      "model_basename": "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE60104"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE60104"
+        },
+        {
+          "label": "Baguete Largura (Painel)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (Painel A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Painel",
+          "code": "DE20150"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE60104"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE60104"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Dobradiça",
+          "code": "DOB3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC4"
+        },
+        {
+          "label": "Cremona",
+          "code": "FEC5"
+        },
+        {
+          "label": "Cilindro",
+          "code": "CIL1"
+        },
+        {
+          "label": "Contra Fecho",
+          "code": "CON1"
+        },
+        {
+          "label": "CONTRA-TESTA",
+          "code": "CON2"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER COM PERSIANA (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Caixa",
+          "code": "321040"
+        },
+        {
+          "label": "Guia lateral",
+          "code": "327201"
+        },
+        {
+          "label": "Tala",
+          "code": "326015_F"
+        },
+        {
+          "label": "Terminal",
+          "code": "311712"
+        },
+        {
+          "label": "Eixo",
+          "code": "375021"
+        },
+        {
+          "label": "Prolongador de guia",
+          "code": "327019"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Tampa lateral (Polia/Pont.)",
+          "code": "370113"
+        },
+        {
+          "label": "Placa lateral (Polia)",
+          "code": "371513_4"
+        },
+        {
+          "label": "Placa lateral (Ponteira)",
+          "code": "371513_2"
+        },
+        {
+          "label": "Polia",
+          "code": "375110"
+        },
+        {
+          "label": "Ponteira",
+          "code": "375213"
+        },
+        {
+          "label": "Adaptador da ponteira",
+          "code": "375234"
+        },
+        {
+          "label": "Recolhedor de embutir",
+          "code": "375339"
+        },
+        {
+          "label": "Convite",
+          "code": "373128"
+        },
+        {
+          "label": "Engate",
+          "code": "375678"
+        },
+        {
+          "label": "Passador",
+          "code": "375415"
+        },
+        {
+          "label": "Limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "PORTA 2 FOLHAS DE CORRER (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4288"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4288"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4550"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4288"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4288"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE11"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL3"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER (PRETO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 1 FOLHA MAXIM-AR (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "family": "CR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "6TI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 1 FOLHA MAXIM-AR (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "family": "MAXIM_AR",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "source_sha256": "3c6f2bd32936e0b4e3d3f16c600767b020b8e26286c4611c32c741a35bb0bafe",
+      "model_basename": "JANELA 1 FOLHA MAXIM-AR (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "DE6058"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "DE6078"
+        },
+        {
+          "label": "Baguete Largura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Baguete Altura",
+          "code": "BA3518"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - DE6058"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - DE6078"
+        },
+        {
+          "label": "Vidro (S)",
+          "code": "4MB"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Braço",
+          "code": "BRA9"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "FEC4"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "family": "CR",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "source_sha256": "48af38fba7e38b4c74f9ddc70f6959af9122d276fc925126a78c1fbd32655476",
+      "model_basename": "JANELA 2 FOLHAS DE CORRER COM PERSIANA (BRANCO).jpg",
+      "page_size_pt": [
+        595.32001,
+        841.92004
+      ],
+      "rows": [
+        {
+          "label": "Marco Largura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Marco Altura",
+          "code": "PR8852"
+        },
+        {
+          "label": "Folha Largura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Folha Altura",
+          "code": "PR4266"
+        },
+        {
+          "label": "Baguete Largura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Baguete Altura (A)",
+          "code": "BA2516"
+        },
+        {
+          "label": "Interlock",
+          "code": "PR4536"
+        },
+        {
+          "label": "Trilho de Alumínio",
+          "code": "AL16"
+        },
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Caixa",
+          "code": "321040"
+        },
+        {
+          "label": "Guia lateral",
+          "code": "327201"
+        },
+        {
+          "label": "Guia central",
+          "code": "327204"
+        },
+        {
+          "label": "Tala",
+          "code": "326015_F"
+        },
+        {
+          "label": "Terminal",
+          "code": "311712"
+        },
+        {
+          "label": "Eixo",
+          "code": "375021"
+        },
+        {
+          "label": "Prolongador de guia",
+          "code": "327019"
+        },
+        {
+          "label": "Reforço Marco Largura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Marco Altura",
+          "code": "RAG - PR8852"
+        },
+        {
+          "label": "Reforço Folha Largura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Reforço Folha Altura",
+          "code": "RAG - PR4266"
+        },
+        {
+          "label": "Vidros (1)",
+          "code": "4FI"
+        },
+        {
+          "label": "Borracha da folha",
+          "code": "ACB606"
+        },
+        {
+          "label": "Escova da folha",
+          "code": "ACE606"
+        },
+        {
+          "label": "Corta vento",
+          "code": "AC0012"
+        },
+        {
+          "label": "Calço de vidro",
+          "code": "AC0312"
+        },
+        {
+          "label": "Tapa deságue",
+          "code": "AC0001"
+        },
+        {
+          "label": "Batente limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Tampa lateral (Polia/Pont.)",
+          "code": "370113"
+        },
+        {
+          "label": "Placa lateral (Polia)",
+          "code": "371513_4"
+        },
+        {
+          "label": "Divisor central (Eixo único)",
+          "code": "0"
+        },
+        {
+          "label": "Divisor central (Eixo ind)",
+          "code": "371127"
+        },
+        {
+          "label": "Polia",
+          "code": "375110"
+        },
+        {
+          "label": "Ponteira",
+          "code": "375213"
+        },
+        {
+          "label": "Adaptador da ponteira",
+          "code": "375234"
+        },
+        {
+          "label": "Recolhedor de embutir",
+          "code": "375339"
+        },
+        {
+          "label": "Convite",
+          "code": "373128"
+        },
+        {
+          "label": "Engate",
+          "code": "375678"
+        },
+        {
+          "label": "Passador",
+          "code": "375415"
+        },
+        {
+          "label": "Limitador",
+          "code": "375441"
+        },
+        {
+          "label": "Cremona",
+          "code": "CRE3"
+        },
+        {
+          "label": "Maçaneta",
+          "code": "MAC1"
+        },
+        {
+          "label": "Fecho oculto",
+          "code": "FEC2"
+        },
+        {
+          "label": "Roldanas",
+          "code": "ROL1"
+        },
+        {
+          "label": "Contra-fecho standard",
+          "code": "CON1"
+        },
+        {
+          "label": "Parafusos (Reforço)",
+          "code": "PAR2"
+        },
+        {
+          "label": "Parafusos (Ferragem)",
+          "code": "PAR1"
+        }
+      ]
+    }
+  ]
+}

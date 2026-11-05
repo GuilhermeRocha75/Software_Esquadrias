@@ -1,0 +1,3090 @@
+{
+  "scope": "B1_PRESENTATION_NOT_HOMOLOGATED",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 32,
+      "presentation_row_count": 32,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 12,
+          "utilization": "Folha Largura (Tela)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 13,
+          "utilization": "Folha Altura (Tela)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 9,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 10,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 11,
+          "legacy_row": 20,
+          "utilization": "Baguete Largura (Tela A)"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 12,
+          "legacy_row": 23,
+          "utilization": "Baguete Altura (Tela A)"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 7,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 8,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 97,
+          "utilization": "Telas (1)"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 20,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 19,
+          "legacy_row": 109,
+          "utilization": "Borracha da tela"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 31,
+          "print_position": 27,
+          "engine_position": 27,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 32,
+          "print_position": 28,
+          "engine_position": 28,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 33,
+          "print_position": 29,
+          "engine_position": 29,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 34,
+          "print_position": 30,
+          "engine_position": 30,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 35,
+          "print_position": 31,
+          "engine_position": 31,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 36,
+          "print_position": 32,
+          "engine_position": 32,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 32,
+      "presentation_row_count": 32,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 12,
+          "utilization": "Folha Largura (Tela)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 13,
+          "utilization": "Folha Altura (Tela)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 9,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 10,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 11,
+          "legacy_row": 20,
+          "utilization": "Baguete Largura (Tela A)"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 12,
+          "legacy_row": 23,
+          "utilization": "Baguete Altura (Tela A)"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 7,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 8,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 97,
+          "utilization": "Telas (1)"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 20,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 19,
+          "legacy_row": 109,
+          "utilization": "Borracha da tela"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 31,
+          "print_position": 27,
+          "engine_position": 27,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 32,
+          "print_position": 28,
+          "engine_position": 28,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 33,
+          "print_position": 29,
+          "engine_position": 29,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 34,
+          "print_position": 30,
+          "engine_position": 30,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 35,
+          "print_position": 31,
+          "engine_position": 31,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 36,
+          "print_position": 32,
+          "engine_position": 32,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 27,
+      "presentation_row_count": 27,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 16,
+          "utilization": "Baguete Largura (Painel)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (Painel A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 7,
+          "legacy_row": 41,
+          "utilization": "Painel"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 8,
+          "legacy_row": 43,
+          "utilization": "Arremate Int. Largura"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 44,
+          "utilization": "Arremate Int. Altura"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 45,
+          "utilization": "Arremate Ext. Largura"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 46,
+          "utilization": "Arremate Ext. Altura"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 58,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 59,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 60,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 61,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 19,
+          "engine_position": 16,
+          "legacy_row": 83,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 20,
+          "engine_position": 17,
+          "legacy_row": 84,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 21,
+          "engine_position": 22,
+          "legacy_row": 105,
+          "utilization": "Dobradiça"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 22,
+          "engine_position": 23,
+          "legacy_row": 111,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 23,
+          "engine_position": 24,
+          "legacy_row": 112,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 24,
+          "engine_position": 25,
+          "legacy_row": 113,
+          "utilization": "Cilindro"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 25,
+          "engine_position": 26,
+          "legacy_row": 115,
+          "utilization": "CONTRA-TESTA"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 26,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 27,
+          "engine_position": 27,
+          "legacy_row": 119,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [
+        {
+          "engine_position": 19,
+          "role": "GLASS_OR_LAMBRI_SEAL",
+          "legacy_row": 76,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 20,
+          "role": "ROUND_SEAL_LEAF",
+          "legacy_row": 77,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 21,
+          "role": "ROUND_SEAL_FRAME",
+          "legacy_row": 78,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Contra Fecho",
+          "code": "CON1"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Cremona",
+          "pdf_code": "FEC5",
+          "engine_code": "FEC6",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 26,
+      "presentation_row_count": 26,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 43,
+      "presentation_row_count": 43,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 27,
+          "legacy_row": 54,
+          "utilization": "Caixa"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 28,
+          "legacy_row": 55,
+          "utilization": "Guia lateral"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 29,
+          "legacy_row": 57,
+          "utilization": "Tala"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 30,
+          "legacy_row": 58,
+          "utilization": "Terminal"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 31,
+          "legacy_row": 59,
+          "utilization": "Eixo"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 32,
+          "legacy_row": 60,
+          "utilization": "Prolongador de guia"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 33,
+          "legacy_row": 120,
+          "utilization": "Tampa lateral (Polia/Pont.)"
+        },
+        {
+          "pdf_position": 31,
+          "print_position": 27,
+          "engine_position": 34,
+          "legacy_row": 121,
+          "utilization": "Placa lateral (Polia)"
+        },
+        {
+          "pdf_position": 32,
+          "print_position": 28,
+          "engine_position": 35,
+          "legacy_row": 122,
+          "utilization": "Placa lateral (Ponteira)"
+        },
+        {
+          "pdf_position": 33,
+          "print_position": 29,
+          "engine_position": 36,
+          "legacy_row": 127,
+          "utilization": "Polia"
+        },
+        {
+          "pdf_position": 34,
+          "print_position": 30,
+          "engine_position": 37,
+          "legacy_row": 128,
+          "utilization": "Ponteira"
+        },
+        {
+          "pdf_position": 35,
+          "print_position": 31,
+          "engine_position": 38,
+          "legacy_row": 129,
+          "utilization": "Adaptador da ponteira"
+        },
+        {
+          "pdf_position": 36,
+          "print_position": 32,
+          "engine_position": 39,
+          "legacy_row": 130,
+          "utilization": "Recolhedor de embutir"
+        },
+        {
+          "pdf_position": 37,
+          "print_position": 33,
+          "engine_position": 40,
+          "legacy_row": 133,
+          "utilization": "Convite"
+        },
+        {
+          "pdf_position": 38,
+          "print_position": 34,
+          "engine_position": 41,
+          "legacy_row": 134,
+          "utilization": "Engate"
+        },
+        {
+          "pdf_position": 39,
+          "print_position": 35,
+          "engine_position": 42,
+          "legacy_row": 135,
+          "utilization": "Passador"
+        },
+        {
+          "pdf_position": 40,
+          "print_position": 36,
+          "engine_position": 43,
+          "legacy_row": 136,
+          "utilization": "Limitador"
+        },
+        {
+          "pdf_position": 41,
+          "print_position": 37,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 42,
+          "print_position": 38,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 43,
+          "print_position": 39,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 44,
+          "print_position": 40,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 45,
+          "print_position": 41,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 46,
+          "print_position": 42,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 47,
+          "print_position": 43,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 26,
+      "presentation_row_count": 26,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE11",
+          "engine_code": "CRE9",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Roldanas",
+          "pdf_code": "ROL3",
+          "engine_code": "ROL1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 26,
+      "presentation_row_count": 26,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 24,
+      "presentation_row_count": 24,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 12,
+          "utilization": "Baguete Largura"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 13,
+          "utilization": "Baguete Altura"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 7,
+          "legacy_row": 33,
+          "utilization": "Arremate Int. Largura"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 8,
+          "legacy_row": 34,
+          "utilization": "Arremate Int. Altura"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 35,
+          "utilization": "Arremate Ext. Largura"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 36,
+          "utilization": "Arremate Ext. Altura"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 42,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 43,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 44,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 45,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 59,
+          "utilization": "Vidro (S)"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 72,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 73,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 76,
+          "utilization": "Braço"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 77,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 80,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 81,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [
+        {
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "reference_rows_without_engine_match": [],
+      "code_differences": [],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 26,
+      "presentation_row_count": 26,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Vidros (1)",
+          "pdf_code": "6TI",
+          "engine_code": "4FI",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 24,
+      "presentation_row_count": 24,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 12,
+          "utilization": "Baguete Largura"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 13,
+          "utilization": "Baguete Altura"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 7,
+          "legacy_row": 33,
+          "utilization": "Arremate Int. Largura"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 8,
+          "legacy_row": 34,
+          "utilization": "Arremate Int. Altura"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 35,
+          "utilization": "Arremate Ext. Largura"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 36,
+          "utilization": "Arremate Ext. Altura"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 42,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 43,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 44,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 45,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 59,
+          "utilization": "Vidro (S)"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 72,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 73,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 76,
+          "utilization": "Braço"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 77,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 80,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 81,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [
+        {
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "reference_rows_without_engine_match": [],
+      "code_differences": [],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 24,
+      "presentation_row_count": 24,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 5,
+          "legacy_row": 12,
+          "utilization": "Baguete Largura"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 6,
+          "legacy_row": 13,
+          "utilization": "Baguete Altura"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 7,
+          "legacy_row": 33,
+          "utilization": "Arremate Int. Largura"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 8,
+          "legacy_row": 34,
+          "utilization": "Arremate Int. Altura"
+        },
+        {
+          "pdf_position": 9,
+          "print_position": 9,
+          "engine_position": 9,
+          "legacy_row": 35,
+          "utilization": "Arremate Ext. Largura"
+        },
+        {
+          "pdf_position": 10,
+          "print_position": 10,
+          "engine_position": 10,
+          "legacy_row": 36,
+          "utilization": "Arremate Ext. Altura"
+        },
+        {
+          "pdf_position": 11,
+          "print_position": 11,
+          "engine_position": 11,
+          "legacy_row": 42,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 12,
+          "print_position": 12,
+          "engine_position": 12,
+          "legacy_row": 43,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 13,
+          "engine_position": 13,
+          "legacy_row": 44,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 14,
+          "engine_position": 14,
+          "legacy_row": 45,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 15,
+          "engine_position": 15,
+          "legacy_row": 59,
+          "utilization": "Vidro (S)"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 19,
+          "engine_position": 19,
+          "legacy_row": 72,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 20,
+          "engine_position": 20,
+          "legacy_row": 73,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 21,
+          "engine_position": 21,
+          "legacy_row": 76,
+          "utilization": "Braço"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 22,
+          "engine_position": 22,
+          "legacy_row": 77,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 23,
+          "engine_position": 23,
+          "legacy_row": 80,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 24,
+          "engine_position": 24,
+          "legacy_row": 81,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [
+        {
+          "engine_position": 16,
+          "role": "GLASS_SEATING_SEAL",
+          "legacy_row": 67,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 17,
+          "role": "LEAF_EXTERNAL_SEAL",
+          "legacy_row": 68,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        },
+        {
+          "engine_position": 18,
+          "role": "FRAME_CONTACT_SEAL",
+          "legacy_row": 69,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "reference_rows_without_engine_match": [],
+      "code_differences": [],
+      "missing_inputs": [],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "ordering_status": "SOURCE_ORDER_MAPPED",
+      "relative_order": "MATCH",
+      "model_basename_matches": true,
+      "images": {
+        "model": "MISSING_ASSET",
+        "frame": "MISSING_ASSET",
+        "leaf": "MISSING_ASSET"
+      },
+      "engine_row_count": 45,
+      "presentation_row_count": 45,
+      "common_rows": [
+        {
+          "pdf_position": 1,
+          "print_position": 1,
+          "engine_position": 1,
+          "legacy_row": 8,
+          "utilization": "Marco Largura"
+        },
+        {
+          "pdf_position": 2,
+          "print_position": 2,
+          "engine_position": 2,
+          "legacy_row": 9,
+          "utilization": "Marco Altura"
+        },
+        {
+          "pdf_position": 3,
+          "print_position": 3,
+          "engine_position": 3,
+          "legacy_row": 10,
+          "utilization": "Folha Largura"
+        },
+        {
+          "pdf_position": 4,
+          "print_position": 4,
+          "engine_position": 4,
+          "legacy_row": 11,
+          "utilization": "Folha Altura"
+        },
+        {
+          "pdf_position": 5,
+          "print_position": 5,
+          "engine_position": 7,
+          "legacy_row": 14,
+          "utilization": "Baguete Largura (A)"
+        },
+        {
+          "pdf_position": 6,
+          "print_position": 6,
+          "engine_position": 8,
+          "legacy_row": 17,
+          "utilization": "Baguete Altura (A)"
+        },
+        {
+          "pdf_position": 7,
+          "print_position": 7,
+          "engine_position": 5,
+          "legacy_row": 32,
+          "utilization": "Interlock"
+        },
+        {
+          "pdf_position": 8,
+          "print_position": 8,
+          "engine_position": 6,
+          "legacy_row": 34,
+          "utilization": "Trilho de Alumínio"
+        },
+        {
+          "pdf_position": 13,
+          "print_position": 9,
+          "engine_position": 27,
+          "legacy_row": 54,
+          "utilization": "Caixa"
+        },
+        {
+          "pdf_position": 14,
+          "print_position": 10,
+          "engine_position": 28,
+          "legacy_row": 55,
+          "utilization": "Guia lateral"
+        },
+        {
+          "pdf_position": 15,
+          "print_position": 11,
+          "engine_position": 33,
+          "legacy_row": 56,
+          "utilization": "Guia central"
+        },
+        {
+          "pdf_position": 16,
+          "print_position": 12,
+          "engine_position": 29,
+          "legacy_row": 57,
+          "utilization": "Tala"
+        },
+        {
+          "pdf_position": 17,
+          "print_position": 13,
+          "engine_position": 30,
+          "legacy_row": 58,
+          "utilization": "Terminal"
+        },
+        {
+          "pdf_position": 18,
+          "print_position": 14,
+          "engine_position": 31,
+          "legacy_row": 59,
+          "utilization": "Eixo"
+        },
+        {
+          "pdf_position": 19,
+          "print_position": 15,
+          "engine_position": 32,
+          "legacy_row": 60,
+          "utilization": "Prolongador de guia"
+        },
+        {
+          "pdf_position": 20,
+          "print_position": 16,
+          "engine_position": 9,
+          "legacy_row": 65,
+          "utilization": "Reforço Marco Largura"
+        },
+        {
+          "pdf_position": 21,
+          "print_position": 17,
+          "engine_position": 10,
+          "legacy_row": 66,
+          "utilization": "Reforço Marco Altura"
+        },
+        {
+          "pdf_position": 22,
+          "print_position": 18,
+          "engine_position": 11,
+          "legacy_row": 67,
+          "utilization": "Reforço Folha Largura"
+        },
+        {
+          "pdf_position": 23,
+          "print_position": 19,
+          "engine_position": 12,
+          "legacy_row": 68,
+          "utilization": "Reforço Folha Altura"
+        },
+        {
+          "pdf_position": 24,
+          "print_position": 20,
+          "engine_position": 13,
+          "legacy_row": 84,
+          "utilization": "Vidros (1)"
+        },
+        {
+          "pdf_position": 25,
+          "print_position": 21,
+          "engine_position": 14,
+          "legacy_row": 108,
+          "utilization": "Borracha da folha"
+        },
+        {
+          "pdf_position": 26,
+          "print_position": 22,
+          "engine_position": 15,
+          "legacy_row": 110,
+          "utilization": "Escova da folha"
+        },
+        {
+          "pdf_position": 27,
+          "print_position": 23,
+          "engine_position": 16,
+          "legacy_row": 116,
+          "utilization": "Corta vento"
+        },
+        {
+          "pdf_position": 28,
+          "print_position": 24,
+          "engine_position": 17,
+          "legacy_row": 117,
+          "utilization": "Calço de vidro"
+        },
+        {
+          "pdf_position": 29,
+          "print_position": 25,
+          "engine_position": 18,
+          "legacy_row": 118,
+          "utilization": "Tapa deságue"
+        },
+        {
+          "pdf_position": 30,
+          "print_position": 26,
+          "engine_position": 19,
+          "legacy_row": 119,
+          "utilization": "Batente limitador"
+        },
+        {
+          "pdf_position": 31,
+          "print_position": 27,
+          "engine_position": 34,
+          "legacy_row": 120,
+          "utilization": "Tampa lateral (Polia/Pont.)"
+        },
+        {
+          "pdf_position": 32,
+          "print_position": 28,
+          "engine_position": 35,
+          "legacy_row": 121,
+          "utilization": "Placa lateral (Polia)"
+        },
+        {
+          "pdf_position": 33,
+          "print_position": 30,
+          "engine_position": 37,
+          "legacy_row": 125,
+          "utilization": "Divisor central (Eixo único)"
+        },
+        {
+          "pdf_position": 35,
+          "print_position": 31,
+          "engine_position": 38,
+          "legacy_row": 127,
+          "utilization": "Polia"
+        },
+        {
+          "pdf_position": 36,
+          "print_position": 32,
+          "engine_position": 39,
+          "legacy_row": 128,
+          "utilization": "Ponteira"
+        },
+        {
+          "pdf_position": 37,
+          "print_position": 33,
+          "engine_position": 40,
+          "legacy_row": 129,
+          "utilization": "Adaptador da ponteira"
+        },
+        {
+          "pdf_position": 38,
+          "print_position": 34,
+          "engine_position": 41,
+          "legacy_row": 130,
+          "utilization": "Recolhedor de embutir"
+        },
+        {
+          "pdf_position": 39,
+          "print_position": 35,
+          "engine_position": 42,
+          "legacy_row": 133,
+          "utilization": "Convite"
+        },
+        {
+          "pdf_position": 40,
+          "print_position": 36,
+          "engine_position": 43,
+          "legacy_row": 134,
+          "utilization": "Engate"
+        },
+        {
+          "pdf_position": 41,
+          "print_position": 37,
+          "engine_position": 44,
+          "legacy_row": 135,
+          "utilization": "Passador"
+        },
+        {
+          "pdf_position": 42,
+          "print_position": 38,
+          "engine_position": 45,
+          "legacy_row": 136,
+          "utilization": "Limitador"
+        },
+        {
+          "pdf_position": 43,
+          "print_position": 39,
+          "engine_position": 20,
+          "legacy_row": 139,
+          "utilization": "Cremona"
+        },
+        {
+          "pdf_position": 44,
+          "print_position": 40,
+          "engine_position": 21,
+          "legacy_row": 140,
+          "utilization": "Maçaneta"
+        },
+        {
+          "pdf_position": 45,
+          "print_position": 41,
+          "engine_position": 22,
+          "legacy_row": 142,
+          "utilization": "Fecho oculto"
+        },
+        {
+          "pdf_position": 46,
+          "print_position": 42,
+          "engine_position": 23,
+          "legacy_row": 143,
+          "utilization": "Roldanas"
+        },
+        {
+          "pdf_position": 47,
+          "print_position": 43,
+          "engine_position": 24,
+          "legacy_row": 144,
+          "utilization": "Contra-fecho standard"
+        },
+        {
+          "pdf_position": 48,
+          "print_position": 44,
+          "engine_position": 25,
+          "legacy_row": 145,
+          "utilization": "Parafusos (Reforço)"
+        },
+        {
+          "pdf_position": 49,
+          "print_position": 45,
+          "engine_position": 26,
+          "legacy_row": 146,
+          "utilization": "Parafusos (Ferragem)"
+        }
+      ],
+      "engine_additions": [
+        {
+          "engine_position": 36,
+          "role": "SHUTTER_END_PLATE",
+          "legacy_row": 122,
+          "reason": "ENGINE_ROW_NOT_IN_REFERENCE_OR_AMBIGUOUS"
+        }
+      ],
+      "reference_rows_without_engine_match": [
+        {
+          "label": "Arremate Int. Largura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Int. Altura",
+          "code": "AC7012"
+        },
+        {
+          "label": "Arremate Ext. Largura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Arremate Ext. Altura",
+          "code": "AC3004"
+        },
+        {
+          "label": "Divisor central (Eixo ind)",
+          "code": "371127"
+        }
+      ],
+      "code_differences": [
+        {
+          "utilization": "Divisor central (Eixo único)",
+          "pdf_code": "0",
+          "engine_code": "371143",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Cremona",
+          "pdf_code": "CRE3",
+          "engine_code": "CRE1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        },
+        {
+          "utilization": "Fecho oculto",
+          "pdf_code": "FEC2",
+          "engine_code": "FEC1",
+          "reason": "INPUT_OR_EXISTING_TECHNICAL_DIFFERENCE_NOT_CORRECTED"
+        }
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "scope": "RELATIVE_ORDER_ONLY_NOT_FULL_TECHNICAL_OR_VISUAL_PARITY"
+    }
+  ],
+  "relative_order_counts": {
+    "MATCH": 12
+  },
+  "model_identity_matches": 12,
+  "engine_rows": 355,
+  "presentation_rows": 355
+}

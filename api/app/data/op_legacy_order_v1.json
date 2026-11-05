@@ -1,0 +1,1178 @@
+{
+  "schema_version": 1,
+  "source_workbook_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "families": {
+    "CR": {
+      "sheet": "CR",
+      "rows": [
+        {
+          "row": 8,
+          "label": "Marco Largura"
+        },
+        {
+          "row": 9,
+          "label": "Marco Altura"
+        },
+        {
+          "row": 10,
+          "label": "Folha Largura"
+        },
+        {
+          "row": 11,
+          "label": "Folha Altura"
+        },
+        {
+          "row": 12,
+          "label": "Folha Largura (Tela)"
+        },
+        {
+          "row": 13,
+          "label": "Folha Altura (Tela)"
+        },
+        {
+          "row": 14,
+          "label": "Baguete Largura (A)"
+        },
+        {
+          "row": 15,
+          "label": "Baguete Largura (B)"
+        },
+        {
+          "row": 16,
+          "label": "Baguete Largura (C)"
+        },
+        {
+          "row": 17,
+          "label": "Baguete Altura (A)"
+        },
+        {
+          "row": 18,
+          "label": "Baguete Altura (B)"
+        },
+        {
+          "row": 19,
+          "label": "Baguete Altura (C)"
+        },
+        {
+          "row": 20,
+          "label": "Baguete Largura (Tela A)"
+        },
+        {
+          "row": 21,
+          "label": "Baguete Largura (Tela B)"
+        },
+        {
+          "row": 22,
+          "label": "Baguete Largura (Tela C)"
+        },
+        {
+          "row": 23,
+          "label": "Baguete Altura (Tela A)"
+        },
+        {
+          "row": 24,
+          "label": "Baguete Altura (Tela B)"
+        },
+        {
+          "row": 25,
+          "label": "Baguete Altura (Tela C)"
+        },
+        {
+          "row": 26,
+          "label": "Trav. Horiz. Largura (A)"
+        },
+        {
+          "row": 27,
+          "label": "Trav. Horiz. Largura (B)"
+        },
+        {
+          "row": 28,
+          "label": "Trav. Horiz. Largura (C)"
+        },
+        {
+          "row": 29,
+          "label": "Trav. Vert. Altura (A)"
+        },
+        {
+          "row": 30,
+          "label": "Fechamento Central"
+        },
+        {
+          "row": 31,
+          "label": "Fechamento Central (Tela)"
+        },
+        {
+          "row": 32,
+          "label": "Interlock"
+        },
+        {
+          "row": 33,
+          "label": "Tapa-folha"
+        },
+        {
+          "row": 34,
+          "label": "Trilho de Alumínio"
+        },
+        {
+          "row": 35,
+          "label": "Perfil Z"
+        },
+        {
+          "row": 36,
+          "label": "Arremate (Perfil Z)"
+        },
+        {
+          "row": 37,
+          "label": "Marco Largura (B.I)"
+        },
+        {
+          "row": 38,
+          "label": "Marco Altura (B.I)"
+        },
+        {
+          "row": 39,
+          "label": "Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 40,
+          "label": "Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 41,
+          "label": "Baguete Largura (B.I)"
+        },
+        {
+          "row": 42,
+          "label": "Baguete Altura (B.I)"
+        },
+        {
+          "row": 43,
+          "label": "Marco Largura (B.S)"
+        },
+        {
+          "row": 44,
+          "label": "Marco Altura (B.S)"
+        },
+        {
+          "row": 45,
+          "label": "Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 46,
+          "label": "Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 47,
+          "label": "Baguete Largura (B.S)"
+        },
+        {
+          "row": 48,
+          "label": "Baguete Altura (B.S)"
+        },
+        {
+          "row": 49,
+          "label": "Arremate Int. Largura"
+        },
+        {
+          "row": 50,
+          "label": "Arremate Int. Altura"
+        },
+        {
+          "row": 51,
+          "label": "Arremate Ext. Largura"
+        },
+        {
+          "row": 52,
+          "label": "Arremate Ext. Altura"
+        },
+        {
+          "row": 53,
+          "label": "Reforço Extrutural"
+        },
+        {
+          "row": 54,
+          "label": "Caixa"
+        },
+        {
+          "row": 55,
+          "label": "Guia lateral"
+        },
+        {
+          "row": 56,
+          "label": "Guia central"
+        },
+        {
+          "row": 57,
+          "label": "Tala"
+        },
+        {
+          "row": 58,
+          "label": "Terminal"
+        },
+        {
+          "row": 59,
+          "label": "Eixo"
+        },
+        {
+          "row": 60,
+          "label": "Prolongador de guia"
+        },
+        {
+          "row": 65,
+          "label": "Reforço Marco Largura"
+        },
+        {
+          "row": 66,
+          "label": "Reforço Marco Altura"
+        },
+        {
+          "row": 67,
+          "label": "Reforço Folha Largura"
+        },
+        {
+          "row": 68,
+          "label": "Reforço Folha Altura"
+        },
+        {
+          "row": 69,
+          "label": "Ref. Trav. Horiz. Largura (A)"
+        },
+        {
+          "row": 70,
+          "label": "Ref. Trav. Horiz. Largura (B)"
+        },
+        {
+          "row": 71,
+          "label": "Ref. Trav. Horiz. Largura (C)"
+        },
+        {
+          "row": 72,
+          "label": "Ref. Trav. Vert. Altura (A)"
+        },
+        {
+          "row": 73,
+          "label": "Ref. Marco Largura (B.I)"
+        },
+        {
+          "row": 74,
+          "label": "Ref. Marco Altura (B.I)"
+        },
+        {
+          "row": 75,
+          "label": "Ref. Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 76,
+          "label": "Ref. Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 77,
+          "label": "Ref. Marco Largura (B.S)"
+        },
+        {
+          "row": 78,
+          "label": "Ref. Marco Altura (B.S)"
+        },
+        {
+          "row": 79,
+          "label": "Ref. Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 80,
+          "label": "Ref. Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 84,
+          "label": "Vidros (1)"
+        },
+        {
+          "row": 85,
+          "label": "Vidros (2)"
+        },
+        {
+          "row": 86,
+          "label": "Vidros (3)"
+        },
+        {
+          "row": 87,
+          "label": "Vidros (4)"
+        },
+        {
+          "row": 88,
+          "label": "Vidros (5)"
+        },
+        {
+          "row": 89,
+          "label": "Vidros (6)"
+        },
+        {
+          "row": 90,
+          "label": "Vidros (7)"
+        },
+        {
+          "row": 91,
+          "label": "Vidros (8)"
+        },
+        {
+          "row": 92,
+          "label": "Vidros (9)"
+        },
+        {
+          "row": 93,
+          "label": "Vidros (Band. Inf.)"
+        },
+        {
+          "row": 94,
+          "label": "Vidros (Band. Sup.)"
+        },
+        {
+          "row": 97,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 98,
+          "label": "Telas (2)"
+        },
+        {
+          "row": 99,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 100,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 101,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 102,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 103,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 104,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 105,
+          "label": "Telas (1)"
+        },
+        {
+          "row": 108,
+          "label": "Borracha da folha"
+        },
+        {
+          "row": 109,
+          "label": "Borracha da tela"
+        },
+        {
+          "row": 110,
+          "label": "Escova da folha"
+        },
+        {
+          "row": 111,
+          "label": "Esc. fecham. central"
+        },
+        {
+          "row": 112,
+          "label": "Esc. guias da persiana"
+        },
+        {
+          "row": 113,
+          "label": "Esc. caixa da persiana"
+        },
+        {
+          "row": 116,
+          "label": "Corta vento"
+        },
+        {
+          "row": 117,
+          "label": "Calço de vidro"
+        },
+        {
+          "row": 118,
+          "label": "Tapa deságue"
+        },
+        {
+          "row": 119,
+          "label": "Batente limitador"
+        },
+        {
+          "row": 120,
+          "label": "Tampa lateral (Polia/Pont.)"
+        },
+        {
+          "row": 121,
+          "label": "Placa lateral (Polia)"
+        },
+        {
+          "row": 122,
+          "label": "Placa lateral (Ponteira)"
+        },
+        {
+          "row": 123,
+          "label": "Tampa lateral (Motor)"
+        },
+        {
+          "row": 124,
+          "label": "Placa lateral (Motor)"
+        },
+        {
+          "row": 125,
+          "label": "Divisor central (Eixo único)"
+        },
+        {
+          "row": 126,
+          "label": "Divisor central (Eixo ind)"
+        },
+        {
+          "row": 127,
+          "label": "Polia"
+        },
+        {
+          "row": 128,
+          "label": "Ponteira"
+        },
+        {
+          "row": 129,
+          "label": "Adaptador da ponteira"
+        },
+        {
+          "row": 130,
+          "label": "Recolhedor de embutir"
+        },
+        {
+          "row": 131,
+          "label": "Motor controle remoto"
+        },
+        {
+          "row": 132,
+          "label": "Motor botoeira"
+        },
+        {
+          "row": 133,
+          "label": "Convite"
+        },
+        {
+          "row": 134,
+          "label": "Engate"
+        },
+        {
+          "row": 135,
+          "label": "Passador"
+        },
+        {
+          "row": 136,
+          "label": "Limitador"
+        },
+        {
+          "row": 139,
+          "label": "Cremona"
+        },
+        {
+          "row": 140,
+          "label": "Maçaneta"
+        },
+        {
+          "row": 141,
+          "label": "Maçaneta oculta"
+        },
+        {
+          "row": 142,
+          "label": "Fecho oculto"
+        },
+        {
+          "row": 143,
+          "label": "Roldanas"
+        },
+        {
+          "row": 144,
+          "label": "Contra-fecho standard"
+        },
+        {
+          "row": 145,
+          "label": "Parafusos (Reforço)"
+        },
+        {
+          "row": 146,
+          "label": "Parafusos (Ferragem)"
+        }
+      ]
+    },
+    "MAXIM_AR": {
+      "sheet": "MX",
+      "rows": [
+        {
+          "row": 8,
+          "label": "Marco Largura"
+        },
+        {
+          "row": 9,
+          "label": "Marco Altura"
+        },
+        {
+          "row": 10,
+          "label": "Folha Largura"
+        },
+        {
+          "row": 11,
+          "label": "Folha Altura"
+        },
+        {
+          "row": 12,
+          "label": "Baguete Largura"
+        },
+        {
+          "row": 13,
+          "label": "Baguete Altura"
+        },
+        {
+          "row": 14,
+          "label": "Trav. Horiz. Largura"
+        },
+        {
+          "row": 15,
+          "label": "Trav. Vert. Altura"
+        },
+        {
+          "row": 16,
+          "label": "Baguete Largura (B.I)"
+        },
+        {
+          "row": 17,
+          "label": "Baguete Altura (B.I)"
+        },
+        {
+          "row": 18,
+          "label": "Baguete Largura (B.S)"
+        },
+        {
+          "row": 19,
+          "label": "Baguete Altura (B.S)"
+        },
+        {
+          "row": 20,
+          "label": "Marco Largura (B.I)"
+        },
+        {
+          "row": 21,
+          "label": "Marco Altura (B.I)"
+        },
+        {
+          "row": 22,
+          "label": "Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 23,
+          "label": "Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 24,
+          "label": "Baguete Largura (B.I)"
+        },
+        {
+          "row": 25,
+          "label": "Baguete Altura (B.I)"
+        },
+        {
+          "row": 26,
+          "label": "Marco Largura (B.S)"
+        },
+        {
+          "row": 27,
+          "label": "Marco Altura (B.S)"
+        },
+        {
+          "row": 28,
+          "label": "Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 29,
+          "label": "Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 30,
+          "label": "Baguete Largura (B.S)"
+        },
+        {
+          "row": 31,
+          "label": "Baguete Altura (B.S)"
+        },
+        {
+          "row": 32,
+          "label": "Reforço Extrutural"
+        },
+        {
+          "row": 33,
+          "label": "Arremate Int. Largura"
+        },
+        {
+          "row": 34,
+          "label": "Arremate Int. Altura"
+        },
+        {
+          "row": 35,
+          "label": "Arremate Ext. Largura"
+        },
+        {
+          "row": 36,
+          "label": "Arremate Ext. Altura"
+        },
+        {
+          "row": 42,
+          "label": "Reforço Marco Largura"
+        },
+        {
+          "row": 43,
+          "label": "Reforço Marco Altura"
+        },
+        {
+          "row": 44,
+          "label": "Reforço Folha Largura"
+        },
+        {
+          "row": 45,
+          "label": "Reforço Folha Altura"
+        },
+        {
+          "row": 46,
+          "label": "Ref. Trav. Horiz. Largura"
+        },
+        {
+          "row": 47,
+          "label": "Ref. Trav. Vert. Altura"
+        },
+        {
+          "row": 48,
+          "label": "Reforço Marco Largura (B.I)"
+        },
+        {
+          "row": 49,
+          "label": "Reforço Marco Altura (B.I)"
+        },
+        {
+          "row": 50,
+          "label": "Ref. Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 51,
+          "label": "Ref. Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 52,
+          "label": "Reforço Marco Largura (B.S)"
+        },
+        {
+          "row": 53,
+          "label": "Reforço Marco Altura (B.S)"
+        },
+        {
+          "row": 54,
+          "label": "Ref. Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 55,
+          "label": "Ref. Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 59,
+          "label": "Vidro (S)"
+        },
+        {
+          "row": 60,
+          "label": "Vidros (Band. Inf.)"
+        },
+        {
+          "row": 61,
+          "label": "Vidros (Band. Sup.)"
+        },
+        {
+          "row": 64,
+          "label": "Tela"
+        },
+        {
+          "row": 67,
+          "label": "Borracha do vidro"
+        },
+        {
+          "row": 68,
+          "label": "Borracha da folha"
+        },
+        {
+          "row": 69,
+          "label": "Borracha do Marco"
+        },
+        {
+          "row": 72,
+          "label": "Calço de vidro"
+        },
+        {
+          "row": 73,
+          "label": "Tapa deságue"
+        },
+        {
+          "row": 76,
+          "label": "Braço"
+        },
+        {
+          "row": 77,
+          "label": "Maçaneta"
+        },
+        {
+          "row": 78,
+          "label": "Cremona"
+        },
+        {
+          "row": 79,
+          "label": "Contra Fecho"
+        },
+        {
+          "row": 80,
+          "label": "Parafusos (Reforço)"
+        },
+        {
+          "row": 81,
+          "label": "Parafusos (Ferragem)"
+        }
+      ]
+    },
+    "GR": {
+      "sheet": "GR",
+      "rows": [
+        {
+          "row": 8,
+          "label": "Marco Largura"
+        },
+        {
+          "row": 9,
+          "label": "Marco Altura"
+        },
+        {
+          "row": 10,
+          "label": "Folha Largura"
+        },
+        {
+          "row": 11,
+          "label": "Folha Altura"
+        },
+        {
+          "row": 12,
+          "label": "Trav. Horiz. Largura (Folha)"
+        },
+        {
+          "row": 13,
+          "label": "Baguete Largura"
+        },
+        {
+          "row": 14,
+          "label": "Baguete Altura (A)"
+        },
+        {
+          "row": 15,
+          "label": "Baguete Altura (B)"
+        },
+        {
+          "row": 16,
+          "label": "Baguete Largura (Painel)"
+        },
+        {
+          "row": 17,
+          "label": "Baguete Altura (Painel A)"
+        },
+        {
+          "row": 18,
+          "label": "Baguete Altura (Painel B)"
+        },
+        {
+          "row": 19,
+          "label": "Trav. Horiz. Largura"
+        },
+        {
+          "row": 20,
+          "label": "Trav. Vert. Altura"
+        },
+        {
+          "row": 21,
+          "label": "Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 22,
+          "label": "Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 23,
+          "label": "Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 24,
+          "label": "Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 25,
+          "label": "Baguete Largura (B.I)"
+        },
+        {
+          "row": 26,
+          "label": "Baguete Altura (B.I)"
+        },
+        {
+          "row": 27,
+          "label": "Baguete Largura (B.S)"
+        },
+        {
+          "row": 28,
+          "label": "Baguete Altura (B.S)"
+        },
+        {
+          "row": 29,
+          "label": "Marco Largura (B.I)"
+        },
+        {
+          "row": 30,
+          "label": "Marco Altura (B.I)"
+        },
+        {
+          "row": 31,
+          "label": "Trav. Horiz. Largura (B.I)"
+        },
+        {
+          "row": 32,
+          "label": "Trav. Vert. Altura (B.I)"
+        },
+        {
+          "row": 33,
+          "label": "Baguete Largura (B.I)"
+        },
+        {
+          "row": 34,
+          "label": "Baguete Altura (B.I)"
+        },
+        {
+          "row": 35,
+          "label": "Marco Largura (B.S)"
+        },
+        {
+          "row": 36,
+          "label": "Marco Altura (B.S)"
+        },
+        {
+          "row": 37,
+          "label": "Trav. Horiz. Largura (B.S)"
+        },
+        {
+          "row": 38,
+          "label": "Trav. Vert. Altura (B.S)"
+        },
+        {
+          "row": 39,
+          "label": "Baguete Largura (B.S)"
+        },
+        {
+          "row": 40,
+          "label": "Baguete Altura (B.S)"
+        },
+        {
+          "row": 41,
+          "label": "Painel"
+        },
+        {
+          "row": 42,
+          "label": "Reforço Extrutural"
+        },
+        {
+          "row": 43,
+          "label": "Arremate Int. Largura"
+        },
+        {
+          "row": 44,
+          "label": "Arremate Int. Altura"
+        },
+        {
+          "row": 45,
+          "label": "Arremate Ext. Largura"
+        },
+        {
+          "row": 46,
+          "label": "Arremate Ext. Altura"
+        },
+        {
+          "row": 47,
+          "label": "Caixa"
+        },
+        {
+          "row": 48,
+          "label": "Guia lateral"
+        },
+        {
+          "row": 49,
+          "label": "Guia central"
+        },
+        {
+          "row": 50,
+          "label": "Tala"
+        },
+        {
+          "row": 51,
+          "label": "Terminal"
+        },
+        {
+          "row": 52,
+          "label": "Eixo"
+        },
+        {
+          "row": 58,
+          "label": "Reforço Marco Largura"
+        },
+        {
+          "row": 59,
+          "label": "Reforço Marco Altura"
+        },
+        {
+          "row": 60,
+          "label": "Reforço Folha Largura"
+        },
+        {
+          "row": 61,
+          "label": "Reforço Folha Altura"
+        },
+        {
+          "row": 62,
+          "label": "Ref. Trav. Horiz. Largura (Folha)"
+        },
+        {
+          "row": 63,
+          "label": "Ref. Trav. Horiz. Largura"
+        },
+        {
+          "row": 64,
+          "label": "Ref. Trav. Vert. Altura"
+        },
+        {
+          "row": 68,
+          "label": "Vidros (1)"
+        },
+        {
+          "row": 69,
+          "label": "Vidros (Band. Inf.)"
+        },
+        {
+          "row": 70,
+          "label": "Vidros (Band. Sup.)"
+        },
+        {
+          "row": 73,
+          "label": "Tela"
+        },
+        {
+          "row": 76,
+          "label": "Borracha do vidro"
+        },
+        {
+          "row": 77,
+          "label": "Borracha da folha"
+        },
+        {
+          "row": 78,
+          "label": "Borracha do Marco"
+        },
+        {
+          "row": 79,
+          "label": "Esc. guias da persiana"
+        },
+        {
+          "row": 80,
+          "label": "Esc. caixa da persiana"
+        },
+        {
+          "row": 83,
+          "label": "Calço de vidro"
+        },
+        {
+          "row": 84,
+          "label": "Tapa deságue"
+        },
+        {
+          "row": 85,
+          "label": "Eixo"
+        },
+        {
+          "row": 86,
+          "label": "Tampa lateral (Polia/Pont.)"
+        },
+        {
+          "row": 87,
+          "label": "Placa lateral (Polia)"
+        },
+        {
+          "row": 88,
+          "label": "Placa lateral (Ponteira)"
+        },
+        {
+          "row": 89,
+          "label": "Tampa lateral (Motor)"
+        },
+        {
+          "row": 90,
+          "label": "Placa lateral (Motor)"
+        },
+        {
+          "row": 91,
+          "label": "Divisor central (Eixo único)"
+        },
+        {
+          "row": 92,
+          "label": "Divisor central (Eixo ind)"
+        },
+        {
+          "row": 93,
+          "label": "Polia"
+        },
+        {
+          "row": 94,
+          "label": "Ponteira"
+        },
+        {
+          "row": 95,
+          "label": "Adaptador da ponteira"
+        },
+        {
+          "row": 96,
+          "label": "Recolhedor de embutir"
+        },
+        {
+          "row": 97,
+          "label": "Motor controle remoto"
+        },
+        {
+          "row": 98,
+          "label": "Motor botoeira"
+        },
+        {
+          "row": 99,
+          "label": "Convite"
+        },
+        {
+          "row": 100,
+          "label": "Engate"
+        },
+        {
+          "row": 101,
+          "label": "Passador"
+        },
+        {
+          "row": 102,
+          "label": "Limitador"
+        },
+        {
+          "row": 105,
+          "label": "Dobradiça"
+        },
+        {
+          "row": 111,
+          "label": "Maçaneta"
+        },
+        {
+          "row": 112,
+          "label": "Cremona"
+        },
+        {
+          "row": 113,
+          "label": "Cilindro"
+        },
+        {
+          "row": 114,
+          "label": "Contra Fecho"
+        },
+        {
+          "row": 117,
+          "label": "Fecho folha passiva"
+        },
+        {
+          "row": 118,
+          "label": "Parafusos (Reforço)"
+        },
+        {
+          "row": 119,
+          "label": "Parafusos (Ferragem)"
+        }
+      ]
+    },
+    "FX": {
+      "sheet": "FX",
+      "rows": [
+        {
+          "row": 8,
+          "label": "Marco Largura"
+        },
+        {
+          "row": 9,
+          "label": "Marco Altura"
+        },
+        {
+          "row": 10,
+          "label": "Trav. Horiz. Largura"
+        },
+        {
+          "row": 11,
+          "label": "Trav. Vert. Altura"
+        },
+        {
+          "row": 12,
+          "label": "Baguete Largura"
+        },
+        {
+          "row": 13,
+          "label": "Baguete Altura"
+        },
+        {
+          "row": 14,
+          "label": "Arremate Int. Largura"
+        },
+        {
+          "row": 15,
+          "label": "Arremate Int. Altura"
+        },
+        {
+          "row": 16,
+          "label": "Arremate Ext. Largura"
+        },
+        {
+          "row": 17,
+          "label": "Arremate Ext. Altura"
+        },
+        {
+          "row": 20,
+          "label": "Ref. Marco Largura"
+        },
+        {
+          "row": 21,
+          "label": "Ref. Marco Altura"
+        },
+        {
+          "row": 22,
+          "label": "Ref. Trav. Horiz. Largura"
+        },
+        {
+          "row": 23,
+          "label": "Ref. Trav. Vert. Altura"
+        },
+        {
+          "row": 27,
+          "label": "Vidros (Band. Sup.)"
+        },
+        {
+          "row": 30,
+          "label": "Calço de vidro"
+        },
+        {
+          "row": 31,
+          "label": "Tapa deságue"
+        }
+      ]
+    }
+  }
+}

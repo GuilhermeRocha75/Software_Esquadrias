@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from .engine_bridge import (
@@ -31,6 +31,8 @@ from .engine_bridge import (
 from .configurations import _to_config, _to_maxim_ar_config, _to_gr_config, _to_fixo_config
 from .production_schemas import ProductionOrderRequest, ProductionOrder
 from .production_service import build_production_order
+from .production_layout import ProductionLayoutRequest, ProductionLayoutDocument, prepare_production_layout
+from .production_images import ProductionImageManifest, ProductionImageStore
 from .schemas import (
     FixoItemRequest, FixoPurchasePlanRequest,
     CRItemRequest,
@@ -73,6 +75,28 @@ def preview_production_order(payload: ProductionOrderRequest) -> ProductionOrder
     """Generate an OP data preview; no persistence, PDF or production release."""
     try:
         return build_production_order(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+def _production_image_store():
+    from pathlib import Path
+    manifest_path = os.getenv("OP_IMAGE_MANIFEST")
+    if not manifest_path:
+        return None
+    try:
+        path = Path(manifest_path)
+        manifest = ProductionImageManifest.model_validate_json(path.read_text(encoding="utf-8"))
+        return ProductionImageStore(Path(os.getenv("OP_IMAGE_STORAGE_ROOT", str(path.parent))), manifest)
+    except (ValueError, OSError):
+        raise HTTPException(status_code=503, detail="Armazenamento privado de imagens da OP indisponível.") from None
+
+
+@app.post("/api/v1/production-orders/layout-preview", response_model=ProductionLayoutDocument)
+def preview_production_layout(payload: ProductionLayoutRequest, image_store=Depends(_production_image_store)) -> ProductionLayoutDocument:
+    """Prepare B1 header/images/source ordering and blocks, without rendering PDF."""
+    try:
+        return prepare_production_layout(payload, image_store=image_store)
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 

@@ -1,7 +1,8 @@
 # Ordem de Produção V1 — Especificação inicial
 
 ## Estado e fonte
-Fase A implementada para auditoria independente; **NÃO homologada**. Fases B/C não implementadas. Branch isolada da main.
+Base da Fase A aprovada com ressalvas segundo autorização do proprietário. Fase B1 implementada para nova auditoria; **NÃO homologada automaticamente**. Renderização PDF e Web não implementadas nesta entrega. Branch isolada da main.
+Infraestrutura, recursos privados e pendências B1: [OP_FASE_B1.md](OP_FASE_B1.md).
 Contratos, limitações e evidências: [OP_FASE_A.md](OP_FASE_A.md).
 Fonte: planilha `SOFTBETA_ PERFIL PRE DELL AMANDA.xlsm`, SHA-256
 `96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160`.
