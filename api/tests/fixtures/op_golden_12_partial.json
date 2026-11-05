@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "note": "Casos parciais, anonimizados, transcritos dos PDFs; nao usar nomes de clientes e nao declarar paridade completa sem testes",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "scenario": "tela-branco",
+      "dimensions": {
+        "width_mm": 1930,
+        "height_mm": 1490,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR13852",
+          "final_length_mm": 1930,
+          "cut_length_mm": 1935,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 954,
+          "cut_length_mm": 959,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 846,
+          "height_mm": 1294,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "family": "CR",
+      "scenario": "tela-branco",
+      "dimensions": {
+        "width_mm": 1630,
+        "height_mm": 1490,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR13852",
+          "final_length_mm": 1630,
+          "cut_length_mm": 1635,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 804,
+          "cut_length_mm": 809,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 696,
+          "height_mm": 1294,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "family": "GR",
+      "scenario": "porta-giro-painel",
+      "dimensions": {
+        "width_mm": 1160,
+        "height_mm": 2110,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "DE6058",
+          "final_length_mm": 1160,
+          "cut_length_mm": 1165,
+          "quantity_total": 1
+        },
+        "leaf_width": {
+          "code": "DE60104",
+          "final_length_mm": 1096,
+          "cut_length_mm": 1101,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "scenario": "janela-branco",
+      "dimensions": {
+        "width_mm": 2800,
+        "height_mm": 1400,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 2800,
+          "cut_length_mm": 2805,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 1389,
+          "cut_length_mm": 1394,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 1281,
+          "height_mm": 1204,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "family": "CR",
+      "scenario": "persiana-branco",
+      "dimensions": {
+        "width_mm": 1420,
+        "height_mm": 1610,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 1420,
+          "cut_length_mm": 1425,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 699,
+          "cut_length_mm": 704,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 591,
+          "height_mm": 1214,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "family": "CR",
+      "scenario": "porta-correr-branco",
+      "dimensions": {
+        "width_mm": 1160,
+        "height_mm": 2100,
+        "order_quantity": 2
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 1160,
+          "cut_length_mm": 1165,
+          "quantity_total": 4
+        },
+        "leaf_width": {
+          "code": "PR4288",
+          "final_length_mm": 580,
+          "cut_length_mm": 585,
+          "quantity_total": 8
+        },
+        "glass": {
+          "width_mm": 428,
+          "height_mm": 1860,
+          "quantity_total": 4
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "family": "CR",
+      "scenario": "janela-preto",
+      "dimensions": {
+        "width_mm": 2480,
+        "height_mm": 1080,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 2480,
+          "cut_length_mm": 2485,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 1229,
+          "cut_length_mm": 1234,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 1121,
+          "height_mm": 884,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "family": "MX",
+      "scenario": "maxim-ar-branco",
+      "dimensions": {
+        "width_mm": 530,
+        "height_mm": 1030,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "DE6058",
+          "final_length_mm": 530,
+          "cut_length_mm": 535,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "DE6078",
+          "final_length_mm": 466,
+          "cut_length_mm": 471,
+          "quantity_total": 2
+        },
+        "glass": {
+          "width_mm": 338,
+          "height_mm": 838,
+          "quantity_total": 1
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "family": "CR",
+      "scenario": "janela-branco",
+      "dimensions": {
+        "width_mm": 1100,
+        "height_mm": 1040,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 1100,
+          "cut_length_mm": 1105,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 539,
+          "cut_length_mm": 544,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 431,
+          "height_mm": 844,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "family": "MX",
+      "scenario": "maxim-ar-branco",
+      "dimensions": {
+        "width_mm": 500,
+        "height_mm": 1030,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "DE6058",
+          "final_length_mm": 500,
+          "cut_length_mm": 505,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "DE6078",
+          "final_length_mm": 436,
+          "cut_length_mm": 441,
+          "quantity_total": 2
+        },
+        "glass": {
+          "width_mm": 308,
+          "height_mm": 838,
+          "quantity_total": 1
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "family": "MX",
+      "scenario": "maxim-ar-branco-qty2",
+      "dimensions": {
+        "width_mm": 510,
+        "height_mm": 1040,
+        "order_quantity": 2
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "DE6058",
+          "final_length_mm": 510,
+          "cut_length_mm": 515,
+          "quantity_total": 4
+        },
+        "leaf_width": {
+          "code": "DE6078",
+          "final_length_mm": 446,
+          "cut_length_mm": 451,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 318,
+          "height_mm": 848,
+          "quantity_total": 2
+        }
+      }
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "scenario": "persiana-branco",
+      "dimensions": {
+        "width_mm": 1980,
+        "height_mm": 1180,
+        "order_quantity": 1
+      },
+      "assertions": {
+        "frame_width": {
+          "code": "PR8852",
+          "final_length_mm": 1980,
+          "cut_length_mm": 1985,
+          "quantity_total": 2
+        },
+        "leaf_width": {
+          "code": "PR4266",
+          "final_length_mm": 979,
+          "cut_length_mm": 984,
+          "quantity_total": 4
+        },
+        "glass": {
+          "width_mm": 871,
+          "height_mm": 784,
+          "quantity_total": 2
+        }
+      }
+    }
+  ]
+}
