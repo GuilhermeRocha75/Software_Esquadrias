@@ -9,6 +9,7 @@ Expor a Engine de cálculo através de uma API web, sem duplicar regras de engen
 Endpoints já criados:
 
 - `GET /health`
+- `POST /api/v1/production-orders/preview` — dados da OP Fase A, quatro famílias e pedidos mistos; sem PDF ou persistência. Contratos, unidades, limites e auditoria em [OP_FASE_A.md](../docs/OP_FASE_A.md).
 - `GET /api/v1/engine/cr/options`
 - `POST /api/v1/engine/cr/calculate`
 - `POST /api/v1/purchase-plans/calculate`

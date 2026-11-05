@@ -1,0 +1,3441 @@
+{
+  "scope": "PARTIAL_NOT_HOMOLOGATED",
+  "case_counts": {
+    "igual": 10,
+    "input insuficiente": 2
+  },
+  "field_counts": {
+    "igual": 141,
+    "divergente": 2
+  },
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "source": {
+        "filename": "op.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1930,
+        "height_mm": 1490,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": true
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR13852",
+          "engine": "PR13852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1930,
+          "engine": 1930.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1935,
+          "engine": 1935.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 954,
+          "engine": 954.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 959,
+          "engine": 959.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 846,
+          "engine": 846.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 1294,
+          "engine": 1294.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "screen.width_mm",
+          "pdf": 846,
+          "engine": 846.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "screen.height_mm",
+          "pdf": 1294,
+          "engine": 1294.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "screen.quantity_total",
+          "pdf": 1,
+          "engine": 1.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-01",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 31
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.MODEL_SKETCH.model/CR/4a49a6998ea14e507259c892c4b4ba1a08e9bac6859d3a389ca2021bc3cdc7c2/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.FRAME_SECTION.profile/PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/BA3218/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-01",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "source": {
+        "filename": "op.pdf",
+        "page": 2
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1630,
+        "height_mm": 1490,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": true
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR13852",
+          "engine": "PR13852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1630,
+          "engine": 1630.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1635,
+          "engine": 1635.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 804,
+          "engine": 804.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 809,
+          "engine": 809.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 696,
+          "engine": 696.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 1294,
+          "engine": 1294.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-02",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 31
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.MODEL_SKETCH.model/CR/6f573bfa6be60ba7a3a2aa71488daa70e0363920bbf864a1ce0f0d96113b6875/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.FRAME_SECTION.profile/PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/BA3218/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR13852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-02",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "source": {
+        "filename": "op.pdf",
+        "page": 3
+      },
+      "family": "GR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "GR_ENGINE_0.25.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Uma folha DESIGN interna com painel; ferragens nao transcritas."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "GR",
+        "width_mm": 1160,
+        "height_mm": 2110,
+        "quantity": 1,
+        "leaf_count": 1,
+        "panel_mode": "PAINEL COMPLETO"
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "DE6058",
+          "engine": "DE6058",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1160,
+          "engine": 1160.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1165,
+          "engine": 1165.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 1,
+          "engine": 1.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "DE60104",
+          "engine": "DE60104",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 1096,
+          "engine": 1096.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 1101,
+          "engine": 1101.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "panel.quantity_total",
+          "pdf": 12.8357143,
+          "engine": 12.835714285714285,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "op.pdf",
+            "page": 3
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-03",
+          "field": "quantity_unit",
+          "message": "Painel fracionário mantido na unidade comercial m; confirmar unidade física de contagem.",
+          "position": 7
+        },
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-03",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 18
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "engine.LEGACY-GR-SEALING-CORRECTED",
+          "message": "GR!76:78 zerava as vedações por condição de família incorreta; fabricação confirmou borracha de vidro/lambri e borracha redonda em folha e marco.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.MODEL_SKETCH.model/GR/398b3ef54e422c78327ab88c382ea401eba5ad4578e3e369cc10c737a0275613/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.FRAME_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.LEAF_SECTION.profile/DE60104/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/DE60104/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/DE20150/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/AC7012/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/AC3004/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-03",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE60104/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 2800,
+        "height_mm": 1400,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 2800,
+          "engine": 2800.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 2805,
+          "engine": 2805.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 1389,
+          "engine": 1389.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 1394,
+          "engine": 1394.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 1281,
+          "engine": 1281.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 1204,
+          "engine": 1204.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-04",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.MODEL_SKETCH.model/CR/f3059cb57250e27aeaf7c709f3f04efc6f417147b8f8e4bd1dd820dd2b7eaf12/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.FRAME_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-04",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 2
+      },
+      "family": "CR",
+      "status": "input insuficiente",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia.",
+        "Modo de persiana e hipotese de comparacao; nao e selecao para fabrica."
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1420,
+        "height_mm": 1610,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false,
+        "shutter": {
+          "mode": "MANUAL EM PAINEL ÚNICO"
+        }
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1420,
+          "engine": 1420.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1425,
+          "engine": 1425.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 699,
+          "engine": 699.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 704,
+          "engine": 704.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 591,
+          "engine": 591.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 1214,
+          "engine": 1214.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_height.final_length_mm",
+          "pdf": 1410,
+          "engine": 1410.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "frame_height.cut_length_mm",
+          "pdf": 1415,
+          "engine": 1415.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "frame_height.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "slat.cut_length_mm",
+          "pdf": 1346,
+          "engine": 1346.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "slat.quantity_total",
+          "pdf": 40.25,
+          "engine": 41.0,
+          "status": "divergente",
+          "reason": "EXISTING_ENGINE_PHYSICAL_CORRECTION_CONDITIONAL_ON_SHUTTER_INPUT",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 2
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-05",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "engine.LEGACY-SHUTTER-SLAT-FRACTION",
+          "message": "A quantidade física de talas foi arredondada para cima; o Excel mantém altura/40 como quantidade fracionária.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.MODEL_SKETCH.model/CR/4c4982e4fdf17b2d5c8db03954a541a7537549c348652db9ce3cf4831c73cadd/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.FRAME_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/321040/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/327201/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/326015_F/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/311712/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/375021/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-05",
+          "field": "assets.PROFILE_SECTION.profile/327019/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 3
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1160,
+        "height_mm": 2100,
+        "quantity": 2,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_DOOR_42x88",
+        "application": "PORTA",
+        "screen_enabled": false
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1160,
+          "engine": 1160.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1165,
+          "engine": 1165.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4288",
+          "engine": "PR4288",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 580,
+          "engine": 580.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 585,
+          "engine": 585.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 8,
+          "engine": 8.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 428,
+          "engine": 428.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 1860,
+          "engine": 1860.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 3
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-06",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.MODEL_SKETCH.model/CR/0a217801730057f5ae478c4773047085e0afde0a7f15e255dce40ffa0f33c85e/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.FRAME_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.LEAF_SECTION.profile/PR4288/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/PR4288/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/PR4550/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-06",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4288/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 4
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 2480,
+        "height_mm": 1080,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 2480,
+          "engine": 2480.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 2485,
+          "engine": 2485.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 1229,
+          "engine": 1229.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 1234,
+          "engine": 1234.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 1121,
+          "engine": 1121.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 884,
+          "engine": 884.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 4
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-07",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.MODEL_SKETCH.model/CR/43cfbb1f6a6da8920640ddd07d571031c0a466c00deac03f242da43413360a0c/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.FRAME_SECTION.profile/PR8852/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.LEAF_SECTION.profile/PR4266/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/AL16/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-07",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/PRETO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 5
+      },
+      "family": "MAXIM_AR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "MX_ENGINE_0.3.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 530,
+        "height_mm": 1030,
+        "quantity": 1,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "DE6058",
+          "engine": "DE6058",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 530,
+          "engine": 530.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 535,
+          "engine": 535.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "DE6078",
+          "engine": "DE6078",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 466,
+          "engine": 466.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 471,
+          "engine": 471.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 338,
+          "engine": 338.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 838,
+          "engine": 838.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 1,
+          "engine": 1.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 5
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-08",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 23
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "engine.MX-SEALING-PRICE-NOT-CONFIGURED",
+          "message": "A vedação física foi calculada, mas o preço configurado é zero.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.MODEL_SKETCH.model/MAXIM_AR/b2a6342c9aeb4e2b664c11a7ad1ddb311afa78b90e04a9e4eb1ad38144a8b440/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.FRAME_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.LEAF_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/BA3518/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/AC7012/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/AC3004/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-08",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 6
+      },
+      "family": "CR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1100,
+        "height_mm": 1040,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1100,
+          "engine": 1100.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1105,
+          "engine": 1105.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 539,
+          "engine": 539.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 544,
+          "engine": 544.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 431,
+          "engine": 431.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 844,
+          "engine": 844.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 6
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-09",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.MODEL_SKETCH.model/CR/520a0ed5450404712e4686f65c0461b909a1caf24e6fdf9ef2afb7bfbd72cace/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.FRAME_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-09",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 7
+      },
+      "family": "MAXIM_AR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "MX_ENGINE_0.3.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 500,
+        "height_mm": 1030,
+        "quantity": 1,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "DE6058",
+          "engine": "DE6058",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 500,
+          "engine": 500.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 505,
+          "engine": 505.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "DE6078",
+          "engine": "DE6078",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 436,
+          "engine": 436.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 441,
+          "engine": 441.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 308,
+          "engine": 308.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 838,
+          "engine": 838.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 1,
+          "engine": 1.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 7
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-10",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 23
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "engine.MX-SEALING-PRICE-NOT-CONFIGURED",
+          "message": "A vedação física foi calculada, mas o preço configurado é zero.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.MODEL_SKETCH.model/MAXIM_AR/319bb581eb3b0c97d31327ae6e6c99535ae16b64e95f2c1e1555d48b41a1d58e/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.FRAME_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.LEAF_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/BA3518/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/AC7012/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/AC3004/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-10",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "source": {
+        "filename": "OP 2.pdf",
+        "page": 8
+      },
+      "family": "MAXIM_AR",
+      "status": "igual",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "MX_ENGINE_0.3.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": [],
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 510,
+        "height_mm": 1040,
+        "quantity": 2,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "DE6058",
+          "engine": "DE6058",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 510,
+          "engine": 510.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 515,
+          "engine": 515.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "DE6078",
+          "engine": "DE6078",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 446,
+          "engine": 446.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 451,
+          "engine": 451.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 318,
+          "engine": 318.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 848,
+          "engine": 848.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 2.pdf",
+            "page": 8
+          },
+          "origin": "op_golden_12_partial.json"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-11",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 23
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "engine.MX-SEALING-PRICE-NOT-CONFIGURED",
+          "message": "A vedação física foi calculada, mas o preço configurado é zero.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.MODEL_SKETCH.model/MAXIM_AR/f09dd1cd95019861e360b91b6c3ec730d51ee5c9abd5edcc169162d9886f457e/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.FRAME_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.LEAF_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/BA3518/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/AC7012/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/AC3004/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6058/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-11",
+          "field": "assets.PROFILE_SECTION.profile/RAG - DE6078/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "source": {
+        "filename": "OP 3.pdf",
+        "page": 1
+      },
+      "family": "CR",
+      "status": "input insuficiente",
+      "scope": "PARTIAL_RECONSTRUCTED_INPUT",
+      "engine_version": "CR_ENGINE_0.5.0",
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia.",
+        "Modo de persiana e hipotese de comparacao; nao e selecao para fabrica."
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ],
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1980,
+        "height_mm": 1180,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false,
+        "shutter": {
+          "mode": "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO"
+        }
+      },
+      "fields": [
+        {
+          "field": "frame_width.code",
+          "pdf": "PR8852",
+          "engine": "PR8852",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.final_length_mm",
+          "pdf": 1980,
+          "engine": 1980.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.cut_length_mm",
+          "pdf": 1985,
+          "engine": 1985.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_width.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.code",
+          "pdf": "PR4266",
+          "engine": "PR4266",
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.final_length_mm",
+          "pdf": 979,
+          "engine": 979.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.cut_length_mm",
+          "pdf": 984,
+          "engine": 984.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "leaf_width.quantity_total",
+          "pdf": 4,
+          "engine": 4.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.width_mm",
+          "pdf": 871,
+          "engine": 871.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.height_mm",
+          "pdf": 784,
+          "engine": 784.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "glass.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "op_golden_12_partial.json"
+        },
+        {
+          "field": "frame_height.final_length_mm",
+          "pdf": 980,
+          "engine": 980.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "frame_height.cut_length_mm",
+          "pdf": 985,
+          "engine": 985.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "frame_height.quantity_total",
+          "pdf": 2,
+          "engine": 2.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "slat.cut_length_mm",
+          "pdf": 933,
+          "engine": 933.0,
+          "status": "igual",
+          "reason": "MATCH",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        },
+        {
+          "field": "slat.quantity_total",
+          "pdf": 59,
+          "engine": 60.0,
+          "status": "divergente",
+          "reason": "EXISTING_ENGINE_PHYSICAL_CORRECTION_CONDITIONAL_ON_SHUTTER_INPUT",
+          "source": {
+            "filename": "OP 3.pdf",
+            "page": 1
+          },
+          "origin": "docs/ORDEM_PRODUCAO_V1.md"
+        }
+      ],
+      "validations": [
+        {
+          "code": "MISSING_TECHNICAL_DATA",
+          "severity": "error",
+          "item_id": "OP-GOLDEN-12",
+          "field": "quantity_total",
+          "message": "Quantidade física fracionária preservada; confirmar unidade/critério de fabricação.",
+          "position": 25
+        },
+        {
+          "code": "ENGINE_WARNING",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "engine.LEGACY-SHUTTER-SLAT-FRACTION",
+          "message": "A quantidade física de talas foi arredondada para cima; o Excel mantém altura/40 como quantidade fracionária.",
+          "position": null
+        },
+        {
+          "code": "LEGACY_LAYOUT_UNVERIFIED",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "lines.position",
+          "message": "Ordem/grupos da Engine preservados; conferir sequência impressa POP/OP com fonte privada.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.MODEL_SKETCH.model/CR/ca1c21b60c9a60ca01616ecd76ad082ac3543fe34607a556b0a21a78b6da35bd/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.FRAME_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.LEAF_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/PR4536/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/AL16/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/BA2516/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR8852/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/RAG - PR4266/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/321040/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/327201/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/326015_F/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/311712/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/375021/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/327019/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        },
+        {
+          "code": "MISSING_ASSET",
+          "severity": "warning",
+          "item_id": "OP-GOLDEN-12",
+          "field": "assets.PROFILE_SECTION.profile/327204/BRANCO",
+          "message": "Arquivo não registrado no índice desta empresa.",
+          "position": null
+        }
+      ]
+    }
+  ]
+}
