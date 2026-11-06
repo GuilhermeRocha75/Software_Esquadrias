@@ -44,7 +44,7 @@ async function generate(page) {
   await generateButton(page).click()
   const pdf = await response
   expect(pdf.status()).toBe(200)
-  await expect(panel(page).getByRole('link', { name: 'Salvar PDF de conferência' })).toBeVisible()
+  await expect(panel(page).getByRole('link', { name: 'Baixar PDF' })).toBeVisible()
   // Inspect the exact Blob offered to the user, independently of DevTools'
   // network-body retention for no-store PDF responses and embedded viewers.
   const bytes = await page.evaluate(async () => {
@@ -77,7 +77,8 @@ for (const item of registered) {
       expect(decoded.text).not.toContain('Croqui não disponível')
     }
     await expect(panel(page).getByText('A OP aguarda auditoria independente e conferência visual.', { exact: false })).toBeVisible()
-    await expect(panel(page).locator('iframe')).toHaveAttribute('src', /^blob:/)
+    await expect(panel(page).locator('iframe')).toHaveCount(0)
+    await expect(panel(page).getByText('PDF gerado', { exact: true })).toBeVisible()
     await expect(page.getByRole('button', { name: /emitir.*definitiva|fabricar/i })).toHaveCount(0)
   })
 }
@@ -107,12 +108,12 @@ test('PDF abre em outra aba e pode ser salvo como arquivo PDF íntegro', async (
   await openOrder(page, [registered[3]])
   const generated = await generate(page)
   const popupPromise = page.waitForEvent('popup')
-  await panel(page).getByRole('link', { name: 'Abrir PDF de conferência', exact: true }).click()
+  await panel(page).getByRole('link', { name: 'Visualizar PDF', exact: true }).click()
   const popup = await popupPromise
   await expect.poll(() => popup.url()).toMatch(/^blob:/)
   await popup.close()
   const downloadPromise = page.waitForEvent('download')
-  await panel(page).getByRole('link', { name: 'Salvar PDF de conferência', exact: true }).click()
+  await panel(page).getByRole('link', { name: 'Baixar PDF', exact: true }).click()
   const download = await downloadPromise
   expect(download.suggestedFilename()).toBe('ordem-producao-conferencia.pdf')
   const target = test.info().outputPath('op-conferencia.pdf')
@@ -147,12 +148,12 @@ test('cabeçalho, identificação e cor invalidam PDF e aproveitam os campos exi
   await page.getByLabel('Código da obra', { exact: true }).fill('OBR-NOVA')
   await page.getByLabel('Obra', { exact: true }).fill('OBRA ATUALIZADA')
   await panel(page).getByLabel('Identificação do item 01', { exact: true }).fill('SALA-FIXO')
-  await panel(page).getByLabel('Cor do croqui do item 01', { exact: true }).fill('COR NÃO IMPORTADA')
+  await panel(page).getByRole('group', { name: 'Cor do croqui do item 01' }).getByRole('button', { name: 'Preto' }).click()
   await expect(panel(page).getByRole('link')).toHaveCount(0)
   const result = await generate(page)
   for (const value of ['CLIENTE ATUALIZADO', 'CLI-NOVO', 'OBR-NOVA', 'OBRA ATUALIZADA', 'SALA-FIXO']) expect(result.decoded.text).toContain(value)
-  expect(result.decoded.text).toContain('Croqui não disponível')
-  await expect(panel(page).getByText('Imagem não importada', { exact: false }).first()).toBeVisible()
+  expect(result.response.request().postDataJSON().layout_request.production_order.items[0].finish_key).toBe('PRETO')
+  await expect(panel(page).getByRole('group', { name: 'Cor do croqui do item 01' }).getByRole('button', { name: 'Preto' })).toHaveAttribute('aria-pressed', 'true')
   const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('software-esquadrias-quote')))
   expect(saved.clientCode).toBe('CLI-NOVO')
   expect(saved.workCode).toBe('OBR-NOVA')
@@ -258,6 +259,26 @@ test('OP em celular mantém seleção, botão e download acessíveis', async ({ 
   const bounds = await panel(page).boundingBox()
   expect(bounds.x).toBeGreaterThanOrEqual(0)
   expect(bounds.x + bounds.width).toBeLessThanOrEqual(390)
-  await expect(panel(page).getByRole('link', { name: 'Salvar PDF de conferência', exact: true })).toBeVisible()
+  await expect(panel(page).getByRole('link', { name: 'Baixar PDF', exact: true })).toBeVisible()
   await page.screenshot({ path: test.info().outputPath('op-mobile.png') })
+})
+
+// Empty OP color metadata must not cause missing technical data from a blank finish.
+test('cor branca ja vem selecionada e pode ser alternada pelo seletor dividido', async ({ page }) => {
+  await page.addInitScript(({ items, quote }) => {
+    localStorage.setItem('software-esquadrias-items', JSON.stringify(items))
+    localStorage.setItem('software-esquadrias-quote', JSON.stringify(quote))
+    localStorage.removeItem('software-esquadrias-op-items:00000000-0000-0000-0000-000000000001')
+  }, { items: [registered[3]], quote })
+  await page.goto('/')
+  await expect(page.getByRole('status')).toHaveText('API online')
+  const group = panel(page).getByRole('group', { name: 'Cor do croqui do item 01' })
+  await expect(group.getByRole('button', { name: 'Branco' })).toHaveAttribute('aria-pressed', 'true')
+  const first = await generate(page)
+  expect(first.response.request().postDataJSON().layout_request.production_order.items[0].finish_key).toBe('BRANCO')
+  await group.getByRole('button', { name: 'Preto' }).click()
+  await expect(panel(page).getByRole('link')).toHaveCount(0)
+  await expect(group.getByRole('button', { name: 'Preto' })).toHaveAttribute('aria-pressed', 'true')
+  const second = await generate(page)
+  expect(second.response.request().postDataJSON().layout_request.production_order.items[0].finish_key).toBe('PRETO')
 })
