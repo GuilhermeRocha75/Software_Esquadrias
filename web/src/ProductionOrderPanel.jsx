@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { generateProductionOrderReview } from './productionOrderPdf.js'
-import { buildProductionLayoutRequest, DEMO_COMPANY_ID, explainProductionBlocker } from './productionOrderRequest.js'
+import { buildProductionLayoutRequest, DEMO_COMPANY_ID, explainProductionBlocker, selectedProfileColor } from './productionOrderRequest.js'
 import './production-order.css'
 
 const COMPANY_ID = import.meta.env.VITE_COMPANY_ID || DEMO_COMPANY_ID
@@ -11,7 +11,7 @@ function readMetadata(key) {
     if (!value || typeof value !== 'object' || Array.isArray(value)) return {}
     return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry && typeof entry === 'object')
       .map(([id, entry]) => [id, { label: typeof entry.label === 'string' ? entry.label : '',
-        finishKey: typeof entry.finishKey === 'string' ? entry.finishKey : '' }]))
+        finishKey: selectedProfileColor(entry.finishKey) }]))
   } catch { return {} }
 }
 
@@ -91,7 +91,7 @@ export default function ProductionOrderPanel({ items, quote, apiUrl, apiOnline, 
     </div>
     <div className="op-body">
       <p className="op-review-mark">CONFERÊNCIA — NÃO FABRICAR</p>
-      <p className="op-help">Selecione um ou vários itens. Identificação e cor do croqui não alteram os cálculos. A cor é a da esquadria, não o arremate interno ou externo; deixe vazia se ainda não souber.</p>
+      <p className="op-help">Selecione um ou vários itens. Identificação e cor do croqui não alteram os cálculos. A cor do croqui é a da esquadria, não a do arremate. Branco já vem selecionado; escolha Preto quando necessário.</p>
       <div className="op-selection-actions">
         <span>{selected.length} de {items.length} itens selecionados</span>
         <button className="secondary" onClick={() => setExcluded([])} disabled={!items.length}>Selecionar todos</button>
@@ -107,12 +107,19 @@ export default function ProductionOrderPanel({ items, quote, apiUrl, apiOnline, 
               Incluir item {ordinal} ({item.family || 'CR'})</label>
             <label>Identificação do item {ordinal}<input maxLength="100" value={metadata[item.id]?.label ?? ''}
               placeholder={ordinal} onChange={(event) => setItemMetadata(item.id, 'label', event.target.value)} /></label>
-            <label>Cor do croqui do item {ordinal}<input list="op-colors" maxLength="100" value={metadata[item.id]?.finishKey ?? item.finish_key ?? ''}
-              placeholder="Não informada" onChange={(event) => setItemMetadata(item.id, 'finishKey', event.target.value)} /></label>
+            <div className="op-color-field">
+              <span id={`op-color-label-${item.id}`}>Cor do croqui do item {ordinal}</span>
+              <div className="op-color-split" role="group" aria-labelledby={`op-color-label-${item.id}`}>
+                {['BRANCO', 'PRETO'].map((color) => (
+                  <button key={color} type="button" className={selectedProfileColor(metadata[item.id]?.finishKey || item.finish_key) === color ? 'op-color-choice active' : 'op-color-choice'}
+                    aria-pressed={selectedProfileColor(metadata[item.id]?.finishKey || item.finish_key) === color}
+                    onClick={() => setItemMetadata(item.id, 'finishKey', color)}>{color === 'BRANCO' ? 'Branco' : 'Preto'}</button>
+                ))}
+              </div>
+            </div>
           </div>
         })}
       </fieldset>
-      <datalist id="op-colors"><option value="BRANCO" /><option value="PRETO" /></datalist>
       {apiOnline === false && <p className="op-error" role="alert">API indisponível. Ligue o servidor para gerar a OP de conferência.</p>}
       {editing && <p>Salve ou cancele a edição da esquadria antes de gerar a OP.</p>}
       {busy && <div className="op-progress" aria-live="polite"><p>{current.phase === 'CHECKING' ? 'Consultando os dados e as pendências da OP…' : 'Gerando o PDF de conferência com as pendências abaixo…'}</p><button className="secondary" onClick={cancel}>Cancelar geração</button></div>}
@@ -128,12 +135,14 @@ export default function ProductionOrderPanel({ items, quote, apiUrl, apiOnline, 
         </li>)}</ul>
       </div>}
       {currentLink && <div className="op-result">
-        <p aria-live="polite">PDF de conferência gerado: {current.result.pages} páginas. Revise todas as pendências antes de comparar com o Excel.</p>
-        <div className="op-file-actions">
-          <a className="secondary" href={currentLink.url} target="_blank" rel="noopener noreferrer">Abrir PDF de conferência</a>
-          <a className="primary" href={currentLink.url} download={current.result.filename}>Salvar PDF de conferência</a>
+        <div className="op-result-summary">
+          <div className="op-result-heading"><span aria-hidden="true" className="op-result-icon">✓</span><div><strong>PDF gerado</strong><p>{current.result.pages} {current.result.pages === 1 ? 'página' : 'páginas'} · Documento de conferência</p></div></div>
+          <div className="op-file-actions">
+            <a className="secondary" href={currentLink.url} target="_blank" rel="noopener noreferrer">Visualizar PDF</a>
+            <a className="primary" href={currentLink.url} download={current.result.filename}>Baixar PDF</a>
+          </div>
         </div>
-        <iframe title="Prévia da OP de conferência" src={currentLink.url} />
+        <p className="op-result-note">Revise as pendências antes de comparar com o Excel. A emissão para fabricação continua bloqueada.</p>
       </div>}
       {!current && hadAttempt && <p aria-live="polite">O pedido ou a seleção mudou. Gere novamente para conferir os dados atuais.</p>}
     </div>
