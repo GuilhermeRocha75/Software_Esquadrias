@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { buildProductionLayoutRequest, DEMO_COMPANY_ID, explainProductionBlocker } from '../src/productionOrderRequest.js'
+import { buildProductionLayoutRequest, DEMO_COMPANY_ID, explainProductionBlocker, selectedProfileColor } from '../src/productionOrderRequest.js'
 
 const quote = { client: 'CLIENTE DE TESTE', clientCode: 'C01', project: 'OBRA DE TESTE', workCode: 'O01', number: 'CONF-01', notes: 'não encaminhar' }
 const items = ['CR', 'MAXIM_AR', 'GR', 'FX'].map((family, index) => ({ id: `item-${index + 1}`, family,
@@ -14,7 +14,7 @@ test('pedido misto preserva uma entrada por item, quantidade e todos os parâmet
   items.forEach(({ id, ...technical }, index) => {
     assert.deepEqual(request.production_order.items[index].technical_input, technical)
     assert.equal(request.production_order.items[index].item_id, id)
-    assert.equal(request.production_order.items[index].finish_key, null)
+    assert.equal(request.production_order.items[index].finish_key, 'BRANCO')
   })
   assert.equal(request.context.company_id, DEMO_COMPANY_ID)
   assert.equal(request.production_order.company_id, request.context.company_id)
@@ -30,7 +30,7 @@ test('seleção individual ou parcial mantém a ordem cadastrada sem duplicar pr
   assert.equal(single.context.item_labels[0].label, '04')
 })
 
-test('cabeçalho aproveita cadastro e metadata não entra na engenharia nem presume cor branca', () => {
+test('cabeçalho aproveita cadastro e aplica cor padrao branca sem alterar engenharia', () => {
   const request = buildProductionLayoutRequest(items, quote, ['item-1'], { 'item-1': { label: ' JANELA SALA ', finishKey: ' PRETO ' } })
   assert.equal(request.production_order.items[0].finish_key, 'PRETO')
   assert.equal(request.context.item_labels[0].label, 'JANELA SALA')
@@ -73,4 +73,14 @@ test('pendências conhecidas têm explicação e mensagens técnicas desconhecid
   assert.match(explainProductionBlocker({ code: 'MISSING_ASSET' }), /Imagem não importada/)
   assert.match(explainProductionBlocker({ code: 'INDEPENDENT_DOCUMENT_AUDIT_PENDING' }), /Não está liberada/)
   assert.equal(explainProductionBlocker({ code: 'FRACTIONAL', message: 'Quantidade 12,835714285714285 pendente' }), 'Quantidade 12,835714285714285 pendente')
+})
+
+test('cor do croqui só admite branco ou preto e mantém seleções válidas', () => {
+  for (const [input, expected] of [[undefined, 'BRANCO'], ['', 'BRANCO'], ['PRETO', 'PRETO'], [' preto ', 'PRETO'], ['COR INVÁLIDA', 'BRANCO']]) {
+    assert.equal(selectedProfileColor(input), expected)
+  }
+  const request = buildProductionLayoutRequest(items, quote, ['item-1', 'item-2'], {
+    'item-1': { finishKey: 'PRETO' }, 'item-2': { finishKey: '' },
+  })
+  assert.deepEqual(request.production_order.items.map((item) => item.finish_key), ['PRETO', 'BRANCO'])
 })
