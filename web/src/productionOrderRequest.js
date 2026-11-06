@@ -1,5 +1,10 @@
 // Contrato B1 a partir dos itens cadastrados. Nenhum cálculo de engenharia.
 export const DEMO_COMPANY_ID = '00000000-0000-0000-0000-000000000001'
+export const OP_PROFILE_COLORS = ['BRANCO', 'PRETO']
+export function selectedProfileColor(value) {
+  const color = String(value ?? '').trim().toUpperCase()
+  return OP_PROFILE_COLORS.includes(color) ? color : 'BRANCO'
+}
 
 export function buildProductionLayoutRequest(items, quote, selectedIds, metadata = {}, companyId = DEMO_COMPANY_ID) {
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(companyId)) throw new Error('Empresa da OP não configurada corretamente.')
@@ -23,7 +28,7 @@ export function buildProductionLayoutRequest(items, quote, selectedIds, metadata
     if (![technical.width_mm, technical.height_mm].every((value) => Number.isFinite(value) && value > 0) ||
         !Number.isInteger(technical.quantity) || technical.quantity < 1) throw new Error(`Item ${label}: informe medidas positivas e quantidade inteira no cadastro da esquadria.`)
     finite(technical)
-    return { item_id: id, finish_key: optional(metadata[id]?.finishKey ?? finish_key), technical_input: structuredClone(technical) }
+    return { item_id: id, finish_key: selectedProfileColor(metadata[id]?.finishKey || finish_key), technical_input: structuredClone(technical) }
   })
   return {
     production_order: { company_id: companyId, order_id: optional(quote.number) || 'CONFERENCIA', items: entries },
