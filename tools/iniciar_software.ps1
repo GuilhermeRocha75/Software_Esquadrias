@@ -65,7 +65,31 @@ try {
         if ($prior.root -eq $projectRoot) { $manifest.api = $prior.api; $manifest.web = $prior.web }
     }
 
-    if (Test-ApiReady) { Write-Host "API já está pronta em $apiUrl." }
+    # OP B1/B2: manifesta imagens privadas para o processo filho da API.
+    # Nunca copiar croquis, manifests ou PDFs para um diretório versionado.
+    $opManifest = Join-Path $projectRoot '.private\op-b1\images\manifest.json'
+    $opPreviouslyReady = Test-ApiReady
+    if (Test-Path -LiteralPath $opManifest -PathType Leaf) {
+        try {
+            $manifestData = Get-Content -LiteralPath $opManifest -Raw | ConvertFrom-Json
+            if (-not $manifestData.company_id -or -not $manifestData.entries) {
+                throw 'O manifesto privado não possui empresa ou imagens registradas.'
+            }
+            if (-not $opPreviouslyReady) {
+                $env:OP_IMAGE_MANIFEST = $opManifest
+                $env:OP_IMAGE_STORAGE_ROOT = Split-Path -Parent $opManifest
+                Write-Host "Croquis privados da OP: $($manifestData.entries.Count) imagens disponíveis para a API."
+            } else {
+                Write-Warning 'API já estava ativa. Alterações no manifesto não chegam a um processo já iniciado. Reinicie o software/API para carregar os croquis da OP.'
+            }
+        } catch {
+            Write-Warning "Manifesto da OP inválido em .private/op-b1/images/manifest.json: $($_.Exception.Message)"
+        }
+    } else {
+        Write-Warning 'Manifesto de croquis OP não encontrado em .private/op-b1/images/manifest.json. PDFs de conferência podem sair sem desenhos; importe as imagens privadas antes de validar.'
+    }
+
+    if ($opPreviouslyReady) { Write-Host "API já está pronta em $apiUrl." }
     else {
         if (Test-PortBusy $apiPort) { throw "Porta $apiPort ocupada por outro serviço; a API não será duplicada." }
         Write-Host 'Iniciando API local...'
