@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
+import CommercialQuote from './CommercialQuote.jsx'
 import ProductionOrderPanel from './ProductionOrderPanel.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
@@ -254,7 +255,7 @@ function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={['Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? () => document.getElementById('orcamento-comercial')?.scrollIntoView({ block: 'start' }) : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -335,9 +336,8 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
   )
 }
 
-function Summary({ data, margin, setMargin }) {
+function Summary({ data }) {
   const plan = data?.purchase_plan
-  const suggested = (plan?.procurement_total_estimate || 0) / Math.max(0.01, 1 - margin / 100)
   return (
     <aside className="summary-column">
       <div className="kpi-grid">
@@ -353,8 +353,6 @@ function Summary({ data, margin, setMargin }) {
         <SummaryLine label="Materiais não lineares" value={money(plan?.exact_nonbar_cost)} />
         <div className="summary-divider" />
         <SummaryLine label="Compra estimada" value={money(plan?.procurement_total_estimate)} strong />
-        <label className="margin-row">Margem<input type="number" min="0" max="90" value={margin} onChange={(e) => setMargin(Number(e.target.value))} /><span>%</span></label>
-        <div className="sale-price"><span>Preço de venda sugerido</span><strong>{money(suggested)}</strong></div>
       </section>
       {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
@@ -809,7 +807,6 @@ export default function App() {
       number: '000001/2026', project: 'Obra piloto — Dell Amanda', notes: 'Pedido de validação da Engine CR e plano de compra.',
     }
   })
-  const [margin, setMargin] = useState(25)
   const [activeTab, setActiveTab] = useState('Custo por Grupo')
   const [data, setData] = useState(null)
   const calculationVersion = useRef(0)
@@ -916,10 +913,11 @@ export default function App() {
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
+              <CommercialQuote items={items} data={data} quote={quote} setQuote={setQuote} money={money} modelLabel={modelLabel} />
               <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
-            <Summary data={data} margin={margin} setMargin={setMargin} />
+            <Summary data={data} />
           </div>
         </main>
       </div>
