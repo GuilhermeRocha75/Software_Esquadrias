@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
+import ProductionOrderPanel from './ProductionOrderPanel.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
@@ -285,12 +286,14 @@ function ClientCard({ quote, setQuote }) {
     <section className="card client-card">
       <div className="section-title">♙ Dados do Cliente e Orçamento</div>
       <div className="form-grid">
-        <label>Cliente *<input value={quote.client} onChange={set('client')} /></label>
+        <label>Código do cliente<input maxLength="100" value={quote.clientCode || ''} onChange={set('clientCode')} /></label>
+        <label>Cliente *<input maxLength="200" value={quote.client} onChange={set('client')} /></label>
         <label>Telefone<input value={quote.phone} onChange={set('phone')} /></label>
         <label>Cidade<input value={quote.city} onChange={set('city')} /></label>
         <label>Data *<input type="date" value={quote.date} onChange={set('date')} /></label>
         <label>Nº do orçamento *<input value={quote.number} onChange={set('number')} /></label>
-        <label className="span-3">Obra<input value={quote.project} onChange={set('project')} /></label>
+        <label>Código da obra<input maxLength="100" value={quote.workCode || ''} onChange={set('workCode')} /></label>
+        <label>Obra<input maxLength="200" value={quote.project} onChange={set('project')} /></label>
         <label className="span-4">Observações<textarea value={quote.notes} onChange={set('notes')} /></label>
       </div>
     </section>
@@ -913,6 +916,7 @@ export default function App() {
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
+              <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
             <Summary data={data} margin={margin} setMargin={setMargin} />

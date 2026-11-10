@@ -12,6 +12,12 @@ web/.env.local
 deploy/hostinger/.env
 .run/
 
+# Private OP sources, customer documents and imported assets
+.private/
+*.xlsm
+*.rar
+*.pdf
+
 # IDE / OS
 .vscode/
 .idea/

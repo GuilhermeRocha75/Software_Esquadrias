@@ -1,0 +1,3 @@
+-r ../api/requirements-dev.txt
+pypdf>=5,<7
+oletools>=0.60,<0.61

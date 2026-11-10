@@ -1,0 +1,249 @@
+{
+  "note": "Explicit reconstructed inputs for partial comparisons; not original inputs or homologation.",
+  "cases": [
+    {
+      "id": "OP-GOLDEN-01",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1930,
+        "height_mm": 1490,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": true
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-02",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1630,
+        "height_mm": 1490,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": true
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-03",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "GR",
+        "width_mm": 1160,
+        "height_mm": 2110,
+        "quantity": 1,
+        "leaf_count": 1,
+        "panel_mode": "PAINEL COMPLETO"
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Uma folha DESIGN interna com painel; ferragens nao transcritas."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-04",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 2800,
+        "height_mm": 1400,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-05",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1420,
+        "height_mm": 1610,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false,
+        "shutter": {
+          "mode": "MANUAL EM PAINEL ÚNICO"
+        }
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia.",
+        "Modo de persiana e hipotese de comparacao; nao e selecao para fabrica."
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ]
+    },
+    {
+      "id": "OP-GOLDEN-06",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1160,
+        "height_mm": 2100,
+        "quantity": 2,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_DOOR_42x88",
+        "application": "PORTA",
+        "screen_enabled": false
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-07",
+      "finish_key": "PRETO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 2480,
+        "height_mm": 1080,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-08",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 530,
+        "height_mm": 1030,
+        "quantity": 1,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-09",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1100,
+        "height_mm": 1040,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-10",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 500,
+        "height_mm": 1030,
+        "quantity": 1,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-11",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "MAXIM_AR",
+        "width_mm": 510,
+        "height_mm": 1040,
+        "quantity": 2,
+        "leaf_system": "DESIGN_WINDOW_60x78",
+        "leaf_count": 1
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "DESIGN identificado por DE6078; uma folha inferida da quantidade de vidros."
+      ],
+      "missing_inputs": []
+    },
+    {
+      "id": "OP-GOLDEN-12",
+      "finish_key": "BRANCO",
+      "technical_input": {
+        "family": "CR",
+        "width_mm": 1980,
+        "height_mm": 1180,
+        "quantity": 1,
+        "leaf_count": 2,
+        "leaf_system": "PRIME_WINDOW_42x66",
+        "application": "JANELA",
+        "screen_enabled": false,
+        "shutter": {
+          "mode": "MANUAL EM 2 PAINÉIS COM EIXO ÚNICO"
+        }
+      },
+      "assumptions": [
+        "Input reconstruido para comparar somente campos transcritos; confirmar input original.",
+        "Fechamentos, vidro comercial e acabamentos usam defaults no snapshot; sem paridade integral de materiais.",
+        "Duas folhas e sistema inferidos dos codigos e quantidades da referencia.",
+        "Modo de persiana e hipotese de comparacao; nao e selecao para fabrica."
+      ],
+      "missing_inputs": [
+        "Modo de acionamento e arranjo/eixos da persiana nao informados na fixture."
+      ]
+    }
+  ]
+}

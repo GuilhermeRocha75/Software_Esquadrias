@@ -1,0 +1,39 @@
+{
+  "scope": "SANITIZED_LOCAL_IMPORT_EVIDENCE_NO_ASSET_BYTES",
+  "source_workbook_sha256": "96514d7818bcbbc1db86f94f86d8ed0239675e9f8d3a6b64df651f30fd90c160",
+  "entries": 25,
+  "model_basenames": [
+    "JANELA 1 FOLHA MAXIM-AR (BRANCO).jpg",
+    "JANELA 2 FOLHAS DE CORRER (BRANCO).jpg",
+    "JANELA 2 FOLHAS DE CORRER (PRETO).jpg",
+    "JANELA 2 FOLHAS DE CORRER + TELA MOSQUITEIRA (BRANCO).jpg",
+    "JANELA 2 FOLHAS DE CORRER COM PERSIANA (BRANCO).jpg",
+    "PAINEL  FIXO - 00 (BRANCO).jpg",
+    "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL (BRANCO).jpg",
+    "PORTA 2 FOLHAS DE CORRER (BRANCO).jpg"
+  ],
+  "profile_codes": [
+    "BA1016",
+    "BA1816",
+    "BA2018",
+    "BA3218",
+    "BA3518",
+    "DE16652",
+    "DE60104",
+    "DE60104-E",
+    "DE60111",
+    "DE6058",
+    "DE6072",
+    "DE6078",
+    "PR13852",
+    "PR4263",
+    "PR4266",
+    "PR4288",
+    "PR8852"
+  ],
+  "reference_page_slots_verified": 36,
+  "byte_validation": "SHA256_IMAGE_FORMAT_AND_DIMENSIONS_VERIFIED_LOCALLY",
+  "pdf_pixel_parity": "NOT_PROVEN_REQUIRES_VISUAL_AUDIT",
+  "private_storage": ".private/op-b1/images",
+  "published_images": 0
+}
