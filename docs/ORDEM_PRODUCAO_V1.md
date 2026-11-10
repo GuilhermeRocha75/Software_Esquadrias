@@ -71,3 +71,14 @@ Não imprimir paths `C:\\Users\\...\\Croquis...` nem caracteres sentinelas `A`. 
 4. Auditoria independente antes de fazer merge na main.
 
 **Não fazer merge, force push ou alterar famílias homologadas sem evidência.**
+
+
+## Encerramento da validação funcional — 10/11/2026
+
+**Situação: validação funcional dos quatro modelos aprovada pelo responsável.** O responsável confirmou que criou OPs nos dois sistemas com os mesmos modelos e parâmetros e comparou os documentos de CR, MAXIM_AR, GR e FX, sem encontrar divergências relevantes para o uso operacional. Essa declaração é evidência de aceite do usuário; os PDFs comparativos dessa rodada não foram anexados ao repositório nem inspecionados independentemente nesta data.
+
+A CI da branch no commit `80857bd76afef7b46e24444c550623efc3a3ec31` concluiu com sucesso (run `42272854232`). A interface de conferência e os croquis funcionaram em teste do usuário. A fábrica havia confirmado ACB606 = 6.004 mm e ACE606 = 13.688 mm no caso aferido; a diferença PAR2 de 46,656 versus 45,856 foi considerada sem impacto prático no procedimento da fábrica, **não** como igualdade numérica.
+
+**Limite do aceite:** encerra o desenvolvimento e os testes funcionais de paridade informados para as quatro famílias existentes; não significa homologação independente de todas as variantes, liberação de produção ou eliminação de alertas de unidades fracionárias, consumo e divergências históricas das fixtures. O endpoint `purpose: "PRODUCTION"` e o bloqueio `CONFERÊNCIA — NÃO FABRICAR` devem permanecer ativos até uma decisão explícita de liberação técnica, com definição dos critérios operacionais e aprovação de segurança correspondente.
+
+**Encaminhamento:** iniciar a próxima fase do software (orçamento comercial), preservando a OP como módulo de conferência funcionalmente aprovado. Não realizar merge para `main` sem autorização explícita.
