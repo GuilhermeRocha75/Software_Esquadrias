@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
+import FullQuoteDialog from './FullQuoteDialog.jsx'
 import CommercialQuote from './CommercialQuote.jsx'
 import ProductionOrderPanel from './ProductionOrderPanel.jsx'
 
@@ -241,7 +242,7 @@ const modelLabel = (item) => item.family === 'FX' ? 'Painel Fixo' : ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
+function Sidebar({ openFullQuote, onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -255,7 +256,7 @@ function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={['Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? () => document.getElementById('orcamento-comercial')?.scrollIntoView({ block: 'start' }) : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={item === 'Visualizar Orçamentos' ? openFullQuote : ['Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? () => document.getElementById('orcamento-comercial')?.scrollIntoView({ block: 'start' }) : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -336,7 +337,7 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
   )
 }
 
-function Summary({ data }) {
+function Summary({ data, openFullQuote }) {
   const plan = data?.purchase_plan
   return (
     <aside className="summary-column">
@@ -354,6 +355,7 @@ function Summary({ data }) {
         <div className="summary-divider" />
         <SummaryLine label="Compra estimada" value={money(plan?.procurement_total_estimate)} strong />
       </section>
+      <button className="primary" onClick={openFullQuote}>Visualizar Orçamento Completo</button>
       {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
   )
@@ -813,6 +815,7 @@ export default function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(null)
+  const [fullQuoteOpen, setFullQuoteOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
@@ -903,7 +906,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
+      <Sidebar openFullQuote={() => setFullQuoteOpen(true)} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -917,10 +920,11 @@ export default function App() {
               <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
-            <Summary data={data} />
+            <Summary data={data} openFullQuote={() => setFullQuoteOpen(true)} />
           </div>
         </main>
       </div>
+      {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} close={() => setFullQuoteOpen(false)} />}
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
         : modalFamily === 'FX'

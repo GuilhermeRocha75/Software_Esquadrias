@@ -1,0 +1,6 @@
+.full-quote-dialog { width: min(760px, 94vw); max-height: 88vh; padding: 0; border: 0; border-radius: 14px; color: inherit; }
+.full-quote-dialog::backdrop { background: rgb(15 23 42 / 55%); }
+.full-quote-body { padding: 20px; display: grid; gap: 16px; }
+.full-quote-body .primary { justify-self: start; }
+.full-quote-body .form-grid { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.full-quote-body .op-file-actions { margin-top: 12px; }
