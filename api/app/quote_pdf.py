@@ -10,7 +10,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.lib.pagesizes import A4
-from reportlab.platypus import Image, KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
+from reportlab.platypus import Image, KeepTogether, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 from .production_images import ImageSelector, image_metadata, model_identity
 from .production_schemas import TechnicalInput
@@ -83,7 +83,7 @@ def render_quote(payload, store=None, directory=None):
                                    ("BOTTOMPADDING", (0, 0), (-1, -1), 5)]))
         return block
 
-    story = [paragraph("Orçamento completo", 21, True), paragraph("   |   ".join(filter(None, [f"Nº {payload.number}", payload.date]))),
+    story = [PageBreak(), paragraph("Orçamento completo", 21, True), paragraph("   |   ".join(filter(None, [f"Nº {payload.number}", payload.date]))),
              Spacer(1, 10), paragraph(payload.client, 14, True)]
     for label, value in [("Código do cliente", payload.client_code), ("Telefone", payload.phone), ("Cidade", payload.city), ("Obra", payload.project), ("Código da obra", payload.work_code)]:
         if value:
@@ -123,5 +123,9 @@ def render_quote(payload, store=None, directory=None):
         canvas.setFont("Helvetica", 8)
         canvas.drawString(17*mm, 10*mm, "Croquis ilustrativos, sem escala.")
         canvas.drawRightString(193*mm, 10*mm, f"Página {document.page}")
-    doc.build(story, onFirstPage=footer, onLaterPages=footer)
+    def cover(canvas, document):
+        image = Path(__file__).parent / "assets" / "fenster-apresentacao.jpg"
+        canvas.drawImage(str(image), 18, A4[1] - 28 - 739, width=552, height=739)
+
+    doc.build(story, onFirstPage=cover, onLaterPages=footer)
     return stream.getvalue(), missing
