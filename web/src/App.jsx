@@ -4,7 +4,6 @@ import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
 import FullQuoteDialog from './FullQuoteDialog.jsx'
-import CommercialQuote from './CommercialQuote.jsx'
 import ProductionOrderPanel from './ProductionOrderPanel.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
@@ -256,7 +255,7 @@ function Sidebar({ openFullQuote, onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={item === 'Visualizar Orçamentos' ? openFullQuote : ['Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? () => document.getElementById('orcamento-comercial')?.scrollIntoView({ block: 'start' }) : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={['Visualizar Orçamentos', 'Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? openFullQuote : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -509,99 +508,7 @@ function MaximArModal({ onClose, onSave, options, item }) {
             <label className="checkbox-row"><input type="checkbox" checked={Boolean(form.top_fixed_panel)} onChange={togglePanel('top_fixed_panel')} /> Bandeira superior</label>
             {form.top_fixed_panel && <label>Altura superior (mm)<input type="number" min="1" value={form.top_fixed_panel.height_mm} onChange={setPanelHeight('top_fixed_panel')} /></label>}
             {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Modo<select value={form.module_mode} onChange={set('module_mode')}>{(options.module_modes || ['MÓDULO ÚNICO', 'MÓDULOS SEPARADOS']).map((value) => <option key={value}>{value}</option>)}</select></label>}
-            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V inferior<div className="inline-inputs"><input type="number" min="0" value={form.bottom_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.bottom_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('bottom_fixed_panel', 'vertical_transoms')} /></div></label>}
-            {form.top_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V superior<div className="inline-inputs"><input type="number" min="0" value={form.top_fixed_panel.horizontal_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'horizontal_transoms')} /><input type="number" min="0" value={form.top_fixed_panel.vertical_transoms || 0} onChange={setFixedTransoms('top_fixed_panel', 'vertical_transoms')} /></div></label>}
-            {(form.bottom_fixed_panel || form.top_fixed_panel) && <label>Reforço estrutural<select disabled={form.module_mode !== 'MÓDULOS SEPARADOS'} value={form.structural_reinforcement?.material_code || ''} onChange={setStructural}><option value="">Sem reforço</option><option value="ALUM10238">ALUM10238 · 102x50</option><option value="ALUM15338">ALUM15338 · 138x50</option></select></label>}
-            <div className="info-note">Travessas pertencem apenas a bandeiras integradas. Reforço estrutural é opcional e exclusivo de módulos separados.</div>
-          </FieldSection>
-          <FieldSection title="Vedação configurável">
-            <label className="span-2">Descrição<input value={form.sealing.description} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, description: e.target.value } }))} /></label>
-            <label>Identificador interno<input value={form.sealing.internal_material_id} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, internal_material_id: e.target.value } }))} /></label>
-            <label>Preço por metro<input type="number" min="0" step="0.01" value={form.sealing.unit_price_per_meter} onChange={(e) => setForm((p) => ({ ...p, sealing: { ...p.sealing, unit_price_per_meter: Number(e.target.value) } }))} /></label>
-          </FieldSection>
-          <FieldSection title="Fechamento e ferragens">
-            <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>
-            {form.closure_mode === 'MAÇANETA COM CREMONA' && <label className="span-2">Cremona<select value={form.cremona_description || ''} onChange={set('cremona_description')}><option value="">Selecione</option>{options.cremonas.map((value) => <option key={value}>{value}</option>)}</select></label>}
-          </FieldSection>
-          <FieldSection title="Acabamentos comprovados">
-            <label>Interno<select value={form.internal_finish} onChange={set('internal_finish')}>{options.internal_finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
-            <label>Externo<select value={form.external_finish} onChange={set('external_finish')}>{options.external_finishes.map((value) => <option key={value}>{value}</option>)}</select></label>
-          </FieldSection>
-        </div>
-        <div className="modal-actions"><button type="button" className="secondary" onClick={onClose}>Cancelar</button><button className="primary" type="submit">{item ? 'Salvar e recalcular' : 'Adicionar e recalcular'}</button></div>
-      </form>
-    </div>
-  )
-}
-
-function GrModal({ onClose, onSave, options, item }) {
-  const [form, setForm] = useState(() => ({ ...grDefaults, ...(item || {}) }))
-  const [customGlass, setCustomGlass] = useState(Boolean(item?.custom_glass_code))
-  const [validation, setValidation] = useState('')
-  const numericFields = new Set([
-    'width_mm', 'height_mm', 'quantity', 'leaf_count', 'mixed_split_from_bottom_mm',
-    'window_lock_length_mm', 'top_flag_height_mm', 'bottom_flag_height_mm',
-    'bottom_flag_vertical_transoms', 'top_flag_vertical_transoms',
-    'custom_glass_unit_price', 'custom_glass_thickness_mm',
-  ])
-  const set = (key) => (event) => {
-    const raw = event.target.type === 'checkbox' ? event.target.checked : event.target.value
-    const value = numericFields.has(key) ? (raw === '' ? null : Number(raw)) : raw
-    setForm((previous) => ({ ...previous, [key]: value }))
-  }
-  const setShutter = (event) => {
-    const mode = event.target.value
-    setForm((previous) => ({
-      ...previous,
-      shutter: mode === 'SEM PERSIANA' ? null : {
-        mode,
-        box_description: 'CAIXA DE 200MM',
-        slat_description: 'TALA DE PVC 40MM',
-      },
-    }))
-  }
-  const setCatalogGlass = (event) => {
-    const value = event.target.value
-    if (value === '__CUSTOM__') {
-      setCustomGlass(true)
-      setForm((previous) => ({
-        ...previous,
-        glass_description: '',
-        custom_glass_code: '',
-        custom_glass_unit_price: null,
-        custom_glass_thickness_mm: null,
-      }))
-    } else {
-      setCustomGlass(false)
-      setForm((previous) => ({
-        ...previous,
-        glass_description: value || null,
-        custom_glass_code: null,
-        custom_glass_unit_price: null,
-        custom_glass_thickness_mm: null,
-      }))
-    }
-  }
-  const usesCremona = form.closure_mode.includes('CREMONA')
-  const isPhysicalWindow = form.leaf_system.includes('FOLHA DE JANELA')
-  const usesWindowLock = isPhysicalWindow && (
-    form.closure_mode.includes('MONOPONTO') || form.closure_mode.includes('MULTIPONTO')
-  )
-  const closureOptions = isPhysicalWindow
-    ? options.closures.filter((value) => value !== 'MAÇANETA COM CHAVE E CREMONA')
-    : options.closures
-  const hasFlag = Number(form.bottom_flag_height_mm || 0) > 0 || Number(form.top_flag_height_mm || 0) > 0
-  const needsGlass = form.panel_mode !== 'PAINEL COMPLETO' || hasFlag
-  const cremonaOptions = form.hinge_description === 'DOBRADIÇA SISTEMA OB'
-    ? (options.cremonas?.ob_options || [])
-    : (options.cremonas?.standard_options || [])
-  const submit = (event) => {
-    event.preventDefault()
-    if (form.width_mm <= 0 || form.height_mm <= 0) return setValidation('Largura e altura precisam ser maiores que zero.')
-    if (form.quantity < 1) return setValidation('Quantidade deve ser pelo menos 1.')
-    if (isPhysicalWindow && form.closure_mode === 'MAÇANETA COM CHAVE E CREMONA') return setValidation('Folha de janela não recebe maçaneta com chave.')
-    if (usesCremona && !form.cremona_description) return setValidation('Selecione a cremona deste orçamento.')
-    if (needsGlass && !form.glass_description) return setValidation('Selecione ou cadastre o vidro.')
+            {form.bottom_fixed_panel && form.module_mode === 'MÓDULO ÚNICO' && <label>Travessas H/V inferior<div className="inline-inputs"><input type="number" min="0" value={form.bottom_fixed_panel.ho…1687 tokens truncated…cription) return setValidation('Selecione ou cadastre o vidro.')
     if (customGlass && (!form.custom_glass_code || form.custom_glass_unit_price == null || !form.custom_glass_thickness_mm)) return setValidation('Vidro personalizado exige código, preço por m² e espessura.')
     if (form.panel_mode === 'SUPERIOR VIDRO/INFERIOR PAINEL' && !form.mixed_split_from_bottom_mm) return setValidation('Informe a altura da divisão do modo misto.')
     if (usesWindowLock && !form.window_lock_length_mm) return setValidation('Informe o comprimento da fechadura de janela.')
@@ -916,7 +823,6 @@ export default function App() {
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
-              <CommercialQuote items={items} data={data} quote={quote} setQuote={setQuote} money={money} modelLabel={modelLabel} />
               <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
@@ -924,7 +830,7 @@ export default function App() {
           </div>
         </main>
       </div>
-      {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} close={() => setFullQuoteOpen(false)} />}
+      {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} modelLabel={modelLabel} close={() => setFullQuoteOpen(false)} />}
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
         : modalFamily === 'FX'

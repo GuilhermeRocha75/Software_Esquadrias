@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { calculateQuote } from './commercialQuote.js'
 import { buildProductionLayoutRequest, DEMO_COMPANY_ID, selectedProfileColor } from './productionOrderRequest.js'
+import CommercialQuote from './CommercialQuote.jsx'
 import './full-quote.css'
 
 const company = import.meta.env.VITE_COMPANY_ID || DEMO_COMPANY_ID
@@ -48,7 +49,7 @@ function PdfActions({ payload, apiUrl, number }) {
   </>
 }
 
-export default function FullQuoteDialog({ quote, setQuote, items, data, apiUrl, close, money }) {
+export default function FullQuoteDialog({ quote, setQuote, items, data, apiUrl, close, money, modelLabel }) {
   const dialog = useRef(null)
   useEffect(() => {
     const node = dialog.current
@@ -82,6 +83,7 @@ export default function FullQuoteDialog({ quote, setQuote, items, data, apiUrl, 
     <div className="modal-head"><div><strong id="quote-pdf-title">Orçamento completo em PDF</strong>
       <span>{quote.client} · {quote.number}</span></div><button autoFocus onClick={close} aria-label="Fechar">×</button></div>
     <div className="full-quote-body">
+      <CommercialQuote items={items} data={data} quote={quote} setQuote={setQuote} money={money} modelLabel={modelLabel} />
       <div className="form-grid">{[['payment', 'Condições de pagamento'], ['delivery', 'Prazo de entrega'], ['validity', 'Validade']].map(([key, label]) =>
         <label key={key}>{label}<input maxLength={500} value={options[key] || ''} onChange={e => update(key, e.target.value)} /></label>)}</div>
       <div className="table-scroll"><table><thead><tr><th>Item</th><th>Medidas (mm)</th><th>Qtd.</th><th>Cor do croqui</th><th>Total</th></tr></thead>
