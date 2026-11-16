@@ -4,7 +4,7 @@ import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
 import FullQuoteDialog from './FullQuoteDialog.jsx'
-import ProductionOrderPanel from './ProductionOrderPanel.jsx'
+import ProductionOrderDialog from './ProductionOrderDialog.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
@@ -336,7 +336,7 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
   )
 }
 
-function Summary({ data, openFullQuote }) {
+function Summary({ data, openFullQuote, openProductionOrder }) {
   const plan = data?.purchase_plan
   return (
     <aside className="summary-column">
@@ -355,6 +355,7 @@ function Summary({ data, openFullQuote }) {
         <SummaryLine label="Compra estimada" value={money(plan?.procurement_total_estimate)} strong />
       </section>
       <button className="primary" onClick={openFullQuote}>Visualizar Orçamento Completo</button>
+      <button className="secondary" onClick={openProductionOrder}>Ordem de Produção de Conferência</button>
       {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
   )
@@ -815,6 +816,7 @@ export default function App() {
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(null)
   const [fullQuoteOpen, setFullQuoteOpen] = useState(false)
+  const [productionOrderOpen, setProductionOrderOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
@@ -915,13 +917,13 @@ export default function App() {
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
-              <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
-            <Summary data={data} openFullQuote={() => setFullQuoteOpen(true)} />
+            <Summary data={data} openFullQuote={() => setFullQuoteOpen(true)} openProductionOrder={() => setProductionOrderOpen(true)} />
           </div>
         </main>
       </div>
+      <ProductionOrderDialog open={productionOrderOpen} close={() => setProductionOrderOpen(false)} items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
       {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} modelLabel={modelLabel} close={() => setFullQuoteOpen(false)} />}
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
