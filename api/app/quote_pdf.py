@@ -47,12 +47,12 @@ def money(value):
     return "R$ " + format(amount, ",.2f").translate(str.maketrans(",.", ".,"))
 
 
-def sketch(store, directory, company, key, finish, basename):
+def sketch(store, directory, company, key, finish, basename, inputs=None):
     selector = ImageSelector(kind="MODEL_SKETCH", model_key=key, finish_key=finish)
     if store:
-        match = store.resolve(selector, company)
+        match = store.resolve_model(inputs, finish, company) if inputs is not None else store.resolve(selector, company)
         if match.status == "VERIFIED":
-            entry = next(e for e in store.manifest.entries if e.selector == selector)
+            entry = next(e for e in store.manifest.entries if e.selector == match.selector)
             return store.read_verified(entry)
     if directory and basename:
         root = Path(directory).resolve()
@@ -93,7 +93,7 @@ def render_quote(payload, store=None, directory=None):
     for index, row in enumerate(payload.lines, 1):
         item = row.technical.model_dump(mode="json")
         key, basename = model_identity(item, row.finish)
-        raw = sketch(store, directory, payload.company_id, key, row.finish, basename)
+        raw = sketch(store, directory, payload.company_id, key, row.finish, basename, item)
         if raw:
             picture = Image(BytesIO(raw))
             picture._restrictSize(51*mm, 40*mm)

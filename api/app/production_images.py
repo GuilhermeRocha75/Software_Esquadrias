@@ -189,6 +189,30 @@ class ProductionImageStore:
             raise ValueError("Metadados da imagem divergentes.")
         return data
 
+    def resolve_model(self, inputs: dict, finish: str, company_id: UUID) -> LayoutImage:
+        """Resolve legacy Maxim-Ar bindings across equivalent sketch configurations."""
+        key, basename = model_identity(inputs, finish)
+        selector = ImageSelector(kind="MODEL_SKETCH", model_key=key, finish_key=finish)
+        resolved = self.resolve(selector, company_id)
+        if resolved.status != "MISSING_ASSET" or inputs["family"] != "MAXIM_AR":
+            return resolved
+        # The legacy drawing is shared by PRIME and DESIGN. For a single leaf,
+        # orientation and module mode also leave the drawing unchanged. Keep all
+        # grids, fixed panels, screens and finish in the candidate identity.
+        orientations = ("HORIZONTAL", "VERTICAL") if inputs.get("leaf_count", 1) == 1 else (inputs.get("orientation", "HORIZONTAL"),)
+        modes = ("MÓDULO ÚNICO", "MÓDULOS SEPARADOS") if inputs.get("leaf_count", 1) == 1 else (inputs.get("module_mode", "MÓDULO ÚNICO"),)
+        for system in ("PRIME_WINDOW_42x63", "DESIGN_WINDOW_60x78"):
+            for orientation in orientations:
+                for mode in modes:
+                    candidate = dict(inputs, leaf_system=system, orientation=orientation, module_mode=mode)
+                    candidate_key, candidate_name = model_identity(candidate, finish)
+                    if candidate_name != basename:
+                        continue
+                    match = self.resolve(ImageSelector(kind="MODEL_SKETCH", model_key=candidate_key, finish_key=finish), company_id)
+                    if match.status == "VERIFIED":
+                        return match
+        return resolved
+
     def resolve(self, selector: ImageSelector, company_id: UUID) -> LayoutImage:
         """Match exact identity; only explicitly neutral profile sections may fallback."""
         if company_id != self.manifest.company_id:
