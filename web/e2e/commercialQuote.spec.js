@@ -12,9 +12,9 @@ test('edição comercial no orçamento completo persiste e atualiza o PDF', asyn
     localStorage.setItem('software-esquadrias-quote', JSON.stringify({ client: 'Teste comercial', number: '001', date: '2026-11-16' }))
   })
   await page.goto('/')
-  await expect(page.locator('.items-card tbody tr')).toContainText('Calculado')
+  await expect(page.locator('.home-summary .summary-line').first()).not.toContainText('—')
   await expect(page.locator('#orcamento-comercial')).toHaveCount(0)
-  await page.getByRole('button', { name: 'Visualizar Orçamento Completo', exact: true }).click()
+  await page.getByRole('button', { name: /^Orçamentos/ }).click()
   const dialog = page.getByRole('dialog')
   for (const [label, value] of [['Fator de margem geral', '2'], ['Instalação (R$/m²)', '10'],
     ['Instalação (R$/unidade)', '5'], ['Instalação fixa (R$)', '50'], ['Custo manual do item 1', '100']]) {
@@ -23,16 +23,16 @@ test('edição comercial no orçamento completo persiste e atualiza o PDF', asyn
   await expect(dialog.locator('.sale-price strong')).toHaveText(/484,00/)
   await dialog.getByRole('button', { name: 'Fechar', exact: true }).click()
   await page.reload()
-  await expect(page.locator('.items-card tbody tr')).toContainText('Calculado')
+  await expect(page.locator('.home-summary .summary-line').first()).not.toContainText('—')
   await expect(page.locator('#orcamento-comercial')).toHaveCount(0)
-  for (const name of ['Definir Margem', 'Substituir Valor Manualmente', 'Visualizar Orçamento Resumido']) {
+  for (const name of [/^Orçamentos/]) {
     await page.getByRole('button', { name, exact: false }).click()
     await expect(dialog.getByLabel('Fator de margem geral', { exact: true })).toHaveValue('2')
     await expect(dialog.getByLabel('Custo manual do item 1', { exact: true })).toHaveValue('100')
     await expect(dialog.locator('.sale-price strong')).toHaveText(/484,00/)
     await dialog.getByRole('button', { name: 'Fechar', exact: true }).click()
   }
-  await page.getByRole('button', { name: 'Visualizar Orçamento Completo', exact: true }).click()
+  await page.getByRole('button', { name: /^Orçamentos/ }).click()
   const response = page.waitForResponse(r => r.url().endsWith('/api/v1/quotes/full-pdf') && r.request().method() === 'POST')
   await dialog.getByRole('button', { name: 'Gerar PDF do orçamento', exact: true }).click()
   const pdf = await response

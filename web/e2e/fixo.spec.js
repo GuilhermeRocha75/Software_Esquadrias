@@ -34,12 +34,13 @@ test.beforeEach(async ({ page }) => {
     if (localStorage.getItem('software-esquadrias-items') === null) localStorage.setItem('software-esquadrias-items', '[]')
   })
   await page.goto('/')
-  await expect(page.getByRole('status')).toHaveText('API online')
+  await page.getByRole('button', { name: /^Itens do orçamento/ }).click()
+  await expect(page.getByRole('status')).toHaveText('Conectado')
 })
 
 for (const item of cases) {
   test(`FX ${item.name}: interface, API real e valores da planilha`, async ({ page }) => {
-    await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+    await page.getByRole('button', { name: '+ Inserir Fixo', exact: false }).click()
     await fillFixo(page, item.configuration)
     if (item.name === 'SIMPLES') await page.screenshot({ path: test.info().outputPath('fixo-desktop.png') })
     const response = await saveFixo(page)
@@ -63,7 +64,7 @@ for (const item of cases) {
 }
 
 test('editar, persistir e remover um Fixo mantém orçamento e disponibilidade coerentes', async ({ page }) => {
-  await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+  await page.getByRole('button', { name: '+ Inserir Fixo', exact: false }).click()
   await fillFixo(page, cases[0].configuration)
   expect((await saveFixo(page)).status()).toBe(200)
   await expect(total(page)).toHaveText(money(cases[0].expected.order_technical_cost))
@@ -73,6 +74,7 @@ test('editar, persistir e remover um Fixo mantém orçamento e disponibilidade c
   await expect(fxRow(page)).toHaveCount(1)
   await expect(total(page)).toHaveText(money(cases[1].expected.order_technical_cost))
   await page.reload()
+  await page.getByRole('button', { name: /^Itens do orçamento/ }).click()
   await expect(total(page)).toHaveText(money(cases[1].expected.order_technical_cost))
   await fxRow(page).getByTitle('Editar', { exact: true }).click()
   await expect(page.getByLabel('Travessas horizontais', { exact: true })).toHaveValue('3')
@@ -80,18 +82,18 @@ test('editar, persistir e remover um Fixo mantém orçamento e disponibilidade c
   await page.getByRole('button', { name: 'Cancelar', exact: true }).click()
   await fxRow(page).getByTitle('Excluir', { exact: true }).click()
   await expect(fxRow(page)).toHaveCount(0)
-  await expect(total(page)).toHaveText(money(0))
-  await expect(page.getByRole('status')).toHaveText('API online')
+  await expect(total(page)).toHaveText('—')
+  await expect(page.getByRole('status')).toHaveText('Conectado')
 })
 
 test('geometria impossível retorna 422, não exibe Calculado e permite corrigir o item', async ({ page }) => {
-  await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+  await page.getByRole('button', { name: '+ Inserir Fixo', exact: false }).click()
   await fillFixo(page, { ...cases[0].configuration, width_mm: 150, vertical_transoms: 2 })
   expect((await saveFixo(page)).status()).toBe(422)
   await expect(fxRow(page)).toContainText('Não calculado')
   await expect(page.locator('.error-banner')).toContainText('Geometria FX inválida')
-  await expect(total(page)).toHaveText(money(0))
-  await expect(page.getByRole('status')).toHaveText('API online')
+  await expect(total(page)).toHaveText('—')
+  await expect(page.getByRole('status')).toHaveText('Conectado')
   await fxRow(page).getByTitle('Editar', { exact: true }).click()
   await fillFixo(page, cases[0].configuration)
   expect((await saveFixo(page)).status()).toBe(200)
@@ -113,7 +115,7 @@ test('resposta de um cálculo antigo não sobrescreve o item recém-editado', as
       await route.fulfill({ response })
     } else await route.continue()
   })
-  await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+  await page.getByRole('button', { name: '+ Inserir Fixo', exact: false }).click()
   await fillFixo(page, cases[0].configuration)
   await page.locator('form button[type=submit]').click()
   await ready
@@ -145,7 +147,7 @@ test('configurador Fixo permite inclusão em tela de celular', async ({ page }) 
 
 
 test('Fixo maior que a barra mantém peça integral e permite divisão pela fabricação', async ({ page }) => {
-  await page.getByRole('button', { name: 'Inserir Modelo Fixo', exact: false }).click()
+  await page.getByRole('button', { name: '+ Inserir Fixo', exact: false }).click()
   await fillFixo(page, { ...cases[0].configuration, width_mm: 7500, height_mm: 2500, vertical_transoms: 3, quantity: 2 })
   const response = await saveFixo(page)
   expect(response.status()).toBe(200)

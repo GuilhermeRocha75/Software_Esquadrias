@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import { sidebarModelAction } from './sidebarActions.js'
+import HomeNavigation from './HomeNavigation.jsx'
+import './home.css'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
 import FullQuoteDialog from './FullQuoteDialog.jsx'
@@ -241,46 +242,6 @@ const modelLabel = (item) => item.family === 'FX' ? 'Painel Fixo' : ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ openFullQuote, onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
-  const groups = [
-    ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
-    ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
-    ['CADASTROS E CONFIGURAÇÕES', ['Materiais', 'Clientes', 'Configurações']],
-  ]
-
-  return (
-    <aside className="sidebar">
-      <div className="brand"><div className="brand-mark">▦</div><div><strong>Software</strong> Esquadrias</div></div>
-      {groups.map(([title, items]) => (
-        <div className="nav-group" key={title}>
-          <div className="nav-title">{title}</div>
-          {items.map((item, index) => (
-            <button key={item} onClick={['Visualizar Orçamentos', 'Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? openFullQuote : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
-              <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
-            </button>
-          ))}
-        </div>
-      ))}
-      <button className="collapse">« Recolher menu</button>
-    </aside>
-  )
-}
-
-function Header({ apiOnline }) {
-  return (
-    <header className="topbar">
-      <select className="company-select"><option>Empresa Demo</option></select>
-      <div className="global-search">⌕ <input placeholder="Buscar clientes, orçamentos, modelos, itens..." /><kbd>Ctrl + K</kbd></div>
-      <div className="header-actions">
-        <span className={`api-dot ${apiOnline === null ? 'checking' : apiOnline ? 'online' : 'offline'}`}></span>
-        <span className="api-label" role="status">API {apiOnline === null ? 'verificando…' : apiOnline ? 'online' : 'offline'}</span>
-        <div className="avatar">AD</div>
-        <div><strong>Administrador</strong><small>admin@demo.com</small></div>
-      </div>
-    </header>
-  )
-}
-
 function ClientCard({ quote, setQuote }) {
   const set = (key) => (event) => setQuote((prev) => ({ ...prev, [key]: event.target.value }))
   return (
@@ -336,29 +297,18 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
   )
 }
 
-function Summary({ data, openFullQuote, openProductionOrder }) {
+function Summary({ data }) {
   const plan = data?.purchase_plan
-  return (
-    <aside className="summary-column">
-      <div className="kpi-grid">
-        <Kpi label="Itens" value={data?.items?.length || 0} tone="blue" />
-        <Kpi label="Alertas" value={(plan?.warnings?.length || 0) + (data?.items || []).flatMap((i) => i.warnings || []).length} tone="amber" />
-        <Kpi label="Aproveitamento" value={`${number(globalUtilization(plan), 2)}%`} tone="green" />
-        <Kpi label="Barras" value={totalBars(plan)} tone="purple" />
-      </div>
-      <section className="card summary-card">
-        <div className="section-title">▤ Resumo do Orçamento</div>
-        <SummaryLine label="Custo técnico" value={money(plan?.technical_total)} />
-        <SummaryLine label="Compra de barras" value={money(plan?.bar_stock_purchase_cost)} />
-        <SummaryLine label="Materiais não lineares" value={money(plan?.exact_nonbar_cost)} />
-        <div className="summary-divider" />
-        <SummaryLine label="Compra estimada" value={money(plan?.procurement_total_estimate)} strong />
-      </section>
-      <button className="primary" onClick={openFullQuote}>Visualizar Orçamento Completo</button>
-      <button className="secondary" onClick={openProductionOrder}>Ordem de Produção de Conferência</button>
-      {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
-    </aside>
-  )
+  const amount = (value) => data ? money(value) : '—'
+  return <section className="home-summary" aria-labelledby="summary-title">
+    <h2 id="summary-title">Resumo do Orçamento</h2>
+    <div className="home-summary-values">
+      <SummaryLine label="Custo técnico" value={amount(plan?.technical_total)} />
+      <SummaryLine label="Compra de barras" value={amount(plan?.bar_stock_purchase_cost)} />
+      <SummaryLine label="Materiais não lineares" value={amount(plan?.exact_nonbar_cost)} />
+      <SummaryLine label="Compra estimada" value={amount(plan?.procurement_total_estimate)} strong />
+    </div>
+  </section>
 }
 
 function Kpi({ label, value, tone }) {
@@ -809,6 +759,9 @@ export default function App() {
       number: '000001/2026', project: 'Obra piloto — Dell Amanda', notes: 'Pedido de validação da Engine CR e plano de compra.',
     }
   })
+  const [section, setSection] = useState('home')
+  const sectionHeading = useRef(null)
+  useEffect(() => { if (section !== 'home') sectionHeading.current?.focus() }, [section])
   const [activeTab, setActiveTab] = useState('Custo por Grupo')
   const [data, setData] = useState(null)
   const calculationVersion = useRef(0)
@@ -906,23 +859,47 @@ export default function App() {
   }
 
   return (
-    <div className="app-shell">
-      <Sidebar openFullQuote={() => setFullQuoteOpen(true)} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
-      <div className="workspace">
-        <Header apiOnline={apiOnline} />
-        <main className="content">
-          <div className="page-head"><div><span className="eyebrow">ORÇAMENTO</span><h1>Novo Cliente / Orçamento</h1><p>Monte o pedido, calcule custos técnicos e gere o plano de compra.</p></div><div className="page-actions"><button className="secondary" onClick={resetBaseline}>Restaurar teste validado</button><button className="primary" onClick={() => calculate()} disabled={loading}>{loading ? 'Calculando...' : '↻ Recalcular pedido'}</button></div></div>
-          {error && <div className="error-banner">⚠ {error}</div>}
-          <div className="dashboard-grid">
-            <div className="main-column">
+    <div className={`meister-app ${section === 'home' ? 'is-home' : 'is-section'}`}>
+      <main className="meister-content">
+        {section !== 'home' && <header className="section-navigation">
+          <button className="secondary" onClick={() => setSection('home')}>← Voltar ao início</button>
+          <span className="connection-status" role="status">{apiOnline === null ? 'Conectando…' : apiOnline ? 'Conectado' : 'Sem conexão'}</span>
+          <img src={`${import.meta.env.BASE_URL}images/meister-logo.png`} alt="Meister Perfis em PVC" />
+        </header>}
+        <div className="home-container">
+          <div className="home-toolbar">
+            <div className="home-actions">
+              <button className="secondary" onClick={resetBaseline} disabled={loading}>Restaurar teste validado</button>
+              <button className="primary" onClick={() => calculate()} disabled={loading}>{loading ? 'Calculando...' : '↻ Recalcular pedido'}</button>
+            </div>
+            <div className="home-kpis" aria-label="Indicadores do pedido">
+              <Kpi label="Itens" value={items.length} tone="blue" />
+              <Kpi label="Alertas" value={data ? (data.purchase_plan?.warnings?.length || 0) + (data.items || []).flatMap(i => i.warnings || []).length : '—'} tone="amber" />
+              <Kpi label="Aproveitamento" value={data ? `${number(globalUtilization(data.purchase_plan), 2)}%` : '—'} tone="green" />
+              <Kpi label="Barras" value={data ? totalBars(data.purchase_plan) : '—'} tone="purple" />
+            </div>
+          </div>
+          {error && <div className="error-banner" role="alert">{error}</div>}
+          {section === 'home' ? <>
+            <div className="home-welcome">
+              <div><span className="eyebrow">SEU ESPAÇO DE TRABALHO</span><h1>O que vamos fazer hoje?</h1><p>Selecione uma área para continuar.</p></div>
+              <span className="connection-status" role="status"><span className={`api-dot ${apiOnline === null ? 'checking' : apiOnline ? 'online' : 'offline'}`} />{apiOnline === null ? 'Conectando…' : apiOnline ? 'Conectado' : 'Sem conexão'}</span>
+            </div>
+            <HomeNavigation onClient={() => setSection('client')} onItems={() => setSection('items')} onQuote={() => setFullQuoteOpen(true)} onProduction={() => setProductionOrderOpen(true)} />
+          </> : <div className="section-body">
+            <h1 ref={sectionHeading} tabIndex={-1}>{section === 'client' ? 'Cadastro de Cliente' : 'Itens do orçamento'}</h1>
+            {section === 'client' ? <>
               <ClientCard quote={quote} setQuote={setQuote} />
+              <div className="section-footer"><span>Os dados são salvos automaticamente neste navegador.</span><button className="primary" onClick={() => setSection('items')}>Continuar para itens →</button></div>
+            </> : <>
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
-            </div>
-            <Summary data={data} openFullQuote={() => setFullQuoteOpen(true)} openProductionOrder={() => setProductionOrderOpen(true)} />
-          </div>
-        </main>
-      </div>
+              <div className="section-footer"><button className="primary" onClick={() => setFullQuoteOpen(true)}>Visualizar Orçamento Completo</button><button className="secondary" onClick={() => setProductionOrderOpen(true)}>Ordem de Produção de Conferência</button></div>
+            </>}
+          </div>}
+          <Summary data={data} />
+        </div>
+      </main>
       <ProductionOrderDialog open={productionOrderOpen} close={() => setProductionOrderOpen(false)} items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
       {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} modelLabel={modelLabel} close={() => setFullQuoteOpen(false)} />}
       {modalOpen && (modalFamily === 'MAXIM_AR'
