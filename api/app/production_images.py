@@ -111,10 +111,18 @@ class StoredProductionImage(OPModel):
     width_px: int = Field(gt=0)
     height_px: int = Field(gt=0)
     finish_policy: Literal["EXACT", "NEUTRAL_LEGACY_SECTION"]
+    source_basename: str | None = None
 
     @model_validator(mode="after")
     def safe_metadata(self):
         ProductionAsset(self.selector.key(), self.relative_path, self.sha256)
+        if self.source_basename is not None:
+            name = self.source_basename
+            if (not name or any(c in name for c in "\\/:") or
+                    any(ord(c) < 32 for c in name) or
+                    self.selector.kind != "MODEL_SKETCH" or
+                    not name.endswith(f" ({self.selector.finish_key}).jpg")):
+                raise ValueError("Nome original de croqui inválido.")
         if any(ord(c) < 32 for c in self.relative_path):
             raise ValueError("Caminho contém caracteres de controle.")
         neutral = self.finish_policy == "NEUTRAL_LEGACY_SECTION"
@@ -194,6 +202,12 @@ class ProductionImageStore:
         key, basename = model_identity(inputs, finish)
         selector = ImageSelector(kind="MODEL_SKETCH", model_key=key, finish_key=finish)
         resolved = self.resolve(selector, company_id)
+        if resolved.status == "MISSING_ASSET":
+            entry = next((e for e in self.manifest.entries
+                          if e.source_basename == basename and
+                          e.selector.finish_key == finish), None)
+            if entry is not None:
+                return self.resolve(entry.selector, company_id)
         if resolved.status != "MISSING_ASSET" or inputs["family"] != "MAXIM_AR":
             return resolved
         # The legacy drawing is shared by PRIME and DESIGN. For a single leaf,
@@ -227,7 +241,7 @@ class ProductionImageStore:
             self.read_verified(entry)
         except (ValueError, OSError):
             return LayoutImage(selector=selector, status="INVALID_ASSET")
-        return LayoutImage(selector=selector, status="VERIFIED", **entry.model_dump(exclude={"selector"}))
+        return LayoutImage(selector=selector, status="VERIFIED", **entry.model_dump(exclude={"selector", "source_basename"}))
 
 
 def import_legacy_images(
