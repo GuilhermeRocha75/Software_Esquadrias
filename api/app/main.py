@@ -33,6 +33,7 @@ from .configurations import _to_config, _to_maxim_ar_config, _to_gr_config, _to_
 from .production_schemas import ProductionOrderRequest, ProductionOrder
 from .production_service import build_production_order
 from .production_layout import ProductionLayoutRequest, ProductionLayoutDocument, prepare_production_layout
+from .quote_pdf import QuotePdf, render_quote
 from .production_images import ProductionImageManifest, ProductionImageStore
 from .production_pdf import ProductionPdfRequest, ProductionPdfReadiness, production_pdf_readiness, render_production_pdf, pdf_model_headings
 from .schemas import (
@@ -69,7 +70,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["Content-Disposition", "X-OP-Mode", "X-OP-Fabrication-Allowed", "X-OP-Blocking-Count", "X-OP-Pages", "X-OP-Snapshot-SHA256"],
+    expose_headers=["Content-Disposition", "X-OP-Mode", "X-OP-Fabrication-Allowed", "X-OP-Blocking-Count", "X-OP-Pages", "X-OP-Snapshot-SHA256", "X-Quote-Missing-Sketches"],
 )
 
 
@@ -93,6 +94,19 @@ def _production_image_store():
         return ProductionImageStore(Path(os.getenv("OP_IMAGE_STORAGE_ROOT", str(path.parent))), manifest)
     except (ValueError, OSError):
         raise HTTPException(status_code=503, detail="Armazenamento privado de imagens da OP indisponível.") from None
+
+
+@app.post("/api/v1/quotes/full-pdf", response_class=Response)
+def full_quote_pdf(payload: QuotePdf, image_store=Depends(_production_image_store)):
+    try:
+        pdf, missing = render_quote(payload, image_store, os.getenv("ORC_CROQUIS_DIR"))
+    except (OSError, ValueError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return Response(pdf, media_type="application/pdf", headers={
+        "Content-Disposition": 'inline; filename="orcamento-completo.pdf"',
+        "Cache-Control": "no-store",
+        "X-Quote-Missing-Sketches": ",".join(map(str, missing)),
+    })
 
 
 @app.post("/api/v1/production-orders/layout-preview", response_model=ProductionLayoutDocument)

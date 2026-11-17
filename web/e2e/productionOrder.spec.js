@@ -18,6 +18,9 @@ registered.push({ id: 'ui-FX', family: 'FX', width_mm: 1200, height_mm: 1000, qu
 const quote = { client: 'CLIENTE TESTE C', clientCode: 'CLI-C', project: 'OBRA TESTE C', workCode: 'OBR-C',
   number: 'CONF-FASE-C', phone: '', city: '', date: '2026-11-05', notes: '' }
 const panel = (page) => page.locator('.op-card')
+const openPanel = (page) => page.getByRole('button', { name: 'Ordem de Produção de Conferência', exact: true }).click()
+const closePanel = (page) => page.getByRole('button', { name: 'Fechar ordem de produção', exact: true }).click()
+
 const generateButton = (page) => panel(page).getByRole('button', { name: 'Gerar OP de Conferência', exact: true })
 const isPdf = (response) => response.url().endsWith('/api/v1/production-orders/pdf') && response.request().method() === 'POST'
 
@@ -37,6 +40,8 @@ async function openOrder(page, items = registered, { finish = 'BRANCO' } = {}) {
   }, { items, quote, finish })
   await page.goto('/')
   await expect(page.getByRole('status')).toHaveText('API online')
+  await expect(panel(page)).not.toBeVisible()
+  await openPanel(page)
 }
 
 async function generate(page) {
@@ -126,11 +131,13 @@ test('PDF abre em outra aba e pode ser salvo como arquivo PDF íntegro', async (
 test('editar dimensão e quantidade invalida PDF e solicita dados novos sem multiplicar itens', async ({ page }) => {
   await openOrder(page, [registered[3]])
   const first = await generate(page)
+  await closePanel(page)
   await page.locator('.items-card').getByTitle('Editar', { exact: true }).click()
   await expect(panel(page).getByRole('link')).toHaveCount(0)
   await page.locator('form').getByLabel('Largura (mm)', { exact: true }).fill('1537')
   await page.locator('form').getByLabel('Quantidade', { exact: true }).fill('3')
   await page.locator('form button[type=submit]').click()
+  await openPanel(page)
   const second = await generate(page)
   const sent = second.response.request().postDataJSON().layout_request.production_order.items
   expect(sent).toHaveLength(1)
@@ -143,10 +150,12 @@ test('editar dimensão e quantidade invalida PDF e solicita dados novos sem mult
 test('cabeçalho, identificação e cor invalidam PDF e aproveitam os campos existentes', async ({ page }) => {
   await openOrder(page, [registered[3]])
   await generate(page)
+  await closePanel(page)
   await page.getByLabel('Cliente *', { exact: true }).fill('CLIENTE ATUALIZADO')
   await page.getByLabel('Código do cliente', { exact: true }).fill('CLI-NOVO')
   await page.getByLabel('Código da obra', { exact: true }).fill('OBR-NOVA')
   await page.getByLabel('Obra', { exact: true }).fill('OBRA ATUALIZADA')
+  await openPanel(page)
   await panel(page).getByLabel('Identificação do item 01', { exact: true }).fill('SALA-FIXO')
   await panel(page).getByRole('group', { name: 'Cor do croqui do item 01' }).getByRole('button', { name: 'Preto' }).click()
   await expect(panel(page).getByRole('link')).toHaveCount(0)
@@ -159,6 +168,7 @@ test('cabeçalho, identificação e cor invalidam PDF e aproveitam os campos exi
   expect(saved.workCode).toBe('OBR-NOVA')
   await page.reload()
   await expect(page.getByLabel('Código do cliente', { exact: true })).toHaveValue('CLI-NOVO')
+  await openPanel(page)
   await expect(panel(page).getByLabel('Identificação do item 01', { exact: true })).toHaveValue('SALA-FIXO')
   await expect(panel(page).getByRole('link')).toHaveCount(0) // PDF bytes/URLs are not persisted.
 })
@@ -169,10 +179,12 @@ test('dados técnicos incompletos ou rejeitados pela Engine não geram PDF', asy
   page.on('request', (request) => { if (request.url().endsWith('/production-orders/pdf')) pdfCalls++ })
   await generateButton(page).click()
   await expect(panel(page).getByRole('alert')).toContainText('medidas positivas')
+  await closePanel(page)
   await page.locator('.items-card').getByTitle('Editar', { exact: true }).click()
   await page.locator('form').getByLabel('Largura (mm)', { exact: true }).fill('150')
   await page.locator('form').getByLabel('Travessas verticais', { exact: true }).fill('2')
   await page.locator('form button[type=submit]').click()
+  await openPanel(page)
   await generateButton(page).click()
   await expect(panel(page).getByRole('alert')).toContainText('HTTP 422')
   await expect(panel(page).getByRole('alert')).toContainText('Geometria FX inválida')
@@ -193,6 +205,7 @@ test('saúde offline desabilita geração e explica como retomar', async ({ page
   await page.addInitScript(() => localStorage.setItem('software-esquadrias-items', '[]'))
   await page.goto('/')
   await expect(page.getByRole('status')).toHaveText('API offline')
+  await openPanel(page)
   await expect(generateButton(page)).toBeDisabled()
   await expect(panel(page).getByRole('alert')).toContainText('Ligue o servidor')
 })
@@ -212,7 +225,9 @@ test('resposta atrasada não restaura PDF antigo depois de alteração do pedido
   })
   await generateButton(page).click()
   await received
+  await closePanel(page)
   await page.getByLabel('Obra', { exact: true }).fill('OBRA MAIS NOVA')
+  await openPanel(page)
   release()
   await completed
   await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
@@ -272,6 +287,8 @@ test('cor branca ja vem selecionada e pode ser alternada pelo seletor dividido',
   }, { items: [registered[3]], quote })
   await page.goto('/')
   await expect(page.getByRole('status')).toHaveText('API online')
+  await expect(panel(page)).not.toBeVisible()
+  await openPanel(page)
   const group = panel(page).getByRole('group', { name: 'Cor do croqui do item 01' })
   await expect(group.getByRole('button', { name: 'Branco' })).toHaveAttribute('aria-pressed', 'true')
   const first = await generate(page)
@@ -281,4 +298,25 @@ test('cor branca ja vem selecionada e pode ser alternada pelo seletor dividido',
   await expect(group.getByRole('button', { name: 'Preto' })).toHaveAttribute('aria-pressed', 'true')
   const second = await generate(page)
   expect(second.response.request().postDataJSON().layout_request.production_order.items[0].finish_key).toBe('PRETO')
+})
+
+
+test('botão abaixo do orçamento abre OP separada e preserva seleção ao reabrir', async ({ page }) => {
+  await openOrder(page)
+  await panel(page).getByLabel('Incluir item 02', { exact: false }).uncheck()
+  await panel(page).getByLabel('Identificação do item 01', { exact: true }).fill('SALA')
+  await closePanel(page)
+  await expect(panel(page)).not.toBeVisible()
+  const quoteButton = page.getByRole('button', { name: 'Visualizar Orçamento Completo', exact: true })
+  const opButton = page.getByRole('button', { name: 'Ordem de Produção de Conferência', exact: true })
+  expect((await opButton.boundingBox()).y).toBeGreaterThan((await quoteButton.boundingBox()).y)
+  await quoteButton.click()
+  await expect(page.getByRole('dialog', { name: 'Orçamento completo em PDF', exact: true })).toBeVisible()
+  await expect(panel(page)).not.toBeVisible()
+  await page.getByRole('button', { name: 'Fechar', exact: true }).click()
+  await openPanel(page)
+  await expect(panel(page).getByLabel('Incluir item 02', { exact: false })).not.toBeChecked()
+  await expect(panel(page).getByLabel('Identificação do item 01', { exact: true })).toHaveValue('SALA')
+  await page.keyboard.press('Escape')
+  await expect(panel(page)).not.toBeVisible()
 })

@@ -3,7 +3,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { sidebarModelAction } from './sidebarActions.js'
 import FixoModal, { fallbackFixoOptions } from './FixoModal.jsx'
 import { apiBaseUrl, monitorApiHealth } from './apiHealth.js'
-import ProductionOrderPanel from './ProductionOrderPanel.jsx'
+import FullQuoteDialog from './FullQuoteDialog.jsx'
+import ProductionOrderDialog from './ProductionOrderDialog.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
@@ -240,7 +241,7 @@ const modelLabel = (item) => item.family === 'FX' ? 'Painel Fixo' : ({
   'FOLHA DE JANELA ABERTURA EXTERNA 60X78MM - DESIGN': 'Giro GR janela 60x78',
 }[item.leaf_system] || item.leaf_system)
 
-function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
+function Sidebar({ openFullQuote, onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
   const groups = [
     ['PRINCIPAL', ['Dashboard', 'Novo Cliente / Orçamento', 'Buscar Cliente / Orçamento', 'Visualizar Orçamentos', 'Visualizar Orçamento Resumido']],
     ['MODELOS E ITENS', ['Inserir Modelo Correr', 'Inserir Modelo Maxim-Ar', 'Inserir Modelo Giro', 'Inserir Modelo Fixo', 'Inserir Modelo Pivotante', 'Inserir Grade', 'Inserir Item Manualmente', 'Substituir Valor Manualmente', 'Definir Margem']],
@@ -254,7 +255,7 @@ function Sidebar({ onAddCR, onAddMaximAr, onAddGr, onAddFixo }) {
         <div className="nav-group" key={title}>
           <div className="nav-title">{title}</div>
           {items.map((item, index) => (
-            <button key={item} onClick={sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
+            <button key={item} onClick={['Visualizar Orçamentos', 'Visualizar Orçamento Resumido', 'Definir Margem', 'Substituir Valor Manualmente'].includes(item) ? openFullQuote : sidebarModelAction(item, { onAddCR, onAddMaximAr, onAddGr, onAddFixo })} className={`nav-item ${item === 'Novo Cliente / Orçamento' ? 'active' : ''}`}>
               <span>{['◫','＋','⌕','▤','▥'][index % 5]}</span>{item}
             </button>
           ))}
@@ -335,9 +336,8 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
   )
 }
 
-function Summary({ data, margin, setMargin }) {
+function Summary({ data, openFullQuote, openProductionOrder }) {
   const plan = data?.purchase_plan
-  const suggested = (plan?.procurement_total_estimate || 0) / Math.max(0.01, 1 - margin / 100)
   return (
     <aside className="summary-column">
       <div className="kpi-grid">
@@ -353,9 +353,9 @@ function Summary({ data, margin, setMargin }) {
         <SummaryLine label="Materiais não lineares" value={money(plan?.exact_nonbar_cost)} />
         <div className="summary-divider" />
         <SummaryLine label="Compra estimada" value={money(plan?.procurement_total_estimate)} strong />
-        <label className="margin-row">Margem<input type="number" min="0" max="90" value={margin} onChange={(e) => setMargin(Number(e.target.value))} /><span>%</span></label>
-        <div className="sale-price"><span>Preço de venda sugerido</span><strong>{money(suggested)}</strong></div>
       </section>
+      <button className="primary" onClick={openFullQuote}>Visualizar Orçamento Completo</button>
+      <button className="secondary" onClick={openProductionOrder}>Ordem de Produção de Conferência</button>
       {plan?.warnings?.map((warning, index) => <div className="warning-card" key={`${warning.code}-${index}`}><strong>⚠ {warning.code}</strong><span>{warning.message}</span></div>)}
     </aside>
   )
@@ -809,13 +809,14 @@ export default function App() {
       number: '000001/2026', project: 'Obra piloto — Dell Amanda', notes: 'Pedido de validação da Engine CR e plano de compra.',
     }
   })
-  const [margin, setMargin] = useState(25)
   const [activeTab, setActiveTab] = useState('Custo por Grupo')
   const [data, setData] = useState(null)
   const calculationVersion = useRef(0)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [apiOnline, setApiOnline] = useState(null)
+  const [fullQuoteOpen, setFullQuoteOpen] = useState(false)
+  const [productionOrderOpen, setProductionOrderOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalFamily, setModalFamily] = useState('CR')
   const [editingItem, setEditingItem] = useState(null)
@@ -906,7 +907,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Sidebar onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
+      <Sidebar openFullQuote={() => setFullQuoteOpen(true)} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} />
       <div className="workspace">
         <Header apiOnline={apiOnline} />
         <main className="content">
@@ -916,13 +917,14 @@ export default function App() {
             <div className="main-column">
               <ClientCard quote={quote} setQuote={setQuote} />
               <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
-              <ProductionOrderPanel items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
-            <Summary data={data} margin={margin} setMargin={setMargin} />
+            <Summary data={data} openFullQuote={() => setFullQuoteOpen(true)} openProductionOrder={() => setProductionOrderOpen(true)} />
           </div>
         </main>
       </div>
+      <ProductionOrderDialog open={productionOrderOpen} close={() => setProductionOrderOpen(false)} items={items} quote={quote} apiUrl={API_URL} apiOnline={apiOnline} editing={modalOpen} />
+      {fullQuoteOpen && <FullQuoteDialog items={items} data={data} quote={quote} setQuote={setQuote} apiUrl={API_URL} money={money} modelLabel={modelLabel} close={() => setFullQuoteOpen(false)} />}
       {modalOpen && (modalFamily === 'MAXIM_AR'
         ? <MaximArModal onClose={() => { setModalOpen(false); setEditingItem(null) }} onSave={saveItem} options={maximArOptions} item={editingItem} />
         : modalFamily === 'FX'

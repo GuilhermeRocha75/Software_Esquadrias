@@ -159,7 +159,10 @@ def build_production_layout(
             else:
                 selector = ImageSelector(kind=kind, model_key=model_key if kind == "MODEL_SKETCH" else None,
                                          code=code, finish_key=finish)
-                resolved = image_store.resolve(selector, document.company_id) if image_store else LayoutImage(selector=selector, status="MISSING_ASSET")
+                if image_store and kind == "MODEL_SKETCH":
+                    resolved = image_store.resolve_model(inputs, finish, document.company_id)
+                else:
+                    resolved = image_store.resolve(selector, document.company_id) if image_store else LayoutImage(selector=selector, status="MISSING_ASSET")
             if resolved.status != "VERIFIED":
                 finding(resolved.status, "images", "Imagem técnica ausente ou não verificada; nenhum substituto foi aplicado.", position)
             return resolved
