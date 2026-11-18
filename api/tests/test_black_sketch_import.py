@@ -1,13 +1,43 @@
-import hashlib
 from pathlib import Path
-import unittest
 
 from api.tests.test_maxim_ar_sketch import MaximArSketchTests, BASE, COMPANY
-from api.app.production_images import ProductionImageManifest, ProductionImageStore
+from api.app.production_images import ProductionImageManifest, ProductionImageStore, model_identity
 from tools.import_op_sketches import import_sketches
 
 
 class BlackSketchImportTests(MaximArSketchTests):
+    def test_reimported_maxim_ar_sketch_replaces_unavailable_binding_for_each_finish(self):
+        root = Path(self.temp.name)
+        source = root / "incoming"
+        source.mkdir()
+        original = root / "sketch.jpg"
+        entries = []
+        for finish in ("BRANCO", "PRETO"):
+            key, basename = model_identity(BASE, finish)
+            (source / basename).write_bytes(original.read_bytes())
+            selector = self.entry.selector.model_copy(update={"model_key": key, "finish_key": finish})
+            entries.append(self.entry.model_copy(update={"selector": selector}))
+        path = root / "manifest.json"
+        path.write_text(self.store.manifest.model_copy(update={"entries": tuple(entries)}).model_dump_json())
+        import_sketches(source, path)
+        original.unlink()
+        self.store = ProductionImageStore(root, ProductionImageManifest.model_validate_json(path.read_bytes()))
+        request = dict(production_order=dict(company_id=str(COMPANY), order_id="TEST", items=[
+            dict(item_id=finish, finish_key=finish, technical_input=BASE) for finish in ("BRANCO", "PRETO")
+        ]), context=dict(company_id=str(COMPANY)))
+        preview = self.client.post("/api/v1/production-orders/layout-preview", json=request)
+        self.assertEqual(preview.status_code, 200, preview.text)
+        for page, finish in zip(preview.json()["pages"], ("BRANCO", "PRETO"), strict=True):
+            image = page["model_image"]
+            self.assertEqual(image["status"], "VERIFIED")
+            self.assertEqual(image["selector"]["finish_key"], finish)
+        quote = self.client.post("/api/v1/quotes/full-pdf", json=dict(
+            company_id=str(COMPANY), client="Teste", number="1", installation=0,
+            lines=[dict(technical=BASE, label=finish, finish=finish, unit=100, total=100)
+                   for finish in ("BRANCO", "PRETO")]))
+        self.assertEqual(quote.status_code, 200)
+        self.assertEqual(quote.headers["X-Quote-Missing-Sketches"], "")
+
     def test_import_preserves_library_and_renders_all_three_families(self):
         root = Path(self.temp.name)
         source = root / "incoming"

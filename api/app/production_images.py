@@ -202,13 +202,18 @@ class ProductionImageStore:
         key, basename = model_identity(inputs, finish)
         selector = ImageSelector(kind="MODEL_SKETCH", model_key=key, finish_key=finish)
         resolved = self.resolve(selector, company_id)
-        if resolved.status == "MISSING_ASSET":
-            entry = next((e for e in self.manifest.entries
-                          if e.source_basename == basename and
-                          e.selector.finish_key == finish), None)
-            if entry is not None:
-                return self.resolve(entry.selector, company_id)
-        if resolved.status != "MISSING_ASSET" or inputs["family"] != "MAXIM_AR":
+        if resolved.status == "VERIFIED":
+            return resolved
+        if resolved.status == "MISSING_ASSET" or inputs["family"] == "MAXIM_AR":
+            for entry in self.manifest.entries:
+                if entry.source_basename != basename or entry.selector.finish_key != finish:
+                    continue
+                match = self.resolve(entry.selector, company_id)
+                if match.status == "VERIFIED":
+                    return match
+                if resolved.status == "MISSING_ASSET":
+                    resolved = match
+        if inputs["family"] != "MAXIM_AR":
             return resolved
         # The legacy drawing is shared by PRIME and DESIGN. For a single leaf,
         # orientation and module mode also leave the drawing unchanged. Keep all
