@@ -1,3 +1,4 @@
+import { groups, MaterialOrders } from './MaterialOrders'
 import { useEffect, useMemo, useRef, useState } from 'react'
 
 import HomeNavigation from './HomeNavigation.jsx'
@@ -886,9 +887,13 @@ export default function App() {
               <span className="connection-status" role="status"><span className={`api-dot ${apiOnline === null ? 'checking' : apiOnline ? 'online' : 'offline'}`} />{apiOnline === null ? 'Conectando…' : apiOnline ? 'Conectado' : 'Sem conexão'}</span>
             </div>
             <HomeNavigation onClient={() => setSection('client')} onItems={() => setSection('items')} onQuote={() => setFullQuoteOpen(true)} onProduction={() => setProductionOrderOpen(true)} />
+            <h2>Pedidos de materiais</h2>
+            <nav className="home-navigation" aria-label="Pedidos de materiais">{Object.entries(groups).map(([key, [label, icon]]) =>
+              <button key={key} className="home-tile" onClick={() => setSection(key)}><span className="home-tile-icon" aria-hidden="true">{icon}</span><strong>{label}</strong></button>
+            )}</nav>
           </> : <div className="section-body">
-            <h1 ref={sectionHeading} tabIndex={-1}>{section === 'client' ? 'Cadastro de Cliente' : 'Itens do orçamento'}</h1>
-            {section === 'client' ? <>
+            <h1 ref={sectionHeading} tabIndex={-1}>{groups[section] ? 'Pedido de ' + groups[section][0].toLowerCase() : section === 'client' ? 'Cadastro de Cliente' : 'Itens do orçamento'}</h1>
+            {groups[section] ? <MaterialOrders group={section} data={data} quote={quote} money={money} number={number} /> : section === 'client' ? <>
               <ClientCard quote={quote} setQuote={setQuote} />
               <div className="section-footer"><span>Os dados são salvos automaticamente neste navegador.</span><button className="primary" onClick={() => setSection('items')}>Continuar para itens →</button></div>
             </> : <>
