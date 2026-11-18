@@ -28,9 +28,9 @@ export async function fetchProductionOrderReadiness(apiUrl, layoutRequest, optio
   if (!response.headers.get('Content-Type')?.startsWith('application/json')) throw new Error('A API não retornou as pendências da OP.')
   const readiness = await response.json()
   if (readiness.review_allowed !== true || readiness.fabrication_allowed !== false ||
-      !/^[0-9a-f]{64}$/.test(readiness.layout_sha256 || '') ||
-      !Array.isArray(readiness.blockers) || !readiness.blockers.length ||
-      readiness.blockers.some((blocker) => typeof blocker.code !== 'string' || typeof blocker.message !== 'string')) {
+    !/^[0-9a-f]{64}$/.test(readiness.layout_sha256 || '') ||
+    !Array.isArray(readiness.blockers) || !readiness.blockers.length ||
+    readiness.blockers.some((blocker) => typeof blocker.code !== 'string' || typeof blocker.message !== 'string')) {
     throw new Error('Resposta de pendências inválida. A fabricação deve permanecer bloqueada.')
   }
   return readiness
@@ -41,15 +41,15 @@ export async function fetchProductionOrderReview(apiUrl, layoutRequest, {
 } = {}) {
   const response = await post(apiUrl, 'pdf', { layout_request: layoutRequest, purpose: 'REVIEW' }, { fetchImpl, signal })
   if (!response.headers.get('Content-Type')?.startsWith('application/pdf') ||
-      response.headers.get('X-OP-Mode') !== 'REVIEW' ||
-      response.headers.get('X-OP-Fabrication-Allowed') !== 'false') {
+    response.headers.get('X-OP-Mode') !== 'REVIEW' ||
+    response.headers.get('X-OP-Fabrication-Allowed') !== 'false') {
     throw new Error('Resposta sem identificação segura de conferência.')
   }
   const blockingCount = Number(response.headers.get('X-OP-Blocking-Count'))
   const pages = Number(response.headers.get('X-OP-Pages'))
   const snapshotSha256 = response.headers.get('X-OP-Snapshot-SHA256')
   if (!Number.isInteger(blockingCount) || blockingCount < 1 || !Number.isInteger(pages) || pages < 1 ||
-      !/^[0-9a-f]{64}$/.test(snapshotSha256 || '')) throw new Error('Metadados da conferência inválidos.')
+    !/^[0-9a-f]{64}$/.test(snapshotSha256 || '')) throw new Error('Metadados da conferência inválidos.')
   const blob = await response.blob()
   if (await blob.slice(0, 5).text() !== '%PDF-') throw new Error('Conteúdo recebido não é um PDF.')
   return {

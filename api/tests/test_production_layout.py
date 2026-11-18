@@ -407,13 +407,16 @@ class LayoutEndpointTests(unittest.TestCase):
             (root / images[0].relative_path).write_bytes(raster())
             path = root / "manifest.json"
             path.write_text(manifest.model_dump_json(), encoding="utf-8")
-            with patch.dict(os.environ, {"OP_IMAGE_MANIFEST": str(path), "OP_IMAGE_STORAGE_ROOT": str(root)}):
-                response = self.client.post("/api/v1/production-orders/layout-preview", json={
-                    "production_order": request().model_dump(mode="json"), "context": context().model_dump(mode="json")})
-            self.assertEqual(response.status_code, 200, response.text)
-            page = response.json()["pages"][0]
-            self.assertEqual([page[k]["status"] for k in ("model_image", "frame_section", "leaf_section")], ["VERIFIED"] * 3)
-            self.assertNotIn(str(root), response.text)
+            for configured_path in (str(path), ""):
+                with self.subTest(explicit_manifest=bool(configured_path)):
+                    with patch.dict(os.environ, {"OP_IMAGE_MANIFEST": configured_path}), patch("api.app.main._LOCAL_IMAGE_MANIFEST", path):
+                        os.environ.pop("OP_IMAGE_STORAGE_ROOT", None)
+                        response = self.client.post("/api/v1/production-orders/layout-preview", json={
+                            "production_order": request().model_dump(mode="json"), "context": context().model_dump(mode="json")})
+                    self.assertEqual(response.status_code, 200, response.text)
+                    page = response.json()["pages"][0]
+                    self.assertEqual([page[k]["status"] for k in ("model_image", "frame_section", "leaf_section")], ["VERIFIED"] * 3)
+                    self.assertNotIn(str(root), response.text)
 
 
 if __name__ == "__main__":

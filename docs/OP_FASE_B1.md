@@ -227,6 +227,12 @@ reextrair a evidência e as pastas originais CROQUIS/CROQUIS_PERFIS. Para usar o
 preview não é necessário colocar os PDFs/Excel no servidor: basta importar os
 originais indicados no inventário e montar o volume privado com manifest.
 
+A API local carrega `.private/op-b1/images/manifest.json` automaticamente
+quando o arquivo existe. Em outro ambiente, use `OP_IMAGE_MANIFEST` para
+apontar para a biblioteca privada. Para acrescentar croquis originais brancos
+e pretos de Maxim-Ar, Giro e Fixo a um manifesto existente, rode
+`python tools/import_op_sketches.py --source-dir <pasta-com-os-JPGs>`.
+
 ```powershell
 python -m pip install -r tools/requirements-op-audit.txt
 python tools/audit_op_layout_sources.py --workbook "$env:OP_WORKBOOK" --pdf-dir "$env:OP_REFERENCE_PDFS" --order-output api/app/data/op_legacy_order_v1.json --reference-output api/tests/fixtures/op_layout_reference_v1.json

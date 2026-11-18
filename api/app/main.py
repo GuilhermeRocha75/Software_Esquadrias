@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import asdict
 import os
+from pathlib import Path
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.responses import Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -83,13 +84,15 @@ def preview_production_order(payload: ProductionOrderRequest) -> ProductionOrder
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
+_LOCAL_IMAGE_MANIFEST = Path(__file__).resolve().parents[2] / ".private/op-b1/images/manifest.json"
+
+
 def _production_image_store():
-    from pathlib import Path
-    manifest_path = os.getenv("OP_IMAGE_MANIFEST")
-    if not manifest_path:
+    configured_manifest = os.getenv("OP_IMAGE_MANIFEST")
+    path = Path(configured_manifest) if configured_manifest else _LOCAL_IMAGE_MANIFEST
+    if not configured_manifest and not path.is_file():
         return None
     try:
-        path = Path(manifest_path)
         manifest = ProductionImageManifest.model_validate_json(path.read_text(encoding="utf-8"))
         return ProductionImageStore(Path(os.getenv("OP_IMAGE_STORAGE_ROOT", str(path.parent))), manifest)
     except (ValueError, OSError):

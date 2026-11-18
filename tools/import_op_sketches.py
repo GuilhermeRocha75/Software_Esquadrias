@@ -23,8 +23,10 @@ def import_sketches(source: Path, manifest_path: Path) -> int:
     root = manifest_path.parent
     entries = {entry.selector.key(): entry for entry in manifest.entries}
     imported = 0
-    for path in sorted(source.glob("*.jpg")):
-        name = path.name
+    for path in sorted(source.iterdir()):
+        if not path.is_file() or path.suffix.lower() != ".jpg":
+            continue
+        name = path.stem + ".jpg"
         if not any(marker in name for marker in ("MAXIM-AR", "DE GIRO", "PAINEL  FIXO -")):
             continue
         finish = next((color for color in ("BRANCO", "PRETO")

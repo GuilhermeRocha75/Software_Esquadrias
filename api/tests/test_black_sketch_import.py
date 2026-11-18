@@ -14,20 +14,23 @@ class BlackSketchImportTests(MaximArSketchTests):
         source.mkdir()
         raw = (root / "sketch.jpg").read_bytes()
         names = ("JANELA 1 FOLHA MAXIM-AR (PRETO).jpg",
+                 "JANELA 2 FOLHAS MAXIM-AR (V) (BRANCO).JPG",
                  "PORTA 1 FOLHA DE GIRO COM PAINEL HORIZONTAL (PRETO).jpg",
                  "PAINEL  FIXO - 00 (PRETO).jpg")
         for name in names:
             (source / name).write_bytes(raw)
         manifest = root / "manifest.json"
         manifest.write_text(self.store.manifest.model_dump_json())
-        self.assertEqual(import_sketches(source, manifest), 3)
+        self.assertEqual(import_sketches(source, manifest), 4)
         first = manifest.read_bytes()
-        self.assertEqual(import_sketches(source, manifest), 3)
+        self.assertEqual(import_sketches(source, manifest), 4)
         self.assertEqual(manifest.read_bytes(), first)
         parsed = ProductionImageManifest.model_validate_json(first)
         self.assertIn(self.entry, parsed.entries)
-        self.assertEqual(len(parsed.entries), 4)
+        self.assertEqual(len(parsed.entries), 5)
         self.store = ProductionImageStore(root, parsed)
+        vertical = dict(BASE, leaf_count=2, orientation="VERTICAL")
+        self.assertEqual(self.store.resolve_model(vertical, "BRANCO", COMPANY).status, "VERIFIED")
         technicals = (dict(BASE, leaf_system="PRIME_WINDOW_42x63"),
                       dict(family="GR", width_mm=900, height_mm=2100),
                       dict(family="FX", width_mm=800, height_mm=600))
