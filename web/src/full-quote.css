@@ -17,14 +17,39 @@
     gap: 16px;
 }
 
-.full-quote-body .primary {
-    justify-self: start;
+.full-quote-pdf {
+    padding-top: 12px;
+    text-align: center;
+}
+
+.full-quote-pdf .op-file-actions {
+    justify-content: center;
+}
+
+.full-quote-pdf .op-file-actions > :is(button, a) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    min-height: 46px;
+    padding: 12px 18px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.full-quote-pdf .op-file-actions svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .full-quote-body .form-grid {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-}
-
-.full-quote-body .op-file-actions {
-    margin-top: 12px;
 }

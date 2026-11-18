@@ -25,6 +25,21 @@ test('home separa áreas, mantém cadastro e abre os quatro modelos', async ({ p
   await expect(page.getByLabel('Cliente *', { exact: true })).toHaveValue('Cliente da interface')
 })
 
+test('clicar no fundo fecha as quatro áreas da home', async ({ page }) => {
+  await page.goto('/')
+  const navigation = page.getByRole('navigation', { name: 'Áreas do software' })
+  for (const name of [/^Cadastro de Cliente/, /^Itens do orçamento/, /^Orçamentos/, /^Ordem de produção/]) {
+    await navigation.getByRole('button', { name }).click()
+    const area = page.locator('dialog[open], .section-body')
+    await expect(area).toBeVisible()
+    await area.click({ position: { x: 10, y: 10 } })
+    await expect(area).toBeVisible()
+    await page.mouse.click(5, 5)
+    await expect(area).toHaveCount(0)
+    await expect(navigation).toBeVisible()
+  }
+})
+
 for (const width of [1440, 390]) {
   test(`home em ${width}px mantém navegação e resumo sem rolagem horizontal`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

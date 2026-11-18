@@ -85,9 +85,15 @@ export default function ProductionOrderPanel({ items, quote, apiUrl, apiOnline, 
     <div className="section-head op-head">
       <div><h2 id="op-title" className="section-title">Ordem de Produção de Conferência</h2>
         <p>Use os itens cadastrados para comparar com o Excel. Fabricação bloqueada.</p></div>
-      <button className="primary" onClick={generate} disabled={busy || editing || apiOnline === false || !selected.length}>
-        {busy ? (current.phase === 'CHECKING' ? 'Consultando pendências…' : 'Gerando PDF…') : 'Gerar OP de Conferência'}
-      </button>
+      <div className="op-file-actions">
+        <button className="primary" onClick={generate} disabled={busy || editing || apiOnline === false || !selected.length}>
+          {busy ? (current.phase === 'CHECKING' ? 'Consultando pendências…' : 'Gerando PDF…') : 'Gerar OP de Conferência'}
+        </button>
+        {currentLink && <>
+          <a className="secondary" href={currentLink.url} target="_blank" rel="noopener noreferrer">Visualizar PDF</a>
+          <a className="primary" href={currentLink.url} download={current.result.filename}>Baixar PDF</a>
+        </>}
+      </div>
     </div>
     <div className="op-body">
       <p className="op-review-mark">CONFERÊNCIA — NÃO FABRICAR</p>
@@ -137,10 +143,6 @@ export default function ProductionOrderPanel({ items, quote, apiUrl, apiOnline, 
       {currentLink && <div className="op-result">
         <div className="op-result-summary">
           <div className="op-result-heading"><span aria-hidden="true" className="op-result-icon">✓</span><div><strong>PDF gerado</strong><p>{current.result.pages} {current.result.pages === 1 ? 'página' : 'páginas'} · Documento de conferência</p></div></div>
-          <div className="op-file-actions">
-            <a className="secondary" href={currentLink.url} target="_blank" rel="noopener noreferrer">Visualizar PDF</a>
-            <a className="primary" href={currentLink.url} download={current.result.filename}>Baixar PDF</a>
-          </div>
         </div>
         <p className="op-result-note">Revise as pendências antes de comparar com o Excel. A emissão para fabricação continua bloqueada.</p>
       </div>}

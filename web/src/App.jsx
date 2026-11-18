@@ -860,7 +860,11 @@ export default function App() {
   }
 
   return (
-    <div className={`meister-app ${section === 'home' ? 'is-home' : 'is-section'}`}>
+    <div className={`meister-app ${section === 'home' ? 'is-home' : 'is-section'}`} onClick={event => {
+      if (section !== 'home' && (event.target === event.currentTarget || event.target.matches('main.meister-content'))) {
+        setSection('home')
+      }
+    }}>
       <main className="meister-content">
         {section !== 'home' && <header className="section-navigation">
           <button className="secondary" onClick={() => setSection('home')}>← Voltar ao início</button>

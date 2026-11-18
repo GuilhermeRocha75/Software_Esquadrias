@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import ProductionOrderPanel from './ProductionOrderPanel.jsx'
+import { isDialogBackdropClick } from './dialogBackdrop.js'
 
 export default function ProductionOrderDialog({ open, close, ...panelProps }) {
   const dialog = useRef(null)
@@ -10,7 +11,8 @@ export default function ProductionOrderDialog({ open, close, ...panelProps }) {
     return () => node.close()
   }, [open])
 
-  return <dialog ref={dialog} className="production-order-dialog" aria-labelledby="production-dialog-title" onCancel={close}>
+  return <dialog ref={dialog} className="production-order-dialog" aria-labelledby="production-dialog-title" onCancel={close}
+    onClick={event => { if (isDialogBackdropClick(event)) close() }}>
     <div className="modal-head">
       <strong id="production-dialog-title">Ordem de Produção de Conferência</strong>
       <button autoFocus onClick={close} aria-label="Fechar ordem de produção">×</button>

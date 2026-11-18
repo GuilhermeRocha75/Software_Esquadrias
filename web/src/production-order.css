@@ -278,22 +278,8 @@
         grid-template-columns: 1fr
     }
 
-    .op-head>button {
-        width: 100%
-    }
-
     .op-result-summary {
         align-items: stretch
-    }
-
-    .op-file-actions {
-        width: 100%
-    }
-
-    .op-file-actions a {
-        text-align: center;
-        flex: 1;
-        min-width: 180px
     }
 }
 

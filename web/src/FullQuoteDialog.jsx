@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { calculateQuote } from './commercialQuote.js'
 import { buildProductionLayoutRequest, DEMO_COMPANY_ID, selectedProfileColor } from './productionOrderRequest.js'
 import CommercialQuote from './CommercialQuote.jsx'
+import { isDialogBackdropClick } from './dialogBackdrop.js'
 import './full-quote.css'
 
 const company = import.meta.env.VITE_COMPANY_ID || DEMO_COMPANY_ID
@@ -38,15 +39,28 @@ function PdfActions({ payload, apiUrl, number }) {
       if (!controller.signal.aborted) setBusy(false)
     }
   }
-  return <>
-    <button className="primary" onClick={generate} disabled={busy || !payload}>{busy ? 'Gerando PDF…' : 'Gerar PDF do orçamento'}</button>
+  return <div className="full-quote-pdf">
+    <div className="op-file-actions">
+      <button className="primary" onClick={generate} disabled={busy || !payload}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10Zm0 0v7h7M8 15h8m-8 3h5" /></svg>
+        {busy ? 'Gerando PDF…' : 'Gerar PDF do orçamento'}
+      </button>
+      {result && <>
+        <a className="secondary" href={result.url} target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z" /><circle cx="12" cy="12" r="2.5" /></svg>
+          Visualizar PDF
+        </a>
+        <a className="primary" href={result.url} download={'Orcamento-' + (number || 'completo').replace(/[^\w.-]/g, '-') + '.pdf'}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4" /></svg>
+          Baixar PDF
+        </a>
+      </>}
+    </div>
     {error && <p role="alert" className="op-error">{error}</p>}
     {result && <div className="op-result" role="status"><strong>PDF gerado</strong>
       {result.missing && <p>Croqui indisponível nos itens {result.missing}. A ausência está indicada no documento.</p>}
-      <div className="op-file-actions"><a className="secondary" href={result.url} target="_blank" rel="noreferrer">Visualizar PDF</a>
-      <a className="primary" href={result.url} download={'Orcamento-' + (number || 'completo').replace(/[^\w.-]/g, '-') + '.pdf'}>Baixar PDF</a></div>
     </div>}
-  </>
+  </div>
 }
 
 export default function FullQuoteDialog({ quote, setQuote, items, data, apiUrl, close, money, modelLabel }) {
@@ -79,7 +93,8 @@ export default function FullQuoteDialog({ quote, setQuote, items, data, apiUrl, 
       })
     } catch (err) { message = err.message }
   }
-  return <dialog ref={dialog} className="full-quote-dialog" aria-labelledby="quote-pdf-title" onCancel={close}>
+  return <dialog ref={dialog} className="full-quote-dialog" aria-labelledby="quote-pdf-title" onCancel={close}
+    onClick={event => { if (isDialogBackdropClick(event)) close() }}>
     <div className="modal-head"><div><strong id="quote-pdf-title">Orçamento completo em PDF</strong>
       <span>{quote.client} · {quote.number}</span></div><button autoFocus onClick={close} aria-label="Fechar">×</button></div>
     <div className="full-quote-body">
