@@ -5,7 +5,7 @@ const paths = {
   production: <><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M8 11l2 2 5-5M8 18h8"/></>,
 }
 export default function HomeNavigation({ onClient, onItems, onQuote, onProduction }) {
-  return <nav className="home-navigation" aria-label="Áreas do software">
+  return <nav className="home-navigation home-navigation-main" aria-label="Áreas do software">
     {[
       ['client', 'Cadastro de Cliente', 'Dados do cliente e da obra', onClient],
       ['items', 'Itens do orçamento', 'Modelos, custos e materiais', onItems],
@@ -13,7 +13,8 @@ export default function HomeNavigation({ onClient, onItems, onQuote, onProductio
       ['production', 'Ordem de produção', 'Conferência e geração da OP', onProduction],
     ].map(([key, title, description, action]) => <button key={key} className="home-tile" onClick={action}>
       <span className="home-tile-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[key]}</svg></span>
-      <strong>{title}</strong><span>{description}</span><span className="home-tile-arrow" aria-hidden="true">↗</span>
+      <span className="home-tile-text"><strong>{title}</strong><span>{description}</span></span>
+      <span className="home-tile-arrow" aria-hidden="true">↗</span>
     </button>)}
   </nav>
 }

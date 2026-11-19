@@ -892,7 +892,7 @@ export default function App() {
             </div>
             <HomeNavigation onClient={() => setSection('client')} onItems={() => setSection('items')} onQuote={() => setFullQuoteOpen(true)} onProduction={() => setProductionOrderOpen(true)} />
             <h2>Pedidos de materiais</h2>
-            <nav className="home-navigation" aria-label="Pedidos de materiais">{Object.entries(groups).map(([key, [label, icon]]) =>
+            <nav className="home-navigation home-navigation-materials" aria-label="Pedidos de materiais">{Object.entries(groups).map(([key, [label, icon]]) =>
               <button key={key} className="home-tile" onClick={() => setSection(key)}><span className="home-tile-icon" aria-hidden="true">{icon}</span><strong>{label}</strong></button>
             )}</nav>
           </> : <div className="section-body">
