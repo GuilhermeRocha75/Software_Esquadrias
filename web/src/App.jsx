@@ -263,7 +263,7 @@ function ClientCard({ quote, setQuote }) {
   )
 }
 
-function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit, calculated }) {
+function ItemsTable({ items, onRemove, onCopy, onAddCR, onAddMaximAr, onAddGr, onAddFixo, onEdit, calculated }) {
   return (
     <section className="card items-card">
       <div className="section-head">
@@ -287,7 +287,11 @@ function ItemsTable({ items, onRemove, onAddCR, onAddMaximAr, onAddGr, onAddFixo
                 <td>{item.screen_enabled ? 'Sim' : 'Não'}</td>
                 <td>{item.shutter?.mode && item.shutter.mode !== 'SEM PERSIANA' ? item.shutter.mode : (item.shutter_enabled ? 'Legado' : 'Não')}</td>
                 <td><span className={calculated ? "status" : "status-pending"}>{calculated ? "● Calculado" : "Não calculado"}</span></td>
-                <td><button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button><button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button></td>
+                <td>
+                  <button className="icon-btn" title="Editar" onClick={() => onEdit(item)}>✎</button>
+                  <button className="icon-btn" title="Copiar item" aria-label="Copiar item" onClick={() => onCopy(item)}>⧉</button>
+                  <button className="icon-btn danger" title="Excluir" onClick={() => onRemove(item.id)}>⌫</button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -849,6 +853,10 @@ export default function App() {
     setItems(next); setModalOpen(false); setEditingItem(null); calculate(next)
   }
 
+  const copyItem = (item) => {
+    saveItem({ ...item, id: crypto.randomUUID() })
+  }
+
   const openNewCR = () => { setEditingItem(null); setModalFamily('CR'); setModalOpen(true) }
   const openNewMaximAr = () => { setEditingItem(null); setModalFamily('MAXIM_AR'); setModalOpen(true) }
   const openNewFixo = () => { setEditingItem(null); setModalFamily('FX'); setModalOpen(true) }
@@ -901,7 +909,7 @@ export default function App() {
               <ClientCard quote={quote} setQuote={setQuote} />
               <div className="section-footer"><span>Os dados são salvos automaticamente neste navegador.</span><button className="primary" onClick={() => setSection('items')}>Continuar para itens →</button></div>
             </> : <>
-              <ItemsTable items={items} onRemove={removeItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
+              <ItemsTable items={items} onRemove={removeItem} onCopy={copyItem} onAddCR={openNewCR} onAddMaximAr={openNewMaximAr} onAddGr={openNewGr} onAddFixo={openNewFixo} onEdit={openEdit} calculated={Boolean(data) && !loading && !error} />
               <Analysis data={data} activeTab={activeTab} setActiveTab={setActiveTab} />
               <div className="section-footer"><button className="primary" onClick={() => setFullQuoteOpen(true)}>Visualizar Orçamento Completo</button><button className="secondary" onClick={() => setProductionOrderOpen(true)}>Ordem de Produção de Conferência</button></div>
             </>}
