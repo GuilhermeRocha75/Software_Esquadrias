@@ -22,6 +22,9 @@ confia nos cabeçalhos de proxy apenas porque a API está isolada na rede Compos
    é 8000 dentro da rede Compose. `CORS_ALLOWED_ORIGINS` pode ficar vazio para
    mesmo domínio; para outro frontend, forneça lista explícita separada por
    vírgulas, por exemplo `https://app.exemplo.com`.
+   Para habilitar os croquis nos PDFs, coloque o manifesto e a pasta
+   `objects/` em `.private/op-b1/images/` na raiz do repositório antes de
+   subir o Compose. A API monta essa pasta somente para leitura.
 3. Na raiz do repositório, execute:
 
    ```sh

@@ -6,6 +6,11 @@ services:
     environment:
       PORT: "8000"
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-}
+    volumes:
+      - type: bind
+        source: ../../.private/op-b1/images
+        target: /srv/software-esquadrias/.private/op-b1/images
+        read_only: true
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)"]
