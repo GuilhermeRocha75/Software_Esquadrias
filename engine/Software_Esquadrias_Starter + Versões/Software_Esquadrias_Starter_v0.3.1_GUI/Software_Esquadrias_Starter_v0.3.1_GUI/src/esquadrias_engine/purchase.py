@@ -7,7 +7,7 @@ from typing import Iterable, Protocol, Sequence
 from .catalog import MATERIALS, BAR_STOCK_CODES, DEFAULT_BAR_LENGTH_MM, PARAMETERS
 from .fixo import FixoConfiguration
 from .models import (
-    CalculationResult, CutPiece, BarAllocation,
+    SlidingConfiguration, CalculationResult, CutPiece, BarAllocation,
     PurchaseLine, OrderPurchasePlan, EngineeringWarning, ManualSpliceAllocation
 )
 
@@ -74,7 +74,7 @@ def _first_fit_decreasing(
     for piece in sorted_pieces:
         required_mm = piece.length_mm + kerf_mm
         if required_mm > stock_length_mm + _EPS:
-            # FX: preservar a peça integral e reservar material. A fabricação
+            # Preservar a peça integral e reservar material. A fabricação
             # decide a divisão; não inventar segmentos ou posições de emenda.
             if piece.source_item in manual_splice_items:
                 bars.append(ManualSpliceAllocation(
@@ -136,7 +136,7 @@ def build_order_purchase_plan(
 
     manual_splice_items = frozenset(
         index for index, (cfg, _) in enumerate(order_items, start=1)
-        if isinstance(cfg, FixoConfiguration)
+        if isinstance(cfg, (FixoConfiguration, SlidingConfiguration))
     )
     grouped = _explode_pieces(order_items)
     lines: list[PurchaseLine] = []
@@ -147,9 +147,13 @@ def build_order_purchase_plan(
         bars = _first_fit_decreasing(pieces, stock_length_mm, float(kerf_mm), manual_splice_items)
         bars_required = sum(bar.stock_bars_required if isinstance(bar, ManualSpliceAllocation)
                             else 1 for bar in bars)
-        if any(isinstance(bar, ManualSpliceAllocation) for bar in bars):
+        splice_models = {
+            "CR" if isinstance(order_items[bar.pieces[0].source_item - 1][0], SlidingConfiguration) else "FX"
+            for bar in bars if isinstance(bar, ManualSpliceAllocation)
+        }
+        for model in sorted(splice_models):
             warnings.append(EngineeringWarning(
-                "FX-MANUAL-SPLICE",
+                f"{model}-MANUAL-SPLICE",
                 f"{code}: peça integral mantida; divisão e emenda pela fabricação. "
                 "Compra estimada reserva barras por peça, sem reaproveitamento "
                 "entre reservas nem acréscimos de emenda/serra da divisão manual."
