@@ -22,7 +22,7 @@ export default function CommercialQuote({ items, data, quote, setQuote, money, m
       }))} />
       <Numeric label="Instalação (R$/m²)" value={settings.perArea ?? 120} change={v => set('perArea', v)} />
       <Numeric label="Instalação (R$/unidade)" value={settings.perUnit ?? 0} change={v => set('perUnit', v)} />
-      <Numeric label="Instalação fixa (R$)" value={settings.fixed ?? 300} change={v => set('fixed', v)} />
+      <Numeric label="Frete (R$)" value={settings.fixed ?? 300} change={v => set('fixed', v)} />
     </div>
     {result ? <>
       <div className="table-scroll"><table><thead><tr>{['Item', 'Qtd.', 'Custo técnico/un.', 'Custo manual/un.', 'Fator do item', 'Venda/un.', 'Total'].map(h => <th key={h}>{h}</th>)}</tr></thead>

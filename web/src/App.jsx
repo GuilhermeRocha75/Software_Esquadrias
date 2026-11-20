@@ -10,14 +10,27 @@ import ProductionOrderDialog from './ProductionOrderDialog.jsx'
 
 const API_URL = apiBaseUrl(import.meta.env.VITE_API_URL)
 
+const crApplicationDefaults = {
+  JANELA: {
+    leaf_system: 'PRIME_WINDOW_42x66',
+    roller_description: 'ROLDANA 30KG',
+    glass_description: '04mm FLOAT INCOLOR',
+  },
+  PORTA: {
+    leaf_system: 'PRIME_DOOR_42x88',
+    roller_description: 'ROLDANA 80KG',
+    glass_description: '06mm TEMPERADO INCOLOR',
+  },
+}
+
 const baseDefaults = {
   family: 'CR',
   quantity: 1,
   leaf_count: 2,
   application: 'JANELA',
   closure_mode: 'MAÇANETA COM CREMONA + FECHO OCULTO',
-  cremona_base: 'CREMONA 1 PONTO',
-  roller_description: 'ROLDANA 30KG',
+  cremona_base: 'CREMONA 2 PONTOS COMP. 600MM',
+  roller_description: crApplicationDefaults.JANELA.roller_description,
   internal_finish: 'GUARNIÇÃO DE 70MM',
   external_finish: 'BARRA CHATA DE 30MM',
   screen_enabled: false,
@@ -96,6 +109,7 @@ const fallbackOptions = {
   leaf_counts: [2, 3, 4, 6],
   glasses: [
     { description: '04mm FLOAT INCOLOR' },
+    { description: '06mm TEMPERADO INCOLOR' },
     { description: '05mm FLOAT FUMÊ' },
   ],
   closures: [
@@ -103,7 +117,7 @@ const fallbackOptions = {
     'MAÇANETA COM CREMONA + MAÇANETA OCULTA COM CREMONA',
     'MAÇANETA COM CREMONA',
   ],
-  cremonas: ['CREMONA 1 PONTO'],
+  cremonas: [baseDefaults.cremona_base],
   rollers: ['ROLDANA 30KG', 'ROLDANA 50KG', 'ROLDANA 80KG', 'ROLDANA 120KG', 'ROLDANA 150KG'],
   finishes: ['SEM ACABAMENTO', 'GUARNIÇÃO DE 70MM', 'BARRA CHATA DE 30MM'],
   screen: { supported: true },
@@ -634,8 +648,7 @@ function AddItemModal({ onClose, onSave, options, item }) {
     ...baseDefaults,
     width_mm: 1200,
     height_mm: 1200,
-    leaf_system: 'PRIME_WINDOW_42x66',
-    glass_description: '04mm FLOAT INCOLOR',
+    ...crApplicationDefaults[item?.application ?? baseDefaults.application],
     ...(item || {}),
     // Itens salvos pela API <= 0.4 podem ter apenas o booleano. Mantemos
     // ``null`` nesse caso para não inventar um modo de acionamento.
@@ -643,6 +656,11 @@ function AddItemModal({ onClose, onSave, options, item }) {
     leaf_grid: item?.leaf_grid || baseDefaults.leaf_grid,
   }))
   const [validation, setValidation] = useState('')
+
+  const setApplication = (event) => {
+    const application = event.target.value
+    setForm((previous) => ({ ...previous, application, ...crApplicationDefaults[application] }))
+  }
 
   const set = (key) => (event) => {
     const target = event.target
@@ -710,7 +728,7 @@ function AddItemModal({ onClose, onSave, options, item }) {
             <label>Altura (mm)<input type="number" min="1" value={form.height_mm} onChange={set('height_mm')} /></label>
             <label>Quantidade<input type="number" min="1" value={form.quantity} onChange={set('quantity')} /></label>
             <label>Tipo de folha<select value={form.leaf_system} onChange={set('leaf_system')}>{options.leaf_systems.map((row) => <option key={row.value} value={row.value}>{row.label}</option>)}</select></label>
-            <label>Aplicação<select value={form.application} onChange={set('application')}>{options.applications.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Aplicação<select value={form.application} onChange={setApplication}>{options.applications.map((value) => <option key={value}>{value}</option>)}</select></label>
             <label>Nº de folhas<select value={form.leaf_count} onChange={set('leaf_count')}>{options.leaf_counts.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
           </FieldSection>
 
@@ -737,7 +755,7 @@ function AddItemModal({ onClose, onSave, options, item }) {
 
           <FieldSection title="Fechamento e ferragens">
             <label className="span-2">Fechamento<select value={form.closure_mode} onChange={set('closure_mode')}>{options.closures.map((value) => <option key={value}>{value}</option>)}</select></label>
-            <label>Cremona<select value={form.cremona_base} onChange={set('cremona_base')}>{options.cremonas.map((value) => <option key={value}>{value}</option>)}</select></label>
+            <label>Cremona<select value={form.cremona_base} onChange={set('cremona_base')}>{options.cremonas.map((value) => <option key={value} value={value}>{value === baseDefaults.cremona_base ? 'CREMONA 2 PONTOS 600mm' : value}</option>)}</select></label>
             <label>Roldanas<select value={form.roller_description} onChange={set('roller_description')}>{options.rollers.map((value) => <option key={value}>{value}</option>)}</select></label>
           </FieldSection>
 
