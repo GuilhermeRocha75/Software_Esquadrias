@@ -102,7 +102,7 @@ def _production_image_store():
 @app.post("/api/v1/quotes/full-pdf", response_class=Response)
 def full_quote_pdf(payload: QuotePdf, image_store=Depends(_production_image_store)):
     try:
-        pdf, missing = render_quote(payload, image_store, os.getenv("ORC_CROQUIS_DIR"))
+        pdf, missing = render_quote(payload, image_store, os.getenv("ORC_CROQUIS_DIR") or str(_LOCAL_IMAGE_MANIFEST.parents[2] / "CROQUIS"))
     except (OSError, ValueError) as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     return Response(pdf, media_type="application/pdf", headers={
