@@ -22,12 +22,16 @@ def import_sketches(source: Path, manifest_path: Path) -> int:
     manifest = ProductionImageManifest.model_validate_json(original)
     root = manifest_path.parent
     entries = {entry.selector.key(): entry for entry in manifest.entries}
+    bindings = {}
+    for entry in manifest.entries:
+        if entry.selector.kind == "MODEL_SKETCH":
+            bindings.setdefault((entry.source_basename, entry.selector.finish_key), []).append(entry.selector)
     imported = 0
     for path in sorted(source.iterdir()):
         if not path.is_file() or path.suffix.lower() != ".jpg":
             continue
         name = path.stem + ".jpg"
-        if not any(marker in name for marker in ("MAXIM-AR", "DE GIRO", "PAINEL  FIXO -")):
+        if not any(marker in name for marker in ("DE CORRER", "MAXIM-AR", "DE GIRO", "PAINEL  FIXO -")):
             continue
         finish = next((color for color in ("BRANCO", "PRETO")
                        if name.endswith(f" ({color}).jpg")), None)
@@ -56,6 +60,8 @@ def import_sketches(source: Path, manifest_path: Path) -> int:
         else:
             destination.write_bytes(data)
         entries[entry.selector.key()] = entry
+        for selector in bindings.get((name, finish), ()):
+            entries[selector.key()] = entry.model_copy(update={"selector": selector})
         imported += 1
     if not imported:
         raise ValueError("Nenhum croqui compatível encontrado na pasta.")
